@@ -2,20 +2,6 @@
 2- https://git-scm.com/
 3- https://kinsta.com/knowledgebase/what-is-github/
 ----------------------------------------------------------------------------------------------------------------
-[1] A tour of the C# language
-[ https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp /]
-[2] Entity Framework documentation
-[ https://learn.microsoft.com/en-us/ef/ ]
-[3] تقنية Entity Framework-Code First
-[ https://io.hsoub.com/webdev/134235-%D8%AA%D9%82%D9%86%D9%8A%D8%A9-entity-framework-code-first ]
-[4] DevExpress 
-[ https://www.componentsource.com/brand/devexpress ]
-[5] Bunifu Framework - Visual Studio .NET UI tools
-[ https://appsource.microsoft.com/en-us/product/web-apps/bunifutechnologiesltd.bunifudevtools?tab=overview ]
-[6] Welcome to the Visual Studio IDE
-[ https://learn.microsoft.com/en-us/visualstudio/get-started/visual-studio-ide?view=vs-2022 ]
-[7] Google Drive – Wikipedia
-[ https://en.wikipedia.org/wiki/Visual_Studio_Code ]
 [8] Agile Software Development – Wikipedia
 [ https://en.wikipedia.org/wiki/Agile_software_development ]
 [9] Unified Modeling Language – Wikipedia
@@ -30,8 +16,6 @@
 [ https://developer.ibm.com/articles/the-sequence-diagram/ ]
 [14] Unified Modeling Language (UML) | State Diagrams
 [ https://www.geeksforgeeks.org/unified-modeling-language-uml-state-diagrams/ ]
-[15] Deployment Diagram Tutorial 
-[ https://online.visual-paradigm.com/diagrams/tutorials/deployment-diagram-tutorial/ ]
 [16] Static Testing vs Dynamic Testing: What’s the Difference?
 [ https://www.guru99.com/static-dynamic-testing.html ]
 [17] Software Testing Help - FREE IT Courses and Business Software/Services Reviews 
