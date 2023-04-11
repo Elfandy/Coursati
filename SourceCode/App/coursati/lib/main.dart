@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Main Screens/Home_Page.dart';
+import 'Main Screens/main_page.dart';
 
-void main() => runApp(MainApp());
+void main() => runApp(const MainApp());
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -10,7 +10,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: MainPage(),
     );
   }
 }
