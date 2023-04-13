@@ -133,7 +133,6 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "Suravaram",
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -141,44 +140,38 @@ class _HomePageState extends State<HomePage> {
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    //////////////////////////////////////////////////////////////
-                    ///
-                    ///
-                    ///
-                    ///
-                    for (int i = 0; i < 4; i++)
-                      CourseBox(
-                        bld: CourseBLD[i],
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                  child: Row(
+                    children: [
+                      //////////////////////////////////////////////////////////////
+                      ///
+                      ///
+                      ///
+                      ///
+                      ///
+
+                      for (int i = 0; i < 4; i++)
+                        CourseBox(
+                          bld: CourseBLD[i],
+                        ),
+
+                      RoundedButton(
+                        icon: const Icon(
+                          Icons.keyboard_arrow_left,
+                          size: 40,
+                        ),
+                        onPressed: () => {},
+                        color: const Color(0xff1776e0),
+                        size: 80,
                       ),
-                    // CourseBox(
-                    //   bld: CourseBLD[1],
-                    // ),
-                    // CourseBox(
-                    //   bld: CourseBLD[2],
-                    // ),
-                    // CourseBox(
-                    //   bld: CourseBLD[3],
-                    // ),
-                    RoundedButton(
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 40,
-                      ),
-                      onPressed: () => {},
-                      color: const Color(0xff1776e0),
-                      size: 80,
-                    ),
-                    /////////////////////////////////////////////////////////
-                    ///
-                    ///
-                    ///
-                    ///
-                  ],
+                      /////////////////////////////////////////////////////////
+                      ///
+                      ///
+                      ///
+                      ///
+                    ],
+                  ),
                 ),
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -188,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                       width: 10,
                     ),
                     Text(
-                      "الدورات التدريبية",
+                      "مراكز التدريب",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -204,28 +197,31 @@ class _HomePageState extends State<HomePage> {
                 ///
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      //////////////////////////////////////////////////
-                      ///
-                      for (int i = 0; i < 4; i++)
-                        TCBox(
-                          bld: trainingCenterBLD[i],
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
                         ),
+                        //////////////////////////////////////////////////
+                        ///
+                        for (int i = 0; i < 4; i++)
+                          TCBox(
+                            bld: trainingCenterBLD[i],
+                          ),
 
-                      RoundedButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_left,
-                          size: 40,
+                        RoundedButton(
+                          icon: const Icon(
+                            Icons.keyboard_arrow_left,
+                            size: 40,
+                          ),
+                          onPressed: () => {},
+                          color: const Color(0xff1776e0),
+                          size: 80,
                         ),
-                        onPressed: () => {},
-                        color: const Color(0xff1776e0),
-                        size: 80,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ]
