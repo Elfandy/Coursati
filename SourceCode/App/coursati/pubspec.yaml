@@ -47,8 +47,14 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  flutter_native_splash: ^2.0.1+1
+
   flutter_localizations:
     sdk: flutter
+
+flutter_native_splash:
+  background_image: Assets/Images/Startup/Frame 1.png
+  image: Assets/Images/Startup/Logo.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -63,9 +69,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - Assets/
     - Assets/Logo/
     - Assets/Icons/
+    - Assets/Images/
+    - Assets/Images/Startup/
   
 
   #   - images/a_dot_burr.jpeg

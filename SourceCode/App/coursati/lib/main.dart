@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Screens/StartScreen.dart';
 import 'Screens/main_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -16,7 +17,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: "Coursati",
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      // home: const MainPage(),
+      home: StartUpScreen(),
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
