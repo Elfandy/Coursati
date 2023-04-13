@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'Screens/main_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(const MainApp());
+List<Locale> local = const [
+  Locale('ar', 'AE'),
+  Locale("en", "US"),
+];
+void main() => runApp(MainApp());
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: "Coursati",
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: const MainPage(),
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: local,
+      locale: local[0],
     );
   }
 }

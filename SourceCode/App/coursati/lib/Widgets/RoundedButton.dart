@@ -20,13 +20,18 @@ class RoundedButton extends StatefulWidget {
 class _RoundedButtonState extends State<RoundedButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: widget.icon,
-      onPressed: widget.onPressed,
-      style: ElevatedButton.styleFrom(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+      child: ElevatedButton(
+        onPressed: widget.onPressed,
+        style: ElevatedButton.styleFrom(
           backgroundColor: widget.color,
-          shape: CircleBorder(),
-          fixedSize: Size(widget.size, widget.size)),
+          shape: const CircleBorder(),
+          fixedSize: Size(widget.size, widget.size),
+          shadowColor: const Color(0xff1776e0),
+        ),
+        child: widget.icon,
+      ),
     );
   }
 }

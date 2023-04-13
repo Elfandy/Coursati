@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentPage = 0;
 
-  List<Widget> pages = [
+  List<Widget> pages = const [
     HomePage(),
     SearchPage(),
     TrainingCenter(),
@@ -27,11 +27,11 @@ class _MainPageState extends State<MainPage> {
       body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(
         landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-        selectedFontSize: 12,
+        selectedFontSize: 10,
 
-        selectedItemColor: Color(0xff1766e0),
+        selectedItemColor: const Color(0xff1766e0),
 
-        unselectedFontSize: 12,
+        unselectedFontSize: 10,
 
         selectedLabelStyle: const TextStyle(
           height: 2,
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
           height: 2,
         ),
 
-        iconSize: 28,
+        iconSize: 26,
 
         unselectedItemColor: Color(0xff999999),
 
@@ -50,22 +50,24 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
 
         ////////////////////////////////////////
+        ///
+        ///
         items: const [
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/home.png")),
-            label: "Home",
+            label: "الرئيسية",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/search.png")),
-            label: "Search",
+            label: "البحث",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/preseintation.png")),
-            label: "TrainingCenter",
+            label: "مركز التدريب",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/more.png")),
-            label: "More",
+            label: "المزيد",
           ),
         ],
         //////////////////////////////////
