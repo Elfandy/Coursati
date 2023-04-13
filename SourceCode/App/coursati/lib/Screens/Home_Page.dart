@@ -131,8 +131,9 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     "الدورات التدريبية",
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Color(0xff1776e0),
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
                     children: [
                       //////////////////////////////////////////////////////////////
@@ -174,6 +175,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              Divider(),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(
                   children: const [
@@ -181,10 +183,11 @@ class _HomePageState extends State<HomePage> {
                       width: 10,
                     ),
                     Text(
-                      "مراكز التدريب",
+                      "المراكز التدريبية",
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Color(0xff1776e0),
                       ),
                       textAlign: TextAlign.start,
                     ),
@@ -198,12 +201,9 @@ class _HomePageState extends State<HomePage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     child: Row(
                       children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
                         //////////////////////////////////////////////////
                         ///
                         for (int i = 0; i < 4; i++)
