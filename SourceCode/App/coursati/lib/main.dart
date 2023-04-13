@@ -24,6 +24,7 @@ class MainApp extends StatelessWidget {
       ],
       supportedLocales: local,
       locale: local[0],
+      theme: ThemeData(fontFamily: "Tajawal"),
     );
   }
 }

@@ -46,7 +46,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  
+
   flutter_localizations:
     sdk: flutter
 
@@ -65,6 +65,7 @@ flutter:
   assets:
     - Assets/
     - Assets/Logo/
+    - Assets/Icons/
   
 
   #   - images/a_dot_burr.jpeg
@@ -92,6 +93,21 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: Assets/fonts/Tajawal/Tajawal-Regular.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-Bold.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-Black.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-ExtraBold.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-ExtraLight.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-Light.ttf
+        - asset: Assets/fonts/Tajawal/Tajawal-Medium.ttf
+    - family: Suravaram
+      fonts: 
+        - asset: Assets/fonts/Suravaram/Suravaram-Regular.ttf
+    - family: Reem
+      fonts:
+        - asset: Assets/fonts/Reem_Kufi/ReemKufi-VariableFont_wght.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

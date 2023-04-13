@@ -1,4 +1,6 @@
+import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:coursati/Widgets/CourseBox.dart';
+import 'package:coursati/Widgets/TCBox.dart';
 import 'package:flutter/material.dart';
 
 import '../Classes/BoxCourseLabelData.dart';
@@ -17,29 +19,60 @@ class _HomePageState extends State<HomePage> {
   ///
   ///
 
-  List<String> coursesImages = [
-    "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=825&q=80",
-    "https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80",
-    "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODN8fGNvdXJzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-  ];
-
-  List<BoxCourseLabelData> blds = [
+  List<BoxCourseLabelData> CourseBLD = [
     BoxCourseLabelData(
       label: "البرمجة باستخدام لغة الجافا",
       In: "Octal",
+      image:
+          "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
     ),
     BoxCourseLabelData(
       label: "تحليل البرمجيات الخبيثة",
       In: "Octal",
+      image:
+          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
     ),
     BoxCourseLabelData(
       label: "إدارة الوقت",
       In: "Gama",
+      image:
+          "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
     ),
     BoxCourseLabelData(
       label: "هجمات الأندرويد",
       In: "Lablas",
+      image:
+          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    ),
+  ];
+
+  List<BoxTCLabelData> trainingCenterBLD = [
+    BoxTCLabelData(
+      label: "Octal",
+      address: "حي الأندلس",
+      logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
+      image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
+    ),
+    BoxTCLabelData(
+      label: "Gama",
+      address: "حي الأندلس",
+      logo: "http://192.168.43.126/Images/Asset%201.png",
+      image:
+          "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
+    ),
+    BoxTCLabelData(
+      label: "Beta",
+      address: "غوط الشعال",
+      logo: "http://192.168.43.126/Images/Asset%202.png",
+      image:
+          "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
+    ),
+    BoxTCLabelData(
+      label: "Lablas",
+      address: "جنزور",
+      logo: "http://192.168.43.126/Images/Asset%203.png",
+      image:
+          "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
     ),
   ];
 
@@ -71,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.topRight,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                     width: 200,
                   ),
@@ -83,6 +116,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ]),
+          ////////////////////////////////////////////////////////////////
+          ///
+          ///
+          ///
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "Suravaram",
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -113,29 +151,26 @@ class _HomePageState extends State<HomePage> {
                     ///
                     ///
                     ///
-                    CourseBox(
-                      image: coursesImages[0],
-                      bld: blds[0],
-                    ),
-                    CourseBox(
-                      image: coursesImages[1],
-                      bld: blds[1],
-                    ),
-                    CourseBox(
-                      image: coursesImages[2],
-                      bld: blds[2],
-                    ),
-                    CourseBox(
-                      image: coursesImages[3],
-                      bld: blds[3],
-                    ),
+                    for (int i = 0; i < 4; i++)
+                      CourseBox(
+                        bld: CourseBLD[i],
+                      ),
+                    // CourseBox(
+                    //   bld: CourseBLD[1],
+                    // ),
+                    // CourseBox(
+                    //   bld: CourseBLD[2],
+                    // ),
+                    // CourseBox(
+                    //   bld: CourseBLD[3],
+                    // ),
                     RoundedButton(
                       icon: const Icon(
                         Icons.keyboard_arrow_left,
                         size: 40,
                       ),
                       onPressed: () => {},
-                      color: const Color(0xffdddddd),
+                      color: const Color(0xff1776e0),
                       size: 80,
                     ),
                     /////////////////////////////////////////////////////////
@@ -146,84 +181,64 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-            
-            Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: const [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "الدورات التدريبية",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ],
-              ),
-                     /////////////////////////////////////////////////////////
-                    ///
-                    ///
-                    ///
-                    ///
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  children: const [
+                    SizedBox(
                       width: 10,
                     ),
-                    //////////////////////////////////////////////////////////////
-                    ///
-                    ///
-                    ///
-                    ///
-                    CourseBox(
-                      image: coursesImages[0],
-                      bld: blds[0],
-                    ),
-                    CourseBox(
-                      image: coursesImages[1],
-                      bld: blds[1],
-                    ),
-                    CourseBox(
-                      image: coursesImages[2],
-                      bld: blds[2],
-                    ),
-                    CourseBox(
-                      image: coursesImages[3],
-                      bld: blds[3],
-                    ),
-                    RoundedButton(
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 40,
+                    Text(
+                      "الدورات التدريبية",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
                       ),
-                      onPressed: () => {},
-                      color: const Color(0xffdddddd),
-                      size: 80,
+                      textAlign: TextAlign.start,
                     ),
-             
                   ],
                 ),
-              ),
-            ]
-            
+                /////////////////////////////////////////////////////////
+                ///
+                ///
+                ///
+                ///
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      //////////////////////////////////////////////////
+                      ///
+                      for (int i = 0; i < 4; i++)
+                        TCBox(
+                          bld: trainingCenterBLD[i],
+                        ),
 
-            //////////////////////////////////////////////////////////////////////////////////
-            ///
-            ///
-            ///
-            ///
-            ///
-            ///
-          
-          
-          )
+                      RoundedButton(
+                        icon: const Icon(
+                          Icons.keyboard_arrow_left,
+                          size: 40,
+                        ),
+                        onPressed: () => {},
+                        color: const Color(0xff1776e0),
+                        size: 80,
+                      ),
+                    ],
+                  ),
+                ),
+              ]
+                  //////////////////////////////////////////////////////////////////////////////////
+                  ///
+                  ///
+                  ///
+                  ///
+                  ///
+                  ///
+                  )
+            ],
+          ),
         ],
       ),
     );

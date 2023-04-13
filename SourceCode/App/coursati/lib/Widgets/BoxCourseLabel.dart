@@ -34,9 +34,12 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 15,
+              ),
               Container(
                 child: Text(
-                  "في مركز " + widget.bld.In,
+                  "في مركز ${widget.bld.In}",
                   softWrap: true,
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
