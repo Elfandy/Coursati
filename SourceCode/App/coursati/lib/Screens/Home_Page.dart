@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   //////////////////////////////////////////////////////////////////////////
   ///
   ///
+  // ? remove after setup with Laravel
 
   List<BoxCourseLabelData> courseBLD = [
     BoxCourseLabelData(
@@ -85,6 +86,7 @@ class _HomePageState extends State<HomePage> {
   ///
   ///
 
+//? ------------------------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -128,25 +130,25 @@ class _HomePageState extends State<HomePage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
                     (languageType == 0) ? "الدورات التدريبية" : "Courses",
                     style: TextStyle(
-                      shadows: [
+                      shadows: const [
                         Shadow(
                             color: Colors.black45,
                             offset: Offset(1, 2.2),
                             blurRadius: 4)
                       ],
                       fontSize: (languageType == 0) ? 24 : 36,
-                      color: Color(0xff1776e0),
+                      color: const Color(0xff1776e0),
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -155,7 +157,7 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
                     children: [
                       //////////////////////////////////////////////////////////////
@@ -165,7 +167,9 @@ class _HomePageState extends State<HomePage> {
                       ///
                       ///
 
-                      for (int i = 0; i < courseBLD.length; i++)
+                      for (int i = 0;
+                          i < ((courseBLD.length < 7) ? courseBLD.length : 7);
+                          i++)
                         CourseBox(
                           bld: courseBLD[i],
                         ),
@@ -193,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
@@ -201,14 +205,14 @@ class _HomePageState extends State<HomePage> {
                           ? "المراكز التدريبية"
                           : "Training Centers",
                       style: TextStyle(
-                        shadows: [
+                        shadows: const [
                           Shadow(
                               color: Colors.black45,
                               offset: Offset(1, 2.2),
                               blurRadius: 4)
                         ],
                         fontSize: (languageType == 0) ? 24 : 36,
-                        color: Color(0xff1776e0),
+                        color: const Color(0xff1776e0),
                       ),
                       textAlign: TextAlign.start,
                     ),
@@ -222,12 +226,17 @@ class _HomePageState extends State<HomePage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     child: Row(
                       children: [
                         //////////////////////////////////////////////////
                         ///
-                        for (int i = 0; i < trainingCenterBLD.length; i++)
+                        for (int i = 0;
+                            i <
+                                ((trainingCenterBLD.length < 7)
+                                    ? trainingCenterBLD.length
+                                    : 7);
+                            i++)
                           TCBox(
                             bld: trainingCenterBLD[i],
                           ),

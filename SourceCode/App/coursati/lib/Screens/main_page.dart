@@ -37,6 +37,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(
@@ -56,7 +57,7 @@ class _MainPageState extends State<MainPage> {
 
         iconSize: 26,
 
-        unselectedItemColor: Color(0xff999999),
+        unselectedItemColor: const Color(0xff999999),
 
         showUnselectedLabels: true,
         showSelectedLabels: true,
@@ -68,19 +69,19 @@ class _MainPageState extends State<MainPage> {
         ///
         items: [
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("Assets/Logo/home.png")),
+            icon: const ImageIcon(AssetImage("Assets/Logo/home.png")),
             label: (languageType == 0) ? "الرئيسية" : "Home",
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("Assets/Logo/search.png")),
+            icon: const ImageIcon(AssetImage("Assets/Logo/search.png")),
             label: (languageType == 0) ? "البحث" : "Search",
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("Assets/Logo/preseintation.png")),
+            icon: const ImageIcon(AssetImage("Assets/Logo/preseintation.png")),
             label: (languageType == 0) ? "مركز التدريب" : "Training Center",
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("Assets/Logo/more.png")),
+            icon: const ImageIcon(AssetImage("Assets/Logo/more.png")),
             label: (languageType == 0) ? "المزيد" : "More",
           ),
         ],

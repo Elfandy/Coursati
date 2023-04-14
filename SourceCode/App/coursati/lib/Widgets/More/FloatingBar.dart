@@ -36,7 +36,8 @@ class _FloatingBarState extends State<FloatingBar> {
             onPressed: () {
               Navigator.of(context).push(
                 Animations().createRoute(
-                  NotificationPage(),1
+                  NotificationPage(),
+                  1,
                 ),
               );
             },
@@ -71,8 +72,11 @@ class _FloatingBarState extends State<FloatingBar> {
           // const VerticalDivider(),
           TextButton(
             onPressed: () {
-              Animations().createRoute(
-                FavoritePage(),1
+              Navigator.of(context).push(
+                Animations().createRoute(
+                  FavoritePage(),
+                  1,
+                ),
               );
             },
             style: const ButtonStyle(

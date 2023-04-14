@@ -4,10 +4,9 @@ import 'package:coursati/Screens/SubScreen/Settings.dart';
 import 'package:coursati/Services/Animations.dart';
 import 'package:coursati/Widgets/More/OptionButton.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/UserData.dart';
-
-import '../Widgets/More/FloatingBar.dart';
+import '../Widgets/More/AvatarGuestMore.dart';
+import '../Widgets/More/AvatarMore.dart';
 import '../main.dart';
 
 class MorePage extends StatefulWidget {
@@ -18,12 +17,14 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+  // ? remove after setup with Laravel
   UserData user = UserData(
       name: "ريان",
       image:
           "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-      token:
-          "tsdf8a79yt78ft74tg79fg97weasgf79gw987fga0wgf9weg7f9wgf97wgef7wgf83wt47rg348217638915198767193rfg72gf72tgr7fergf987fga79gf79sdgf9asgf7sgfs7g");
+      token: "fahf9487gt98g8w4gf8gfa80w4f");
+
+  // ? --------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,31 +50,11 @@ class _MorePageState extends State<MorePage> {
             Container(
               height: 300,
               width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(
-                      user.image,
-                    ),
-                    radius: 50,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    user.name,
-                    style: const TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const FloatingBar(),
-                ],
-              ),
+              child: (user.token != "")
+                  ? AvatarMore(
+                      user: user,
+                    )
+                  : const AvatarGuestMore(),
             ),
           ],
         ),
@@ -81,15 +62,19 @@ class _MorePageState extends State<MorePage> {
           width: double.infinity,
           child: Column(
             children: [
-              OptionButton(
-                image: const AssetImage("Assets/Icons/user.png"),
-                label: (languageType == 0) ? "إدارة الحساب" : "Account",
-                labelColor: const Color.fromARGB(255, 65, 65, 65),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    Animations().createRoute(AccountPage(), 1),
-                  );
-                },
+              Container(
+                child: (user.token != "")
+                    ? OptionButton(
+                        image: const AssetImage("Assets/Icons/user.png"),
+                        label: (languageType == 0) ? "إدارة الحساب" : "Account",
+                        labelColor: const Color.fromARGB(255, 65, 65, 65),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            Animations().createRoute(const AccountPage(), 1),
+                          );
+                        },
+                      )
+                    : Container(),
               ),
               OptionButton(
                 image: const AssetImage("Assets/Icons/settings.png"),
@@ -97,7 +82,7 @@ class _MorePageState extends State<MorePage> {
                 labelColor: const Color.fromARGB(255, 65, 65, 65),
                 onPressed: () {
                   Navigator.of(context).push(
-                    Animations().createRoute(SettingsPage(), 1),
+                    Animations().createRoute(const SettingsPage(), 1),
                   );
                 },
               ),
@@ -107,7 +92,7 @@ class _MorePageState extends State<MorePage> {
                 labelColor: const Color.fromARGB(255, 65, 65, 65),
                 onPressed: () {
                   Navigator.of(context).push(
-                    Animations().createRoute(AboutPage(), 1),
+                    Animations().createRoute(const AboutPage(), 1),
                   );
                 },
               ),
