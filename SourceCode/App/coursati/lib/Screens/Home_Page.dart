@@ -1,10 +1,11 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
-import 'package:coursati/Widgets/CourseBox.dart';
-import 'package:coursati/Widgets/TCBox.dart';
+import 'package:coursati/Widgets/Home/CourseBox.dart';
+import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:flutter/material.dart';
 
 import '../Classes/BoxCourseLabelData.dart';
-import '../Widgets/RoundedButton.dart';
+import '../Widgets/Home/RoundedButton.dart';
+import 'package:coursati/main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -92,16 +93,20 @@ class _HomePageState extends State<HomePage> {
         children: [
           Stack(children: [
             Align(
-              alignment: Alignment.topLeft,
+              alignment:
+                  (languageType == 0) ? Alignment.topLeft : Alignment.topRight,
               widthFactor: 5,
               heightFactor: 0.7,
               child: Image.asset(
-                "Assets/Logo/MainLogoTilted-Right.png",
+                (languageType == 0)
+                    ? "Assets/Logo/MainLogoTilted-Right.png"
+                    : "Assets/Logo/MainLogoTilted-left.png",
                 scale: 5,
               ),
             ),
             Align(
-              alignment: Alignment.topRight,
+              alignment:
+                  (languageType == 0) ? Alignment.topRight : Alignment.topLeft,
               child: Column(
                 children: [
                   const SizedBox(
@@ -123,16 +128,24 @@ class _HomePageState extends State<HomePage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 15,
+              ),
               Row(
-                children: const [
+                children: [
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "الدورات التدريبية",
+                    (languageType == 0) ? "الدورات التدريبية" : "Courses",
                     style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                            color: Colors.black45,
+                            offset: Offset(1, 2.2),
+                            blurRadius: 4)
+                      ],
+                      fontSize: (languageType == 0) ? 24 : 36,
                       color: Color(0xff1776e0),
                     ),
                     textAlign: TextAlign.start,
@@ -142,7 +155,7 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
                     children: [
                       //////////////////////////////////////////////////////////////
@@ -158,8 +171,10 @@ class _HomePageState extends State<HomePage> {
                         ),
 
                       RoundedButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_left,
+                        icon: Icon(
+                          (languageType == 0)
+                              ? Icons.keyboard_arrow_left
+                              : Icons.keyboard_arrow_right,
                           size: 40,
                         ),
                         onPressed: () => {},
@@ -175,18 +190,24 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              const Divider(),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(
-                  children: const [
+                  children: [
                     SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "المراكز التدريبية",
+                      (languageType == 0)
+                          ? "المراكز التدريبية"
+                          : "Training Centers",
                       style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                              color: Colors.black45,
+                              offset: Offset(1, 2.2),
+                              blurRadius: 4)
+                        ],
+                        fontSize: (languageType == 0) ? 24 : 36,
                         color: Color(0xff1776e0),
                       ),
                       textAlign: TextAlign.start,
@@ -201,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                     child: Row(
                       children: [
                         //////////////////////////////////////////////////
@@ -212,8 +233,10 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                         RoundedButton(
-                          icon: const Icon(
-                            Icons.keyboard_arrow_left,
+                          icon: Icon(
+                            (languageType == 0)
+                                ? Icons.keyboard_arrow_left
+                                : Icons.keyboard_arrow_right,
                             size: 40,
                           ),
                           onPressed: () => {},

@@ -31,10 +31,10 @@ dependencies:
   cached_network_image: ^3.2.3
   connectivity_plus: ^2.3.6
   cupertino_icons: ^1.0.2
+
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.2.19
-  font_awesome_flutter: ^10.4.0
   internet_popup: ^1.0.8+5
 
 flutter_native_splash:

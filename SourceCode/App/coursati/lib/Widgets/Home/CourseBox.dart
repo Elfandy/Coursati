@@ -1,24 +1,18 @@
-import 'package:coursati/Classes/BoxTCLabelData.dart';
-import 'package:coursati/Widgets/BoxTCLabel.dart';
+import 'package:coursati/Classes/BoxCourseLabelData.dart';
+import 'package:coursati/Widgets/Home/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-//////////////////////////////////////////////////////////////
-///
-///
-class TCBox extends StatefulWidget {
-  const TCBox({
-    super.key,
-    required this.bld,
-  });
+class CourseBox extends StatefulWidget {
+  const CourseBox({super.key, required this.bld});
 
-  final BoxTCLabelData bld;
+  final BoxCourseLabelData bld;
 
   @override
-  State<TCBox> createState() => _TCBoxState();
+  State<CourseBox> createState() => _CourseBoxState();
 }
 
-class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
+class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
   late AnimationController _boxAnimationController;
 
   @override
@@ -33,9 +27,6 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
     );
     super.initState();
   }
-////////////////////////////////////////////////////////////////////////////////
-  ///
-  ///
 
   @override
   Widget build(BuildContext context) {
@@ -69,19 +60,9 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
                 highlightColor: null,
-                splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                splashFactory: InkSplash.splashFactory,
                 onTap: _onTap,
-                //////////////////////////////////////////////////
-                ///
-                ///
-                ///Here where you write your code on tap
-
-                ///////////////////////////////////////////////////
-                ///
-                ///
-                ///
-
-                splashColor: const Color(0xdd1776e0),
+                splashColor: const Color(0xff1776e0),
                 child: Ink(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -93,36 +74,19 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image(
-                          image: CachedNetworkImageProvider(widget.bld.logo),
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              BoxTCLabel(
-                                bld: widget.bld,
-                              ),
-                            ],
-                          ),
                           const SizedBox(
-                            height: 15,
+                            width: 10,
                           ),
+                          BoxCourseLabel(bld: widget.bld),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
@@ -137,9 +101,22 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
     }
   }
 
-  void _onTap() {
+  void _onTap() async {
     _boxAnimationController.forward().then((value) => {
           _boxAnimationController.reverse(),
         });
+
+    /////////////////////////////////////////////////////////////////////
+    ///
+    ///
+    ///
+    //Write Your code here
+
+
+
+    ///
+    ///
+    ///
+    ////////////////////////////////////////////////////////////////////
   }
 }

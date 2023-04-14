@@ -1,5 +1,6 @@
 import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
 import 'TrainingCenter_Page.dart';
@@ -65,22 +66,22 @@ class _MainPageState extends State<MainPage> {
         ////////////////////////////////////////
         ///
         ///
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/home.png")),
-            label: "الرئيسية",
+            label: (languageType == 0) ? "الرئيسية" : "Home",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/search.png")),
-            label: "البحث",
+            label: (languageType == 0) ? "البحث" : "Search",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/preseintation.png")),
-            label: "مركز التدريب",
+            label: (languageType == 0) ? "مركز التدريب" : "Training Center",
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage("Assets/Logo/more.png")),
-            label: "المزيد",
+            label: (languageType == 0) ? "المزيد" : "More",
           ),
         ],
         //////////////////////////////////

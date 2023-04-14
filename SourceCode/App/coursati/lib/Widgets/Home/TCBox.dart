@@ -1,18 +1,24 @@
-import 'package:coursati/Classes/BoxCourseLabelData.dart';
-import 'package:coursati/Widgets/BoxCourseLabel.dart';
+import 'package:coursati/Classes/BoxTCLabelData.dart';
+import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class CourseBox extends StatefulWidget {
-  const CourseBox({super.key, required this.bld});
+//////////////////////////////////////////////////////////////
+///
+///
+class TCBox extends StatefulWidget {
+  const TCBox({
+    super.key,
+    required this.bld,
+  });
 
-  final BoxCourseLabelData bld;
+  final BoxTCLabelData bld;
 
   @override
-  State<CourseBox> createState() => _CourseBoxState();
+  State<TCBox> createState() => _TCBoxState();
 }
 
-class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
+class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
   late AnimationController _boxAnimationController;
 
   @override
@@ -20,13 +26,16 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     // TODO: implement initState
     _boxAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 150),
       value: 1.0,
       lowerBound: 1.0,
       upperBound: 1.05,
     );
     super.initState();
   }
+////////////////////////////////////////////////////////////////////////////////
+  ///
+  ///
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +69,19 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
                 highlightColor: null,
-                splashFactory: InkSplash.splashFactory,
+                splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
                 onTap: _onTap,
-                splashColor: const Color(0xff1776e0),
+                //////////////////////////////////////////////////
+                ///
+                ///
+                ///Here where you write your code on tap
+
+                ///////////////////////////////////////////////////
+                ///
+                ///
+                ///
+
+                splashColor: const Color(0xdd1776e0),
                 child: Ink(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -74,19 +93,36 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          BoxCourseLabel(bld: widget.bld),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image(
+                          image: CachedNetworkImageProvider(widget.bld.logo),
+                          height: 30,
+                          width: 30,
+                        ),
                       ),
-                      const SizedBox(
-                        height: 15,
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              BoxTCLabel(
+                                bld: widget.bld,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -105,16 +141,5 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     _boxAnimationController.forward().then((value) => {
           _boxAnimationController.reverse(),
         });
-
-    /////////////////////////////////////////////////////////////////////
-    ///
-    ///
-    ///
-    //Write Your code here
-
-    ///
-    ///
-    ///
-    ////////////////////////////////////////////////////////////////////
   }
 }

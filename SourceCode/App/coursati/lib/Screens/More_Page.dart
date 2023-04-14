@@ -1,7 +1,13 @@
+import 'package:coursati/Screens/SubScreen/About.dart';
+import 'package:coursati/Screens/SubScreen/Account.dart';
+import 'package:coursati/Screens/SubScreen/Settings.dart';
+import 'package:coursati/Widgets/More/OptionButton.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:coursati/Classes/UserData.dart';
+
+import '../Widgets/More/FloatingBar.dart';
+import '../main.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -12,7 +18,7 @@ class MorePage extends StatefulWidget {
 
 class _MorePageState extends State<MorePage> {
   UserData user = UserData(
-      name: "XDslipcy",
+      name: "ريان",
       image:
           "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
       token:
@@ -59,72 +65,12 @@ class _MorePageState extends State<MorePage> {
                   ),
                   Text(
                     user.name,
-                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    style: const TextStyle(color: Colors.white, fontSize: 30),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: 220,
-                    height: 90,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x22000000),
-                          blurRadius: 5,
-                          spreadRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                          splashColor: Colors.amber,
-                          onTap: () => {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                image: AssetImage(
-                                  "Assets/Icons/Bill.png",
-                                ),
-                                height: 30,
-                              ),
-                              Text(
-                                "الرسائل",
-                                style: TextStyle(height: 2),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // const VerticalDivider(),
-                        InkWell(
-                          onTap: () => {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                image: AssetImage("Assets/Icons/Fav.png"),
-                                height: 30,
-                              ),
-                              Text(
-                                "المفضلة",
-                                style: TextStyle(
-                                  height: 2.3,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const FloatingBar(),
                 ],
               ),
             ),
@@ -134,107 +80,47 @@ class _MorePageState extends State<MorePage> {
           width: double.infinity,
           child: Column(
             children: [
-              InkWell(
-                onTap: () => {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Image(
-                        image: AssetImage("Assets/Icons/user.png"),
-                        height: 30,
-                      ),
-                    ),
-                    Text(
-                      "إدارة الحساب",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_left_sharp,
-                        size: 40,
-                        color: Color(0xff999999),
-                      ),
-                    ),
-                  ],
-                ),
+              OptionButton(
+                image: const AssetImage("Assets/Icons/user.png"),
+                label: (languageType == 0) ? "إدارة الحساب" : "Account",
+                labelColor: const Color.fromARGB(255, 65, 65, 65),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Account(),
+                      ));
+                },
               ),
-              InkWell(
-                onTap: () => {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Image(
-                        image: AssetImage("Assets/Icons/settings.png"),
-                        height: 30,
-                      ),
-                    ),
-                    Text(
-                      "الإعدادات",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_left_sharp,
-                        size: 40,
-                        color: Color(0xff999999),
-                      ),
-                    ),
-                  ],
-                ),
+              OptionButton(
+                image: const AssetImage("Assets/Icons/settings.png"),
+                label: (languageType == 0) ? "الإعدادات" : "Settings",
+                labelColor: const Color.fromARGB(255, 65, 65, 65),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ));
+                },
               ),
-              InkWell(
-                onTap: () => {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Image(
-                        image: AssetImage("Assets/Icons/about.png"),
-                        height: 30,
-                      ),
-                    ),
-                    Text(
-                      "حول",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_left_sharp,
-                        size: 40,
-                        color: Color(0xff999999),
-                      ),
-                    ),
-                  ],
-                ),
+              OptionButton(
+                image: const AssetImage("Assets/Icons/about.png"),
+                label: (languageType == 0) ? "حول" : "About",
+                labelColor: const Color.fromARGB(255, 65, 65, 65),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AboutPage(),
+                      ));
+                },
               ),
             ],
           ),
         ),
-        Spacer(),
-        Image(
+        const Spacer(),
+        const Image(
           image: AssetImage("Assets/Images/Startup/Logo.png"),
           height: 150,
         )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Screens/main_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 //////////////////////////////////////////////////////////////////
 ////
 ///
@@ -11,17 +12,19 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 ///
 ///
 ///
-
+///
+///
 List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
-void main() => runApp(MainApp());
+int languageType = 1;
+void main() {
+  runApp(MainApp());
+}
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: local,
-      locale: local[0],
+      locale: local[languageType],
       theme: ThemeData(fontFamily: "Tajawal"),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
+
 class BoxCourseLabel extends StatefulWidget {
   BoxCourseLabel({super.key, required this.bld});
   BoxCourseLabelData bld;
@@ -39,9 +41,13 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
               ),
               Container(
                 child: Text(
-                  "في مركز ${widget.bld.In}",
+                  (languageType == 0)
+                      ? "في مركز ${widget.bld.In}"
+                      : "In ${widget.bld.In}",
                   softWrap: true,
-                  style: TextStyle(color: Colors.white, fontSize: 10),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: (languageType == 0) ? 10 : 12),
                 ),
               ),
             ],

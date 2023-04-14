@@ -33,25 +33,28 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 10,
-            ),
             Row(
               children: [
+                SizedBox(
+                  width: 4,
+                ),
                 Image.asset(
                   "Assets/Icons/map-pin-location.png",
                   scale: 6,
                   color: Color(0xff1776e0),
                 ),
                 SizedBox(
-                  width: 4,
+                  width: 6,
                 ),
                 Text(
                   widget.bld.address,
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
               ],
-            )
+            ),
+            SizedBox(
+              height: 10,
+            ),
           ],
         )
       ],
