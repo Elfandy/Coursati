@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:coursati/Widgets/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CourseBox extends StatefulWidget {
   const CourseBox({super.key, required this.bld});
@@ -66,7 +67,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: NetworkImage(
+                      image: CachedNetworkImageProvider(
                         widget.bld.image,
                       ),
                       fit: BoxFit.cover,

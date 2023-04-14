@@ -1,8 +1,10 @@
+import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
 import 'TrainingCenter_Page.dart';
 import 'search_Page.dart';
+import 'package:internet_popup/internet_popup.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,6 +22,17 @@ class _MainPageState extends State<MainPage> {
     TrainingCenter(),
     MorePage(),
   ];
+
+// * This is the initiliser of the app
+  @override
+  void initState() {
+    InternetPopup()
+        .initializeCustomWidget(context: context, widget: const NetworkPopup());
+
+    super.initState();
+  }
+
+  //* This is the Builder for the app
 
   @override
   Widget build(BuildContext context) {

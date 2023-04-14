@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:coursati/Widgets/BoxTCLabel.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //////////////////////////////////////////////////////////////
 ///
@@ -25,7 +26,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
     // TODO: implement initState
     _boxAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 150),
       value: 1.0,
       lowerBound: 1.0,
       upperBound: 1.05,
@@ -85,7 +86,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: NetworkImage(
+                      image: CachedNetworkImageProvider(
                         widget.bld.image,
                       ),
                       fit: BoxFit.cover,
@@ -98,7 +99,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
-                          image: NetworkImage(widget.bld.logo),
+                          image: CachedNetworkImageProvider(widget.bld.logo),
                           height: 30,
                           width: 30,
                         ),

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   ///
   ///
 
-  List<BoxCourseLabelData> CourseBLD = [
+  List<BoxCourseLabelData> courseBLD = [
     BoxCourseLabelData(
       label: "البرمجة باستخدام لغة الجافا",
       In: "Octal",
@@ -152,9 +152,9 @@ class _HomePageState extends State<HomePage> {
                       ///
                       ///
 
-                      for (int i = 0; i < 4; i++)
+                      for (int i = 0; i < courseBLD.length; i++)
                         CourseBox(
-                          bld: CourseBLD[i],
+                          bld: courseBLD[i],
                         ),
 
                       RoundedButton(
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(
                   children: const [
@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         //////////////////////////////////////////////////
                         ///
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < trainingCenterBLD.length; i++)
                           TCBox(
                             bld: trainingCenterBLD[i],
                           ),
