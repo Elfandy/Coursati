@@ -1,6 +1,7 @@
 import 'package:coursati/Screens/SubScreen/About.dart';
 import 'package:coursati/Screens/SubScreen/Account.dart';
 import 'package:coursati/Screens/SubScreen/Settings.dart';
+import 'package:coursati/Services/Animations.dart';
 import 'package:coursati/Widgets/More/OptionButton.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -85,11 +86,9 @@ class _MorePageState extends State<MorePage> {
                 label: (languageType == 0) ? "إدارة الحساب" : "Account",
                 labelColor: const Color.fromARGB(255, 65, 65, 65),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Account(),
-                      ));
+                  Navigator.of(context).push(
+                    Animations().createRoute(AccountPage(), 1),
+                  );
                 },
               ),
               OptionButton(
@@ -97,11 +96,9 @@ class _MorePageState extends State<MorePage> {
                 label: (languageType == 0) ? "الإعدادات" : "Settings",
                 labelColor: const Color.fromARGB(255, 65, 65, 65),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
-                      ));
+                  Navigator.of(context).push(
+                    Animations().createRoute(SettingsPage(), 1),
+                  );
                 },
               ),
               OptionButton(
@@ -109,11 +106,9 @@ class _MorePageState extends State<MorePage> {
                 label: (languageType == 0) ? "حول" : "About",
                 labelColor: const Color.fromARGB(255, 65, 65, 65),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AboutPage(),
-                      ));
+                  Navigator.of(context).push(
+                    Animations().createRoute(AboutPage(), 1),
+                  );
                 },
               ),
             ],

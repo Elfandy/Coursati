@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
-class AboutPage extends StatefulWidget {
-  const AboutPage({super.key});
+class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
 
   @override
-  State<AboutPage> createState() => _AboutPageState();
+  State<NotificationPage> createState() => _NotificationPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +27,11 @@ class _AboutPageState extends State<AboutPage> {
         ),
         shadowColor: Color(0xff1776e0),
         title: Text(
-          (languageType == 0) ? "حول" : "About",
+          (languageType == 0) ? "الإشعارات" : "Notification",
           style: TextStyle(color: Colors.black54),
         ),
       ),
       body: Container(),
-      
     );
   }
 }

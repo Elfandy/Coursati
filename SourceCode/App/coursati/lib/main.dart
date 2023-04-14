@@ -18,7 +18,7 @@ List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
-int languageType = 1;
+int languageType = 0;
 void main() {
   runApp(MainApp());
 }

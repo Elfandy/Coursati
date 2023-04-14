@@ -1,5 +1,9 @@
+import 'package:coursati/Screens/SubScreen/NotificationPage.dart';
 import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
+
+import '../../Screens/SubScreen/FavoritePage.dart';
+import '../../Services/Animations.dart';
 
 class FloatingBar extends StatefulWidget {
   const FloatingBar({super.key});
@@ -29,7 +33,13 @@ class _FloatingBarState extends State<FloatingBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                Animations().createRoute(
+                  NotificationPage(),1
+                ),
+              );
+            },
             style: const ButtonStyle(
               fixedSize: MaterialStatePropertyAll(
                 Size(110, 100),
@@ -51,7 +61,7 @@ class _FloatingBarState extends State<FloatingBar> {
                   (languageType == 0) ? "الإشعارات" : "Notification",
                   style: TextStyle(
                     height: 2,
-                    fontSize: (languageType == 0) ? 10 : 15,
+                    fontSize: 10,
                     color: Colors.black,
                   ),
                 ),
@@ -60,7 +70,11 @@ class _FloatingBarState extends State<FloatingBar> {
           ),
           // const VerticalDivider(),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Animations().createRoute(
+                FavoritePage(),1
+              );
+            },
             style: const ButtonStyle(
               fixedSize: MaterialStatePropertyAll(
                 Size(110, 100),
@@ -80,7 +94,7 @@ class _FloatingBarState extends State<FloatingBar> {
                   (languageType == 0) ? "المفضلة" : "Favorite",
                   style: TextStyle(
                     height: 2.3,
-                    fontSize: (languageType == 0) ? 10 : 15,
+                    fontSize: 10,
                     color: Colors.black,
                   ),
                 ),

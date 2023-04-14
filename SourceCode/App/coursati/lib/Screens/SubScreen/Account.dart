@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 
-class Account extends StatefulWidget {
-  const Account({super.key});
+import '../../main.dart';
+
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
 
   @override
-  State<Account> createState() => _AccountState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountState extends State<Account> {
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          splashColor: Color(0xff1776e0),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Color(0xff1776e0),
+          ),
+        ),
+        shadowColor: Color(0xff1776e0),
+        title: Text(
+          (languageType == 0) ? "إدارة الحساب" : "Account",
+          style: TextStyle(color: Colors.black54),
+        ),
+      ),
+      body: Container(),
+    );
   }
 }
