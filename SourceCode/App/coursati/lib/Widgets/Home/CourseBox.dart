@@ -14,7 +14,7 @@ class CourseBox extends StatefulWidget {
 
 class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
   late AnimationController _boxAnimationController;
-
+  
   @override
   void initState() {
     // TODO: implement initState

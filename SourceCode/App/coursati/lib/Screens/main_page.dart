@@ -1,5 +1,6 @@
 import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
+import '../Classes/GlobalVariables.dart';
 import '../main.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
@@ -37,7 +38,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(

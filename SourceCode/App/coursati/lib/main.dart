@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Classes/GlobalVariables.dart';
 import 'Screens/main_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,8 +19,8 @@ List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
-int languageType = 0;
 void main() {
+  languageType = 0;
   runApp(const MainApp());
 }
 
@@ -29,7 +30,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: (languageType==0)?"كورساتي":"Coursati",
+      title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
       // home: const MainPage(),
       home: const MainPage(),
@@ -39,8 +40,10 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: local,
-      locale: local[languageType],
-      theme: ThemeData(fontFamily: "Tajawal",),
+      locale: local[languageType!],
+      theme: ThemeData(
+        fontFamily: "Tajawal",
+      ),
     );
   }
 

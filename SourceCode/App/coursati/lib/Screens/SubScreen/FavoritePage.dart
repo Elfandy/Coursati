@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../main.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -25,7 +26,8 @@ class _FavoritePageState extends State<FavoritePage> {
             color: Color(0xff1776e0),
           ),
         ),
-        shadowColor: Color(0xff1776e0),
+        elevation: 0,
+        bottomOpacity: 0,
         title: Text(
           (languageType == 0) ? "المفضلة" : "Favorite",
           style: TextStyle(color: Colors.black54),

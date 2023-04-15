@@ -2,6 +2,7 @@ import 'package:coursati/Screens/SubScreen/NotificationPage.dart';
 import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../Screens/SubScreen/FavoritePage.dart';
 import '../../Services/Animations.dart';
 

@@ -27,19 +27,17 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
-
 dependencies:
   cached_network_image: ^3.2.3
   connectivity_plus: ^2.3.6
   cupertino_icons: ^1.0.2
-
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.2.19
   internet_popup: ^1.0.8+5
 
-# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -225,6 +223,5 @@ flutter:
     - family: Suravaram
       fonts:
         - asset: Assets/fonts/Suravaram/Suravaram-Regular.ttf
-
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

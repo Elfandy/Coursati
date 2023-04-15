@@ -1,6 +1,7 @@
 import 'package:coursati/Screens/Services%20Screens/Login_Signin.dart';
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../Services/Animations.dart';
 import '../../main.dart';
 

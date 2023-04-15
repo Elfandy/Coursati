@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../main.dart';
 
 class OptionButton extends StatefulWidget {

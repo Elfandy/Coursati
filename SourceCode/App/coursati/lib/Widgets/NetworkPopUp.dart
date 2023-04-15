@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Classes/GlobalVariables.dart';
+
 Random r = Random();
 
 class NetworkPopup extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../main.dart';
 
 class BoxCourseLabel extends StatefulWidget {
