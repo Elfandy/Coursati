@@ -51,7 +51,9 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
           ),
           child: Material(
             elevation: 5,
-            shadowColor: const Color(0xff1776e0),
+            shadowColor: (Theme.of(context).brightness == Brightness.light)
+                ? const Color(0xff1776e0)
+                : Colors.grey,
             borderRadius: BorderRadius.circular(20),
             child: Container(
               decoration: BoxDecoration(

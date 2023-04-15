@@ -1,9 +1,6 @@
-import 'package:coursati/Screens/main_page.dart';
-import 'package:coursati/main.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import '../../Classes/GlobalVariables.dart';
-
-List<bool> _selection = [true, false];
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,30 +10,26 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  int change = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+        //* This is for hanfling backButton event
+        Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          splashColor: const Color(0xff1776e0),
+        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        leading: BackButton(
           onPressed: () {
-            Navigator.pop(context, true);
+            Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xff1776e0),
-          ),
         ),
         elevation: 0,
         bottomOpacity: 0,
         title: Text(
           (languageType == 0) ? "الإعدادات" : "Settings",
-          style: const TextStyle(color: Colors.black54),
         ),
       ),
       body: Container(
-        color: Colors.white,
         child: SizedBox(
           width: double.infinity,
           child:
@@ -52,38 +45,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 Text(
                   (languageType == 0) ? "اللغة" : "Language",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 const Spacer(),
                 ToggleButtons(
-                  splashColor: const Color(0xff1776e0),
-                  isSelected: _selection,
+                  isSelected:
+                      (languageType == 0) ? [true, false] : [false, true],
                   onPressed: ((index) {
                     setState(() {
                       if (index == 0) {
-                        if (_selection[index] == false) {
-                          _selection[index] = true;
-                          _selection[index + 1] = false;
-                          languageType = 0;
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MainApp(),
-                              ));
-                        }
+                        if (languageSelector![index] == false) languageType = 0;
+                        languageSelector![index] = true;
+                        languageSelector![index + 1] = false;
+                        change++;
                       } else if (index == 1) {
-                        if (_selection[index] == false) {
-                          _selection[index] = true;
-                          _selection[index - 1] = false;
-                          languageType = 1;
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MainApp(),
-                              ));
-                        }
+                        languageSelector![index] = true;
+                        languageSelector![index - 1] = false;
+                        languageType = 1;
+                        change++;
                       }
                     });
                   }),
@@ -93,6 +74,55 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: 10,
                 )
               ],
+            ),
+            Row(
+              children: [
+                const Text("hello"),
+                const Spacer(),
+                Switch(
+                  onChanged: (value) {
+                    setState(() {
+                      isDark = !isDark!;
+                      if (isDark!) {
+                        themeMode = 1;
+                        change++;
+                      } else {
+                        themeMode = 0;
+                        change++;
+                      }
+                    });
+                  },
+                  value: isDark!,
+                ),
+                const SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+            Text((languageSelector![0]) ? "hello" : "bye"),
+            //*! last Thing in the page
+            const Spacer(),
+            ElevatedButton(
+              style: const ButtonStyle(
+                  fixedSize: MaterialStatePropertyAll(
+                    Size(160, 40),
+                  ),
+                  elevation: MaterialStatePropertyAll(10),
+                  alignment: Alignment.center,
+                  shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(200))))),
+              onPressed: () {
+                if (change > 0) {
+                  ScreenController().restartApp(context);
+                }
+              },
+              child: const Text(
+                "Save",
+                style: TextStyle(fontSize: 26),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             )
           ]),
         ),

@@ -16,9 +16,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int currentPage = 0;
+  int _currentPage = 0;
 
-  List<Widget> pages = const [
+  final List<Widget> _pages = const [
     HomePage(),
     SearchPage(),
     TrainingCenter(),
@@ -39,25 +39,21 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentPage],
+      body: _pages[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
         selectedFontSize: 10,
 
-        selectedItemColor: const Color(0xff1766e0),
-
         unselectedFontSize: 10,
 
         selectedLabelStyle: const TextStyle(
-          height: 2,
+          height: 2.5,
         ),
         unselectedLabelStyle: const TextStyle(
           height: 2,
         ),
 
         iconSize: 26,
-
-        unselectedItemColor: const Color(0xff999999),
 
         showUnselectedLabels: true,
         showSelectedLabels: true,
@@ -87,10 +83,10 @@ class _MainPageState extends State<MainPage> {
         ],
         //////////////////////////////////
 
-        currentIndex: currentPage,
+        currentIndex: _currentPage,
         onTap: (int page) {
           setState(() {
-            currentPage = page;
+            _currentPage = page;
           });
         },
       ),

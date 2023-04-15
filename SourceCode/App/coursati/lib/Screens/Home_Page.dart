@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                             blurRadius: 4)
                       ],
                       fontSize: (languageType == 0) ? 24 : 36,
-                      color: const Color(0xff1776e0),
+                      // color: const Color(0xff1776e0),
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -179,9 +179,9 @@ class _HomePageState extends State<HomePage> {
                               ? Icons.keyboard_arrow_left
                               : Icons.keyboard_arrow_right,
                           size: 40,
+                          color: Colors.white,
                         ),
                         onPressed: () => {},
-                        color: const Color(0xff1776e0),
                         size: 80,
                       ),
                       /////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                               blurRadius: 4)
                         ],
                         fontSize: (languageType == 0) ? 24 : 36,
-                        color: const Color(0xff1776e0),
+                        // color: const Color(0xff1776e0),
                       ),
                       textAlign: TextAlign.start,
                     ),
@@ -246,6 +246,7 @@ class _HomePageState extends State<HomePage> {
                                 ? Icons.keyboard_arrow_left
                                 : Icons.keyboard_arrow_right,
                             size: 40,
+                            color: Colors.white,
                           ),
                           onPressed: () => {},
                           color: const Color(0xff1776e0),

@@ -14,7 +14,7 @@ class CourseBox extends StatefulWidget {
 
 class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
   late AnimationController _boxAnimationController;
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +42,9 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
           ),
           child: Material(
             elevation: 5,
-            shadowColor: const Color(0xff1776e0),
+            shadowColor: (Theme.of(context).brightness == Brightness.light)
+                ? const Color(0xff1776e0)
+                : Colors.grey,
             borderRadius: BorderRadius.circular(20),
             child: Container(
               decoration: BoxDecoration(
@@ -111,8 +113,6 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     ///
     ///
     //Write Your code here
-
-
 
     ///
     ///

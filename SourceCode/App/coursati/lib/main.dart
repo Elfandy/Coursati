@@ -19,8 +19,16 @@ List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
+
+List<ThemeMode> _ThemeSelector = [ThemeMode.light, ThemeMode.dark];
 void main() {
+  //* This is for the config file
   languageType = 0;
+  themeMode = 0;
+  isDark = false;
+  languageSelector = [true, false];
+//*----------------------------------------
+
   runApp(const MainApp());
 }
 
@@ -42,8 +50,30 @@ class MainApp extends StatelessWidget {
       supportedLocales: local,
       locale: local[languageType!],
       theme: ThemeData(
+        colorScheme: const ColorScheme(
+            background: Colors.white,
+            brightness: Brightness.light,
+            error: Colors.red,
+            onBackground: Colors.amber,
+            onError: Colors.cyan,
+            //*This Color is for Text And Alike
+            onPrimary: Color(0xff555555),
+            onSecondary: Colors.amber,
+            //* This Color is for disabled buttons and stuff
+            onSurface: Color(0xff999999),
+            //*This Color is For buttons and stuff like this
+            primary: Color(0xff1776e0),
+            //*This Colors is For Splash
+            secondary: Color(0xff1776e0),
+            surface: Colors.white),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(color: Colors.white),
+          titleMedium: TextStyle(color: Colors.white),
+        ),
         fontFamily: "Tajawal",
       ),
+      darkTheme: ThemeData.dark(),
+      themeMode: _ThemeSelector[themeMode!],
     );
   }
 

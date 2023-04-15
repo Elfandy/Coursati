@@ -7,15 +7,13 @@ class OptionButton extends StatefulWidget {
   OptionButton(
       {super.key,
       required String label,
-      required Color labelColor,
       required AssetImage image,
       required Function onPressed})
       : _onPressed = onPressed,
         _image = image,
-        _labelColor = labelColor,
         _label = label;
   final String _label;
-  final Color _labelColor;
+
   final AssetImage _image;
   IconData _side = Icons.offline_bolt;
   final Function _onPressed;
@@ -41,7 +39,7 @@ class _OptionButtonState extends State<OptionButton> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Image(
               image: widget._image,
               height: 30,
@@ -51,17 +49,21 @@ class _OptionButtonState extends State<OptionButton> {
             widget._label,
             textAlign: TextAlign.start,
             style: TextStyle(
-              color: widget._labelColor,
+              color: (Theme.of(context).brightness == Brightness.light)
+                  ? const Color.fromARGB(255, 65, 65, 65)
+                  : Colors.white,
               fontSize: 15,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Icon(
               widget._side,
               size: 40,
-              color: widget._labelColor,
+              color: (Theme.of(context).brightness == Brightness.light)
+                  ? const Color.fromARGB(255, 65, 65, 65)
+                  : Colors.white,
             ),
           ),
         ],
