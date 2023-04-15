@@ -20,7 +20,6 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
   TextEditingController date = TextEditingController();
   int gender = 0;
   bool showPass = false;
-  Gender? _gender;
   bool loginable = false;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           height: (login)
-              ? (MediaQuery.of(context).size.height / 2.1)
+              ? (MediaQuery.of(context).size.height / 1.9)
               : (MediaQuery.of(context).size.height / 1.4),
           child: Container(
             width: (MediaQuery.of(context).size.width / 1.1),
@@ -49,7 +48,7 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 height: (login)
-                    ? ((MediaQuery.of(context).size.height / 2.1) - 60)
+                    ? ((MediaQuery.of(context).size.height / 1.9) - 60)
                     : ((MediaQuery.of(context).size.height / 1.4) - 60),
                 child: Container(
                     width: (MediaQuery.of(context).size.width / 1.1),
@@ -158,28 +157,33 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
                               ?
                               //? below is the case for sign in
                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SignupTextFeild(
-                                      icon: Icons.person_rounded,
-                                      text: name,
-                                      text_ar: "الأسم",
-                                      text_en: "Name",
-                                      onTap: () {
-                                        //! This is the fix for selecting the last charcter in the
+                                    AnimatedContainer(
+                                      duration: Duration(milliseconds: 200),
+                                      height: 0,
+                                      child: SignupTextFeild(
+                                        icon: Icons.person_rounded,
+                                        text: name,
+                                        text_ar: "الأسم",
+                                        text_en: "Name",
+                                        onTap: () {
+                                          //! This is the fix for selecting the last charcter in the
 
-                                        if (name.selection ==
-                                            TextSelection.fromPosition(
-                                                TextPosition(
-                                                    offset: name.text.length -
-                                                        1))) {
-                                          name.selection =
+                                          if (name.selection ==
                                               TextSelection.fromPosition(
                                                   TextPosition(
-                                                      offset:
-                                                          name.text.length));
-                                        }
-                                      },
-                                      maxLingth: 20,
+                                                      offset: name.text.length -
+                                                          1))) {
+                                            name.selection =
+                                                TextSelection.fromPosition(
+                                                    TextPosition(
+                                                        offset:
+                                                            name.text.length));
+                                          }
+                                        },
+                                        maxLingth: 20,
+                                      ),
                                     ),
                                     SignupTextFeild(
                                       icon: Icons.email_outlined,
@@ -296,62 +300,6 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
                                         ),
                                       ],
                                     ),
-
-                                    // Padding(
-                                    //   padding: const EdgeInsets.fromLTRB(
-                                    //       50, 0, 50, 10),
-                                    //   child: Row(
-                                    //     mainAxisAlignment:
-                                    //         MainAxisAlignment.start,
-                                    //     children: [
-                                    //       Expanded(
-                                    //         child: RadioListTile(
-                                    //           contentPadding: EdgeInsets.all(0),
-                                    //           value: Gender.male,
-                                    //           groupValue: _gender,
-                                    //           shape: RoundedRectangleBorder(
-                                    //               borderRadius:
-                                    //                   BorderRadius.circular(20)),
-                                    //           onChanged: (value) {
-                                    //             setState(
-                                    //               () {
-                                    //                 _gender = value;
-                                    //               },
-                                    //             );
-                                    //           },
-                                    //           title: Text(
-                                    //             "Male",
-                                    //             style: TextStyle(
-                                    //               color: Colors.black,
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //       SizedBox(
-                                    //         width: 10,
-                                    //       ),
-                                    //       Expanded(
-                                    //         child: RadioListTile(
-                                    //           contentPadding: EdgeInsets.all(0),
-                                    //           value: Gender.female,
-                                    //           groupValue: _gender,
-                                    //           tileColor: Colors.amber,
-                                    //           onChanged: (value) {
-                                    //             setState(() {
-                                    //               _gender = value;
-                                    //             });
-                                    //           },
-                                    //           title: Text(
-                                    //             "female",
-                                    //             style: TextStyle(
-                                    //               color: Colors.black,
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       )
-                                    //     ],
-                                    //   ),
-                                    // )
                                   ],
                                 )
                               :

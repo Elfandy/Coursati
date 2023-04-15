@@ -36,7 +36,7 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+      padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
       child: SizedBox(
         height: 50,
         child: TextField(
