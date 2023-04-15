@@ -47,12 +47,12 @@ class _AvatarGuestMoreState extends State<AvatarGuestMore> {
                       borderRadius: BorderRadius.circular(100),
                     ))),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    Animations().createRoute(
-                      SigninPage(),
-                      1,
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   Animations().createRoute(
+                  //     SigninPage(),
+                  //     1,
+                  //   ),
+                  // );
                 },
                 child: Text(
                   (languageType == 0) ? "تسجيل الدخول" : "Sign in",

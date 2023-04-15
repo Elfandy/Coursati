@@ -18,7 +18,7 @@ List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
-
+  
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
 bool login = false;
 int picker = 0;
@@ -56,7 +56,16 @@ List<UserData> users = [
 //       notifications: 3),
 ];
 
-UserData? user ;
+UserData user = UserData(
+  name: "ريان",
+  image:
+      "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+  token: "",
+  notifications: 3,
+  password: "122345123",
+  birthDate: "2000-04-23",
+  email: "rayan@gmail.com",
+);
 // ? --------------------------------------------------------------
 
 // ? remove after setup with Laravel

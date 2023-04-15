@@ -4,7 +4,6 @@ import 'package:coursati/Screens/SubScreen/Settings.dart';
 import 'package:coursati/Services/Animations.dart';
 import 'package:coursati/Widgets/More/OptionButton.dart';
 import 'package:flutter/material.dart';
-import 'package:coursati/Classes/UserData.dart';
 import '../Classes/GlobalVariables.dart';
 import '../Widgets/More/AvatarGuestMore.dart';
 import '../Widgets/More/AvatarMore.dart';
