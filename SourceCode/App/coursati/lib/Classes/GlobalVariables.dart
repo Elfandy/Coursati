@@ -20,6 +20,7 @@ List<Locale> local = const [
 ];
 
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
+bool login = false;
 
 //* These are the data of the app
 // ? remove after setup with Laravel
