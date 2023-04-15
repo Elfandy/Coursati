@@ -18,7 +18,8 @@ class _SettingsPageState extends State<SettingsPage> {
         Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-        leading: BackButton(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },

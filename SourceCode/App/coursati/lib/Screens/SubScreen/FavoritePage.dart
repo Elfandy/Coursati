@@ -17,14 +17,10 @@ class _FavoritePageState extends State<FavoritePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          splashColor: Color(0xff1776e0),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xff1776e0),
-          ),
         ),
         elevation: 0,
         bottomOpacity: 0,

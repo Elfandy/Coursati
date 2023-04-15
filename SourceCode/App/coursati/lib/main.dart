@@ -15,18 +15,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 ///
 ///
 ///
-List<Locale> local = const [
-  Locale('ar', 'AE'),
-  Locale("en", "US"),
-];
 
-List<ThemeMode> _ThemeSelector = [ThemeMode.light, ThemeMode.dark];
 void main() {
   //* This is for the config file
   languageType = 0;
   themeMode = 0;
   isDark = false;
   languageSelector = [true, false];
+
 //*----------------------------------------
 
   runApp(const MainApp());
@@ -73,7 +69,7 @@ class MainApp extends StatelessWidget {
         fontFamily: "Tajawal",
       ),
       darkTheme: ThemeData.dark(),
-      themeMode: _ThemeSelector[themeMode!],
+      themeMode: themeSelector[themeMode!],
     );
   }
 

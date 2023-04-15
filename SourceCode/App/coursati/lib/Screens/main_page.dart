@@ -1,7 +1,6 @@
 import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
 import '../Classes/GlobalVariables.dart';
-import '../main.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
 import 'TrainingCenter_Page.dart';
@@ -39,6 +38,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: _pages[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
           height: 2,
         ),
 
-        iconSize: 26,
+        iconSize: (MediaQuery.of(context).size.height / 25),
 
         showUnselectedLabels: true,
         showSelectedLabels: true,

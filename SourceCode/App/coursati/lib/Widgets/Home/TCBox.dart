@@ -44,8 +44,8 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
         scale: _boxAnimationController,
         child: Container(
           margin: const EdgeInsets.fromLTRB(15, 5, 0, 20),
-          width: 170,
-          height: 240,
+          width: (MediaQuery.of(context).size.width / 2.3),
+          height: (MediaQuery.of(context).size.height / 3.6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),

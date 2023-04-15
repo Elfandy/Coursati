@@ -36,7 +36,7 @@ class _AvatarMoreState extends State<AvatarMore> {
         const SizedBox(
           height: 10,
         ),
-        const FloatingBar(),
+        FloatingBar(notificationCount: widget.user.notifications),
       ],
     );
   }

@@ -17,14 +17,6 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  // ? remove after setup with Laravel
-  UserData user = UserData(
-      name: "ريان",
-      image:
-          "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-      token: "asfasfdasfafda");
-
-  // ? --------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +40,9 @@ class _MorePageState extends State<MorePage> {
               ],
             ),
             Container(
-              height: (user.token != "") ? 300 : 250,
+              height: (user.token != "")
+                  ? (MediaQuery.of(context).size.height / 2.6)
+                  : (MediaQuery.of(context).size.height / 3.3),
               width: double.infinity,
               child: (user.token != "")
                   ? AvatarMore(
@@ -103,10 +97,13 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
         const Spacer(),
-        const Image(
-          image: AssetImage("Assets/Images/Startup/Logo.png"),
-          height: 150,
-        )
+        Image(
+          image: const AssetImage("Assets/Icons/Logo.png"),
+          height: (MediaQuery.of(context).size.height / 6),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
       ],
     );
   }

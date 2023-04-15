@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Services/Animations.dart';
-import '../../main.dart';
 
 class AvatarGuestMore extends StatefulWidget {
   const AvatarGuestMore({super.key});
@@ -50,7 +49,7 @@ class _AvatarGuestMoreState extends State<AvatarGuestMore> {
                 onPressed: () {
                   Navigator.of(context).push(
                     Animations().createRoute(
-                      const SigninPage(),
+                      SigninPage(),
                       1,
                     ),
                   );

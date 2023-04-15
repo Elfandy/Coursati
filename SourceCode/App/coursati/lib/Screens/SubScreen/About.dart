@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../Classes/GlobalVariables.dart';
-import '../../main.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -15,26 +13,47 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         leading: IconButton(
-          splashColor: Color(0xff1776e0),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xff1776e0),
-          ),
         ),
         elevation: 0,
         bottomOpacity: 0,
         title: Text(
           (languageType == 0) ? "حول" : "About",
-          style: TextStyle(color: Colors.black54),
         ),
       ),
-      body: Container(),
-      
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            Image.asset(
+              (languageType == 0)
+                  ? "Assets/Icons/Logo_arabic.png"
+                  : "Assets/Icons/Logo.png",
+              scale: 4,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: 250,
+              child: Text(
+                (languageType == 0)
+                    ? "كورساتي هي منصة للتجميع جميع مراكز التدريب و كورساتهم في مكان واحد للمساعدة في تسهيل عملية البحث و الإنضمام لها"
+                    : "Coursati is a platform for collecting and viewing the Training centers and there courses in one platform to help eas the search for the right course to enroll in",
+                softWrap: true,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+            // Text(appName!),
+          ],
+        ),
+      ),
     );
   }
 }

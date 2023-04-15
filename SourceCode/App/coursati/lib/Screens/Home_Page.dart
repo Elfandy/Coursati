@@ -18,64 +18,6 @@ class _HomePageState extends State<HomePage> {
   //////////////////////////////////////////////////////////////////////////
   ///
   ///
-  // ? remove after setup with Laravel
-
-  List<BoxCourseLabelData> courseBLD = [
-    BoxCourseLabelData(
-      label: "البرمجة باستخدام لغة الجافا",
-      In: "Octal",
-      image:
-          "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    ),
-    BoxCourseLabelData(
-      label: "تحليل البرمجيات الخبيثة",
-      In: "Octal",
-      image:
-          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    ),
-    BoxCourseLabelData(
-      label: "إدارة الوقت",
-      In: "Gama",
-      image:
-          "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    ),
-    BoxCourseLabelData(
-      label: "هجمات الأندرويد",
-      In: "Lablas",
-      image:
-          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    ),
-  ];
-
-  List<BoxTCLabelData> trainingCenterBLD = [
-    BoxTCLabelData(
-      label: "Octal",
-      address: "حي الأندلس",
-      logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
-      image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
-    ),
-    BoxTCLabelData(
-      label: "Gama",
-      address: "حي الأندلس",
-      logo: "http://192.168.43.126/Images/Asset%201.png",
-      image:
-          "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
-    ),
-    BoxTCLabelData(
-      label: "Beta",
-      address: "غوط الشعال",
-      logo: "http://192.168.43.126/Images/Asset%202.png",
-      image:
-          "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
-    ),
-    BoxTCLabelData(
-      label: "Lablas",
-      address: "جنزور",
-      logo: "http://192.168.43.126/Images/Asset%203.png",
-      image:
-          "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
-    ),
-  ];
 
 ////////////////////////////////////////////////////////////////////
   ///
@@ -111,12 +53,16 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 40,
-                    width: 200,
+                    height: 50,
                   ),
-                  Image.asset(
-                    "Assets/Logo/Coursati.png",
-                    scale: 3,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      (languageType == 0)
+                          ? "Assets/Icons/Coursati_arabic.png"
+                          : "Assets/Logo/Coursati.png",
+                      scale: 3,
+                    ),
                   )
                 ],
               ),

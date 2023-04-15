@@ -17,20 +17,16 @@ class _AccountPageState extends State<AccountPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          splashColor: Color(0xff1776e0),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xff1776e0),
-          ),
         ),
         elevation: 0,
         bottomOpacity: 0,
         title: Text(
           (languageType == 0) ? "إدارة الحساب" : "Account",
-          style: TextStyle(color: Colors.black54),
+          style: const TextStyle(color: Colors.black54),
         ),
       ),
       body: Container(),

@@ -1,14 +1,13 @@
 import 'package:coursati/Screens/SubScreen/NotificationPage.dart';
-import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
-
 import '../../Classes/GlobalVariables.dart';
 import '../../Screens/SubScreen/FavoritePage.dart';
 import '../../Services/Animations.dart';
 
 class FloatingBar extends StatefulWidget {
-  const FloatingBar({super.key});
+  const FloatingBar({super.key, required this.notificationCount});
 
+  final int notificationCount;
   @override
   State<FloatingBar> createState() => _FloatingBarState();
 }
@@ -19,9 +18,11 @@ class _FloatingBarState extends State<FloatingBar> {
     return Container(
       width: 220,
       height: 90,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
+      decoration: BoxDecoration(
+        color: (Theme.of(context).brightness == Brightness.light)
+            ? Colors.white
+            : Colors.grey[800],
+        boxShadow: const [
           BoxShadow(
             color: Color(0x22000000),
             blurRadius: 5,
@@ -37,7 +38,7 @@ class _FloatingBarState extends State<FloatingBar> {
             onPressed: () {
               Navigator.of(context).push(
                 Animations().createRoute(
-                  NotificationPage(),
+                  const NotificationPage(),
                   1,
                 ),
               );
@@ -53,18 +54,54 @@ class _FloatingBarState extends State<FloatingBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  image: AssetImage(
-                    "Assets/Icons/Bill.png",
-                  ),
-                  height: 30,
+                Container(
+                  child: (widget.notificationCount <= 0)
+                      ? Image(
+                          image: const AssetImage(
+                            "Assets/Icons/Bill.png",
+                          ),
+                          height: 30,
+                          color:
+                              (Theme.of(context).brightness == Brightness.light)
+                                  ? Colors.black
+                                  : Colors.white,
+                        )
+                      : Stack(children: [
+                          Image(
+                            image: const AssetImage(
+                              "Assets/Icons/Bill.png",
+                            ),
+                            height: 30,
+                            color: (Theme.of(context).brightness ==
+                                    Brightness.light)
+                                ? Colors.black
+                                : Colors.white,
+                          ),
+                          CircleAvatar(
+                            radius: 8,
+                            backgroundColor: Colors.deepOrangeAccent,
+                            child: Text(
+                              (widget.notificationCount > 99)
+                                  ? "+99"
+                                  : widget.notificationCount.toString(),
+                              style: TextStyle(
+                                  fontSize: 8,
+                                  color: (Theme.of(context).brightness ==
+                                          Brightness.dark)
+                                      ? Colors.black
+                                      : Colors.white),
+                            ),
+                          )
+                        ]),
                 ),
                 Text(
                   (languageType == 0) ? "الإشعارات" : "Notification",
                   style: TextStyle(
                     height: 2,
                     fontSize: 10,
-                    color: Colors.black,
+                    color: (Theme.of(context).brightness == Brightness.light)
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ],
@@ -75,7 +112,7 @@ class _FloatingBarState extends State<FloatingBar> {
             onPressed: () {
               Navigator.of(context).push(
                 Animations().createRoute(
-                  FavoritePage(),
+                  const FavoritePage(),
                   1,
                 ),
               );
@@ -92,15 +129,20 @@ class _FloatingBarState extends State<FloatingBar> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image(
-                  image: AssetImage("Assets/Icons/Fav.png"),
+                  image: const AssetImage("Assets/Icons/Fav.png"),
                   height: 30,
+                  color: (Theme.of(context).brightness == Brightness.light)
+                      ? Colors.black
+                      : Colors.white,
                 ),
                 Text(
                   (languageType == 0) ? "المفضلة" : "Favorite",
                   style: TextStyle(
                     height: 2.3,
                     fontSize: 10,
-                    color: Colors.black,
+                    color: (Theme.of(context).brightness == Brightness.light)
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ],
