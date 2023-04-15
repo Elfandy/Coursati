@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../Classes/GlobalVariables.dart';
 import '../Signin/SignUpTextFeild.dart';
 import 'RoundedSigninButton.dart';
@@ -19,34 +18,39 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController date = TextEditingController();
+  int gender = 0;
   bool showPass = false;
   Gender? _gender;
+  bool loginable = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         AnimatedContainer(
+          //*position of the floating box in the screen from above
           duration: const Duration(milliseconds: 300),
           height: (login)
               ? (MediaQuery.of(context).size.height / 4)
-              : (MediaQuery.of(context).size.height / 6),
+              : (MediaQuery.of(context).size.height / 5.8),
           child: const SizedBox(
             width: double.infinity,
           ),
         ),
+        //*position of the rounded button with the floating box
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           height: (login)
               ? (MediaQuery.of(context).size.height / 2.1)
-              : (MediaQuery.of(context).size.height / 1.35),
+              : (MediaQuery.of(context).size.height / 1.4),
           child: Container(
             width: (MediaQuery.of(context).size.width / 1.1),
             child: Stack(children: [
+              //* size of the floating box
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 height: (login)
                     ? ((MediaQuery.of(context).size.height / 2.1) - 60)
-                    : ((MediaQuery.of(context).size.height / 1.35) - 60),
+                    : ((MediaQuery.of(context).size.height / 1.4) - 60),
                 child: Container(
                     width: (MediaQuery.of(context).size.width / 1.1),
                     decoration: BoxDecoration(
@@ -146,143 +150,213 @@ class _FloatingSigninBoxState extends State<FloatingSigninBox> {
                         // const Divider(),
                         //*This is where you put you Textboxes and stuff
                         // FloatingSigninBox(),
+
                         Container(
-                          child: Column(
-                            children: [
-                              SignupTextFeild(
-                                icon: Icons.person_rounded,
-                                text: name,
-                                text_ar: "الأسم",
-                                text_en: "Name",
-                                onTap: () {
-                                  //! This is the fix for selecting the last charcter in the
+                          //* this is for the case of login or sign in */
 
-                                  if (name.selection ==
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset: name.text.length - 1))) {
-                                    name.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: name.text.length));
-                                  }
-                                },
-                                maxLingth: 20,
-                              ),
-                              SignupTextFeild(
-                                icon: Icons.email_outlined,
-                                text: email,
-                                text_ar: "البريد الإلكتروني",
-                                text_en: "Email",
-                                onTap: () {
-                                  //! This is the fix for selecting the last charcter in the
+                          child: (!login)
+                              ?
+                              //? below is the case for sign in
+                              Column(
+                                  children: [
+                                    SignupTextFeild(
+                                      icon: Icons.person_rounded,
+                                      text: name,
+                                      text_ar: "الأسم",
+                                      text_en: "Name",
+                                      onTap: () {
+                                        //! This is the fix for selecting the last charcter in the
 
-                                  if (name.selection ==
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset: name.text.length - 1))) {
-                                    name.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: name.text.length));
-                                  }
-                                },
-                                maxLingth: 32,
-                              ),
-                              SignupTextFeild(
-                                icon: Icons.lock_outline_rounded,
-                                text: password,
-                                text_ar: "الرمز السري",
-                                text_en: "Password",
-                                eyeOfSeeing: true,
-                                onTap: () {
-                                  //! This is the fix for selecting the last charcter in the
+                                        if (name.selection ==
+                                            TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: name.text.length -
+                                                        1))) {
+                                          name.selection =
+                                              TextSelection.fromPosition(
+                                                  TextPosition(
+                                                      offset:
+                                                          name.text.length));
+                                        }
+                                      },
+                                      maxLingth: 20,
+                                    ),
+                                    SignupTextFeild(
+                                      icon: Icons.email_outlined,
+                                      text: email,
+                                      text_ar: "البريد الإلكتروني",
+                                      text_en: "Email",
+                                      onTap: () {
+                                        //! This is the fix for selecting the last charcter in the
 
-                                  if (name.selection ==
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset: name.text.length - 1))) {
-                                    name.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: name.text.length));
-                                  }
-                                },
-                                maxLingth: 26,
-                                password: !showPass,
-                              ),
-                              SignupTextFeild(
-                                icon: Icons.calendar_today_outlined,
-                                text: date,
-                                text_ar: "تاريخ الميلاد",
-                                text_en: "BirthDate",
-                                readOnly: true,
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      firstDate: DateTime(1900),
-                                      initialDate: DateTime.now(),
-                                      lastDate: DateTime.now());
+                                        if (name.selection ==
+                                            TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: name.text.length -
+                                                        1))) {
+                                          name.selection =
+                                              TextSelection.fromPosition(
+                                                  TextPosition(
+                                                      offset:
+                                                          name.text.length));
+                                        }
+                                      },
+                                      maxLingth: 32,
+                                    ),
+                                    SignupTextFeild(
+                                      icon: Icons.lock_outline_rounded,
+                                      text: password,
+                                      text_ar: "الرمز السري",
+                                      text_en: "Password",
+                                      eyeOfSeeing: true,
+                                      onTap: () {
+                                        //! This is the fix for selecting the last charcter in the
 
-                                  if (pickedDate != null) {
-                                    String foramteDate =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(pickedDate);
-                                    setState(() {
-                                      date.text = foramteDate;
-                                    });
-                                  } else {}
-                                },
-                              ),
+                                        if (name.selection ==
+                                            TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: name.text.length -
+                                                        1))) {
+                                          name.selection =
+                                              TextSelection.fromPosition(
+                                                  TextPosition(
+                                                      offset:
+                                                          name.text.length));
+                                        }
+                                      },
+                                      maxLingth: 26,
+                                      password: !showPass,
+                                    ),
+                                    SignupTextFeild(
+                                      icon: Icons.calendar_today_outlined,
+                                      text: date,
+                                      text_ar: "تاريخ الميلاد",
+                                      text_en: "BirthDate",
+                                      readOnly: true,
+                                      onTap: () async {
+                                        DateTime? pickedDate =
+                                            await showDatePicker(
+                                                context: context,
+                                                firstDate: DateTime(1900),
+                                                initialDate: DateTime.now(),
+                                                lastDate: DateTime.now());
 
-                              // Padding(
-                              //   padding: const EdgeInsets.fromLTRB(
-                              //       50, 0, 50, 10),
-                              //   child: Row(
-                              //     mainAxisAlignment:
-                              //         MainAxisAlignment.start,
-                              //     children: [
-                              //       Expanded(
-                              //         child: RadioListTile(
-                              //           contentPadding: EdgeInsets.all(0),
-                              //           value: Gender.male,
-                              //           groupValue: _gender,
-                              //           shape: RoundedRectangleBorder(
-                              //               borderRadius:
-                              //                   BorderRadius.circular(20)),
-                              //           onChanged: (value) {
-                              //             setState(
-                              //               () {
-                              //                 _gender = value;
-                              //               },
-                              //             );
-                              //           },
-                              //           title: Text(
-                              //             "Male",
-                              //             style: TextStyle(
-                              //               color: Colors.black,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       SizedBox(
-                              //         width: 10,
-                              //       ),
-                              //       Expanded(
-                              //         child: RadioListTile(
-                              //           contentPadding: EdgeInsets.all(0),
-                              //           value: Gender.female,
-                              //           groupValue: _gender,
-                              //           tileColor: Colors.amber,
-                              //           onChanged: (value) {
-                              //             setState(() {
-                              //               _gender = value;
-                              //             });
-                              //           },
-                              //           title: Text(
-                              //             "female",
-                              //             style: TextStyle(
-                              //               color: Colors.black,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       )
-                              //     ],
-                              //   ),
-                              // )
-                            ],
-                          ),
+                                        if (pickedDate != null) {
+                                          String foramteDate =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(pickedDate);
+                                          setState(() {
+                                            date.text = foramteDate;
+                                          });
+                                        } else {}
+                                      },
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              gender = 0;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.male_rounded,
+                                            color: (gender == 0)
+                                                ? Color(0xff1776e0)
+                                                : Color(0xff999999),
+                                          ),
+                                          style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              gender = 1;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.female_rounded,
+                                            color: (gender == 1)
+                                                ? Color(0xff1776e0)
+                                                : Color(0xff999999),
+                                          ),
+                                          style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    // Padding(
+                                    //   padding: const EdgeInsets.fromLTRB(
+                                    //       50, 0, 50, 10),
+                                    //   child: Row(
+                                    //     mainAxisAlignment:
+                                    //         MainAxisAlignment.start,
+                                    //     children: [
+                                    //       Expanded(
+                                    //         child: RadioListTile(
+                                    //           contentPadding: EdgeInsets.all(0),
+                                    //           value: Gender.male,
+                                    //           groupValue: _gender,
+                                    //           shape: RoundedRectangleBorder(
+                                    //               borderRadius:
+                                    //                   BorderRadius.circular(20)),
+                                    //           onChanged: (value) {
+                                    //             setState(
+                                    //               () {
+                                    //                 _gender = value;
+                                    //               },
+                                    //             );
+                                    //           },
+                                    //           title: Text(
+                                    //             "Male",
+                                    //             style: TextStyle(
+                                    //               color: Colors.black,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //       SizedBox(
+                                    //         width: 10,
+                                    //       ),
+                                    //       Expanded(
+                                    //         child: RadioListTile(
+                                    //           contentPadding: EdgeInsets.all(0),
+                                    //           value: Gender.female,
+                                    //           groupValue: _gender,
+                                    //           tileColor: Colors.amber,
+                                    //           onChanged: (value) {
+                                    //             setState(() {
+                                    //               _gender = value;
+                                    //             });
+                                    //           },
+                                    //           title: Text(
+                                    //             "female",
+                                    //             style: TextStyle(
+                                    //               color: Colors.black,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // )
+                                  ],
+                                )
+                              :
+                              //? This is for the case of login
+                              Column(children: []),
                         ),
                       ],
                     )),

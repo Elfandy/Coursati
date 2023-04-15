@@ -17,8 +17,8 @@ class _RoundedSigninButtonState extends State<RoundedSigninButton> {
       ),
       onPressed: () {},
       child: Container(
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Color(0x4007AD18),
