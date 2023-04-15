@@ -21,43 +21,42 @@ List<Locale> local = const [
 
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
 bool login = false;
-
+int picker = 0;
 //* These are the data of the app
 // ? remove after setup with Laravel
 
 List<UserData> users = [
-  UserData(
-      name: "ريان",
-      image:
-          "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-      token: "g45g45g45g45g45g45g4g",
-      notifications: 3),
-  UserData(
-      name: "تادر",
-      image:
-          "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      token: "312313131231edd23d23d324fd3f4",
-      notifications: 3),
-  UserData(
-      name: "محمد",
-      image:
-          "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      token: "f24f34f34fg34eg34eg34eg",
-      notifications: 3),
-  UserData(
-      name: "سالم",
-      image:
-          "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
-      token: "g45g4g4g45g45g45g45g4g45g45g",
-      notifications: 3),
+//   UserData(
+//       name: "ريان",
+//       image:
+//           "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+//       token: "g45g45g45g45g45g45g4g",
+//       notifications: 3
+//       password: "1234554321",
+//       birthDate:
+
+//       ),
+//   UserData(
+//       name: "تادر",
+//       image:
+//           "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+//       token: "312313131231edd23d23d324fd3f4",
+//       notifications: 3),
+//   UserData(
+//       name: "محمد",
+//       image:
+//           "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+//       token: "f24f34f34fg34eg34eg34eg",
+//       notifications: 3),
+//   UserData(
+//       name: "سالم",
+//       image:
+//           "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+//       token: "g45g4g4g45g45g45g45g4g45g45g",
+//       notifications: 3),
 ];
 
-UserData user = UserData(
-    name: "ريان",
-    image:
-        "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-    token: "",
-    notifications: 3);
+UserData? user ;
 // ? --------------------------------------------------------------
 
 // ? remove after setup with Laravel

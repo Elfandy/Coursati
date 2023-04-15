@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RoundedSigninButton extends StatefulWidget {
-  const RoundedSigninButton({super.key});
+  const RoundedSigninButton({super.key, required this.onPressed});
+  final void Function() onPressed;
 
   @override
   State<RoundedSigninButton> createState() => _RoundedSigninButtonState();
@@ -15,7 +16,7 @@ class _RoundedSigninButtonState extends State<RoundedSigninButton> {
         shape: const CircleBorder(),
         backgroundColor: Colors.white,
       ),
-      onPressed: () {},
+      onPressed: widget.onPressed,
       child: Container(
         width: 100,
         height: 100,

@@ -40,13 +40,13 @@ class _MorePageState extends State<MorePage> {
               ],
             ),
             Container(
-              height: (user.token != "")
+              height: (user!.token != "")
                   ? (MediaQuery.of(context).size.height / 2.6)
                   : (MediaQuery.of(context).size.height / 3.3),
               width: double.infinity,
-              child: (user.token != "")
+              child: (user!.token != "")
                   ? AvatarMore(
-                      user: user,
+                      user: user!,
                     )
                   : const AvatarGuestMore(),
             ),
@@ -57,7 +57,7 @@ class _MorePageState extends State<MorePage> {
           child: Column(
             children: [
               Container(
-                child: (user.token != "")
+                child: (user!.token != "")
                     ? OptionButton(
                         image: const AssetImage("Assets/Icons/user.png"),
                         label: (languageType == 0) ? "إدارة الحساب" : "Account",
