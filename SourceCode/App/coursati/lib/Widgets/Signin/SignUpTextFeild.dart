@@ -7,7 +7,7 @@ class SignupTextFeild extends StatefulWidget {
   SignupTextFeild({
     super.key,
     required this.icon,
-    required this.text,
+    required this.textController,
     required this.text_ar,
     required this.text_en,
     this.maxLingth,
@@ -18,7 +18,7 @@ class SignupTextFeild extends StatefulWidget {
   });
   String text_ar, text_en;
   IconData icon;
-  TextEditingController text;
+  TextEditingController textController;
   int? maxLingth;
   bool readOnly, password, eyeOfSeeing;
   void Function() onTap;
@@ -28,7 +28,7 @@ class SignupTextFeild extends StatefulWidget {
 }
 
 class _SignupTextFeildState extends State<SignupTextFeild> {
-  Icon visibile = Icon(
+  Icon visibile = const Icon(
     Icons.visibility_off,
     size: 20,
     color: Color(0xffdddddd),
@@ -53,7 +53,7 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
           maxLength: widget.maxLingth,
           onTap: widget.onTap,
           style: const TextStyle(color: Colors.black, fontSize: 16),
-          controller: widget.text,
+          controller: widget.textController,
           decoration: InputDecoration(
             counterText: "",
             suffixIcon: (widget.eyeOfSeeing)
@@ -62,13 +62,13 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
                       setState(() {
                         widget.password = !widget.password;
                         if (widget.password) {
-                          visibile = Icon(
+                          visibile = const Icon(
                             Icons.visibility_off,
                             size: 20,
                             color: Color(0xffdddddd),
                           );
                         } else {
-                          visibile = Icon(
+                          visibile = const Icon(
                             Icons.visibility,
                             size: 20,
                             color: Color(0xff999999),
@@ -77,7 +77,7 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
                       });
                     },
                     icon: visibile)
-                : Icon(null),
+                : const Icon(null),
             label: Row(children: [
               Icon(
                 widget.icon,
@@ -92,8 +92,9 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
               ),
             ]),
             border: OutlineInputBorder(
-                borderSide: const BorderSide(),
-                borderRadius: BorderRadius.circular(50)),
+              borderSide: const BorderSide(),
+              borderRadius: BorderRadius.circular(50),
+            ),
           ),
         ),
       ),

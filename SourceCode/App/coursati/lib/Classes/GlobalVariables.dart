@@ -4,7 +4,7 @@ import 'BoxCourseLabelData.dart';
 import 'BoxTCLabelData.dart';
 import 'UserData.dart';
 
-int? languageType, themeMode;
+int? languageType;
 bool? isDark;
 List<bool>? languageSelector;
 
@@ -18,7 +18,7 @@ List<Locale> local = const [
   Locale('ar', 'AE'),
   Locale("en", "US"),
 ];
-  
+
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
 bool login = false;
 int picker = 0;

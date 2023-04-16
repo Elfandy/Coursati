@@ -10,9 +10,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  int change = 0;
+  int _change = 0, _langpicker = languageType!;
+  bool themeMode = isDark!;
+
   @override
   Widget build(BuildContext context) {
+    languageSelector = (_langpicker == 0) ? [true, false] : [false, true];
     return
         //* This is for hanfling backButton event
         Scaffold(
@@ -52,20 +55,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const Spacer(),
                 ToggleButtons(
-                  isSelected:
-                      (languageType == 0) ? [true, false] : [false, true],
+                  isSelected: languageSelector!,
                   onPressed: ((index) {
                     setState(() {
                       if (index == 0) {
-                        if (languageSelector![index] == false) languageType = 0;
-                        languageSelector![index] = true;
-                        languageSelector![index + 1] = false;
-                        change++;
+                        _langpicker = 0;
+                        _change++;
                       } else if (index == 1) {
-                        languageSelector![index] = true;
-                        languageSelector![index - 1] = false;
-                        languageType = 1;
-                        change++;
+                        _change++;
+                        _langpicker = 1;
                       }
                     });
                   }),
@@ -78,29 +76,32 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Row(
               children: [
-                const Text("hello"),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  (languageType == 0) ? "الوضع الليلي" : "Dark Mode",
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
                 const Spacer(),
                 Switch(
                   onChanged: (value) {
                     setState(() {
-                      isDark = !isDark!;
-                      if (isDark!) {
-                        themeMode = 1;
-                        change++;
-                      } else {
-                        themeMode = 0;
-                        change++;
-                      }
+                      themeMode = !themeMode;
+
+                      _change++;
                     });
                   },
-                  value: isDark!,
+                  value: themeMode,
                 ),
                 const SizedBox(
                   width: 10,
                 )
               ],
             ),
-            Text((languageSelector![0]) ? "hello" : "bye"),
+
             //*! last Thing in the page
             const Spacer(),
             ElevatedButton(
@@ -113,13 +114,19 @@ class _SettingsPageState extends State<SettingsPage> {
                   shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(200))))),
               onPressed: () {
-                if (change > 0) {
+                if (_change > 0) {
+                  if (_langpicker == 0) {
+                    languageType = 0;
+                  } else if (_langpicker == 1) {
+                    languageType = 1;
+                  }
+                  isDark = themeMode;
                   ScreenController().restartApp(context);
                 }
               },
-              child: const Text(
-                "Save",
-                style: TextStyle(fontSize: 26),
+              child: Text(
+                (languageType == 0) ? "حفظ" : "Save",
+                style: TextStyle(fontSize: 26, color: Colors.white),
               ),
             ),
             const SizedBox(

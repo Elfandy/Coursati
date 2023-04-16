@@ -19,7 +19,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() {
   //* This is for the config file
   languageType = 0;
-  themeMode = 0;
   isDark = false;
   languageSelector = [true, false];
 
@@ -69,7 +68,7 @@ class MainApp extends StatelessWidget {
         fontFamily: "Tajawal",
       ),
       darkTheme: ThemeData.dark(),
-      themeMode: themeSelector[themeMode!],
+      themeMode: themeSelector[(isDark!) ? 1 : 0],
     );
   }
 

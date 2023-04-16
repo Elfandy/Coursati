@@ -1,8 +1,8 @@
-import 'package:coursati/Screens/Services%20Screens/Login_Signin.dart';
 import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Services/Animations.dart';
+import '../Signin/loginPage.dart';
 
 class AvatarGuestMore extends StatefulWidget {
   const AvatarGuestMore({super.key});
@@ -47,12 +47,12 @@ class _AvatarGuestMoreState extends State<AvatarGuestMore> {
                       borderRadius: BorderRadius.circular(100),
                     ))),
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   Animations().createRoute(
-                  //     SigninPage(),
-                  //     1,
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    Animations().createRoute(
+                      loginPage(),
+                      1,
+                    ),
+                  );
                 },
                 child: Text(
                   (languageType == 0) ? "تسجيل الدخول" : "Sign in",
