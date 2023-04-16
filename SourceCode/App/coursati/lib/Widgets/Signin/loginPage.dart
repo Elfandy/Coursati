@@ -1,7 +1,9 @@
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../Classes/GlobalVariables.dart';
+import '../../Classes/UserData.dart';
 import 'SignUpTextFeild.dart';
 
 class loginPage extends StatefulWidget {
@@ -25,7 +27,7 @@ class _loginPageState extends State<loginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: (isDark!) ? Colors.black38 : Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -36,7 +38,7 @@ class _loginPageState extends State<loginPage> {
         bottomOpacity: 0,
       ),
       body: Container(
-          color: Colors.white,
+          color: (isDark!) ? Colors.black38 : Colors.white,
           child: Center(
               child: Stack(children: [
             Align(
@@ -48,14 +50,6 @@ class _loginPageState extends State<loginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        child: Text(
-                          (languageType == 0) ? "تسحيل الدخول" : "Login",
-                          style: TextStyle(
-                              color: (_isSelected != 0)
-                                  ? Color(0xff1776e0)
-                                  : Color(0xff999999),
-                              fontSize: (languageType == 0) ? 18 : 36),
-                        ),
                         onPressed: () {
                           setState(() {
                             if (_isSelected == 0) {
@@ -64,18 +58,18 @@ class _loginPageState extends State<loginPage> {
                           });
                         },
                         style: TextButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                          padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                        ),
+                        child: Text(
+                          (languageType == 0) ? "تسحيل الدخول" : "Login",
+                          style: TextStyle(
+                              color: (_isSelected != 0)
+                                  ? const Color(0xff1776e0)
+                                  : const Color(0xff999999),
+                              fontSize: (languageType == 0) ? 18 : 36),
                         ),
                       ),
                       TextButton(
-                        child: Text(
-                          (languageType == 0) ? "إنشاء حساب" : "Signin",
-                          style: TextStyle(
-                              color: (_isSelected == 0)
-                                  ? Color(0xff1776e0)
-                                  : Color(0xff999999),
-                              fontSize: (languageType == 0) ? 18 : 36),
-                        ),
                         onPressed: () {
                           setState(() {
                             if (_isSelected == 1) {
@@ -84,15 +78,25 @@ class _loginPageState extends State<loginPage> {
                           });
                         },
                         style: TextButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                        ),
+                        child: Text(
+                          (languageType == 0) ? "إنشاء حساب" : "Signin",
+                          style: TextStyle(
+                              color: (_isSelected == 0)
+                                  ? const Color(0xff1776e0)
+                                  : const Color(0xff999999),
+                              fontSize: (languageType == 0) ? 18 : 36),
                         ),
                       ),
                     ],
                   ),
                   AnimatedSwitcher(
-                    duration: Duration(seconds: 2),
+                    duration: const Duration(seconds: 2),
+                    switchInCurve: Curves.linear,
                     child: (_isSelected == 0)
                         ? Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               SignupTextFeild(
                                 icon: Icons.person,
@@ -138,7 +142,7 @@ class _loginPageState extends State<loginPage> {
                                 textController: _birthDate,
                                 readOnly: true,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -152,16 +156,16 @@ class _loginPageState extends State<loginPage> {
                                         }
                                       });
                                     },
+                                    style: OutlinedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        shape: const CircleBorder()),
                                     child: Icon(
                                       Icons.male_rounded,
                                       size: 40,
                                       color: (_gender == 0)
-                                          ? Color(0xff1776e0)
-                                          : Color(0xff999999),
+                                          ? const Color(0xff1776e0)
+                                          : const Color(0xff999999),
                                     ),
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        shape: CircleBorder()),
                                   ),
                                   OutlinedButton(
                                     onPressed: () {
@@ -171,19 +175,19 @@ class _loginPageState extends State<loginPage> {
                                         }
                                       });
                                     },
+                                    style: OutlinedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        shape: const CircleBorder()),
                                     child: Icon(
                                       Icons.female_rounded,
                                       size: 40,
                                       color: (_gender != 0)
-                                          ? Color(0xff1776e0)
-                                          : Color(0xff999999),
+                                          ? const Color(0xff1776e0)
+                                          : const Color(0xff999999),
                                     ),
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        shape: CircleBorder()),
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           )
                         : Column(
@@ -205,7 +209,73 @@ class _loginPageState extends State<loginPage> {
                             ],
                           ),
                   ),
-                  SizedBox(height: 150),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_isSelected == 0) {
+                        if (_password.text.trim() != "" &&
+                            _email.text.trim() != "" &&
+                            _name.text.trim() != "" &&
+                            _birthDate.text.trim() != "") {
+                          users.add(UserData(
+                              birthDate: _birthDate.text.trim(),
+                              email: _email.text.trim(),
+                              name: _name.text.trim(),
+                              password: _password.text.trim(),
+                              token: "fafdasfasdfsdf"));
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("The Account has been created"),
+                              );
+                            },
+                          ).then(
+                            (value) {
+                              _password.text = "";
+                              _email.text = "";
+                              _name.text = "";
+                              _birthDate.text = "";
+                            },
+                          );
+                        }
+                      } else {
+                        if (_loginEmail.text != "" && _loginPass.text != "") {
+                          for (int i = 0; i < users.length; i++) {
+                            if (_loginEmail.text.trim() == users[i].email &&
+                                _loginPass.text.trim() == users[i].password) {
+                              user!.name = users[i].name;
+                              user!.birthDate = users[i].birthDate;
+                              user!.email = _loginEmail.text;
+                              user!.password = _loginEmail.text;
+                              user!.notifications = users[i].notifications;
+                              user!.image = users[i].image;
+                              user!.token = users[i].token;
+
+                              ScreenController().restartApp(context);
+                            }
+                          }
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(200, 50),
+                        shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(300))),
+                    child: Text(
+                      (_isSelected == 0)
+                          ? (languageType == 0)
+                              ? "إنشاء الحساب"
+                              : "Signup"
+                          : (languageType == 0)
+                              ? "تسجيل الدخول"
+                              : "Login",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Classes/GlobalVariables.dart';
+import 'Classes/UserData.dart';
 import 'Screens/main_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,6 +22,15 @@ void main() {
   languageType = 0;
   isDark = false;
   languageSelector = [true, false];
+  user = UserData(
+    name: "",
+    image: "",
+    token: "",
+    notifications: 0,
+    password: "",
+    birthDate: "",
+    email: "",
+  );
 
 //*----------------------------------------
 
