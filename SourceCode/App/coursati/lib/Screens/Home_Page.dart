@@ -113,10 +113,13 @@ class _HomePageState extends State<HomePage> {
                       ///
 
                       for (int i = 0;
-                          i < ((courseBLD.length < 7) ? courseBLD.length : 7);
+                          i <
+                              ((courseBLDSmall.length < 7)
+                                  ? courseBLDSmall.length
+                                  : 7);
                           i++)
                         CourseBox(
-                          bld: courseBLD[i],
+                          bld: courseBLDSmall[i],
                         ),
 
                       RoundedButton(
@@ -178,12 +181,12 @@ class _HomePageState extends State<HomePage> {
                         ///
                         for (int i = 0;
                             i <
-                                ((trainingCenterBLD.length < 7)
-                                    ? trainingCenterBLD.length
+                                ((trainingCenterBLDSmall.length < 7)
+                                    ? trainingCenterBLDSmall.length
                                     : 7);
                             i++)
                           TCBox(
-                            bld: trainingCenterBLD[i],
+                            bld: trainingCenterBLDSmall[i],
                           ),
 
                         RoundedButton(

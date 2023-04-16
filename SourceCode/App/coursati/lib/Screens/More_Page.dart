@@ -97,7 +97,9 @@ class _MorePageState extends State<MorePage> {
         ),
         const Spacer(),
         Image(
-          image: const AssetImage("Assets/Icons/Logo.png"),
+          image: AssetImage((languageType == 0)
+              ? "Assets/Icons/Logo_arabic.png"
+              : "Assets/Icons/Logo.png"),
           height: (MediaQuery.of(context).size.height / 6),
         ),
         const SizedBox(

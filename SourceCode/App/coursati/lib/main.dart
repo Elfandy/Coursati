@@ -23,14 +23,14 @@ void main() {
   isDark = false;
   languageSelector = [true, false];
   user = UserData(
-    name: "",
-    image: "",
-    token: "",
-    notifications: 0,
-    password: "",
-    birthDate: "",
-    email: "",
-  );
+      name: "",
+      image: "",
+      token: "",
+      notifications: 0,
+      password: "",
+      birthDate: "",
+      email: "",
+      gender: "");
 
 //*----------------------------------------
 
@@ -77,7 +77,7 @@ class MainApp extends StatelessWidget {
         ),
         fontFamily: "Tajawal",
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(colorScheme: ColorScheme.dark()),
       themeMode: themeSelector[(isDark!) ? 1 : 0],
     );
   }

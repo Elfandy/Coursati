@@ -21,6 +21,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController _loginEmail = TextEditingController();
   TextEditingController _loginPass = TextEditingController();
   int _isSelected = 0, _gender = 0;
+  int _accountFound = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +119,8 @@ class _loginPageState extends State<loginPage> {
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _password,
+                                eyeOfSeeing: true,
+                                password: true,
                               ),
                               SignupTextFeild(
                                 icon: Icons.calendar_today,
@@ -192,19 +195,29 @@ class _loginPageState extends State<loginPage> {
                           )
                         : Column(
                             children: [
+                              (_accountFound == 2)
+                                  ? Container(
+                                      child: Text(
+                                        "Your Email/Password is wrong",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    )
+                                  : Container(),
                               SignupTextFeild(
                                 icon: Icons.mail,
                                 onTap: () {},
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
-                                textController: _email,
+                                textController: _loginEmail,
                               ),
                               SignupTextFeild(
                                 icon: Icons.lock_outline_rounded,
                                 onTap: () {},
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
-                                textController: _password,
+                                textController: _loginPass,
+                                eyeOfSeeing: true,
+                                password: true,
                               ),
                             ],
                           ),
@@ -220,17 +233,22 @@ class _loginPageState extends State<loginPage> {
                             _name.text.trim() != "" &&
                             _birthDate.text.trim() != "") {
                           users.add(UserData(
-                              birthDate: _birthDate.text.trim(),
-                              email: _email.text.trim(),
-                              name: _name.text.trim(),
-                              password: _password.text.trim(),
-                              token: "fafdasfasdfsdf"));
+                            birthDate: _birthDate.text.trim(),
+                            email: _email.text.trim(),
+                            name: _name.text.trim(),
+                            password: _password.text.trim(),
+                            token: "54g4g45g45g4g45g",
+                            gender: (_gender == 0) ? "Male" : "Female",
+                          ));
                           showDialog(
                             context: context,
                             barrierDismissible: true,
                             builder: (context) {
                               return AlertDialog(
-                                title: Text("The Account has been created"),
+                                title: Text(
+                                  "The Account has been created",
+                                  style: TextStyle(color: Colors.black),
+                                ),
                               );
                             },
                           ).then(
@@ -239,6 +257,10 @@ class _loginPageState extends State<loginPage> {
                               _email.text = "";
                               _name.text = "";
                               _birthDate.text = "";
+                              user!.name = _name.text;
+                              user!.birthDate = _birthDate.text;
+                              user!.email = _email.text;
+                              user!.password = _password.text;
                             },
                           );
                         }
@@ -247,6 +269,7 @@ class _loginPageState extends State<loginPage> {
                           for (int i = 0; i < users.length; i++) {
                             if (_loginEmail.text.trim() == users[i].email &&
                                 _loginPass.text.trim() == users[i].password) {
+                              _accountFound = 1;
                               user!.name = users[i].name;
                               user!.birthDate = users[i].birthDate;
                               user!.email = _loginEmail.text;
@@ -254,9 +277,12 @@ class _loginPageState extends State<loginPage> {
                               user!.notifications = users[i].notifications;
                               user!.image = users[i].image;
                               user!.token = users[i].token;
-
-                              ScreenController().restartApp(context);
                             }
+                          }
+                          if (_accountFound == 1) {
+                            Navigator.pop(context, true);
+                          } else if (_accountFound == 0) {
+                            _accountFound = 2;
                           }
                         }
                       }

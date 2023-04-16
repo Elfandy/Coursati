@@ -50,7 +50,7 @@ class _AvatarGuestMoreState extends State<AvatarGuestMore> {
                   Navigator.of(context).push(
                     Animations().createRoute(
                       loginPage(),
-                      1,
+                      0,
                     ),
                   );
                 },

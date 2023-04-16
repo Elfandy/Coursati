@@ -6,7 +6,8 @@ class UserData {
       this.notifications = 0,
       required this.birthDate,
       required this.email,
-      required this.password});
-  String name, image = "", token, password, email, birthDate;
+      required this.password,
+      required this.gender});
+  String name, image, token, password, email, birthDate, gender;
   int notifications;
 }

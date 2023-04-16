@@ -27,41 +27,49 @@ int picker = 0;
 
 List<UserData> users = [
   UserData(
-      name: "ريان",
-      image:
-          "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-      token: "g45g45g45g45g45g45g4g",
-      notifications: 3,
-      password: "123",
-      birthDate: "2000/5/2",
-      email: "ryan@gmail.com"),
+    name: "ريان",
+    image:
+        "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+    token: "g45g45g45g45g45g45g4g",
+    notifications: 120,
+    password: "123",
+    birthDate: "2000/5/2",
+    email: "ryan@gmail.com",
+    gender: "Male",
+  ),
   UserData(
-      name: "تادر",
-      image:
-          "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      token: "312313131231edd23d23d324fd3f4",
-      notifications: 3,
-      password: "112233",
-      birthDate: "1999/5/2",
-      email: "nader@gmail.com"),
+    name: "نادر",
+    image:
+        "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+    token: "312313131231edd23d23d324fd3f4",
+    notifications: 0,
+    password: "112233",
+    birthDate: "1999/5/2",
+    email: "nader@gmail.com",
+    gender: "Male",
+  ),
   UserData(
-      name: "محمد",
-      image:
-          "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      token: "f24f34f34fg34eg34eg34eg",
-      notifications: 3,
-      password: "12345",
-      birthDate: "2003/3/2",
-      email: "mohammed@gmail.com"),
+    name: "محمد",
+    image:
+        "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+    token: "f24f34f34fg34eg34eg34eg",
+    notifications: 33,
+    password: "12345",
+    birthDate: "2003/3/2",
+    email: "mohammed@gmail.com",
+    gender: "Male",
+  ),
   UserData(
-      name: "سالم",
-      image:
-          "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
-      token: "g45g4g4g45g45g45g45g4g45g45g",
-      notifications: 3,
-      password: "54321",
-      birthDate: "2000/5/2",
-      email: "salem@gmail.com"),
+    name: "سالم",
+    image:
+        "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+    token: "g45g4g4g45g45g45g45g4g45g45g",
+    notifications: 3,
+    password: "54321",
+    birthDate: "2000/5/2",
+    email: "salem@gmail.com",
+    gender: "Male",
+  ),
 ];
 
 UserData? user;
@@ -69,7 +77,7 @@ UserData? user;
 
 // ? remove after setup with Laravel
 
-List<BoxCourseLabelData> courseBLD = [
+List<BoxCourseLabelData> courseBLDSmall = [
   BoxCourseLabelData(
     label: "البرمجة باستخدام لغة الجافا",
     In: "Octal",
@@ -96,7 +104,7 @@ List<BoxCourseLabelData> courseBLD = [
   ),
 ];
 
-List<BoxTCLabelData> trainingCenterBLD = [
+List<BoxTCLabelData> trainingCenterBLDSmall = [
   BoxTCLabelData(
     label: "Octal",
     address: "حي الأندلس",

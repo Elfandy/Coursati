@@ -1,6 +1,7 @@
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import '../../Classes/GlobalVariables.dart';
+import '../../Classes/UserData.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -102,6 +103,31 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
 
+            (user!.token != "")
+                ? Center(
+                    child: TextButton(
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(color: Colors.red, fontSize: 20),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          user = UserData(
+                              name: "",
+                              image: "",
+                              token: "",
+                              notifications: 0,
+                              password: "",
+                              birthDate: "",
+                              email: "",
+                              gender: "");
+                          ScreenController().restartApp(context);
+                        });
+                      },
+                    ),
+                  )
+                : Container(),
+
             //*! last Thing in the page
             const Spacer(),
             ElevatedButton(
@@ -126,12 +152,12 @@ class _SettingsPageState extends State<SettingsPage> {
               },
               child: Text(
                 (languageType == 0) ? "حفظ" : "Save",
-                style: TextStyle(fontSize: 26, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
             const SizedBox(
               height: 20,
-            )
+            ),
           ]),
         ),
       ),
