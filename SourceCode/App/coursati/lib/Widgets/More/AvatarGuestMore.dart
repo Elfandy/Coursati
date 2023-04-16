@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Services/Animations.dart';
-import '../Signin/loginPage.dart';
+import '../../Screens/SubScreen/loginPage.dart';
 
 class AvatarGuestMore extends StatefulWidget {
   const AvatarGuestMore({super.key});

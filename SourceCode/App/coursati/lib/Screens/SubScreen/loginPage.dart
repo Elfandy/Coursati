@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
-import 'SignUpTextFeild.dart';
+import '../../Widgets/Signin/SignUpTextFeild.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
