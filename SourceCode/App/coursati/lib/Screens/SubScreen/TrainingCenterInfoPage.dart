@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/TrainingCenter.dart';
@@ -78,7 +81,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
               padding: const EdgeInsets.only(top: 270),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: (isDark!) ? Colors.black38 : Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
@@ -468,7 +471,11 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                 IconButton(
                                                   icon: Icon(Icons.facebook,
                                                       size: 40),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    _launchSocial(
+                                                        _trainingCenter
+                                                            .facebook);
+                                                  },
                                                 ),
                                                 Text(
                                                   "Facebook",
@@ -489,7 +496,11 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                 IconButton(
                                                   icon: Icon(Icons.web_asset,
                                                       size: 40),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    _launchSocial(
+                                                        _trainingCenter
+                                                            .website);
+                                                  },
                                                 ),
                                                 Text(
                                                   "Website",
@@ -541,15 +552,32 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: TextButton(
-                          child: Text(
-                            _trainingCenter.phoneNumber,
-                            style: TextStyle(
-                                fontSize: 20,
-                                color:
-                                    (isDark!) ? Colors.white : Colors.black38),
-                          ),
-                          onPressed: () {},
-                        ),
+                            child: Text(
+                              _trainingCenter.phoneNumber,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: (isDark!)
+                                      ? Colors.white
+                                      : Colors.black38),
+                            ),
+                            onPressed: () async {
+                              //! this is for copying number to dailer
+                              // Uri phoneno =
+                              //     Uri.parse('tel:${_trainingCenter.phoneNumber}');
+                              // if (await launchUrl(phoneno)) {
+                              //   //dialer opened
+                              // } else {
+                              //   //dailer is not opened
+                              // }
+
+                              //! this is for copying number to clipboard
+                              await Clipboard.setData(ClipboardData(
+                                  text: _trainingCenter.phoneNumber));
+                              Fluttertoast.showToast(
+                                  msg: "copyed to clipboard",
+                                  backgroundColor: Color(0xff999999),
+                                  gravity: ToastGravity.BOTTOM);
+                            }),
                       ),
 
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -592,6 +620,12 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
       }
     }
     return null;
+  }
+
+  void _launchSocial(String url) async {
+    // Don't use canLaunch because of fbProtocolUrl (fb://)
+
+    bool launched = await launchUrl(Uri.https(url));
   }
 //! deprecated Function it caculates the image height
   // Future<double> getImageHeight({required String images}) async {
