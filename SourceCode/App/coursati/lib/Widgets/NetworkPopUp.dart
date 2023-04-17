@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:coursati/main.dart';
@@ -20,41 +21,76 @@ class _NetworkPopupState extends State<NetworkPopup> {
   int picker = r.nextInt(1);
   List<String> image = [
     "Assets/Images/Disconnected/GIFS/sammy-no-connection.gif",
-
   ];
 
   //? -------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      width: double.infinity,
-      height: 400,
-      child: Center(
-        child: Column(
-          children: [
-            Image(
-              image: AssetImage(image[picker]),
+    return WillPopScope(
+      onWillPop: _onPop,
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(255, 255, 255, 0),
+        body: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              color: (isDark!) ? Color(0xf424242) : Colors.white,
+              borderRadius: BorderRadius.circular(20),
             ),
-            Text(
-              (languageType == 0)
-                  ? "يبدو أنه لايوجد اتصال بالانترنت"
-                  : "It semms like there is no Internet Connection",
-              style: TextStyle(
-                  color: Color(0xff1776e0),
-                  fontSize: 20,
-                  height: 1.1,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: (languageType == 0) ? "" : "Suravaram",
-                  shadows: [Shadow(color: Colors.black, blurRadius: 0.5)]),
-              textAlign: TextAlign.center,
-            )
-          ],
+            width: double.infinity,
+            height: 400,
+            child: Center(
+              child: Column(
+                children: [
+                  Image(
+                    image: AssetImage(image[picker]),
+                  ),
+                  Text(
+                    (languageType == 0)
+                        ? "يبدو أنه لايوجد اتصال بالانترنت"
+                        : "It semms like there is no Internet Connection",
+                    style: TextStyle(
+                      color: Color(0xff1776e0),
+                      fontSize: 20,
+                      height: 1.1,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: (languageType == 0) ? "" : "Suravaram",
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Future<bool> _onPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          (languageType == 0) ? "هل انت متأكد" : "Are you Sure?",
+          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+        ),
+        content: Text(
+          (languageType == 0) ? "الخروج من التطبيق" : "Exit The App",
+          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            //<-- SEE HERE
+            child: new Text((languageType == 0) ? "لا" : "No"),
+          ),
+          TextButton(
+            onPressed: () => exit(0),
+            // <-- SEE HERE
+            child: new Text((languageType == 0) ? "نعم" : "Yes"),
+          ),
+        ],
+      ),
+    ));
   }
 }

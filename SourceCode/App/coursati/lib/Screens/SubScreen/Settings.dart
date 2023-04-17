@@ -1,5 +1,9 @@
+import 'package:coursati/Services/Controller/FileController.dart';
+import 'package:coursati/Services/FileHandle.dart';
 import 'package:coursati/Services/ScreenController.dart';
+import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
 
@@ -120,7 +124,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               password: "",
                               birthDate: "",
                               email: "",
-                              gender: "");
+                              gender: "",
+                              id: 0);
                           ScreenController().restartApp(context);
                         });
                       },
@@ -139,7 +144,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment: Alignment.center,
                   shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(200))))),
-              onPressed: () {
+              onPressed: () async {
                 if (_change > 0) {
                   if (_langpicker == 0) {
                     languageType = 0;
@@ -147,6 +152,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     languageType = 1;
                   }
                   isDark = themeMode;
+
+                  // await context.read<FileController>().writeConfig(
+                  //     "language:$languageType,\ndarkMode:${isDark!},");
+
+                  // saveConfig(isDark!, languageType!);
                   ScreenController().restartApp(context);
                 }
               },

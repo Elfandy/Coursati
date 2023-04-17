@@ -1,10 +1,11 @@
 import 'package:coursati/Classes/Location.dart';
-import 'package:coursati/Classes/Tag.dart';
+import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:flutter/material.dart';
 
 import 'BoxCourseLabelData.dart';
 import 'BoxTCLabelData.dart';
+import 'Course.dart';
 import 'UserData.dart';
 
 int? languageType;
@@ -32,115 +33,142 @@ UserData? user;
 
 List<UserData> users = [
   UserData(
-    name: "ريان",
-    image:
-        "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-    token: "g45g45g45g45g45g45g4g",
-    notifications: 120,
-    password: "123",
-    birthDate: "2000/5/2",
-    email: "ryan@gmail.com",
-    gender: "Male",
-  ),
+      name: "ريان",
+      image:
+          "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+      token: "g45g45g45g45g45g45g4g",
+      notifications: 120,
+      password: "123",
+      birthDate: "2000/5/2",
+      email: "ryan@gmail.com",
+      gender: "Male",
+      id: 4893123),
   UserData(
-    name: "نادر",
-    image:
-        "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    token: "312313131231edd23d23d324fd3f4",
-    notifications: 0,
-    password: "112233",
-    birthDate: "1999/5/2",
-    email: "nader@gmail.com",
-    gender: "Male",
-  ),
+      name: "نادر",
+      image:
+          "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+      token: "312313131231edd23d23d324fd3f4",
+      notifications: 0,
+      password: "112233",
+      birthDate: "1999/5/2",
+      email: "nader@gmail.com",
+      gender: "Male",
+      id: 5654321),
   UserData(
-    name: "محمد",
-    image:
-        "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    token: "f24f34f34fg34eg34eg34eg",
-    notifications: 33,
-    password: "12345",
-    birthDate: "2003/3/2",
-    email: "mohammed@gmail.com",
-    gender: "Male",
-  ),
+      name: "محمد",
+      image:
+          "https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+      token: "f24f34f34fg34eg34eg34eg",
+      notifications: 33,
+      password: "12345",
+      birthDate: "2003/3/2",
+      email: "mohammed@gmail.com",
+      gender: "Male",
+      id: 4321324),
   UserData(
-    name: "سالم",
-    image:
-        "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
-    token: "g45g4g4g45g45g45g45g4g45g45g",
-    notifications: 3,
-    password: "54321",
-    birthDate: "2000/5/2",
-    email: "salem@gmail.com",
-    gender: "Male",
-  ),
+      name: "سالم",
+      image:
+          "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+      token: "g45g4g4g45g45g45g45g4g45g45g",
+      notifications: 3,
+      password: "54321",
+      birthDate: "2000/5/2",
+      email: "salem@gmail.com",
+      gender: "Male",
+      id: 6543213),
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-List<BoxCourseLabelData> courseBLDSmall = [
-  BoxCourseLabelData(
-      label: "البرمجة باستخدام لغة الجافا",
-      In: "Octal",
-      image:
-          "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-      token: "009112345"),
-  BoxCourseLabelData(
-      label: "تحليل البرمجيات الخبيثة",
-      In: "Octal",
-      image:
-          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-      token: "009112345"),
-  BoxCourseLabelData(
-      label: "إدارة الوقت",
-      In: "Gama",
-      image:
-          "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-      token: "009112345"),
-  BoxCourseLabelData(
-      label: "هجمات الأندرويد",
-      In: "Lablas",
-      image:
-          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-      token: "009112345"),
+List<Course> courseBLD = [
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenter: 0091,
+    image:
+        "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenter: 0091,
+    image:
+        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenter: 0004,
+    image:
+        "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenter: 0123,
+    image:
+        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+  ),
+
+  //! repeated code
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-List<BoxTCLabelData> trainingCenterBLDSmall = [
-  BoxTCLabelData(
-    name: "Octal",
-    address: locations[3],
-    image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
-  ),
-  BoxTCLabelData(
-    name: "Gama",
-    address: locations[2],
-    image:
-        "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%201.png",
-  ),
-  BoxTCLabelData(
-    name: "بيتا",
-    address: locations[0],
-    image: "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%203.png",
-  ),
-  BoxTCLabelData(
-    name: "Lablas",
-    address: locations[1],
-    image:
-        "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%202.png",
-  ),
-];
+List<BoxTCLabelData> trainingCenterBLDSmall = [];
+List<BoxCourseLabelData> courseBLDsmall = [];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 List<TrainingCenter> trainingCenterData = [
   TrainingCenter(
     branch: [Branches[0], Branches[1], Branches[2]],
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -155,7 +183,7 @@ they need to make our world a safer place.""",
     id: 0091,
     location: locations[3],
     name: "Octal",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 00),
     phoneNumber: "0911234567",
     rating: 3.8,
     tags: [
@@ -165,12 +193,14 @@ they need to make our world a safer place.""",
     ],
     image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
     logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
-    facebook: "www.facebook.com",
-    website: "www.octal.com.ly",
+    facebook: "https://www.facebook.com",
+    website: "https://www.octal.com.ly",
+    viperAllow: true,
+    whatsAppAllow: true,
   ),
   TrainingCenter(
     branch: null,
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 45),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -185,7 +215,7 @@ they need to make our world a safer place.""",
     id: 0004,
     location: locations[2],
     name: "Gama",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 30),
     phoneNumber: "0911234567",
     rating: 3.8,
     tags: [
@@ -201,7 +231,7 @@ they need to make our world a safer place.""",
   ),
   TrainingCenter(
     branch: null,
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 06),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -216,7 +246,7 @@ they need to make our world a safer place.""",
     id: 0123,
     location: locations[1],
     name: "Lablas",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 01),
     phoneNumber: "0911234567",
     rating: 2.8,
     tags: [
@@ -233,10 +263,12 @@ they need to make our world a safer place.""",
     image:
         "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
     logo: "http://192.168.43.126/Images/Asset%202.png",
+    viperAllow: true,
+    whatsAppAllow: true,
   ),
   TrainingCenter(
     branch: null,
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -251,7 +283,7 @@ they need to make our world a safer place.""",
     id: 0012,
     location: locations[0],
     name: "بيتا",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 00),
     phoneNumber: "0911234567",
     rating: 3.4,
     tags: [
@@ -263,12 +295,14 @@ they need to make our world a safer place.""",
     image: "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
     logo: "http://192.168.43.126/Images/Asset%203.png",
   ),
+
+  //!! Repeated Data for tests
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 List<TrainingCenterBranch> Branches = [
   TrainingCenterBranch(
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -283,7 +317,7 @@ they need to make our world a safer place.""",
     id: 0321,
     location: locations[2],
     name: "Octal",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 00),
     phoneNumber: "0911234567",
     rating: 4.3,
     tags: [
@@ -292,10 +326,9 @@ they need to make our world a safer place.""",
       tags[2],
     ],
     image: "",
-    logo: "",
   ),
   TrainingCenterBranch(
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -310,7 +343,7 @@ they need to make our world a safer place.""",
     id: 3210,
     location: locations[1],
     name: "Octal",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 00),
     phoneNumber: "0911234567",
     rating: 4.2,
     tags: [
@@ -319,10 +352,9 @@ they need to make our world a safer place.""",
       tags[2],
     ],
     image: "",
-    logo: "",
   ),
   TrainingCenterBranch(
-    close: TimeOfDay(hour: 19, minute: 0),
+    close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
 It is our ongoing mission to empower cyber security
@@ -337,7 +369,7 @@ they need to make our world a safer place.""",
     id: 0923,
     location: locations[0],
     name: "Octal",
-    open: TimeOfDay(hour: 8, minute: 0),
+    open: TimeOfDay(hour: 8, minute: 00),
     phoneNumber: "0911234567",
     rating: 3.3,
     tags: [
@@ -346,16 +378,15 @@ they need to make our world a safer place.""",
       tags[2],
     ],
     image: "",
-    logo: "",
   ),
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 List<Location> locations = [
-  Location(city_en: "Tripoli", city_ar: "طرابلس"),
-  Location(city_en: "Janzour", city_ar: "جنزور"),
-  Location(city_en: "Hay Alandalus", city_ar: "حي الاندلس"),
-  Location(city_en: "Ghout alshaal", city_ar: "غوط الشعال"),
+  Location(city_en: "Tripoli", city_ar: "طرابلس", id: 1),
+  Location(city_en: "Janzour", city_ar: "جنزور", id: 2),
+  Location(city_en: "Hay Alandalus", city_ar: "حي الاندلس", id: 3),
+  Location(city_en: "Ghout alshaal", city_ar: "غوط الشعال", id: 4),
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -374,3 +405,14 @@ List<Tag> tags = [
   Tag(id: 11, name_ar: "متقدم", name_en: "Advanced"),
   Tag(id: 12, name_ar: "إدارة", name_en: "Managment"),
 ];
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+//**************************************************************************** */
+//????????????????????????????????????????????????????????????????????????????????
+//******************************************************************************* */
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+//? Data base data
+
+

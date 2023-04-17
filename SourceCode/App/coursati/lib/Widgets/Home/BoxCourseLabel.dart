@@ -43,8 +43,8 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
               Container(
                 child: Text(
                   (languageType == 0)
-                      ? "في مركز ${widget.bld.In}"
-                      : "In ${widget.bld.In}",
+                      ? "في مركز ${widget.bld.location_in}"
+                      : "In ${widget.bld.location_in}",
                   softWrap: true,
                   style: TextStyle(
                       color: Colors.white,

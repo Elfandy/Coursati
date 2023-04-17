@@ -1,11 +1,11 @@
 class BoxCourseLabelData {
   BoxCourseLabelData(
-      {required this.In,
+      {required this.location_in,
       required this.label,
       required this.image,
-      required this.token});
-  String In;
+      required this.id});
+  String location_in;
   String label;
   String image;
-  String token;
+  int id;
 }

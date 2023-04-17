@@ -1,0 +1,26 @@
+//////////////////////////////////////////////
+1.image not showing from internet using Image.network
+
+
+
+In debug mode service extension and multiple permissions are enabled by default(in flutter)
+
+as you are in release mode you have to add internet permission in androidmanifest.xml manually.( Just like you add it in native development)
+
+navigate to android-> app-> src-> main-> AndroidManifest.xml and add this line outside of application scope.
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+//////////////////////////////////////////////
+2.for storage access
+
+
+Allows an application a broad access to external storage in scoped storage. Intended to be used by few apps that need to manage files on behalf of the users.
+
+Protection level: signature|appop|preinstalled
+
+Constant Value: "android.permission.MANAGE_EXTERNAL_STORAGE" 
+
+////////////////////////////////////////////////

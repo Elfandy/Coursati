@@ -1,4 +1,5 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
+import 'package:coursati/Screens/SubScreen/CourseInfoPage.dart';
 import 'package:coursati/Widgets/Home/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -110,7 +111,11 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     _boxAnimationController.forward().then((value) => {
           _boxAnimationController.reverse(),
         });
-   
+    Navigator.of(context).push(ScreenController().createRoute(
+      CourseInfoPage(name: widget.bld.label),
+      2,
+    ));
+
     /////////////////////////////////////////////////////////////////////
     ///
     ///

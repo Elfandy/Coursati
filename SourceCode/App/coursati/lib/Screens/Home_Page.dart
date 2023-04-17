@@ -30,6 +30,28 @@ class _HomePageState extends State<HomePage> {
 //? ------------------------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < trainingCenterData.length; i++) {
+      trainingCenterBLDSmall.add(BoxTCLabelData(
+          address: trainingCenterData[i].location,
+          id: trainingCenterData[i].id,
+          image: trainingCenterData[i].image,
+          logo: trainingCenterData[i].logo,
+          name: trainingCenterData[i].name));
+    }
+    for (int i = 0; i < courseBLD.length; i++) {
+      for (int j = 0; j < trainingCenterData.length; j++) {
+        if (trainingCenterData[j].id == courseBLD[i].trainingCenter) {
+          courseBLDsmall.add(BoxCourseLabelData(
+            location_in: (languageType == 0)
+                ? trainingCenterData[j].location.city_ar
+                : trainingCenterData[j].location.city_en,
+            id: courseBLD[i].id,
+            image: courseBLD[i].image,
+            label: courseBLD[i].name,
+          ));
+        }
+      }
+    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -117,12 +139,12 @@ class _HomePageState extends State<HomePage> {
 
                         for (int i = 0;
                             i <
-                                ((courseBLDSmall.length < 7)
-                                    ? courseBLDSmall.length
+                                ((courseBLDsmall.length < 7)
+                                    ? courseBLDsmall.length
                                     : 7);
                             i++)
                           CourseBox(
-                            bld: courseBLDSmall[i],
+                            bld: courseBLDsmall[i],
                           ),
 
                         RoundedButton(

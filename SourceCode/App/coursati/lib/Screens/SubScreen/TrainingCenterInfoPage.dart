@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../Classes/GlobalVariables.dart';
+
 import '../../Classes/TrainingCenter.dart';
+import 'CoursesViewPage.dart';
 
 class TrainingCenterPage extends StatefulWidget {
   const TrainingCenterPage({super.key, required this.name});
@@ -40,9 +42,11 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
   Widget build(BuildContext context) {
 //! This is for the repeated widgets
 
-    TextStyle _tagsStyle = TextStyle(color: Color(0xff1776e0), fontSize: 18),
+    TextStyle _tagsStyle = TextStyle(
+            color: Color(0xff1776e0), fontSize: (languageType == 0) ? 16 : 16),
         _branchStyle = TextStyle(fontSize: 16),
-        _labeleStyle = TextStyle(color: Color(0xff1776e0), fontSize: 22);
+        _labeleStyle = TextStyle(
+            color: Color(0xff1776e0), fontSize: (languageType == 0) ? 22 : 20);
     EdgeInsets _labelPad = EdgeInsets.fromLTRB(20, 10, 20, 10);
 
     //??????????????????????????????????????????????????????????????????????????????????
@@ -53,6 +57,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
 
     if (_found) {
       //************************************************************************* */
+
       return Scaffold(
           body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -81,7 +86,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
               padding: const EdgeInsets.only(top: 270),
               child: Container(
                 decoration: BoxDecoration(
-                    color: (isDark!) ? Colors.black38 : Colors.white,
+                    color: (isDark!) ? Colors.grey[800] : Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
@@ -95,22 +100,40 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                            child: Text(
-                              ((languageType == 0)
-                                  ? "مركز " + _trainingCenter.name
-                                  : _trainingCenter.name + " Center"),
-                              style: TextStyle(fontSize: 36),
+                            child: TextButton(
+                              onPressed: () async {
+                                await Clipboard.setData(ClipboardData(
+                                    text: _trainingCenter.name));
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "${_trainingCenter.name} copyed to clipboard",
+                                    backgroundColor: Color(0xff999999),
+                                    gravity: ToastGravity.BOTTOM);
+                              },
+                              child: Text(
+                                ((languageType == 0)
+                                    ? "مركز ${_trainingCenter.name}"
+                                    : "${_trainingCenter.name} Center"),
+                                style: TextStyle(
+                                    fontSize: 36, color: Color(0xff1776e0)),
+                              ),
                             ),
                           ),
                           Spacer(),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
                             child: Container(
-                              width: 50,
-                              height: 50,
-                              child: Image(
-                                image: CachedNetworkImageProvider(
-                                  _trainingCenter.logo,
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  color: (isDark!) ? Colors.white : null,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Image(
+                                  image: CachedNetworkImageProvider(
+                                    _trainingCenter.logo,
+                                  ),
                                 ),
                               ),
                             ),
@@ -119,26 +142,62 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                       ),
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              (languageType == 0)
+                                  ? "اوقات العمل:"
+                                  : "Working Hours:",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              (languageType == 0)
+                                  ? " ${_trainingCenter.open.hour}:${(_trainingCenter.open.minute.toInt() < 10) ? "0${_trainingCenter.open.minute}" : _trainingCenter.open.minute.toString()} - ${_trainingCenter.close.hour}:${(_trainingCenter.close.minute.toInt() < 10) ? "0${_trainingCenter.close.minute}" : _trainingCenter.close.minute.toString()}"
+                                  : " ${_trainingCenter.open.hour}:${(_trainingCenter.open.minute.toInt() < 10) ? "0${_trainingCenter.open.minute}" : _trainingCenter.open.minute.toString()} - ${_trainingCenter.close.hour}:${(_trainingCenter.close.minute.toInt() < 10) ? "0${_trainingCenter.close.minute}" : _trainingCenter.close.minute.toString()}",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //? this is the location of the main branch of the center
-
                       Padding(
                         padding: _labelPad,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image.asset(
-                              "Assets/Icons/map-pin-location.png",
-                              scale: 3,
+                            Container(
+                              width: 25,
+                              height: 25,
+                              child: Image.asset(
+                                "Assets/Icons/map-pin-location.png",
+                                color: (isDark!) ? Colors.white : Colors.black,
+                              ),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             Text(
+                              (languageType == 0) ? "العنوان: " : "ِAddress: ",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
                               (languageType == 0)
                                   ? _trainingCenter.location.city_ar
                                   : _trainingCenter.location.city_en,
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
@@ -169,9 +228,15 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                           MainAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Image.asset(
-                                                          "Assets/Icons/map-pin-location.png",
-                                                          scale: 3,
+                                                        Container(
+                                                          width: 25,
+                                                          height: 25,
+                                                          child: Image.asset(
+                                                            "Assets/Icons/map-pin-location.png",
+                                                            color: (isDark!)
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           width: 10,
@@ -196,9 +261,15 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                           MainAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Image.asset(
-                                                          "Assets/Icons/map-pin-location.png",
-                                                          scale: 3,
+                                                        Container(
+                                                          width: 25,
+                                                          height: 25,
+                                                          child: Image.asset(
+                                                            "Assets/Icons/map-pin-location.png",
+                                                            color: (isDark!)
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           width: 10,
@@ -227,9 +298,15 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                           MainAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Image.asset(
-                                                          "Assets/Icons/map-pin-location.png",
-                                                          scale: 3,
+                                                        Container(
+                                                          width: 25,
+                                                          height: 25,
+                                                          child: Image.asset(
+                                                            "Assets/Icons/map-pin-location.png",
+                                                            color: (isDark!)
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           width: 10,
@@ -258,9 +335,18 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                               MainAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Image.asset(
-                                                              "Assets/Icons/map-pin-location.png",
-                                                              scale: 3,
+                                                            Container(
+                                                              width: 25,
+                                                              height: 25,
+                                                              child:
+                                                                  Image.asset(
+                                                                "Assets/Icons/map-pin-location.png",
+                                                                color: (isDark!)
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Colors
+                                                                        .black,
+                                                              ),
                                                             ),
                                                             SizedBox(
                                                               width: 10,
@@ -405,6 +491,14 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                           ],
                         ),
                       ),
+                      //* Second try of the tags place
+
+                      // Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child:
+
+                      //     )),
+
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!a
                       //? this is the description
 
@@ -432,12 +526,17 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                         child: Padding(
                           padding: _labelPad,
                           child: Text(
-                            "See Our Courses",
+                            (languageType == 0)
+                                ? "تفحص دوراتنا"
+                                : "See Our Courses",
                             style: _labeleStyle,
                           ),
                         ),
                         //???????????????? This is for the function of the see our courses
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(ScreenController()
+                              .createRoute(CoursesViewPage(), 1));
+                        },
                       ),
                       Padding(
                         padding: _labelPad,
@@ -446,8 +545,10 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
 
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //? This is for the contact us section
-                      (_trainingCenter.facebook != "" &&
-                              _trainingCenter.website != "")
+                      (_trainingCenter.facebook != "" ||
+                              _trainingCenter.website != "" ||
+                              _trainingCenter.ViperAllow ||
+                              _trainingCenter.WhatsAppAllow)
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -460,59 +561,128 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                     style: _labeleStyle,
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    (_trainingCenter.facebook != "")
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 0, 20, 0),
-                                            child: Column(
-                                              children: [
-                                                IconButton(
-                                                  icon: Icon(Icons.facebook,
-                                                      size: 40),
-                                                  onPressed: () {
-                                                    _launchSocial(
-                                                        _trainingCenter
-                                                            .facebook);
-                                                  },
-                                                ),
-                                                Text(
-                                                  "Facebook",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        : Container(),
-                                    (_trainingCenter.website != "")
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 0, 20, 0),
-                                            child: Column(
-                                              children: [
-                                                IconButton(
-                                                  icon: Icon(Icons.web_asset,
-                                                      size: 40),
-                                                  onPressed: () {
-                                                    _launchSocial(
-                                                        _trainingCenter
-                                                            .website);
-                                                  },
-                                                ),
-                                                Text(
-                                                  "Website",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        : Container(),
-                                  ],
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      (_trainingCenter.facebook != "")
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 20, 0),
+                                              child: Column(
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(Icons.facebook,
+                                                        size: 40),
+                                                    onPressed: () {
+                                                      _launchSocial(
+                                                          _trainingCenter
+                                                              .facebook);
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Facebook",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          : Container(),
+                                      (_trainingCenter.website != "")
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 20, 0),
+                                              child: Column(
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(Icons.web_asset,
+                                                        size: 40),
+                                                    onPressed: () {
+                                                      _launchSocial(
+                                                          _trainingCenter
+                                                              .website);
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "Website",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          : Container(),
+                                      (_trainingCenter.WhatsAppAllow)
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 20, 0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: 45,
+                                                    height: 45,
+                                                    child: TextButton(
+                                                      child: Image.asset(
+                                                          "Assets/Icons/whatsapp.png",
+                                                          color: (isDark!)
+                                                              ? Colors.white
+                                                              : Colors.black),
+                                                      onPressed: () {
+                                                        _launchSocial(
+                                                            _trainingCenter
+                                                                .whatsApp);
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "WhatsApp",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          : Container(),
+                                      //! this is for viper
+                                      // (_trainingCenter.ViperAllow)
+                                      //     ? Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.fromLTRB(
+                                      //                 20, 0, 20, 0),
+                                      //         child: Column(
+                                      //           children: [
+                                      //             Container(
+                                      //               width: 45,
+                                      //               height: 45,
+                                      //               child: TextButton(
+                                      //                 child: Image.asset(
+                                      //                     "Assets/Icons/viber.png"),
+                                      //                 onPressed: () {
+                                      //                   _launchSocial(
+                                      //                       _trainingCenter
+                                      //                           .viper);
+                                      //                 },
+                                      //               ),
+                                      //             ),
+                                      //             Text(
+                                      //               "Viper",
+                                      //               style: TextStyle(
+                                      //                   fontWeight:
+                                      //                       FontWeight.bold),
+                                      //             )
+                                      //           ],
+                                      //         ),
+                                      //       )
+                                      //     : Container(),
+                                    ],
+                                  ),
                                 )
                               ],
                             )
@@ -536,7 +706,14 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                 color:
                                     (isDark!) ? Colors.white : Colors.black38),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            await Clipboard.setData(ClipboardData(
+                                text: _trainingCenter.phoneNumber));
+                            Fluttertoast.showToast(
+                                msg: "Email copyed to clipboard",
+                                backgroundColor: Color(0xff999999),
+                                gravity: ToastGravity.BOTTOM);
+                          },
                         ),
                       ),
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -571,12 +748,16 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                               // }
 
                               //! this is for copying number to clipboard
-                              await Clipboard.setData(ClipboardData(
-                                  text: _trainingCenter.phoneNumber));
-                              Fluttertoast.showToast(
-                                  msg: "copyed to clipboard",
-                                  backgroundColor: Color(0xff999999),
-                                  gravity: ToastGravity.BOTTOM);
+                              // await Clipboard.setData(ClipboardData(
+                              //     text: _trainingCenter.phoneNumber));
+                              // Fluttertoast.showToast(
+                              //     msg: "copyed to clipboard",
+                              //     backgroundColor: Color(0xff999999),
+                              //     gravity: ToastGravity.BOTTOM);
+
+                              //! this id for copying number to dailer
+                              _launchSocial(
+                                  "tel:${_trainingCenter.phoneNumber}");
                             }),
                       ),
 
@@ -586,7 +767,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                         padding: const EdgeInsets.fromLTRB(40, 20, 40, 30),
                         child: Text(
                           (languageType == 0)
-                              ? "كل المعلومات تم تقديمها بواسطة مركز التدريب"
+                              ? "كل المعلومات الموجودة تم تقديمها بواسطة مركز التدريب"
                               : "All Informations are provided by the Training Center",
                           style: TextStyle(
                             color: Color(0xff999999),
@@ -602,6 +783,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
         ),
       ));
     }
+
     return (Scaffold(
       body: Center(
         child: Text(
@@ -622,10 +804,14 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
     return null;
   }
 
-  void _launchSocial(String url) async {
+  void _launchSocial(String _url) async {
     // Don't use canLaunch because of fbProtocolUrl (fb://)
 
-    bool launched = await launchUrl(Uri.https(url));
+    if (!await launchUrl(Uri.parse(_url),
+        mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $_url');
+    }
+    // await launchUrl(Uri.https(url),mode: LaunchMode.externalApplication ,);
   }
 //! deprecated Function it caculates the image height
   // Future<double> getImageHeight({required String images}) async {

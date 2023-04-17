@@ -1,4 +1,7 @@
+import 'package:coursati/Services/Controller/FileController.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Classes/GlobalVariables.dart';
 import 'Classes/UserData.dart';
 import 'Screens/main_page.dart';
@@ -17,21 +20,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 ///
 ///
 
-void main() {
-  //* This is for the config file
-  languageType = 0;
-  isDark = false;
-  languageSelector = [true, false];
-  user = UserData(
-      name: "",
-      image: "",
-      token: "",
-      notifications: 0,
-      password: "",
-      birthDate: "",
-      email: "",
-      gender: "");
-
+void main() async {
 //*----------------------------------------
 
   runApp(const MainApp());
@@ -42,6 +31,59 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //* This is for the config file
+    // getlanguage().then(
+    //   (value) {
+    //     languageType = value;
+    //   },
+    // );
+    // getDarkMode().then(
+    //   (value) {
+    //     isDark = value;
+    //   },
+    // );
+    // saveConfig(isDark ??= false, languageType ??= 0);
+    // print("bye");
+    isDark ??= false;
+    languageType ??= 0;
+    user = UserData(
+        name: "",
+        image: "",
+        token: "",
+        notifications: 0,
+        password: "",
+        birthDate: "",
+        email: "",
+        gender: "",
+        id: 0);
+    //! This line here is for activating reading and writing from files
+    // context.read<FileController>().readConfig();
+    // String fileData =
+    //     context.select((FileController controller) => controller.text);
+    // if (fileData != "") {
+    //   isDark = fileData
+    //           .substring(
+    //               fileData.indexOf(":", fileData.indexOf("darkMode:")) + 1,
+    //               fileData.indexOf(",", fileData.indexOf("darkMode:")))
+    //           .toLowerCase() ==
+    //       "true";
+
+    //   languageType = int.parse(fileData.substring(9, 10));
+    //   print(isDark.toString() + languageType.toString() + "bye");
+    // } else {
+    //   isDark = false;
+    //   languageType = 0;
+    //   context
+    //       .read<FileController>()
+    //       .writeConfig("language:$languageType,\ndarkMode:${isDark!},");
+    //   print(isDark.toString() + languageType.toString() + "hello");
+    // }
+
+//! this is for shared prefrences test
+
+//??????????????????????????????????????????????????????????????
+    languageSelector = (languageType == 0) ? [true, false] : [false, true];
+
     return MaterialApp(
       title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
@@ -53,9 +95,10 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: local,
-      locale: local[languageType!],
+      locale: local[languageType ??= 0],
       theme: ThemeData(
         colorScheme: const ColorScheme(
+            //*This is the background of the app
             background: Colors.white,
             brightness: Brightness.light,
             error: Colors.red,
@@ -77,8 +120,26 @@ class MainApp extends StatelessWidget {
         ),
         fontFamily: "Tajawal",
       ),
-      darkTheme: ThemeData(colorScheme: ColorScheme.dark()),
-      themeMode: themeSelector[(isDark!) ? 1 : 0],
+      darkTheme: ThemeData(
+        colorScheme: const ColorScheme(
+            //*This is the background of the app
+            background: Color(0xff424242),
+            brightness: Brightness.dark,
+            error: Colors.red,
+            onBackground: Colors.amber,
+            onError: Colors.cyan,
+            //*This Color is for Text And Alike
+            onPrimary: Color(0xff555555),
+            onSecondary: Colors.amber,
+            //* This Color is for disabled buttons and stuff
+            onSurface: Color(0xff999999),
+            //*This Color is For buttons and stuff like this
+            primary: Color(0xff1776e0),
+            //*This Colors is For Splash
+            secondary: Color(0xff1776e0),
+            surface: Color(0xff424242)),
+      ),
+      themeMode: themeSelector[(isDark ??= false) ? 1 : 0],
     );
   }
 
@@ -174,3 +235,24 @@ class MainApp extends StatelessWidget {
   //   return w;
   // }
 }
+
+// saveConfig(bool dark, int lang) async {
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+//   prefs.setInt("Language", lang);
+//   prefs.setBool("DarkMode", dark);
+// }
+
+// Future getlanguage() async {
+//   print
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+//   int? test = prefs.getInt("Language");
+
+//   return test ??= 0;
+// }
+
+// Future getDarkMode() async {
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+//   bool? test = prefs.getBool("DarkMode");
+//   return test ??= false;
+// }

@@ -1,0 +1,6 @@
+ 	MANAGE_DEVICE_POLICY_RUN_IN_BACKGROUND
+
+Allows an application to set policy related to users running in the background. 
+
+
+
