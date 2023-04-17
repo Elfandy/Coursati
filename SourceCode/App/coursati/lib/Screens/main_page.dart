@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Classes/GlobalVariables.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
-import 'TrainingCenter_Page.dart';
+import 'TrainingCenterPage.dart';
 import 'search_Page.dart';
 import 'package:internet_popup/internet_popup.dart';
 

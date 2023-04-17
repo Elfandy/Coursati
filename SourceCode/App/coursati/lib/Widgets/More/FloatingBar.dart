@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Screens/SubScreen/FavoritePage.dart';
 import '../../Services/Animations.dart';
+import '../../Services/ScreenController.dart';
 
 class FloatingBar extends StatefulWidget {
   const FloatingBar({super.key, required this.notificationCount});
@@ -37,7 +38,7 @@ class _FloatingBarState extends State<FloatingBar> {
           TextButton(
             onPressed: () {
               Navigator.of(context).push(
-                Animations().createRoute(
+                ScreenController().createRoute(
                   const NotificationPage(),
                   1,
                 ),
@@ -111,7 +112,7 @@ class _FloatingBarState extends State<FloatingBar> {
           TextButton(
             onPressed: () {
               Navigator.of(context).push(
-                Animations().createRoute(
+                ScreenController().createRoute(
                   const FavoritePage(),
                   1,
                 ),

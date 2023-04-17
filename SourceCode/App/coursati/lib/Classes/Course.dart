@@ -12,7 +12,6 @@ class Course {
   late Trainer trainer;
   late TrainingCenter trainingCenter;
 
-
   Course({
     required int id,
     required int duration,

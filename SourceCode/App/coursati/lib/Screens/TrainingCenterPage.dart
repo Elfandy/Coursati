@@ -10,8 +10,10 @@ class TrainingCenter extends StatefulWidget {
 class _TrainingCenterState extends State<TrainingCenter> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [Text("hello This is Training Center")],
+    return Scaffold(
+      body: Column(
+        children: [Text("hello This is Training Center")],
+      ),
     );
   }
 }

@@ -1,11 +1,13 @@
+import 'Location.dart';
+
 class BoxTCLabelData {
   BoxTCLabelData(
-      {required this.label,
+      {required this.name,
       required this.address,
       required this.image,
       required this.logo});
-  String label;
-  String address;
+  String name;
+  Location address;
   String image;
   String logo;
 }

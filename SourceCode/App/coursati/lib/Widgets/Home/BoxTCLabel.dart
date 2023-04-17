@@ -2,6 +2,8 @@ import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
+
 class BoxTCLabel extends StatefulWidget {
   BoxTCLabel({super.key, required this.bld});
   BoxTCLabelData bld;
@@ -19,7 +21,7 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
         Container(
           child: Text(
             softWrap: true,
-            widget.bld.label,
+            widget.bld.name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -47,7 +49,9 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
                   width: 6,
                 ),
                 Text(
-                  widget.bld.address,
+                  (languageType == 0)
+                      ? widget.bld.address.city_ar
+                      : widget.bld.address.city_en,
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
               ],

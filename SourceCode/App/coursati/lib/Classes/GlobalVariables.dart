@@ -1,3 +1,6 @@
+import 'package:coursati/Classes/Location.dart';
+import 'package:coursati/Classes/Tag.dart';
+import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:flutter/material.dart';
 
 import 'BoxCourseLabelData.dart';
@@ -22,8 +25,10 @@ List<Locale> local = const [
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
 bool login = false;
 int picker = 0;
+UserData? user;
 //* These are the data of the app
 // ? remove after setup with Laravel
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 List<UserData> users = [
   UserData(
@@ -72,63 +77,300 @@ List<UserData> users = [
   ),
 ];
 
-UserData? user;
-// ? --------------------------------------------------------------
-
-// ? remove after setup with Laravel
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 List<BoxCourseLabelData> courseBLDSmall = [
   BoxCourseLabelData(
-    label: "البرمجة باستخدام لغة الجافا",
-    In: "Octal",
-    image:
-        "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-  ),
+      label: "البرمجة باستخدام لغة الجافا",
+      In: "Octal",
+      image:
+          "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+      token: "009112345"),
   BoxCourseLabelData(
-    label: "تحليل البرمجيات الخبيثة",
-    In: "Octal",
-    image:
-        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-  ),
+      label: "تحليل البرمجيات الخبيثة",
+      In: "Octal",
+      image:
+          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+      token: "009112345"),
   BoxCourseLabelData(
-    label: "إدارة الوقت",
-    In: "Gama",
-    image:
-        "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-  ),
+      label: "إدارة الوقت",
+      In: "Gama",
+      image:
+          "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+      token: "009112345"),
   BoxCourseLabelData(
-    label: "هجمات الأندرويد",
-    In: "Lablas",
+      label: "هجمات الأندرويد",
+      In: "Lablas",
+      image:
+          "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+      token: "009112345"),
+];
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+List<BoxTCLabelData> trainingCenterBLDSmall = [
+  BoxTCLabelData(
+    name: "Octal",
+    address: locations[3],
+    image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
+  ),
+  BoxTCLabelData(
+    name: "Gama",
+    address: locations[2],
     image:
-        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+        "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%201.png",
+  ),
+  BoxTCLabelData(
+    name: "بيتا",
+    address: locations[0],
+    image: "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%203.png",
+  ),
+  BoxTCLabelData(
+    name: "Lablas",
+    address: locations[1],
+    image:
+        "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%202.png",
   ),
 ];
 
-List<BoxTCLabelData> trainingCenterBLDSmall = [
-  BoxTCLabelData(
-    label: "Octal",
-    address: "حي الأندلس",
-    logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+List<TrainingCenter> trainingCenterData = [
+  TrainingCenter(
+    branch: [Branches[0], Branches[1], Branches[2]],
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Octal@gmail.com",
+    id: 0091,
+    location: locations[3],
+    name: "Octal",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 3.8,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+    ],
     image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
+    facebook: "www.facebook.com",
+    website: "www.octal.com.ly",
   ),
-  BoxTCLabelData(
-    label: "Gama",
-    address: "حي الأندلس",
-    logo: "http://192.168.43.126/Images/Asset%201.png",
+  TrainingCenter(
+    branch: null,
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Gama@gmail.com",
+    id: 0004,
+    location: locations[2],
+    name: "Gama",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 3.8,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+      tags[9],
+      tags[11],
+    ],
     image:
         "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%201.png",
   ),
-  BoxTCLabelData(
-    label: "Beta",
-    address: "غوط الشعال",
-    logo: "http://192.168.43.126/Images/Asset%202.png",
+  TrainingCenter(
+    branch: null,
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Lablas@gmail.com",
+    id: 0123,
+    location: locations[1],
+    name: "Lablas",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 2.8,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+      tags[3],
+      tags[4],
+      tags[5],
+      tags[6],
+      tags[7],
+      tags[8],
+    ],
     image:
         "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%202.png",
   ),
-  BoxTCLabelData(
-    label: "Lablas",
-    address: "جنزور",
-    logo: "http://192.168.43.126/Images/Asset%203.png",
+  TrainingCenter(
+    branch: null,
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Beta@gmail.com",
+    id: 0012,
+    location: locations[0],
+    name: "بيتا",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 3.4,
+    tags: [
+      tags[9],
+      tags[10],
+      tags[11],
+      tags[4],
+    ],
     image: "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
+    logo: "http://192.168.43.126/Images/Asset%203.png",
   ),
+];
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+List<TrainingCenterBranch> Branches = [
+  TrainingCenterBranch(
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Octal@gmail.com",
+    id: 0321,
+    location: locations[2],
+    name: "Octal",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 4.3,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+    ],
+    image: "",
+    logo: "",
+  ),
+  TrainingCenterBranch(
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Octal@gmail.com",
+    id: 3210,
+    location: locations[1],
+    name: "Octal",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 4.2,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+    ],
+    image: "",
+    logo: "",
+  ),
+  TrainingCenterBranch(
+    close: TimeOfDay(hour: 19, minute: 0),
+    description: """Advancing the Community with Hands-on Cyber
+Security Training.
+It is our ongoing mission to empower cyber security
+ professionals with the practical skills and knowledge
+ they need to make our world a safer place.
+Advancing the Community with Hands-on Cyber Security
+Training.
+It is our ongoing mission to empower cyber security
+professionals with the practical skills and knowledge
+they need to make our world a safer place.""",
+    email: "Octal@gmail.com",
+    id: 0923,
+    location: locations[0],
+    name: "Octal",
+    open: TimeOfDay(hour: 8, minute: 0),
+    phoneNumber: "0911234567",
+    rating: 3.3,
+    tags: [
+      tags[0],
+      tags[1],
+      tags[2],
+    ],
+    image: "",
+    logo: "",
+  ),
+];
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+List<Location> locations = [
+  Location(city_en: "Tripoli", city_ar: "طرابلس"),
+  Location(city_en: "Janzour", city_ar: "جنزور"),
+  Location(city_en: "Hay Alandalus", city_ar: "حي الاندلس"),
+  Location(city_en: "Ghout alshaal", city_ar: "غوط الشعال"),
+];
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+List<Tag> tags = [
+  Tag(id: 1, name_ar: "برمجة", name_en: "Programming"),
+  Tag(id: 2, name_ar: "هندسة", name_en: "Engineering"),
+  Tag(id: 3, name_ar: "أمن سيبراني", name_en: "Cyber Security"),
+  Tag(id: 4, name_ar: "اندرويد", name_en: "Android"),
+  Tag(id: 5, name_ar: "فيروسات", name_en: "Malware"),
+  Tag(id: 6, name_ar: "لينيكس", name_en: "Linux"),
+  Tag(id: 7, name_ar: "البرمجة الكائينية", name_en: "OOP"),
+  Tag(id: 8, name_ar: "اساسيات", name_en: "Basic"),
+  Tag(id: 9, name_ar: "جافا", name_en: "Java"),
+  Tag(id: 10, name_ar: "أمن", name_en: "Security"),
+  Tag(id: 11, name_ar: "متقدم", name_en: "Advanced"),
+  Tag(id: 12, name_ar: "إدارة", name_en: "Managment"),
 ];

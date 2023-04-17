@@ -3,6 +3,9 @@ import 'package:coursati/Widgets/Home/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../../Screens/SubScreen/TrainingCenterInfoPage.dart';
+import '../../Services/ScreenController.dart';
+
 class CourseBox extends StatefulWidget {
   const CourseBox({super.key, required this.bld});
 
@@ -20,10 +23,10 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     // TODO: implement initState
     _boxAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 100),
       value: 1.0,
       lowerBound: 1.0,
-      upperBound: 1.05,
+      upperBound: 1.03,
     );
     super.initState();
   }
@@ -107,7 +110,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
     _boxAnimationController.forward().then((value) => {
           _boxAnimationController.reverse(),
         });
-
+   
     /////////////////////////////////////////////////////////////////////
     ///
     ///
