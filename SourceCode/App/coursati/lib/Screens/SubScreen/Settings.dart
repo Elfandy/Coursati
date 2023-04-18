@@ -156,7 +156,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   // await context.read<FileController>().writeConfig(
                   //     "language:$languageType,\ndarkMode:${isDark!},");
 
-                  // saveConfig(isDark!, languageType!);
+                  saveConfig(isDark!, languageType!);
                   ScreenController().restartApp(context);
                 }
               },

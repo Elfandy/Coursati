@@ -1,3 +1,5 @@
+import 'GlobalVariables.dart';
+import 'Location.dart';
 import 'TagData.dart';
 import 'Trainer.dart';
 import 'TrainingCenter.dart';
@@ -36,17 +38,25 @@ class Course {
     required this.startingDate,
     required this.active,
     required this.trainer,
-    required this.trainingCenter,
+    required this.trainingCenterID,
     required this.description,
     required this.full,
     required this.image,
+    required this.location,
+    this.icon = "",
+    this.trainingCenterName = "",
+    this.periodsRepeats,
+    required this.repeats,
+    required this.trainerData,
+    this.period,
   });
-  final int id, duration;
-  final String name, description, image;
+  final int id, duration, trainer, trainingCenterID;
+  int? periodsRepeats, period;
+  final String name, description, image, icon, trainingCenterName;
   final List<Tag> tags;
   final double price, discount;
   final DateTime startingDate;
-  final bool active, full;
-  final int trainer;
-  final int trainingCenter;
+  final bool active, full, repeats;
+  final Location location;
+  final Trainer trainerData;
 }

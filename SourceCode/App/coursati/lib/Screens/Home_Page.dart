@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     }
     for (int i = 0; i < courseBLD.length; i++) {
       for (int j = 0; j < trainingCenterData.length; j++) {
-        if (trainingCenterData[j].id == courseBLD[i].trainingCenter) {
+        if (trainingCenterData[j].id == courseBLD[i].trainingCenterID) {
           courseBLDsmall.add(BoxCourseLabelData(
             location_in: (languageType == 0)
                 ? trainingCenterData[j].location.city_ar

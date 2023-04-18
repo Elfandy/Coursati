@@ -1,5 +1,6 @@
 import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import '../Classes/GlobalVariables.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
@@ -31,6 +32,7 @@ class _MainPageState extends State<MainPage> {
         .initializeCustomWidget(context: context, widget: const NetworkPopup());
 
     super.initState();
+        FlutterNativeSplash.remove();
   }
 
   //* This is the Builder for the app

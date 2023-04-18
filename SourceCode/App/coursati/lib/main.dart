@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:coursati/Services/Controller/FileController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Classes/GlobalVariables.dart';
@@ -22,8 +25,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
 //*----------------------------------------
-
-  runApp(const MainApp());
+  // runZonedGuarded(() async {
+// Here
+    // WidgetsFlutterBinding.ensureInitialized();
+    // getlanguage();
+    // getDarkMode();
+    runApp(const MainApp());
+  // }, (_, s) {});
 }
 
 class MainApp extends StatelessWidget {
@@ -32,20 +40,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //* This is for the config file
-    // getlanguage().then(
-    //   (value) {
-    //     languageType = value;
-    //   },
-    // );
-    // getDarkMode().then(
-    //   (value) {
-    //     isDark = value;
-    //   },
-    // );
-    // saveConfig(isDark ??= false, languageType ??= 0);
-    // print("bye");
-    isDark ??= false;
-    languageType ??= 0;
+
+    // // print("bye");
+    // isDark ??= false;
+    // languageType ??= 0;
+    
     user = UserData(
         name: "",
         image: "",
@@ -139,7 +138,7 @@ class MainApp extends StatelessWidget {
             secondary: Color(0xff1776e0),
             surface: Color(0xff424242)),
       ),
-      themeMode: themeSelector[(isDark ??= false) ? 1 : 0],
+      themeMode: themeSelector[(isDark!) ? 1 : 0],
     );
   }
 
@@ -236,23 +235,22 @@ class MainApp extends StatelessWidget {
   // }
 }
 
-// saveConfig(bool dark, int lang) async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-//   prefs.setInt("Language", lang);
-//   prefs.setBool("DarkMode", dark);
-// }
+saveConfig(bool dark, int lang) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt("Language", lang);
+  prefs.setBool("DarkMode", dark);
+}
 
-// Future getlanguage() async {
-//   print
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+Future getlanguage() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-//   int? test = prefs.getInt("Language");
+  int? test = prefs.getInt("Language");
 
-//   return test ??= 0;
-// }
+  languageType = test ??= 0;
+}
 
-// Future getDarkMode() async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-//   bool? test = prefs.getBool("DarkMode");
-//   return test ??= false;
-// }
+Future getDarkMode() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool? test = prefs.getBool("DarkMode");
+  isDark = test ??= false;
+}
