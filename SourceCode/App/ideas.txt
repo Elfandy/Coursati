@@ -1,3 +1,26 @@
 1.start Rating
 https://www.kindacode.com/article/how-to-implement-star-rating-in-flutter/
 
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+2.Flutter: How to flip an icon to get mirror effect?
+
+
+The accepted answer works, but to add my two cents, you can use the following:
+
+Transform.scale(
+  scaleX: -1,
+  child: Icon(
+    Icons.rotate_left, 
+    size: 100,
+  ),
+)
+
+Same effect, but without an import statement or any explicit matrices specification
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+
