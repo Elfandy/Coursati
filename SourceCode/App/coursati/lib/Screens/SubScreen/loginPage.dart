@@ -5,9 +5,11 @@ import 'package:intl/intl.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
 import '../../Widgets/Signin/SignUpTextFeild.dart';
+import '../../Widgets/TrainingCenter/TCNotLoggedIn.dart';
 
 class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+  const loginPage({super.key, required this.contextIn});
+  final BuildContext contextIn;
 
   @override
   State<loginPage> createState() => _loginPageState();
@@ -28,7 +30,7 @@ class _loginPageState extends State<loginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: (isDark!) ? Colors.black38 : Colors.white,
+        backgroundColor: (isDark) ? Colors.black38 : Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -39,7 +41,7 @@ class _loginPageState extends State<loginPage> {
         bottomOpacity: 0,
       ),
       body: Container(
-          color: (isDark!) ? Colors.black38 : Colors.white,
+          color: (isDark) ? Colors.black38 : Colors.white,
           child: Center(
               child: Stack(children: [
             Align(
@@ -258,10 +260,10 @@ class _loginPageState extends State<loginPage> {
                               _email.text = "";
                               _name.text = "";
                               _birthDate.text = "";
-                              user!.name = _name.text;
-                              user!.birthDate = _birthDate.text;
-                              user!.email = _email.text;
-                              user!.password = _password.text;
+                              user.name = _name.text;
+                              user.birthDate = _birthDate.text;
+                              user.email = _email.text;
+                              user.password = _password.text;
                             },
                           );
                         }
@@ -271,17 +273,34 @@ class _loginPageState extends State<loginPage> {
                             if (_loginEmail.text.trim() == users[i].email &&
                                 _loginPass.text.trim() == users[i].password) {
                               _accountFound = 1;
-                              user!.name = users[i].name;
-                              user!.birthDate = users[i].birthDate;
-                              user!.email = _loginEmail.text;
-                              user!.password = _loginEmail.text;
-                              user!.notifications = users[i].notifications;
-                              user!.image = users[i].image;
-                              user!.token = users[i].token;
+                              user.name = users[i].name;
+                              user.birthDate = users[i].birthDate;
+                              user.email = _loginEmail.text;
+                              user.password = _loginEmail.text;
+                              user.notifications = users[i].notifications;
+                              user.image = users[i].image;
+                              user.token = users[i].token;
+                              user.trainingCenterId = users[i].trainingCenterId;
+                              //!! this is for filling the data of the training center
+                              if (user.trainingCenterId != null) {
+                                for (int i = 0;
+                                    i < trainingCenterData.length;
+                                    i++) {
+                                  if (user.trainingCenterId ==
+                                      trainingCenterData[i].id) {
+                                    TC = trainingCenterData[i];
+                                  }
+                                }
+                              }
                             }
                           }
                           if (_accountFound == 1) {
-                            Navigator.pop(context, true);
+                            if (widget.contextIn.widget.toString() ==
+                                "TCNotLogged") {
+                              ScreenController().restartApp(context);
+                            } else {
+                              Navigator.pop(context, true);
+                            }
                           } else if (_accountFound == 0) {
                             _accountFound = 2;
                           }

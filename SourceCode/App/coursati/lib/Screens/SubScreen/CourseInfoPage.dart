@@ -70,10 +70,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Image(
-              image: CachedNetworkImageProvider(
-                _course.image,
-              ),
+            child: CachedNetworkImage(
+             
+              imageUrl: _course.image,
+               errorWidget: (context, url, error) => Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, progress) =>
+                  Center(child: CircularProgressIndicator(value: progress.progress)),
               fit: BoxFit.cover,
               height: 300,
             ),

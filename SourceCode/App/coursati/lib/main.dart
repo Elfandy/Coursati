@@ -53,16 +53,7 @@ class MainApp extends StatelessWidget {
     // isDark ??= false;
     // languageType ??= 0;
 
-    user = UserData(
-        name: "",
-        image: "",
-        token: "",
-        notifications: 0,
-        password: "",
-        birthDate: "",
-        email: "",
-        gender: "",
-        id: 0);
+   
     //! This line here is for activating reading and writing from files
     // context.read<FileController>().readConfig();
     // String fileData =
@@ -254,14 +245,14 @@ Future getlanguage() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   int? test = prefs.getInt("Language");
-
+bool? test1 = prefs.getBool("DarkMode");
+  isDark = test1 ??= false;
   languageType = test ??= 0;
 }
 
 Future getDarkMode() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? test = prefs.getBool("DarkMode");
-  isDark = test ??= false;
+  
 }
 
 Future<int> checkServer() async {

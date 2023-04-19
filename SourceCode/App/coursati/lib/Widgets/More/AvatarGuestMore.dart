@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
-import '../../Services/Animations.dart';
 import '../../Screens/SubScreen/loginPage.dart';
 import '../../Services/ScreenController.dart';
 
@@ -50,7 +49,9 @@ class _AvatarGuestMoreState extends State<AvatarGuestMore> {
                 onPressed: () {
                   Navigator.of(context).push(
                     ScreenController().createRoute(
-                      loginPage(),
+                      loginPage(
+                        contextIn: context,
+                      ),
                       0,
                     ),
                   );

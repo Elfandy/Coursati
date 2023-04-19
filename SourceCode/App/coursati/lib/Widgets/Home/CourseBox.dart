@@ -63,38 +63,44 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
                   end: Alignment.topCenter,
                 ),
               ),
+              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
                 highlightColor: null,
                 splashFactory: InkSplash.splashFactory,
                 onTap: _onTap,
                 splashColor: const Color(0xff1776e0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        widget.bld.image,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                child: CachedNetworkImage(
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                    child: CircularProgressIndicator(value: progress.progress),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          BoxCourseLabel(bld: widget.bld),
-                        ],
+                  imageUrl: widget.bld.image,
+                  imageBuilder: (context, imageProvider) => Ink(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                    ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            BoxCourseLabel(bld: widget.bld),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

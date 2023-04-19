@@ -71,6 +71,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                   end: Alignment.topCenter,
                 ),
               ),
+              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
                 highlightColor: null,
@@ -87,49 +88,54 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                 ///
 
                 splashColor: const Color(0xdd1776e0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        widget.bld.image,
+                child: CachedNetworkImage(
+
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, progress) =>
+                  Center(child: CircularProgressIndicator(value: progress.progress)),
+                  imageUrl: widget.bld.image,
+                  imageBuilder: (context, imageProvider) => Ink(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image(
-                          image: CachedNetworkImageProvider(widget.bld.logo),
-                          height: 30,
-                          width: 30,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image(
+                            image: CachedNetworkImageProvider(widget.bld.logo),
+                            height: 30,
+                            width: 30,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              BoxTCLabel(
-                                bld: widget.bld,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      ),
-                    ],
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                BoxTCLabel(
+                                  bld: widget.bld,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

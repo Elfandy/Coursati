@@ -33,37 +33,80 @@ List<Locale> local = const [
   Locale("en", "US"),
 ];
 
+TrainingCenter TC = TrainingCenter(
+  branch: [Branches[0]],
+  close: TimeOfDay(hour: 0, minute: 00),
+  description: """""",
+  email: "",
+  id: 0,
+  location: locations[0],
+  name: "",
+  open: TimeOfDay(hour: 0, minute: 00),
+  phoneNumber: "",
+  rating: 3.8,
+  tags: [tags[0]],
+  image: "",
+  logo: "",
+);
+
 List<ThemeMode> themeSelector = [ThemeMode.light, ThemeMode.dark];
 bool login = false;
 int picker = 0;
-UserData? user;
-//* These are the data of the app
+
+// UserData user = UserData(
+//     name: "ريان",
+//     image:
+//         "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+//     token: "g45g45g45g45g45g45g4g",
+//     notifications: 120,
+//     password: "123",
+//     birthDate: "2000/5/2",
+//     email: "ryan@gmail.com",
+//     gender: "Male",
+//     id: 4893123,
+//     trainingCenterId: 0091);
+
+UserData user = UserData(
+    name: "",
+    image: "",
+    token: "",
+    notifications: 0,
+    password: "",
+    birthDate: "",
+    email: "",
+    gender: "",
+    id: 0);
+// //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 List<UserData> users = [
   UserData(
-      name: "ريان",
-      image:
-          "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-      token: "g45g45g45g45g45g45g4g",
-      notifications: 120,
-      password: "123",
-      birthDate: "2000/5/2",
-      email: "ryan@gmail.com",
-      gender: "Male",
-      id: 4893123),
+    name: "ريان",
+    image:
+        "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+    token: "g45g45g45g45g45g45g4g",
+    notifications: 120,
+    password: "123",
+    birthDate: "2000/5/2",
+    email: "ryan@gmail.com",
+    gender: "Male",
+    id: 4893123,
+    trainingCenterId: 0091,
+  ),
   UserData(
-      name: "نادر",
-      image:
-          "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      token: "312313131231edd23d23d324fd3f4",
-      notifications: 0,
-      password: "112233",
-      birthDate: "1999/5/2",
-      email: "nader@gmail.com",
-      gender: "Male",
-      id: 5654321),
+    name: "نادر",
+    image:
+        "https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+    token: "312313131231edd23d23d324fd3f4",
+    notifications: 0,
+    password: "112233",
+    birthDate: "1999/5/2",
+    email: "nader@gmail.com",
+    gender: "Male",
+    id: 5654321,
+    trainingCenterId: 0004,
+  ),
   UserData(
       name: "محمد",
       image:
@@ -439,7 +482,7 @@ they need to make our world a safer place.""",
       tags[1],
       tags[2],
     ],
-    image: "",
+    image: "${server}/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
   ),
   TrainingCenterBranch(
     close: TimeOfDay(hour: 19, minute: 00),
@@ -465,7 +508,7 @@ they need to make our world a safer place.""",
       tags[1],
       tags[2],
     ],
-    image: "",
+    image: "${server}/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
   ),
   TrainingCenterBranch(
     close: TimeOfDay(hour: 19, minute: 00),
@@ -491,7 +534,7 @@ they need to make our world a safer place.""",
       tags[1],
       tags[2],
     ],
-    image: "",
+    image: "${server}/Images/mike-kononov-lFv0V3_2H6s-unsplash.jpg",
   ),
 ];
 
@@ -520,7 +563,6 @@ List<Tag> tags = <Tag>[
   Tag(id: 12, name_ar: "إدارة", name_en: "Managment"),
 ];
 
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 //**************************************************************************** */
 //????????????????????????????????????????????????????????????????????????????????
@@ -528,5 +570,3 @@ List<Tag> tags = <Tag>[
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
 //? Data base data
-
-

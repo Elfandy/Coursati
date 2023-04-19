@@ -15,8 +15,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  int _change = 0, _langpicker = languageType!;
-  bool themeMode = isDark!;
+  int _change = 0, _langpicker = languageType;
+  bool themeMode = isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
 
-            (user!.token != "")
+            (user.token != "")
                 ? Center(
                     child: TextButton(
                       child: Text(
@@ -156,7 +156,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   // await context.read<FileController>().writeConfig(
                   //     "language:$languageType,\ndarkMode:${isDark!},");
 
-                  saveConfig(isDark!, languageType!);
+                  saveConfig(isDark, languageType);
                   ScreenController().restartApp(context);
                 }
               },

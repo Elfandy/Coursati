@@ -69,10 +69,11 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Image(
-              image: CachedNetworkImageProvider(
-                _trainingCenter.image,
-              ),
+            child: CachedNetworkImage(
+              imageUrl: _trainingCenter.image,
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(value: progress.progress)),
               fit: BoxFit.cover,
               height: 300,
             ),
