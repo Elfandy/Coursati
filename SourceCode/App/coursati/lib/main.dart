@@ -1,15 +1,14 @@
 import 'dart:async';
-
-import 'package:coursati/Services/Controller/FileController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Classes/GlobalVariables.dart';
 import 'Classes/UserData.dart';
 import 'Screens/main_page.dart';
+import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'Widgets/ErrorServer.dart';
 
 //////////////////////////////////////////////////////////////////
 ////
@@ -27,10 +26,19 @@ void main() async {
 //*----------------------------------------
   // runZonedGuarded(() async {
 // Here
-    // WidgetsFlutterBinding.ensureInitialized();
-    // getlanguage();
-    // getDarkMode();
-    runApp(const MainApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // getlanguage();
+  // getDarkMode();
+
+  //!!! This is for checking the connection to the server
+  checkServer().then((value) {
+    if (value==1) {
+      runApp(const MainApp());
+    } else {
+      runApp( ServerError(error:value));
+    }
+  });
+
   // }, (_, s) {});
 }
 
@@ -44,7 +52,7 @@ class MainApp extends StatelessWidget {
     // // print("bye");
     // isDark ??= false;
     // languageType ??= 0;
-    
+
     user = UserData(
         name: "",
         image: "",
@@ -87,7 +95,8 @@ class MainApp extends StatelessWidget {
       title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
       // home: const MainPage(),
-      home: const MainPage(),
+      home: MainPage(),
+
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -253,4 +262,18 @@ Future getDarkMode() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? test = prefs.getBool("DarkMode");
   isDark = test ??= false;
+}
+
+Future<int> checkServer() async {
+  http.Response response;
+  try {
+    response = await http.get(Uri.parse(server));
+  } catch (e) {
+    return 0;
+  }
+  if (response.statusCode == 200) {
+    return 1;
+  } else {
+    return 2;
+  }
 }

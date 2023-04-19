@@ -32,14 +32,13 @@ class _MainPageState extends State<MainPage> {
         .initializeCustomWidget(context: context, widget: const NetworkPopup());
 
     super.initState();
-        FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove();
   }
 
   //* This is the Builder for the app
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
       onWillPop: _onPop,
       child: Scaffold(

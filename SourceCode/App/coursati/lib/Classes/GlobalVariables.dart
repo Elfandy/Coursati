@@ -9,6 +9,8 @@ import 'Course.dart';
 import 'Trainer.dart';
 import 'UserData.dart';
 
+String server = "http://192.168.43.126";
+
 int languageType = 0;
 bool isDark = false;
 List<bool>? languageSelector;
@@ -43,7 +45,7 @@ List<UserData> users = [
   UserData(
       name: "ريان",
       image:
-          "http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+          "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
       token: "g45g45g45g45g45g45g4g",
       notifications: 120,
       password: "123",
@@ -92,8 +94,7 @@ List<Course> courseBLD = [
   Course(
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
-    image:
-        "http://192.168.43.126/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
     id: 12331212,
     active: true,
     description: """Our core Java programming tutorial is designed for
@@ -116,7 +117,7 @@ It is a widely used robust technology.""",
     tags: [tags[0], tags[6], tags[7], tags[8]],
     trainer: 001,
     location: locations[0],
-    icon: "http://192.168.43.126/Images/Asset%201%20(2).png",
+    icon: "${server}/Images/Asset%201%20(2).png",
     trainingCenterName: "Octal",
     repeats: true,
     periodsRepeats: 3,
@@ -133,8 +134,7 @@ while also being the largest individual shareholder until May 2014.
 He was a major entrepreneur of the
 microcomputer revolution of the 1970s
 and 1980s.""",
-      image:
-          "http://192.168.43.126/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
       rating: 3.2,
@@ -144,7 +144,7 @@ and 1980s.""",
     name: "تحليل البرمجيات الخبيثة",
     trainingCenterID: 0091,
     image:
-        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
     id: 87654321,
     active: true,
     description: """Malware analysis is the process of understanding
@@ -174,7 +174,7 @@ reverse engineer a file to discover the malicious code.""",
     tags: [tags[0], tags[4], tags[10], tags[3]],
     trainer: 003,
     location: locations[1],
-    icon: "http://192.168.43.126/Images/Asset%201%20(2).png",
+    icon: "${server}/Images/Asset%201%20(2).png",
     trainingCenterName: "Octal",
     repeats: true,
     periodsRepeats: 6,
@@ -191,8 +191,7 @@ while also being the largest individual shareholder until May 2014.
 He was a major entrepreneur of the
 microcomputer revolution of the 1970s
 and 1980s.""",
-      image:
-          "http://192.168.43.126/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
       rating: 1.5,
@@ -201,8 +200,7 @@ and 1980s.""",
   Course(
     name: "إدارة الوقت",
     trainingCenterID: 0004,
-    image:
-        "http://192.168.43.126/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
     id: 12345678,
     active: false,
     description: """""",
@@ -214,7 +212,7 @@ and 1980s.""",
     tags: [tags[3], tags[4], tags[8], tags[11]],
     trainer: 002,
     location: locations[2],
-    icon: "http://192.168.43.126/Images/Asset%201.png",
+    icon: "${server}/Images/Asset%201.png",
     trainingCenterName: "Gama",
     repeats: false,
     trainerData: Trainer(
@@ -229,8 +227,7 @@ while also being the largest individual shareholder until May 2014.
 He was a major entrepreneur of the
 microcomputer revolution of the 1970s
 and 1980s.""",
-      image:
-          "http://192.168.43.126/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
       rating: 4.8,
@@ -240,7 +237,7 @@ and 1980s.""",
     name: "هجمات الأندرويد",
     trainingCenterID: 0123,
     image:
-        "http://192.168.43.126/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
     id: 00932131,
     active: true,
     description: """""",
@@ -252,7 +249,7 @@ and 1980s.""",
     tags: [tags[0], tags[6], tags[7], tags[8]],
     trainer: 001,
     location: locations[3],
-    icon: "http://192.168.43.126/Images/Asset%202.png",
+    icon: "${server}/Images/Asset%202.png",
     trainingCenterName: "Lablas",
     repeats: true,
     periodsRepeats: 1,
@@ -269,8 +266,7 @@ while also being the largest individual shareholder until May 2014.
 He was a major entrepreneur of the
 microcomputer revolution of the 1970s
 and 1980s.""",
-      image:
-          "http://192.168.43.126/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
       rating: 2.2,
@@ -311,8 +307,8 @@ they need to make our world a safer place.""",
       tags[1],
       tags[2],
     ],
-    image: "http://192.168.43.126/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%201%20(2).png",
+    image: "${server}/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
+    logo: "${server}/Images/Asset%201%20(2).png",
     facebook: "https://www.facebook.com",
     website: "https://www.octal.com.ly",
     viperAllow: true,
@@ -345,9 +341,8 @@ they need to make our world a safer place.""",
       tags[9],
       tags[11],
     ],
-    image:
-        "http://192.168.43.126/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%201.png",
+    image: "${server}/Images/quentin-basnier-bFpbKy69zdc-unsplash.jpg",
+    logo: "${server}/Images/Asset%201.png",
   ),
   TrainingCenter(
     branch: null,
@@ -380,9 +375,8 @@ they need to make our world a safer place.""",
       tags[7],
       tags[8],
     ],
-    image:
-        "http://192.168.43.126/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%202.png",
+    image: "${server}/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
+    logo: "${server}/Images/Asset%202.png",
     viperAllow: true,
     whatsAppAllow: true,
   ),
@@ -412,8 +406,8 @@ they need to make our world a safer place.""",
       tags[11],
       tags[4],
     ],
-    image: "http://192.168.43.126/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
-    logo: "http://192.168.43.126/Images/Asset%203.png",
+    image: "${server}/Images/lucas-franco-aRTjFXs6HNc-unsplash.jpg",
+    logo: "${server}/Images/Asset%203.png",
   ),
 
   //!! Repeated Data for tests
