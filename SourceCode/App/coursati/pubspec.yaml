@@ -36,13 +36,12 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.2.19
   flutter_rating_bar: ^4.0.1
+  flutter_svg: ^2.0.5
   fluttertoast: ^8.2.1
   internet_popup: ^1.0.8+5
   intl: ^0.17.0
   path_provider: ^2.0.14
   provider: ^6.0.5
-  shared_preferences: ^2.1.0
-  sqflite: ^2.2.6
   url_launcher: ^6.1.10
 
 # -----------------------------------------------------------------------------

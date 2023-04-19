@@ -1,9 +1,7 @@
-import 'package:coursati/Services/Controller/FileController.dart';
-import 'package:coursati/Services/FileHandle.dart';
+import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
 
@@ -109,12 +107,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
             (user.token != "")
                 ? Center(
-                    child: TextButton(
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(color: Colors.red, fontSize: 20),
-                      ),
-                      onPressed: () {
+                    child: InkWell(
+                      splashColor: Colors.red,
+                      onTap: () {
                         setState(() {
                           user = UserData(
                               name: "",
@@ -129,6 +124,17 @@ class _SettingsPageState extends State<SettingsPage> {
                           ScreenController().restartApp(context);
                         });
                       },
+                      child: Ink(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              (languageType == 0) ? "تسجيل الخروج" : "Logout",
+                              style: TextStyle(color: Colors.red, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   )
                 : Container(),
@@ -153,10 +159,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                   isDark = themeMode;
 
-                  // await context.read<FileController>().writeConfig(
-                  //     "language:$languageType,\ndarkMode:${isDark!},");
-
-                  saveConfig(isDark, languageType);
+                  FileHandle().writeConfig(
+                      "language:$languageType,\ndarkMode:$isDark,");
+                  // saveConfig(isDark, languageType);
                   ScreenController().restartApp(context);
                 }
               },

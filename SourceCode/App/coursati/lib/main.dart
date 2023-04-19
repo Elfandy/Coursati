@@ -1,14 +1,12 @@
 import 'dart:async';
+
+import 'package:coursati/Services/FileHandle.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'Classes/GlobalVariables.dart';
-import 'Classes/UserData.dart';
 import 'Screens/main_page.dart';
-import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'Widgets/ErrorServer.dart';
 
 //////////////////////////////////////////////////////////////////
 ////
@@ -24,22 +22,42 @@ import 'Widgets/ErrorServer.dart';
 
 void main() async {
 //*----------------------------------------
-  // runZonedGuarded(() async {
+  runZonedGuarded(() async {
 // Here
-  // WidgetsFlutterBinding.ensureInitialized();
-  // getlanguage();
-  // getDarkMode();
+    WidgetsFlutterBinding.ensureInitialized();
+    // getlanguage();
+    // getDarkMode();
 
-  //!!! This is for checking the connection to the server
-  checkServer().then((value) {
-    if (value==1) {
-      runApp(const MainApp());
-    } else {
-      runApp( ServerError(error:value));
-    }
-  });
-
-  // }, (_, s) {});
+    //!!! This is for checking the connection to the server
+    //?????????????????????????????????????????????????????????
+    // checkServer().then((value) {
+    //   if (value==1) {
+    //     runApp(const MainApp());
+    //   } else {
+    //     runApp( ServerError(error:value));
+    //   }
+    // });
+//! This is the temp run remove it
+    FileHandle().readConfig().then(
+      (value) {
+        if (value != null) {
+          String temp = value;
+          isDark = temp
+                  .substring(temp.indexOf(':', temp.indexOf("darkMode")) + 1,
+                      temp.indexOf(',', temp.indexOf("darkMode")))
+                  .toLowerCase() ==
+              'true';
+          languageType = int.parse(temp.substring(
+              temp.indexOf(':', temp.indexOf("language")) + 1,
+              temp.indexOf(",", temp.indexOf("language"))));
+          runApp(MainApp());
+        } else {
+          FileHandle()
+              .writeConfig("language:$languageType,\ndarkMode:$isDark,");
+        }
+      },
+    );
+  }, (_, s) {});
 }
 
 class MainApp extends StatelessWidget {
@@ -47,13 +65,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FileHandle().localPath;
+
     //* This is for the config file
 
     // // print("bye");
     // isDark ??= false;
     // languageType ??= 0;
 
-   
     //! This line here is for activating reading and writing from files
     // context.read<FileController>().readConfig();
     // String fileData =
@@ -235,36 +254,35 @@ class MainApp extends StatelessWidget {
   // }
 }
 
-saveConfig(bool dark, int lang) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setInt("Language", lang);
-  prefs.setBool("DarkMode", dark);
-}
+// saveConfig(bool dark, int lang) async {
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+//   prefs.setInt("Language", lang);
+//   prefs.setBool("DarkMode", dark);
+// }
 
-Future getlanguage() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
+// Future getlanguage() async {
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  int? test = prefs.getInt("Language");
-bool? test1 = prefs.getBool("DarkMode");
-  isDark = test1 ??= false;
-  languageType = test ??= 0;
-}
+//   int? test = prefs.getInt("Language");
+//   bool? test1 = prefs.getBool("DarkMode");
+//   isDark = test1 ??= false;
+//   languageType = test ??= 0;
+// }
 
-Future getDarkMode() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  
-}
+// Future getDarkMode() async {
+//   final SharedPreferences prefs = await SharedPreferences.getInstance();
+// }
 
-Future<int> checkServer() async {
-  http.Response response;
-  try {
-    response = await http.get(Uri.parse(server));
-  } catch (e) {
-    return 0;
-  }
-  if (response.statusCode == 200) {
-    return 1;
-  } else {
-    return 2;
-  }
-}
+// Future<int> checkServer() async {
+//   http.Response response;
+//   try {
+//     response = await http.get(Uri.parse(server));
+//   } catch (e) {
+//     return 0;
+//   }
+//   if (response.statusCode == 200) {
+//     return 1;
+//   } else {
+//     return 2;
+//   }
+// }
