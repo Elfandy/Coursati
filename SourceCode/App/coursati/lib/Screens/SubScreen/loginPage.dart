@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
+import '../../Services/Controller/FileHandle.dart';
 import '../../Widgets/Signin/SignUpTextFeild.dart';
-import '../../Widgets/TrainingCenter/TCNotLoggedIn.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key, required this.contextIn});
@@ -281,6 +281,9 @@ class _loginPageState extends State<loginPage> {
                               user.image = users[i].image;
                               user.token = users[i].token;
                               user.trainingCenterId = users[i].trainingCenterId;
+                              FileHandle().writeConfig(
+                                  ConfigSave);
+
                               //!! this is for filling the data of the training center
                               if (user.trainingCenterId != null) {
                                 for (int i = 0;

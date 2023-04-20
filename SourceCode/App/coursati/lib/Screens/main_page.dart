@@ -28,8 +28,9 @@ class _MainPageState extends State<MainPage> {
 // * This is the initiliser of the app
   @override
   void initState() {
-    InternetPopup()
-        .initializeCustomWidget(context: context, widget: const NetworkPopup());
+    //!This is for the network popup
+    // InternetPopup()
+    //     .initializeCustomWidget(context: context, widget: const NetworkPopup());
 
     super.initState();
     FlutterNativeSplash.remove();

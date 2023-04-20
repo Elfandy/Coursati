@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../Services/ScreenController.dart';
 
 class TCLoggedIn extends StatefulWidget {
@@ -18,18 +19,20 @@ class _TCLoggedInState extends State<TCLoggedIn> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Welcome to Coursati",
+            Text(
+              (languageType == 0) ? "مرحبا في كورساتي" : "Welcome to Coursati",
               style: TextStyle(color: Color(0xff1776e0), fontSize: 32),
             ),
             Image.asset(
               "Assets/Images/handy-line-analytics-solves-the-problem.png",
               height: (MediaQuery.of(context).size.width / 1.3),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 50, right: 50),
               child: Text(
-                "IT seems that you don’t have any Training Centers Yet",
+                (languageType == 0)
+                    ? "يبدو أنك لم تسجل مركز تدريب مسبقاً"
+                    : "IT seems that you don’t have any Training Centers Yet",
                 style: TextStyle(fontSize: 24),
                 textAlign: TextAlign.center,
               ),
@@ -49,8 +52,10 @@ class _TCLoggedInState extends State<TCLoggedIn> {
                   //   ),
                   // );
                 },
-                child: const Text(
-                  "Add Training Center",
+                child: Text(
+                  (languageType == 0)
+                      ? "أضف مركز تدريب"
+                      : "Add Training Center",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

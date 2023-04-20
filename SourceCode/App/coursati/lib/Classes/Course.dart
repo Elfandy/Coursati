@@ -59,4 +59,49 @@ class Course {
   final bool active, full, repeats;
   final Location location;
   final Trainer trainerData;
+
+  Course.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        duration = json['duration'],
+        image = json['image'],
+        trainer = json['trainer'],
+        trainingCenterID = json['trainingCenterID'],
+        periodsRepeats = json['periodsRepeats'],
+        period = json['period'],
+        description = json['description'],
+        id = json['id'],
+        trainingCenterName = json['trainingCenterName'],
+        tags = json['tags'],
+        price = json['price'],
+        discount = json['discount'],
+        startingDate = json['startingDate'],
+        active = json['active'],
+        full = json['full'],
+        repeats = json['repeats'],
+        location = json['location'],
+        trainerData = json['trainerData'],
+        icon = json['icon'];
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'duration': duration,
+        'image': image,
+        'trainer': trainer,
+        'trainingCenterID': trainingCenterID,
+        'periodsRepeats': periodsRepeats,
+        'period': period,
+        'description': description,
+        'id': id,
+        'trainingCenterName': trainingCenterName,
+        'tags': tags,
+        'price': price,
+        'discount': discount,
+        'startingDate': startingDate,
+        'active': active,
+        'full': full,
+        'repeats': repeats,
+        'location': location,
+        'trainerData': trainerData,
+        'icon': icon,
+      };
 }

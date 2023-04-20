@@ -11,6 +11,9 @@ import 'UserData.dart';
 
 String server = "http://192.168.43.126";
 
+String ConfigSave =
+    "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
+
 int languageType = 0;
 bool isDark = false;
 List<bool>? languageSelector;

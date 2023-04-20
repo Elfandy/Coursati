@@ -20,18 +20,22 @@ class _TCNotLoggedState extends State<TCNotLogged> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Welcome to Coursati",
+            Text(
+              (languageType == 0)
+                  ? "مرحبا بك في كورساتي"
+                  : "Welcome to Coursati",
               style: TextStyle(color: Color(0xff1776e0), fontSize: 32),
             ),
             Image.asset(
               "Assets/Images/handy-line-cyber-security.png",
               height: (MediaQuery.of(context).size.width / 1.5),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 50, right: 50),
               child: Text(
-                "Please Login/Signin to Create Or manage Training Centers",
+                (languageType == 0)
+                    ? "الرجاء تسجيل الدخول لإنشاء مركز تدريب أو إدارة المركز "
+                    : "Please Login/Signin to Create Or manage Training Centers",
                 style: TextStyle(fontSize: 24),
                 textAlign: TextAlign.center,
               ),
@@ -46,14 +50,15 @@ class _TCNotLoggedState extends State<TCNotLogged> {
                 onPressed: () {
                   Navigator.of(context).push(
                     ScreenController().createRoute(
-                      loginPage(contextIn: context,),
+                      loginPage(
+                        contextIn: context,
+                      ),
                       0,
                     ),
                   );
-                  
                 },
-                child: const Text(
-                  "Login/Sigin",
+                child: Text(
+                  (languageType == 0) ? "تسجيل الدخول" : "Login/Sigin",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

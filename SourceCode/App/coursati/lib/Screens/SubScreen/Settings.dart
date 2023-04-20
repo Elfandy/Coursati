@@ -1,6 +1,5 @@
 import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:coursati/Services/ScreenController.dart';
-import 'package:coursati/main.dart';
 import 'package:flutter/material.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
@@ -121,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               email: "",
                               gender: "",
                               id: 0);
+                          FileHandle().writeConfig(ConfigSave);
                           ScreenController().restartApp(context);
                         });
                       },
@@ -159,8 +159,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                   isDark = themeMode;
 
-                  FileHandle().writeConfig(
-                      "language:$languageType,\ndarkMode:$isDark,");
+                  FileHandle().writeConfig(ConfigSave);
+
                   // saveConfig(isDark, languageType);
                   ScreenController().restartApp(context);
                 }

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class Config {
   Config({this.id, required this.language, required this.darkMode});

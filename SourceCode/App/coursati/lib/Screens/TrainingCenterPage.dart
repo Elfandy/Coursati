@@ -45,12 +45,14 @@ class _TrainingCenterState extends State<TrainingCenter> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Text(
-                        "Training Center",
+                        (languageType == 0)
+                            ? "مركز التدريب"
+                            : "Training Center",
                         style:
-                            TextStyle(fontSize: 28, color: Color(0xff1776e0)),
+                            const TextStyle(fontSize: 28, color: Color(0xff1776e0)),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -65,7 +67,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                           Padding(
                             padding: const EdgeInsets.only(top: 30),
                             child: Text(
-                              "${TC.name} Center",
+                              " ${(languageType == 0) ? "مركز ${TC.name}" : "${TC.name} Center"}",
                               style: const TextStyle(
                                 fontSize: 32,
                               ),
@@ -75,12 +77,12 @@ class _TrainingCenterState extends State<TrainingCenter> {
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Text(
-                        "Main Branch",
+                        (languageType == 0) ? "الفرع الرئيسي" : "Main Branch",
                         style:
-                            TextStyle(fontSize: 28, color: Color(0xff1776e0)),
+                            const TextStyle(fontSize: 28, color: Color(0xff1776e0)),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -123,7 +125,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                             splashColor: const Color(0xdd1776e0),
                             child: CachedNetworkImage(
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  const Icon(Icons.error),
                               progressIndicatorBuilder:
                                   (context, url, progress) => Center(
                                       child: CircularProgressIndicator(
@@ -140,18 +142,18 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Align(
+                                    alignment: (languageType == 0)
+                                        ? Alignment.bottomRight
+                                        : Alignment.bottomLeft,
                                     child: Text(
                                       (languageType == 0)
                                           ? TC.location.city_ar
                                           : TC.location.city_en,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 28,
                                       ),
                                     ),
-                                    alignment: (languageType == 0)
-                                        ? Alignment.bottomRight
-                                        : Alignment.bottomLeft,
                                   ),
                                 ),
                               ),
@@ -162,18 +164,18 @@ class _TrainingCenterState extends State<TrainingCenter> {
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                       child: (TC.branch == null)
                           ? Container()
                           : Text(
-                              "Branches",
-                              style: TextStyle(
+                              (languageType == 0) ? "الفروع" : "Branches",
+                              style: const TextStyle(
                                   fontSize: 28, color: Color(0xff1776e0)),
                             ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                       child: (TC.branch == null)
                           ? Container()
                           : Column(children: [
@@ -221,7 +223,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                         splashColor: const Color(0xdd1776e0),
                                         child: CachedNetworkImage(
                                           errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                              const Icon(Icons.error),
                                           progressIndicatorBuilder: (context,
                                                   url, progress) =>
                                               Center(
@@ -244,20 +246,20 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Align(
+                                                alignment: (languageType == 0)
+                                                    ? Alignment.bottomRight
+                                                    : Alignment.bottomLeft,
                                                 child: Text(
                                                   (languageType == 0)
                                                       ? TC.branch![i].location
                                                           .city_ar
                                                       : TC.branch![i].location
                                                           .city_en,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 28,
                                                   ),
                                                 ),
-                                                alignment: (languageType == 0)
-                                                    ? Alignment.bottomRight
-                                                    : Alignment.bottomLeft,
                                               ),
                                             ),
                                           ),

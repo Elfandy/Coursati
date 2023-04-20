@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:coursati/Services/FileHandle.dart';
+import 'package:coursati/Classes/UserData.dart';
+import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:flutter/material.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'Classes/GlobalVariables.dart';
@@ -38,23 +40,16 @@ void main() async {
     //   }
     // });
 //! This is the temp run remove it
+
+//* this is the local saving restore function
     FileHandle().readConfig().then(
       (value) {
         if (value != null) {
-          String temp = value;
-          isDark = temp
-                  .substring(temp.indexOf(':', temp.indexOf("darkMode")) + 1,
-                      temp.indexOf(',', temp.indexOf("darkMode")))
-                  .toLowerCase() ==
-              'true';
-          languageType = int.parse(temp.substring(
-              temp.indexOf(':', temp.indexOf("language")) + 1,
-              temp.indexOf(",", temp.indexOf("language"))));
-          runApp(MainApp());
+          FileHandle().extractConfigData(value);
         } else {
-          FileHandle()
-              .writeConfig("language:$languageType,\ndarkMode:$isDark,");
+          FileHandle().writeConfig(ConfigSave);
         }
+        runApp(const MainApp());
       },
     );
   }, (_, s) {});
@@ -65,47 +60,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FileHandle().localPath;
-
-    //* This is for the config file
-
-    // // print("bye");
-    // isDark ??= false;
-    // languageType ??= 0;
-
-    //! This line here is for activating reading and writing from files
-    // context.read<FileController>().readConfig();
-    // String fileData =
-    //     context.select((FileController controller) => controller.text);
-    // if (fileData != "") {
-    //   isDark = fileData
-    //           .substring(
-    //               fileData.indexOf(":", fileData.indexOf("darkMode:")) + 1,
-    //               fileData.indexOf(",", fileData.indexOf("darkMode:")))
-    //           .toLowerCase() ==
-    //       "true";
-
-    //   languageType = int.parse(fileData.substring(9, 10));
-    //   print(isDark.toString() + languageType.toString() + "bye");
-    // } else {
-    //   isDark = false;
-    //   languageType = 0;
-    //   context
-    //       .read<FileController>()
-    //       .writeConfig("language:$languageType,\ndarkMode:${isDark!},");
-    //   print(isDark.toString() + languageType.toString() + "hello");
-    // }
-
-//! this is for shared prefrences test
-
-//??????????????????????????????????????????????????????????????
     languageSelector = (languageType == 0) ? [true, false] : [false, true];
 
     return MaterialApp(
       title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
       // home: const MainPage(),
-      home: MainPage(),
+      home: const MainPage(),
 
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -113,7 +74,7 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: local,
-      locale: local[languageType ??= 0],
+      locale: local[languageType],
       theme: ThemeData(
         colorScheme: const ColorScheme(
             //*This is the background of the app
@@ -157,132 +118,7 @@ class MainApp extends StatelessWidget {
             secondary: Color(0xff1776e0),
             surface: Color(0xff424242)),
       ),
-      themeMode: themeSelector[(isDark!) ? 1 : 0],
+      themeMode: themeSelector[(isDark) ? 1 : 0],
     );
   }
-
-//////////////////////////////////
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-// class SplashScreen extends StatefulWidget {
-//   const SplashScreen({super.key});
-
-//   @override
-//   State<SplashScreen> createState() => _SplashScreenState();
-// }
-
-// class _SplashScreenState extends State<SplashScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedSplashScreen(
-//       splash: Container(
-//         child: Center(
-//           child: Image.asset("Assets/Images/Startup/Logo.png"),
-//         ),
-//       ),
-//       nextScreen: const MainPage(),
-//       backgroundColor: const Color(0xff1776e0),
-//       splashIconSize: 280,
-//       splashTransition: SplashTransition.fadeTransition,
-//     );
-//   }
-// }
-
-  // ! deprected Functions here
-
-  // Future<Widget> _checkConnection() async {
-  //   Widget w = Scaffold(
-  //       body: Container(
-  //     child: Text("hello world"),
-  //   ));
-  //   await Socket.connect("192.168.43.126", 80, timeout: Duration(seconds: 5))
-  //       .then((socket) {
-  //     w = const MainPage();
-  //     socket.destroy();
-  //   }).catchError((error) {
-  //     w = Scaffold(
-  //       body: Container(
-  //         child: Text("hello world"),
-  //       ),
-  //     );
-  //   });
-  //   return w;
-  // }
-
-  //////
-  ///
-  ///
-  ///
-  // Future<bool> _checkConnection() async {
-  //   bool w = false;
-  //   await Socket.connect("192.168.43.126", 80, timeout: Duration(seconds: 5))
-  //       .then((socket) {
-  //     w = true;
-  //     socket.destroy();
-  //   }).catchError((error) {
-  //     w = false;
-  //   });
-  //   return w;
-  // }
-
-  // Widget _assignAfterConnsection() {
-  //   Widget w = Scaffold(
-  //     body: Container(
-  //       child: Text("hello world"),
-  //     ),
-  //   );
-  //   _checkConnection().then((value) => {
-  //         if (value)
-  //           {
-  //             w = const MainPage(),
-  //           }
-  //       });
-
-  //   return w;
-  // }
 }
-
-// saveConfig(bool dark, int lang) async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-//   prefs.setInt("Language", lang);
-//   prefs.setBool("DarkMode", dark);
-// }
-
-// Future getlanguage() async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-//   int? test = prefs.getInt("Language");
-//   bool? test1 = prefs.getBool("DarkMode");
-//   isDark = test1 ??= false;
-//   languageType = test ??= 0;
-// }
-
-// Future getDarkMode() async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-// }
-
-// Future<int> checkServer() async {
-//   http.Response response;
-//   try {
-//     response = await http.get(Uri.parse(server));
-//   } catch (e) {
-//     return 0;
-//   }
-//   if (response.statusCode == 200) {
-//     return 1;
-//   } else {
-//     return 2;
-//   }
-// }
