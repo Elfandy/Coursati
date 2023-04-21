@@ -107,11 +107,11 @@ class _MainPageState extends State<MainPage> {
       builder: (context) => AlertDialog(
         title: Text(
           (languageType == 0) ? "هل انت متأكد" : "Are you Sure?",
-          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+          style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
         ),
         content: Text(
           (languageType == 0) ? "الخروج من التطبيق" : "Exit The App",
-          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+          style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
         ),
         actions: [
           TextButton(

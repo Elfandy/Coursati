@@ -1,5 +1,10 @@
+import 'package:bottom_sheet/bottom_sheet.dart';
+import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '../Classes/TagData.dart';
 import '../Widgets/CustomeWidgets/SearchBar.dart';
+import '../Widgets/CustomeWidgets/TagChip.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -9,39 +14,238 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  List<Tag> _selectedTags = [],
+      _selectedTypes = [],
+      tagTypeList = [
+        Tag(id: 1, name_ar: "دورة", name_en: "Course"),
+        Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center"),
+        Tag(id: 3, name_ar: "مدرب", name_en: "Trainer")
+      ];
+  // bool _selectedRepeat = false;
+  refresh() {
+    setState(() {});
+  }
+
+  TextEditingController _search = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _selectedTags = [];
+    _selectedTypes = [tagTypeList[0]];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
+            padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            height: 400,
-                            width: double.infinity,
-                            
-                          );
-                        },
-                      );
-                    },
-                    child: Image(
-                        image: AssetImage("Assets/Icons/options.png"),
-                        height: 30),
+                Container(
+                  height: 40,
+                  width: (MediaQuery.of(context).size.width / 1.3),
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.start,
+                    cursorWidth: 1,
+                    style: TextStyle(
+                        color: (isDark) ? Colors.white : Colors.black),
+                    onSubmitted: (value) {},
+                    controller: _search,
+                    cursorHeight: 20,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search),
+                      hintText: (languageType == 0) ? "البحث" : "Search",
+                      contentPadding: const EdgeInsets.all(2.5),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                   ),
                 ),
-                SearchBar()
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Container(
+                  width: 60,
+                  height: 40,
+                  child: IconButton(
+                    splashRadius: 20,
+                    onPressed: () {
+                      //!! This is the bottom sheet
+                      setState(() {
+                        showFlexibleBottomSheet(
+                          maxHeight: 1,
+                          minHeight: 0.5,
+                          initHeight: 0.6,
+                          context: context,
+                          isDismissible: true,
+                          bottomSheetColor: Colors.transparent,
+                          anchors: [0, 0.6, 1],
+                          builder:
+                              (context, scrollController, bottomSheetOffset) {
+                            return Material(
+                              color: Colors.transparent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(50),
+                                      topRight: Radius.circular(50),
+                                    ),
+                                    color: (isDark)
+                                        ? const Color(0xff424242)
+                                        : Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: ListView(
+                                    controller: scrollController,
+                                    dragStartBehavior: DragStartBehavior.start,
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: const Color(0xffdddddd),
+                                          ),
+                                          height: 8,
+                                          width: 100,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: double.infinity,
+                                        height: 20,
+                                      ),
+                                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 10, 20, 0),
+                                        child: Text(
+                                          (languageType == 0)
+                                              ? "النوع"
+                                              : "Type",
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Color(0xff1776e0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 10, 20, 10),
+                                        child: Wrap(
+                                          spacing: 10,
+                                          children: [
+                                            TagChip(
+                                              passiveBackgroundColor: (isDark)
+                                                  ? const Color.fromRGBO(
+                                                      250, 250, 250, 0.5)
+                                                  : const Color.fromRGBO(
+                                                      200, 200, 200, 0.5),
+                                              minuimumSelection: 1,
+                                              selected: _selectedTypes,
+                                              tag: tagTypeList[0],
+                                              notifyParent: refresh,
+                                            ),
+                                            TagChip(
+                                              passiveBackgroundColor: (isDark)
+                                                  ? const Color.fromRGBO(
+                                                      250, 250, 250, 0.5)
+                                                  : const Color.fromRGBO(
+                                                      200, 200, 200, 0.5),
+                                              minuimumSelection: 1,
+                                              selected: _selectedTypes,
+                                              tag: tagTypeList[1],
+                                              notifyParent: refresh,
+                                            ),
+                                            TagChip(
+                                              passiveBackgroundColor: (isDark)
+                                                  ? const Color.fromRGBO(
+                                                      250, 250, 250, 0.5)
+                                                  : const Color.fromRGBO(
+                                                      200, 200, 200, 0.5),
+                                              minuimumSelection: 1,
+                                              selected: _selectedTypes,
+                                              tag: tagTypeList[2],
+                                              notifyParent: refresh,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        child: Divider(),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 10, 20, 0),
+                                        child: Text(
+                                          (languageType == 0) ? "وسوم" : "Tags",
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Color(0xff1776e0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 10, 20, 10),
+                                        child: Wrap(
+                                          spacing: 10,
+                                          children: [
+                                            for (Tag i in tags)
+                                              TagChip(
+                                                passiveBackgroundColor: (isDark)
+                                                    ? const Color.fromRGBO(
+                                                        250, 250, 250, 0.5)
+                                                    : const Color.fromRGBO(
+                                                        200, 200, 200, 0.5),
+                                                selected: _selectedTags,
+                                                tag: i,
+                                                notifyParent: refresh,
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      });
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                    },
+                    icon: const Image(
+                      image: AssetImage("Assets/Icons/options.png"),
+                    ),
+                  ),
+                ),
               ],
             ),
-          )
+          ),
+          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+          const Spacer(),
+          Image(
+            image: const AssetImage(
+              "Assets/Icons/handy-line-pin-on-the-map-waving.png",
+            ),
+            height: (MediaQuery.of(context).size.height / 3),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            (languageType == 0) ? "أبدء البحث" : "Start Searching",
+            style: const TextStyle(fontSize: 32, color: Color(0xff999999)),
+          ),
+          const Spacer(),
         ],
       ),
     );

@@ -33,7 +33,7 @@ class _NetworkPopupState extends State<NetworkPopup> {
         body: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: (isDark!) ? Color(0xf424242) : Colors.white,
+              color: (isDark) ? Color(0xf424242) : Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             width: double.infinity,
@@ -72,11 +72,11 @@ class _NetworkPopupState extends State<NetworkPopup> {
       builder: (context) => AlertDialog(
         title: Text(
           (languageType == 0) ? "هل انت متأكد" : "Are you Sure?",
-          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+          style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
         ),
         content: Text(
           (languageType == 0) ? "الخروج من التطبيق" : "Exit The App",
-          style: TextStyle(color: (isDark!) ? Colors.white : Colors.black),
+          style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
         ),
         actions: [
           TextButton(
