@@ -25,16 +25,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() async {
 //*----------------------------------------
   runZonedGuarded(() async {
-// Here
     WidgetsFlutterBinding.ensureInitialized();
-    // getlanguage();
-    // getDarkMode();
 
     //!!! This is for checking the connection to the server
     //?????????????????????????????????????????????????????????
     // checkServer().then((value) {
     //   if (value==1) {
-    //     runApp(const MainApp());
+    //      FileHandle().readConfig().then(
+    //   (value) {
+    //     if (value != null) {
+    //       FileHandle().extractConfigData(value);
+    //     } else {
+    //       FileHandle().writeConfig(ConfigSave);
+    //     }
+    runApp(const MainApp());
+    //   },
+    // );
     //   } else {
     //     runApp( ServerError(error:value));
     //   }
@@ -42,16 +48,6 @@ void main() async {
 //! This is the temp run remove it
 
 //* this is the local saving restore function
-    FileHandle().readConfig().then(
-      (value) {
-        if (value != null) {
-          FileHandle().extractConfigData(value);
-        } else {
-          FileHandle().writeConfig(ConfigSave);
-        }
-        runApp(const MainApp());
-      },
-    );
   }, (_, s) {});
 }
 
@@ -108,7 +104,7 @@ class MainApp extends StatelessWidget {
             onBackground: Colors.amber,
             onError: Colors.cyan,
             //*This Color is for Text And Alike
-            onPrimary: Color(0xff555555),
+            onPrimary: Color.fromARGB(255, 104, 104, 104),
             onSecondary: Colors.amber,
             //* This Color is for disabled buttons and stuff
             onSurface: Color(0xff999999),

@@ -41,7 +41,7 @@ class _RoundedButtonState extends State<RoundedButton>
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
         child: ElevatedButton(
-          onPressed: _onPressed,
+          onPressed: widget.onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.color,
             shape: const CircleBorder(),
@@ -55,6 +55,7 @@ class _RoundedButtonState extends State<RoundedButton>
   }
 
   void _onPressed() {
+    widget.onPressed;
     setState(() {
       _boxAnimationController
           .forward()
@@ -64,7 +65,6 @@ class _RoundedButtonState extends State<RoundedButton>
     ///
     ///
     //Write your code here
-    widget.onPressed;
 
     ///
     ///

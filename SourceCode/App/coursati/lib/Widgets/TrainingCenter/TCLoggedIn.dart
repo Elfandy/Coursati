@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
+import '../../Screens/SubScreen/AddTrainingCenter.dart';
 import '../../Services/ScreenController.dart';
 
 class TCLoggedIn extends StatefulWidget {
@@ -45,12 +46,12 @@ class _TCLoggedInState extends State<TCLoggedIn> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   ScreenController().createRoute(
-                  //     loginPage(),
-                  //     0,
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    ScreenController().createRoute(
+                      AddTrainingCenterPage(),
+                      0,
+                    ),
+                  );
                 },
                 child: Text(
                   (languageType == 0)

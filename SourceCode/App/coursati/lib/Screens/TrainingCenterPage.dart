@@ -20,6 +20,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
     if (user.token == "") {
       //! This is where the screen of user is not loged in
       return const TCNotLogged();
+      // return const TCLoggedIn();
     }
     if (user.trainingCenterId == null) {
       //! THis is where the screen of user is loged in but doesnot have a training center
@@ -51,8 +52,8 @@ class _TrainingCenterState extends State<TrainingCenter> {
                         (languageType == 0)
                             ? "مركز التدريب"
                             : "Training Center",
-                        style:
-                            const TextStyle(fontSize: 28, color: Color(0xff1776e0)),
+                        style: const TextStyle(
+                            fontSize: 28, color: Color(0xff1776e0)),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -81,8 +82,8 @@ class _TrainingCenterState extends State<TrainingCenter> {
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Text(
                         (languageType == 0) ? "الفرع الرئيسي" : "Main Branch",
-                        style:
-                            const TextStyle(fontSize: 28, color: Color(0xff1776e0)),
+                        style: const TextStyle(
+                            fontSize: 28, color: Color(0xff1776e0)),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -164,7 +165,8 @@ class _TrainingCenterState extends State<TrainingCenter> {
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
                       child: (TC.branch == null)
                           ? Container()
                           : Text(

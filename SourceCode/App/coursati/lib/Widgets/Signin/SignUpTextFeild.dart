@@ -31,7 +31,6 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
   Icon visibile = const Icon(
     Icons.visibility_off,
     size: 20,
-    color: Color(0xffdddddd),
   );
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,8 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
           ],
           maxLength: widget.maxLingth,
           onTap: widget.onTap,
-          style: const TextStyle(color: Colors.black, fontSize: 16),
+          style: TextStyle(
+              color: isDark ? Colors.white : Colors.black, fontSize: 16),
           controller: widget.textController,
           decoration: InputDecoration(
             counterText: "",
@@ -65,13 +65,11 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
                           visibile = const Icon(
                             Icons.visibility_off,
                             size: 20,
-                            color: Color(0xffdddddd),
                           );
                         } else {
                           visibile = const Icon(
                             Icons.visibility,
                             size: 20,
-                            color: Color(0xff999999),
                           );
                         }
                       });
@@ -88,7 +86,9 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
               ),
               Text(
                 (languageType == 0) ? widget.text_ar : widget.text_en,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                    fontSize: 16,
+                    color: (isDark) ? Colors.white : Colors.black),
               ),
             ]),
             border: OutlineInputBorder(

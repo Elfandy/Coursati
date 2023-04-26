@@ -13,9 +13,9 @@ class TagChip extends StatefulWidget {
     this.activeTextStyle = const TextStyle(color: Colors.white),
     this.passiveTextStyle = const TextStyle(color: Colors.black),
     this.padding = const EdgeInsets.all(9),
-    required this.notifyParent,
     this.elevation = 1,
     this.minuimumSelection = 0,
+    this.selectable = true,
   });
   int minuimumSelection;
   Tag tag;
@@ -24,7 +24,8 @@ class TagChip extends StatefulWidget {
   TextStyle activeTextStyle, passiveTextStyle;
   EdgeInsets padding;
   double elevation;
-  Function() notifyParent;
+  bool selectable;
+
   @override
   State<TagChip> createState() => _TagChipState();
 }
@@ -54,26 +55,27 @@ class _TagChipState extends State<TagChip> {
       borderRadius: BorderRadius.circular(20),
       onTap: () {
         setState(() {
-          if (!_check) {
-            if (!widget.selected.contains(widget.tag)) {
-              widget.selected.add(widget.tag);
-            }
-
-            _background = widget.activeBackgroundColor;
-            _style = widget.activeTextStyle;
-            _check = !_check;
-          } else {
-            if (widget.minuimumSelection < widget.selected.length) {
-              if (widget.selected.contains(widget.tag)) {
-                widget.selected.remove(widget.tag);
+          if (widget.selectable) {
+            if (!_check) {
+              if (!widget.selected.contains(widget.tag)) {
+                widget.selected.add(widget.tag);
               }
-              _background = widget.passiveBackgroundColor;
 
-              _style = widget.passiveTextStyle;
+              _background = widget.activeBackgroundColor;
+              _style = widget.activeTextStyle;
               _check = !_check;
+            } else {
+              if (widget.minuimumSelection < widget.selected.length) {
+                if (widget.selected.contains(widget.tag)) {
+                  widget.selected.remove(widget.tag);
+                }
+                _background = widget.passiveBackgroundColor;
+
+                _style = widget.passiveTextStyle;
+                _check = !_check;
+              }
             }
           }
-          widget.notifyParent();
         });
       },
       child: Chip(

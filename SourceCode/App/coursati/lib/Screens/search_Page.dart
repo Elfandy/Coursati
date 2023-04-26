@@ -3,7 +3,6 @@ import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../Classes/TagData.dart';
-import '../Widgets/CustomeWidgets/SearchBar.dart';
 import '../Widgets/CustomeWidgets/TagChip.dart';
 
 class SearchPage extends StatefulWidget {
@@ -14,30 +13,45 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<Tag> _selectedTags = [],
-      _selectedTypes = [],
-      tagTypeList = [
-        Tag(id: 1, name_ar: "دورة", name_en: "Course"),
-        Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center"),
-        Tag(id: 3, name_ar: "مدرب", name_en: "Trainer")
-      ];
+  List<Tag> _selectedTags = [], _selectedTypes = [];
+
+  final List<Tag> _tagTypeList = [
+    Tag(id: 1, name_ar: "دورة", name_en: "Course"),
+    Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center"),
+    Tag(id: 3, name_ar: "مدرب", name_en: "Trainer")
+  ];
   // bool _selectedRepeat = false;
   refresh() {
     setState(() {});
   }
 
-  TextEditingController _search = TextEditingController();
+  final TextEditingController _search = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _selectedTags = [];
-    _selectedTypes = [tagTypeList[0]];
+    _selectedTypes = [_tagTypeList[0]];
   }
 
   @override
   Widget build(BuildContext context) {
+    TextField _input = TextField(
+      textAlignVertical: TextAlignVertical.center,
+      textAlign: TextAlign.start,
+      cursorWidth: 1,
+      style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
+      onSubmitted: (value) {},
+      controller: _search,
+      cursorHeight: 20,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search),
+        hintText: (languageType == 0) ? "البحث" : "Search",
+        contentPadding: const EdgeInsets.all(2.5),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -48,26 +62,9 @@ class _SearchPageState extends State<SearchPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 40,
-                  width: (MediaQuery.of(context).size.width / 1.3),
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.center,
-                    textAlign: TextAlign.start,
-                    cursorWidth: 1,
-                    style: TextStyle(
-                        color: (isDark) ? Colors.white : Colors.black),
-                    onSubmitted: (value) {},
-                    controller: _search,
-                    cursorHeight: 20,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: (languageType == 0) ? "البحث" : "Search",
-                      contentPadding: const EdgeInsets.all(2.5),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                  ),
-                ),
+                    height: 40,
+                    width: (MediaQuery.of(context).size.width / 1.3),
+                    child: _input),
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Container(
@@ -78,6 +75,7 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () {
                       //!! This is the bottom sheet
                       setState(() {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         showFlexibleBottomSheet(
                           maxHeight: 1,
                           minHeight: 0.5,
@@ -147,8 +145,7 @@ class _SearchPageState extends State<SearchPage> {
                                                       200, 200, 200, 0.5),
                                               minuimumSelection: 1,
                                               selected: _selectedTypes,
-                                              tag: tagTypeList[0],
-                                              notifyParent: refresh,
+                                              tag: _tagTypeList[0],
                                             ),
                                             TagChip(
                                               passiveBackgroundColor: (isDark)
@@ -158,8 +155,7 @@ class _SearchPageState extends State<SearchPage> {
                                                       200, 200, 200, 0.5),
                                               minuimumSelection: 1,
                                               selected: _selectedTypes,
-                                              tag: tagTypeList[1],
-                                              notifyParent: refresh,
+                                              tag: _tagTypeList[1],
                                             ),
                                             TagChip(
                                               passiveBackgroundColor: (isDark)
@@ -169,8 +165,7 @@ class _SearchPageState extends State<SearchPage> {
                                                       200, 200, 200, 0.5),
                                               minuimumSelection: 1,
                                               selected: _selectedTypes,
-                                              tag: tagTypeList[2],
-                                              notifyParent: refresh,
+                                              tag: _tagTypeList[2],
                                             ),
                                           ],
                                         ),
@@ -206,12 +201,33 @@ class _SearchPageState extends State<SearchPage> {
                                                         200, 200, 200, 0.5),
                                                 selected: _selectedTags,
                                                 tag: i,
-                                                notifyParent: refresh,
                                               ),
                                           ],
                                         ),
                                       ),
                                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                                      Center(
+                                          child: ElevatedButton(
+                                        child: Text(
+                                          (languageType == 0)
+                                              ? "إعادة ضبط"
+                                              : "Reset",
+                                          style: TextStyle(
+                                              color: (isDark)
+                                                  ? Color(0xff424242)
+                                                  : Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          setState(
+                                            () {
+                                              _selectedTags = [_tagTypeList[0]];
+                                              _selectedTypes = [];
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        },
+                                      )),
                                     ],
                                   ),
                                 ),

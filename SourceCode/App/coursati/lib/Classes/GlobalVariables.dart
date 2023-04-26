@@ -2,6 +2,7 @@ import 'package:coursati/Classes/Location.dart';
 import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_termii/flutter_termii.dart';
 
 import 'BoxCourseLabelData.dart';
 import 'BoxTCLabelData.dart';
@@ -13,6 +14,12 @@ String server = "http://192.168.43.126";
 
 String ConfigSave =
     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
+
+final termii = Termii(
+  url: 'https://api.ng.termii.com',
+  apiKey: 'TL0rbCtFTSJb220qvyUcr2FoeY5sZQG4h8ELjYPSgVyCtDJ8iCZjImDHiJDyUr',
+  senderId: 'Coursati',
+);
 
 int languageType = 0;
 bool isDark = false;

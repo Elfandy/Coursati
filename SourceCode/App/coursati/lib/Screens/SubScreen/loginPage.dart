@@ -107,6 +107,7 @@ class _loginPageState extends State<loginPage> {
                                 text_ar: "الاسم",
                                 text_en: "Name",
                                 textController: _name,
+                                
                               ),
                               SignupTextFeild(
                                 icon: Icons.mail,
@@ -187,7 +188,7 @@ class _loginPageState extends State<loginPage> {
                                       Icons.female_rounded,
                                       size: 40,
                                       color: (_gender != 0)
-                                          ? const Color(0xff1776e0)
+                                          ? Color.fromARGB(255, 228, 28, 228)
                                           : const Color(0xff999999),
                                     ),
                                   ),
@@ -199,7 +200,7 @@ class _loginPageState extends State<loginPage> {
                             children: [
                               (_accountFound == 2)
                                   ? Container(
-                                      child: Text(
+                                      child: const Text(
                                         "Your Email/Password is wrong",
                                         style: TextStyle(color: Colors.red),
                                       ),
@@ -247,7 +248,7 @@ class _loginPageState extends State<loginPage> {
                             context: context,
                             barrierDismissible: true,
                             builder: (context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 title: Text(
                                   "The Account has been created",
                                   style: TextStyle(color: Colors.black),
@@ -281,8 +282,7 @@ class _loginPageState extends State<loginPage> {
                               user.image = users[i].image;
                               user.token = users[i].token;
                               user.trainingCenterId = users[i].trainingCenterId;
-                              FileHandle().writeConfig(
-                                  ConfigSave);
+                              FileHandle().writeConfig(ConfigSave);
 
                               //!! this is for filling the data of the training center
                               if (user.trainingCenterId != null) {
@@ -322,7 +322,7 @@ class _loginPageState extends State<loginPage> {
                           : (languageType == 0)
                               ? "تسجيل الدخول"
                               : "Login",
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
                 ],

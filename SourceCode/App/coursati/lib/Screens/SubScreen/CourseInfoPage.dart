@@ -5,7 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Classes/Course.dart';
 import '../../Classes/GlobalVariables.dart';
+import '../../Classes/TagData.dart';
 import '../../Classes/Trainer.dart';
+import '../../Widgets/CustomeWidgets/TagChip.dart';
 
 class CourseInfoPage extends StatefulWidget {
   const CourseInfoPage({super.key, required this.name});
@@ -99,7 +101,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: (isDark) ? Colors.grey[800] : Colors.white,
+                    color: (isDark) ? Color(0xff424242) : Colors.white,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
@@ -141,7 +143,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                                color: (isDark) ? Colors.white : null,
+                                color: (isDark) ? Colors.white70 : null,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(2.0),
@@ -230,7 +232,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -253,7 +255,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             (_course.repeats)
                                 ? Padding(
                                     padding: const EdgeInsets.fromLTRB(
-                                        20, 10, 20, 0),
+                                        30, 10, 30, 0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
@@ -326,20 +328,15 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             spacing: 10,
                             runSpacing: 10,
                             children: [
-                              for (int i = 0; i < _course.tags.length; i++)
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffdddddd)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      (languageType == 0)
-                                          ? _course.tags[i].name_ar
-                                          : _course.tags[i].name_en,
-                                      style: _tagsStyle,
-                                    ),
-                                  ),
+                              for (Tag i in _course.tags)
+                                TagChip(
+                                  passiveBackgroundColor: (isDark)
+                                      ? Color.fromARGB(183, 250, 250, 250)
+                                      : const Color.fromRGBO(
+                                          200, 200, 200, 0.5),
+                                  selected: [],
+                                  tag: i,
+                                  selectable: false,
                                 ),
                             ],
                           ),

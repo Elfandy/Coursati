@@ -1,10 +1,13 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
+import 'package:coursati/Screens/SubScreen/ShowAllTC.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
 import '../Widgets/Home/RoundedButton.dart';
+import 'SubScreen/ShowAllCourse.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -155,7 +158,12 @@ class _HomePageState extends State<HomePage> {
                             size: 40,
                             color: Colors.white,
                           ),
-                          onPressed: () => {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              ScreenController()
+                                  .createRoute(const ShowCourses(), 3),
+                            );
+                          },
                           size: 80,
                         ),
                         /////////////////////////////////////////////////////////
@@ -222,7 +230,12 @@ class _HomePageState extends State<HomePage> {
                               size: 40,
                               color: Colors.white,
                             ),
-                            onPressed: () => {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                ScreenController()
+                                    .createRoute(const ShowTC(), 3),
+                              );
+                            },
                             color: const Color(0xff1776e0),
                             size: 80,
                           ),
