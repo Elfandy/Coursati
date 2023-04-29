@@ -1,7 +1,0 @@
-{
-"Account":
-[
-{"name":" ريان", "email": "ryan@gmail.com", "image":"http://192.168.43.126/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png", "token": "g45g45g45g45g45g45g4g", "password": "123", "birthDate": "2000/5/2", "notifications": 120, "gender": "Male", "id": 4893123, "trainingCenterId": 91},
-{"name":" نادر", "email": "nader@gmail.com", "image":"https://plus.unsplash.com/premium_photo-1678990345290-735e9718af20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", "token": "312313131231edd23d23d324fd3f4", "password": "112233", "birthDate": "1999/5/2", "notifications": 0, "gender": "Male", "id": 5654321, "trainingCenterId": 4},
-{"name":" محمد", "email": "mohammed@gmail.com", "image":"https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", "token": "f24f34f34fg34eg34eg34eg", "password": "12345", "birthDate": "2003/3/2", "notifications": 33, "gender": "Male", "id": 4321324, "trainingCenterId": null},
-{"name":" سالم", "email": "salem@gmail.com", "image":"https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq", "token": "g45g4g4g45g45g45g45g4g45g45g", "password": "54321", "birthDate": "2000/5/2", "notifications": 3, "gender": "Male", "id": 6543213, "trainingCenterId": null}],}
