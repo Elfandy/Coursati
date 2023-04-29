@@ -24,3 +24,20 @@ Protection level: signature|appop|preinstalled
 Constant Value: "android.permission.MANAGE_EXTERNAL_STORAGE" 
 
 ////////////////////////////////////////////////
+
+3. for Bug in Flutter, while editing text in RTL languages cant select last letter
+
+ onTap: () {
+                        if (textController.selection ==
+                            TextSelection.fromPosition(TextPosition(
+                                offset:
+                                    textController.text.length -
+                                        1))) {
+                          textController.selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset:textController.text.length));
+                        }
+                      },
+                      
+
+//////////////////////////////////////////////////////////////////////////

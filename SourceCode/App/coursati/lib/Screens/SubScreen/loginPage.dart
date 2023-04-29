@@ -103,22 +103,45 @@ class _loginPageState extends State<loginPage> {
                             children: [
                               SignupTextFeild(
                                 icon: Icons.person,
-                                onTap: () {},
+                                onTap: () {
+                                  if (_name.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset: _name.text.length - 1))) {
+                                    _name.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _name.text.length));
+                                  }
+                                },
                                 text_ar: "الاسم",
                                 text_en: "Name",
                                 textController: _name,
-                                
                               ),
                               SignupTextFeild(
                                 icon: Icons.mail,
-                                onTap: () {},
+                                onTap: () {
+                                  if (_email.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset: _email.text.length - 1))) {
+                                    _email.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _email.text.length));
+                                  }
+                                },
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _email,
                               ),
                               SignupTextFeild(
                                 icon: Icons.lock_outline_rounded,
-                                onTap: () {},
+                                onTap: () {
+                                  if (_password.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset: _password.text.length - 1))) {
+                                    _password.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _password.text.length));
+                                  }
+                                },
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _password,
@@ -208,14 +231,32 @@ class _loginPageState extends State<loginPage> {
                                   : Container(),
                               SignupTextFeild(
                                 icon: Icons.mail,
-                                onTap: () {},
+                                onTap: () {
+                                  if (_loginEmail.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _loginEmail.text.length - 1))) {
+                                    _loginEmail.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _loginEmail.text.length));
+                                  }
+                                },
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _loginEmail,
                               ),
                               SignupTextFeild(
                                 icon: Icons.lock_outline_rounded,
-                                onTap: () {},
+                                onTap: () {
+                                  if (_loginPass.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _loginPass.text.length - 1))) {
+                                    _loginPass.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _loginPass.text.length));
+                                  }
+                                },
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _loginPass,
@@ -261,6 +302,7 @@ class _loginPageState extends State<loginPage> {
                               _email.text = "";
                               _name.text = "";
                               _birthDate.text = "";
+                              user.gender = '';
                               user.name = _name.text;
                               user.birthDate = _birthDate.text;
                               user.email = _email.text;
@@ -282,6 +324,7 @@ class _loginPageState extends State<loginPage> {
                               user.image = users[i].image;
                               user.token = users[i].token;
                               user.trainingCenterId = users[i].trainingCenterId;
+                              user.gender = users[i].gender;
                               FileHandle().writeConfig(ConfigSave);
 
                               //!! this is for filling the data of the training center

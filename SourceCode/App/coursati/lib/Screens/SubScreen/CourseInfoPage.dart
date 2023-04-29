@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -101,7 +103,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: (isDark) ? Color(0xff424242) : Colors.white,
+                    color: (isDark) ? const Color(0xff424242) : Colors.white,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
@@ -244,7 +246,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                     width: 10,
                                   ),
                                   Text(
-                                    "${(_course.repeats) ? (languageType == 0) ? "يتجدد" : "Reapeats" : (languageType == 0) ? "لا يتجدد" : "No repeats"}",
+                                    (_course.repeats)
+                                        ? (languageType == 0)
+                                            ? "يتجدد"
+                                            : "Reapeats"
+                                        : (languageType == 0)
+                                            ? "لا يتجدد"
+                                            : "No repeats",
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
@@ -285,28 +293,37 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     //? This is the side of the Location and Training Center Name
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 25,
-                            height: 25,
-                            child: Image.asset(
-                              "Assets/Icons/map-pin-location.png",
-                              color: (isDark) ? Colors.white : Colors.black,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(ScreenController()
+                              .createRoute(
+                                  TrainingCenterPage(
+                                      name: _course.trainingCenterName),
+                                  1));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 25,
+                              height: 25,
+                              child: Image.asset(
+                                "Assets/Icons/map-pin-location.png",
+                                color: (isDark) ? Colors.white : Colors.black,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "${(languageType == 0) ? "مركز " + _course.trainingCenterName : _course.trainingCenterName + " Center"} - ${(languageType == 0) ? _course.location.city_ar : _course.location.city_en}",
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff1776e0)),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "${(languageType == 0) ? "مركز ${_course.trainingCenterName}" : "${_course.trainingCenterName} Center"} - ${(languageType == 0) ? _course.location.city_ar : _course.location.city_en}",
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1776e0)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -331,7 +348,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               for (Tag i in _course.tags)
                                 TagChip(
                                   passiveBackgroundColor: (isDark)
-                                      ? Color.fromARGB(183, 250, 250, 250)
+                                      ? const Color.fromARGB(183, 250, 250, 250)
                                       : const Color.fromRGBO(
                                           200, 200, 200, 0.5),
                                   selected: [],
@@ -400,8 +417,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(
-                                        "${(languageType == 0) ? "التخصص:" : "Major:"}"),
+                                    Text((languageType == 0)
+                                        ? "التخصص:"
+                                        : "Major:"),
                                     Text(
                                       _course.trainerData.major,
                                       style: const TextStyle(

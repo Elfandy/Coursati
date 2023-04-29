@@ -10,7 +10,14 @@ import 'Course.dart';
 import 'Trainer.dart';
 import 'UserData.dart';
 
-String server = "http://192.168.43.126";
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+final RegExp english = RegExp(r'^[a-zA-Z]+');
+final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
+
+//!!!!!!!!!1
+//!!!!!!!!!
+String server = "http://192.168.1.7";
 
 String ConfigSave =
     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
@@ -76,34 +83,52 @@ int picker = 0;
 //     id: 4893123,
 //     trainingCenterId: 0091);
 
-UserData user = UserData(
-    name: "",
-    image: "",
-    token: "",
-    notifications: 0,
-    password: "",
-    birthDate: "",
-    email: "",
-    gender: "",
-    id: 0);
+UserData user =
+//  UserData(
+//     name: "",
+//     image: "",
+//     token: "",
+//     notifications: 0,
+//     password: "",
+//     birthDate: "",
+//     email: "",
+//     gender: "",
+//     id: 0);
+    UserData(
+        name: "ريان",
+        image:
+            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+        token: "g45g45g45g45g45g45g4g",
+        notifications: 120,
+        password: "123",
+        birthDate: "2000/5/2",
+        email: "ryan@gmail.com",
+        gender: "Male",
+        id: 4893123,
+        trainingCenterId: 0091,
+        orginaizationName: "coursati",
+        personalID: "NY6D8DWE",
+        phoneNumber: "0910502646");
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 List<UserData> users = [
   UserData(
-    name: "ريان",
-    image:
-        "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-    token: "g45g45g45g45g45g45g4g",
-    notifications: 120,
-    password: "123",
-    birthDate: "2000/5/2",
-    email: "ryan@gmail.com",
-    gender: "Male",
-    id: 4893123,
-    trainingCenterId: 0091,
-  ),
+      name: "ريان",
+      image:
+          "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+      token: "g45g45g45g45g45g45g4g",
+      notifications: 120,
+      password: "123",
+      birthDate: "2000/5/2",
+      email: "ryan@gmail.com",
+      gender: "Male",
+      id: 4893123,
+      trainingCenterId: 0091,
+      orginaizationName: "coursati",
+      personalID: "NY6D8DWE",
+      phoneNumber: "0910502646"),
   UserData(
     name: "نادر",
     image:
@@ -327,6 +352,1092 @@ and 1980s.""",
   ),
 
   //! repeated code
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
+  Course(
+    name: "البرمجة باستخدام لغة الجافا",
+    trainingCenterID: 0091,
+    image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
+    id: 12331212,
+    active: true,
+    description: """Our core Java programming tutorial is designed for
+students and working professionals. Java is an
+object-oriented, class-based, concurrent,
+secured and general-purpose
+computer-programming language.
+It is a widely used robust technology.
+Our core Java programming tutorial is designed
+for students and working professionals.
+Java is an object-oriented, class-based, 
+concurrent, secured and general-purpose
+computer-programming language. 
+It is a widely used robust technology.""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 300,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[0],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 3,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 3.2,
+    ),
+  ),
+  Course(
+    name: "تحليل البرمجيات الخبيثة",
+    trainingCenterID: 0091,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
+    id: 87654321,
+    active: true,
+    description: """Malware analysis is the process of understanding
+the behavior and purpose of a suspicious file or URL. 
+The output of the analysis aids in the detection and 
+mitigation of the potential threat. The key benefit of 
+malware analysis is that it helps incident responders 
+and security analysts pragmatically triage incidents
+by level of severity
+Dynamic malware analysis executes suspected
+ malicious code in a safe environment called a
+ sandbox. This closed system enables security
+ professionals to watch the malware in action
+ without the risk of letting it infect their system or
+ escape into the enterprise network.
+Dynamic analysis provides threat hunters and
+ incident responders with deeper visibility,
+ allowing them to uncover the true nature of a
+ threat. As a secondary benefit, automated
+ sandboxing eliminates the time it would take to 
+reverse engineer a file to discover the malicious code.""",
+    discount: 0,
+    duration: 120,
+    full: false,
+    price: 420,
+    startingDate: DateTime(2023, 5, 32),
+    tags: [tags[0], tags[4], tags[10], tags[3]],
+    trainer: 003,
+    location: locations[1],
+    icon: "${server}/Images/Asset%201%20(2).png",
+    trainingCenterName: "Octal",
+    repeats: true,
+    periodsRepeats: 6,
+    period: 1,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 1.5,
+    ),
+  ),
+  Course(
+    name: "إدارة الوقت",
+    trainingCenterID: 0004,
+    image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
+    id: 12345678,
+    active: false,
+    description: """""",
+    discount: 0,
+    duration: 60,
+    full: false,
+    price: 750,
+    startingDate: DateTime(2023, 6, 32),
+    tags: [tags[3], tags[4], tags[8], tags[11]],
+    trainer: 002,
+    location: locations[2],
+    icon: "${server}/Images/Asset%201.png",
+    trainingCenterName: "Gama",
+    repeats: false,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 4.8,
+    ),
+  ),
+  Course(
+    name: "هجمات الأندرويد",
+    trainingCenterID: 0123,
+    image:
+        "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
+    id: 00932131,
+    active: true,
+    description: """""",
+    discount: 20,
+    duration: 80,
+    full: true,
+    price: 1600,
+    startingDate: DateTime(2023, 10, 9),
+    tags: [tags[0], tags[6], tags[7], tags[8]],
+    trainer: 001,
+    location: locations[3],
+    icon: "${server}/Images/Asset%202.png",
+    trainingCenterName: "Lablas",
+    repeats: true,
+    periodsRepeats: 1,
+    period: 2,
+    trainerData: Trainer(
+      id: 001,
+      discription: """an American business magnate, philanthropist
+and investor. He is a co-founder of Microsoft,
+along with his late childhood friend Paul Allen.
+During his career at Microsoft, Gates held the 
+positions of chairman, chief executive officer, 
+president and chief software architect,
+while also being the largest individual shareholder until May 2014.
+He was a major entrepreneur of the
+microcomputer revolution of the 1970s
+and 1980s.""",
+      image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
+      major: "Programming",
+      name: "Bill Gates",
+      rating: 2.2,
+    ),
+  ),
 ];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

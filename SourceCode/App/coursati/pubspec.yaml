@@ -33,6 +33,8 @@ dependencies:
   chips_choice: ^3.0.0
   connectivity_plus: ^2.3.6
   cupertino_icons: ^1.0.2
+  dropdown_button2: ^2.1.0
+  dropdown_search: ^5.0.6
   flutter:
     sdk: flutter
   flutter_local_notifications: ^13.0.0
@@ -47,6 +49,7 @@ dependencies:
   intl: ^0.17.0
   path_provider: ^2.0.14
   provider: ^6.0.5
+  searchfield: ^0.7.7
   swipe_refresh: ^1.0.2
   url_launcher: ^6.1.10
 

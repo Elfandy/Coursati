@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
@@ -29,7 +30,32 @@ class _AccountPageState extends State<AccountPage> {
           style: const TextStyle(color: Colors.black54),
         ),
       ),
-      body: Container(),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                user.image,
+              ),
+              radius: 100,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                GridPaper()
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+

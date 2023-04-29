@@ -1,17 +1,30 @@
 class UserData {
-  UserData(
-      {required this.id,
-      required this.name,
-      this.image = "Assets/Icons/Asset 2 1.png",
-      required this.token,
-      this.notifications = 0,
-      required this.birthDate,
-      required this.email,
-      required this.password,
-      required this.gender,
-      this.trainingCenterId});
+  UserData({
+    required this.id,
+    required this.name,
+    this.image = "Assets/Icons/Asset 2 1.png",
+    required this.token,
+    this.notifications = 0,
+    required this.birthDate,
+    required this.email,
+    required this.password,
+    required this.gender,
+    this.trainingCenterId,
+    this.orginaizationName = '',
+    this.personalID = '',
+    this.phoneNumber = '',
+  });
   int id;
-  String name, image, token, password, email, birthDate, gender;
+  String name,
+      image,
+      token,
+      password,
+      email,
+      birthDate,
+      gender,
+      orginaizationName,
+      personalID,
+      phoneNumber;
   int notifications;
   int? trainingCenterId;
 }
