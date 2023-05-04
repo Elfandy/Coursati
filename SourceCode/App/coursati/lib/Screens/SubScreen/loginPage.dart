@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:coursati/Services/ScreenController.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +25,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController _birthDate = TextEditingController();
   TextEditingController _loginEmail = TextEditingController();
   TextEditingController _loginPass = TextEditingController();
-  int _isSelected = 0, _gender = 0;
+  int _isSelected = 1, _gender = 0;
   int _accountFound = 0;
 
   @override
@@ -112,6 +115,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _name.text.length));
                                   }
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "الاسم",
                                 text_en: "Name",
                                 textController: _name,
@@ -127,6 +131,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _email.text.length));
                                   }
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _email,
@@ -142,9 +147,31 @@ class _loginPageState extends State<loginPage> {
                                             offset: _password.text.length));
                                   }
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _password,
+                                eyeOfSeeing: true,
+                                password: true,
+                              ),
+                              SignupTextFeild(
+                                icon: Icons.lock_outline_rounded,
+                                onTap: () {
+                                  if (_loginPass.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _loginPass.text.length - 1))) {
+                                    _loginPass.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _loginPass.text.length));
+                                  }
+                                },
+                                onEdidingComplete: () {
+                                  
+                                },
+                                text_ar: "تأكيد الرمز السري",
+                                text_en: "Confirm password",
+                                textController: _loginPass,
                                 eyeOfSeeing: true,
                                 password: true,
                               ),
@@ -166,6 +193,7 @@ class _loginPageState extends State<loginPage> {
                                     });
                                   } else {}
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "المبلاد",
                                 text_en: "Birth Date",
                                 textController: _birthDate,
@@ -241,6 +269,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _loginEmail.text.length));
                                   }
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _loginEmail,
@@ -257,6 +286,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _loginPass.text.length));
                                   }
                                 },
+                                onEdidingComplete: () {},
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _loginPass,
@@ -282,7 +312,7 @@ class _loginPageState extends State<loginPage> {
                             name: _name.text.trim(),
                             password: _password.text.trim(),
                             token: "54g4g45g45g4g45g",
-                            gender: (_gender == 0) ? "Male" : "Female",
+                            gender: _gender,
                             id: 010,
                           ));
                           showDialog(
@@ -302,7 +332,7 @@ class _loginPageState extends State<loginPage> {
                               _email.text = "";
                               _name.text = "";
                               _birthDate.text = "";
-                              user.gender = '';
+                              user.gender = 0;
                               user.name = _name.text;
                               user.birthDate = _birthDate.text;
                               user.email = _email.text;
@@ -311,45 +341,68 @@ class _loginPageState extends State<loginPage> {
                           );
                         }
                       } else {
-                        if (_loginEmail.text != "" && _loginPass.text != "") {
-                          for (int i = 0; i < users.length; i++) {
-                            if (_loginEmail.text.trim() == users[i].email &&
-                                _loginPass.text.trim() == users[i].password) {
-                              _accountFound = 1;
-                              user.name = users[i].name;
-                              user.birthDate = users[i].birthDate;
-                              user.email = _loginEmail.text;
-                              user.password = _loginEmail.text;
-                              user.notifications = users[i].notifications;
-                              user.image = users[i].image;
-                              user.token = users[i].token;
-                              user.trainingCenterId = users[i].trainingCenterId;
-                              user.gender = users[i].gender;
-                              FileHandle().writeConfig(ConfigSave);
+                        if (_loginEmail.text.isNotEmpty &&
+                            _loginPass.text.isNotEmpty) {
+                          //**** Fetch Token from server */
+                          getToken(_loginEmail.text, _loginPass.text)
+                              .then((value) {
+                            Map<String, dynamic> _userTemp =
+                                json.decode(value.toString());
+                            user.token = _userTemp["token"];
+                            //**** Fetch credintials */
+                            getCredintials(user.token).then((value) {
+                              Map<String, dynamic> _userCredinitals =
+                                  json.decode(value.toString());
 
-                              //!! this is for filling the data of the training center
-                              if (user.trainingCenterId != null) {
-                                for (int i = 0;
-                                    i < trainingCenterData.length;
-                                    i++) {
-                                  if (user.trainingCenterId ==
-                                      trainingCenterData[i].id) {
-                                    TC = trainingCenterData[i];
-                                  }
+                              user.name = _userCredinitals['name'];
+                              user.email = _userCredinitals['email'];
+                              user.id = _userCredinitals['id'];
+                              user.birthDate = _userCredinitals['birthdate'];
+                              user.gender = _userCredinitals['gender'];
+                              user.image =
+                                  "$onlineServer/storage/${_userCredinitals['avatar']}";
+                              _accountFound = 1;
+                              if (_accountFound == 1) {
+                                if (widget.contextIn.widget.toString() ==
+                                    "TCNotLogged") {
+                                  ScreenController().restartApp(context);
+                                } else {
+                                  Navigator.pop(context, true);
                                 }
+                              } else if (_accountFound == 0) {
+                                _accountFound = 2;
                               }
-                            }
-                          }
-                          if (_accountFound == 1) {
-                            if (widget.contextIn.widget.toString() ==
-                                "TCNotLogged") {
-                              ScreenController().restartApp(context);
-                            } else {
-                              Navigator.pop(context, true);
-                            }
-                          } else if (_accountFound == 0) {
-                            _accountFound = 2;
-                          }
+                            });
+                          });
+
+                          // for (int i = 0; i < users.length; i++) {
+                          //   if (_loginEmail.text.trim() == users[i].email &&
+                          //       _loginPass.text.trim() == users[i].password) {
+                          //     _accountFound = 1;
+                          //     user.name = users[i].name;
+                          //     user.birthDate = users[i].birthDate;
+                          //     user.email = _loginEmail.text;
+                          //     user.password = _loginEmail.text;
+                          //     user.notifications = users[i].notifications;
+                          //     user.image = users[i].image;
+                          //     user.token = users[i].token;
+                          //     user.trainingCenterId = users[i].trainingCenterId;
+                          //     user.gender = users[i].gender;
+                          //     FileHandle().writeConfig(ConfigSave);
+
+                          //     //!! this is for filling the data of the training center
+                          //     if (user.trainingCenterId != null) {
+                          //       for (int i = 0;
+                          //           i < trainingCenterData.length;
+                          //           i++) {
+                          //         if (user.trainingCenterId ==
+                          //             trainingCenterData[i].id) {
+                          //           TC = trainingCenterData[i];
+                          //         }
+                          //       }
+                          //     }
+                          //   }
+                          // }
                         }
                       }
                     },
@@ -381,5 +434,23 @@ class _loginPageState extends State<loginPage> {
             // ),
           ]))),
     );
+  }
+
+  Future getToken(String email, String password) async {
+    try {
+      return await Dio().post("$onlineServer/api/auth/token",
+          data: {"email": email, "password": password});
+    } catch (exception) {
+      print(exception);
+    }
+  }
+
+  Future getCredintials(String token) async {
+    try {
+      return await Dio().get("$onlineServer/api/user",
+          options: Options(headers: {'Authorization': "Bearer $token"}));
+    } catch (exception) {
+      print(exception) {}
+    }
   }
 }

@@ -33,6 +33,7 @@ dependencies:
   chips_choice: ^3.0.0
   connectivity_plus: ^2.3.6
   cupertino_icons: ^1.0.2
+  dio: ^5.1.1
   dropdown_button2: ^2.1.0
   dropdown_search: ^5.0.6
   flutter:
@@ -47,6 +48,7 @@ dependencies:
   image_picker: ^0.8.7+4
   internet_popup: ^1.0.8+5
   intl: ^0.17.0
+  json_serializable: ^6.6.2
   path_provider: ^2.0.14
   provider: ^6.0.5
   searchfield: ^0.7.7

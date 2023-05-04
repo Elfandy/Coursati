@@ -2,7 +2,6 @@ import 'package:coursati/Classes/Location.dart';
 import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_termii/flutter_termii.dart';
 
 import 'BoxCourseLabelData.dart';
 import 'BoxTCLabelData.dart';
@@ -15,18 +14,24 @@ import 'UserData.dart';
 final RegExp english = RegExp(r'^[a-zA-Z]+');
 final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
 
-//!!!!!!!!!1
 //!!!!!!!!!
-String server = "http://192.168.1.7";
+//!!!!!!!!!
+String server =
+// "http://192.168.1.7";
+    // "http://192.168.43.126";
+    // "http://192.168.1.9";
+    // "http://192.168.43.20";
+    "http://192.168.238.20";
+String onlineServer = "http://192.168.43.128:8000";
 
 String ConfigSave =
     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
 
-final termii = Termii(
-  url: 'https://api.ng.termii.com',
-  apiKey: 'TL0rbCtFTSJb220qvyUcr2FoeY5sZQG4h8ELjYPSgVyCtDJ8iCZjImDHiJDyUr',
-  senderId: 'Coursati',
-);
+// final termii = Termii(
+//   url: 'https://api.ng.termii.com',
+//   apiKey: 'TL0rbCtFTSJb220qvyUcr2FoeY5sZQG4h8ELjYPSgVyCtDJ8iCZjImDHiJDyUr',
+//   senderId: 'Coursati',
+// );
 
 int languageType = 0;
 bool isDark = false;
@@ -83,32 +88,31 @@ int picker = 0;
 //     id: 4893123,
 //     trainingCenterId: 0091);
 
-UserData user =
-//  UserData(
-//     name: "",
-//     image: "",
-//     token: "",
-//     notifications: 0,
-//     password: "",
-//     birthDate: "",
-//     email: "",
-//     gender: "",
-//     id: 0);
-    UserData(
-        name: "ريان",
-        image:
-            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-        token: "g45g45g45g45g45g45g4g",
-        notifications: 120,
-        password: "123",
-        birthDate: "2000/5/2",
-        email: "ryan@gmail.com",
-        gender: "Male",
-        id: 4893123,
-        trainingCenterId: 0091,
-        orginaizationName: "coursati",
-        personalID: "NY6D8DWE",
-        phoneNumber: "0910502646");
+UserData user = UserData(
+    name: "",
+    image: "",
+    token: "",
+    notifications: 0,
+    password: "",
+    birthDate: "",
+    email: "",
+    gender: 0,
+    id: 0);
+// UserData(
+//     name: "ريان",
+//     image:
+//         "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+//     token: "g45g45g45g45g45g45g4g",
+//     notifications: 120,
+//     password: "123",
+//     birthDate: "2000/5/2",
+//     email: "ryan@gmail.com",
+//     gender: 0,
+//     id: 4893123,
+//     trainingCenterId: 0091,
+//     orginaizationName: "coursati",
+//     personalID: "NY6D8DWE",
+//     phoneNumber: "0910502646");
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -123,7 +127,7 @@ List<UserData> users = [
       password: "123",
       birthDate: "2000/5/2",
       email: "ryan@gmail.com",
-      gender: "Male",
+      gender: 0,
       id: 4893123,
       trainingCenterId: 0091,
       orginaizationName: "coursati",
@@ -138,7 +142,7 @@ List<UserData> users = [
     password: "112233",
     birthDate: "1999/5/2",
     email: "nader@gmail.com",
-    gender: "Male",
+    gender: 0,
     id: 5654321,
     trainingCenterId: 0004,
   ),
@@ -151,7 +155,7 @@ List<UserData> users = [
       password: "12345",
       birthDate: "2003/3/2",
       email: "mohammed@gmail.com",
-      gender: "Male",
+      gender: 0,
       id: 4321324),
   UserData(
       name: "سالم",
@@ -162,7 +166,7 @@ List<UserData> users = [
       password: "54321",
       birthDate: "2000/5/2",
       email: "salem@gmail.com",
-      gender: "Male",
+      gender: 0,
       id: 6543213),
 ];
 

@@ -1,7 +1,13 @@
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import '../../Classes/GlobalVariables.dart';
+import '../../Classes/UserData.dart';
+import '../../Services/Controller/FileHandle.dart';
+import '../../Services/ScreenController.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -15,64 +21,79 @@ class _AccountPageState extends State<AccountPage> {
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.name,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _email = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.email,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _gender = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           languageType == 0
-              ? user.gender.toLowerCase() == "male"
+              ? user.gender == 0
                   ? "ذكر"
                   : "أنثى"
-              : user.gender,
-          style: TextStyle(fontSize: 18),
+              : user.gender == 0
+                  ? "Male"
+                  : "Female",
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _birthDate = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.birthDate,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _phoneNumber = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.phoneNumber,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _organaiationName = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.orginaizationName,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       _passportID = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           user.personalID,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       );
   bool _isEdit = false, _SaveButton = false;
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//****     Start of the edit controller */
+  TextEditingController _editName = TextEditingController(),
+      _editEmail = TextEditingController(),
+      _editBirthDate = TextEditingController(),
+      _editPHoneNumber = TextEditingController(),
+      _editOrganaiztionName = TextEditingController(),
+      _editPersonalID = TextEditingController(),
+      _oldPass = TextEditingController(),
+      _newPass1 = TextEditingController(),
+      _newPass2 = TextEditingController();
+  int? _editGender = user.gender;
+  File? _image;
+  ImageProvider _imageProv = CachedNetworkImageProvider(user.image);
+  bool _newPassError = false, _oldPassError = false;
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //**** Start of build function */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -83,7 +104,7 @@ class _AccountPageState extends State<AccountPage> {
         bottomOpacity: 0,
         title: Text(
           (languageType == 0) ? "إدارة الحساب" : "Account",
-          style: const TextStyle(color: Colors.black54),
+          style: TextStyle(color: isDark ? Colors.white : Colors.black54),
         ),
       ),
       body: SizedBox(
@@ -96,12 +117,25 @@ class _AccountPageState extends State<AccountPage> {
                 height: 20,
               ),
               CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  user.image,
-                ),
+                backgroundImage: _imageProv,
                 radius: 100,
+                child: _isEdit
+                    ? Align(
+                        alignment: AlignmentDirectional.bottomStart,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              shape: CircleBorder(),
+                              backgroundColor: Color(0xbbffffff)),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.grey,
+                          ),
+                          onPressed: getImage,
+                        ),
+                      )
+                    : Container(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -109,7 +143,7 @@ class _AccountPageState extends State<AccountPage> {
               SizedBox(
                 height: 400,
                 child: GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   childAspectRatio: 3,
@@ -118,88 +152,180 @@ class _AccountPageState extends State<AccountPage> {
                         alignment: AlignmentDirectional.centerEnd,
                         child: Text(
                           languageType == 0 ? "الاسم:" : "Name:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
+                          style: const TextStyle(
+                              color: Color(0xff1776e0), fontSize: 16),
                         )),
                     AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100), child: _name),
+                        duration: const Duration(milliseconds: 100),
+                        child: _name),
                     Align(
                         alignment: AlignmentDirectional.centerEnd,
                         child: Text(
                           languageType == 0 ? "البريد الالكتروني:" : "Email:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
+                          style: const TextStyle(
+                              color: Color(0xff1776e0), fontSize: 16),
                         )),
                     AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100), child: _email),
+                        duration: const Duration(milliseconds: 100),
+                        child: _email),
                     Align(
                         alignment: AlignmentDirectional.centerEnd,
                         child: Text(
                           languageType == 0 ? "الجنس:" : "Gender:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
+                          style: const TextStyle(
+                              color: Color(0xff1776e0), fontSize: 16),
                         )),
                     AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100), child: _gender),
+                      duration: const Duration(milliseconds: 100),
+                      child: (_isEdit)
+                          ? DropdownButton(
+                              items: [
+                                DropdownMenuItem(
+                                  value: 0,
+                                  child: Text(
+                                    languageType == 0 ? "ذكر" : "Male",
+                                    style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                  // onTap: () {
+                                  //   setState(() {
+                                  //     _editGender = "Male";
+                                  //   });
+                                  // },
+                                ),
+                                DropdownMenuItem(
+                                  value: 1,
+                                  child: Text(
+                                    languageType == 0 ? "أنثى" : "Female",
+                                    style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                  // onTap: () {
+                                  //   setState(() {
+                                  //     _editGender = "Female";
+                                  //   });
+                                  // },
+                                ),
+                              ],
+                              value: _editGender,
+                              isExpanded: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  _editGender = value;
+                                });
+                              },
+                              style: TextStyle(color: Colors.black),
+                            )
+                          : Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: Text(
+                                languageType == 0
+                                    ? user.gender == 0
+                                        ? "ذكر"
+                                        : "أنثى"
+                                    : user.gender == 0
+                                        ? "Male"
+                                        : "Female",
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                    ),
                     Align(
                         alignment: AlignmentDirectional.centerEnd,
                         child: Text(
                           languageType == 0 ? "الميلاد:" : "BirthDate:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
+                          style: const TextStyle(
+                              color: Color(0xff1776e0), fontSize: 16),
                         )),
                     AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100),
+                        duration: const Duration(milliseconds: 100),
                         child: _birthDate),
-                    Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          languageType == 0 ? "رقم الهاتف:" : "Phone Number:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
-                        )),
-                    AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100),
-                        child: _phoneNumber),
-                    Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          languageType == 0
-                              ? "اسم المؤسسة:"
-                              : "Oranaization name:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
-                        )),
-                    AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100),
-                        child: _organaiationName),
-                    Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          languageType == 0
-                              ? "رقم جواز السفر:"
-                              : "Passport ID:",
-                          style:
-                              TextStyle(color: Color(0xff1776e0), fontSize: 18),
-                        )),
-                    AnimatedSwitcher(
-                        duration: Duration(milliseconds: 100),
-                        child: _passportID),
+                    (user.phoneNumber != '')
+                        ? Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Text(
+                              languageType == 0
+                                  ? "رقم الهاتف:"
+                                  : "Phone Number:",
+                              style: const TextStyle(
+                                  color: Color(0xff1776e0), fontSize: 16),
+                            ))
+                        : Container(),
+                    (user.phoneNumber != '')
+                        ? AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 100),
+                            child: _phoneNumber)
+                        : Container(),
+                    (user.orginaizationName != '')
+                        ? Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Text(
+                              languageType == 0
+                                  ? "اسم المؤسسة:"
+                                  : "Oranaization name:",
+                              style: const TextStyle(
+                                  color: Color(0xff1776e0), fontSize: 16),
+                            ))
+                        : Container(),
+                    (user.orginaizationName != '')
+                        ? AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 100),
+                            child: _organaiationName)
+                        : Container(),
+                    (user.personalID != '')
+                        ? Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Text(
+                              languageType == 0
+                                  ? "رقم جواز السفر:"
+                                  : "Passport ID:",
+                              style: const TextStyle(
+                                  color: Color(0xff1776e0), fontSize: 16),
+                            ))
+                        : Container(),
+                    (user.personalID != '')
+                        ? AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 100),
+                            child: _passportID)
+                        : Container(),
                   ],
                 ),
               ),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
               //****   Start of the edit button  */
-              SizedBox(
-                height: 20,
+              const SizedBox(
+                height: 15,
               ),
               Visibility(
                 visible: !_isEdit,
-                child: ElevatedButton(
-                  child: Text(languageType == 0
-                      ? "تعديل البيانات"
-                      : "Edit inforamtion"),
-                  onPressed: _switchToEdit,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 60,
+                  child: OutlinedButton(
+                    // style: ElevatedButton.styleFrom(
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(20))),
+                    onPressed: _switchToEdit,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.edit),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          languageType == 0
+                              ? "تعديل البيانات"
+                              : "Edit inforamtion",
+                          style: const TextStyle(color: Color(0xff1776e0)),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Visibility(
@@ -210,21 +336,258 @@ class _AccountPageState extends State<AccountPage> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
                       child: ElevatedButton(
-                        child: Text(languageType == 0 ? "حفظ" : "save"),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          languageType == 0 ? "حفظ" : "save",
+                          style: const TextStyle(color: Colors.white),
+                        ),
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
                       child: ElevatedButton(
-                        child: Text(languageType == 0 ? "إلغاء" : "cancel"),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
                         onPressed: _switchToEdit,
+                        child: Text(
+                          languageType == 0 ? "إلغاء" : "cancel",
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
+                ),
+              ),
+              Visibility(
+                visible: !_isEdit,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 60,
+                  child: OutlinedButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => AlertDialog(
+                        title: Center(
+                          child: Text(
+                            languageType == 0
+                                ? "تغيير كلمة المرور"
+                                : "Change password",
+                            style: TextStyle(
+                                color: Color(0xff1776e0), fontSize: 18),
+                          ),
+                        ),
+                        content: SizedBox(
+                          height: MediaQuery.of(context).size.height / 4,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 50,
+                                child: TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (value != user.password) {
+                                        _oldPassError = true;
+                                      } else {
+                                        _oldPassError = false;
+                                      }
+                                    });
+                                  },
+                                  controller: _oldPass,
+                                  autofocus: true,
+                                  obscureText: true,
+                                  maxLength: 32,
+                                  style: TextStyle(
+                                      color:
+                                          isDark ? Colors.white : Colors.black),
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: (_oldPassError)
+                                          ? BorderSide(color: Colors.red)
+                                          : BorderSide(
+                                              color: Color(0xff1776e0)),
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: (_newPassError)
+                                          ? BorderSide(color: Colors.red)
+                                          : BorderSide(
+                                              color: Color(0xff1776e0)),
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                    counterText: "",
+                                    label: Text(languageType == 0
+                                        ? "الرمز السري الحالي"
+                                        : "Old Password"),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                  ),
+                                  cursorHeight: 3,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                height: 50,
+                                child: TextField(
+                                  controller: _newPass1,
+                                  autofocus: true,
+                                  obscureText: true,
+                                  maxLength: 32,
+                                  style: TextStyle(
+                                      color:
+                                          isDark ? Colors.white : Colors.black),
+                                  decoration: InputDecoration(
+                                    counterText: "",
+                                    label: Text(languageType == 0
+                                        ? "الرمز السري الجديد "
+                                        : "New Password"),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff1776e0)),
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                  ),
+                                  cursorHeight: 3,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                height: 50,
+                                child: TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (value != _newPass1.text) {
+                                        _newPassError = true;
+                                      } else {
+                                        _newPassError = false;
+                                      }
+                                    });
+                                  },
+                                  controller: _newPass2,
+                                  autofocus: true,
+                                  obscureText: true,
+                                  maxLength: 32,
+                                  style: TextStyle(
+                                      color:
+                                          isDark ? Colors.white : Colors.black),
+                                  decoration: InputDecoration(
+                                    counterText: "",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: (_newPassError)
+                                          ? BorderSide(color: Colors.red)
+                                          : BorderSide(
+                                              color: Color(0xff1776e0)),
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: (_newPassError)
+                                          ? BorderSide(color: Colors.red)
+                                          : BorderSide(
+                                              color: Color(0xff1776e0)),
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                    focusColor: Colors.red,
+                                    label: Text(languageType == 0
+                                        ? "تكرار الرمز الجديد"
+                                        : "Reapeat New Password"),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(200),
+                                    ),
+                                  ),
+                                  cursorHeight: 3,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          Center(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: TextButton(
+                                child: Text(
+                                    languageType == 0 ? "تغيير" : "submit",
+                                    style: TextStyle(fontSize: 18)),
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.edit),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            languageType == 0
+                                ? "تغيير كلمة السر"
+                                : "Change password",
+                            style: const TextStyle(color: Color(0xff1776e0)),
+                          ),
+                        ]),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: !_isEdit,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 60,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(),
+                    onPressed: () {
+                      setState(() {
+                        user = UserData(
+                            name: "",
+                            image: "",
+                            token: "",
+                            notifications: 0,
+                            password: "",
+                            birthDate: "",
+                            email: "",
+                            gender: 0,
+                            id: 0);
+                        FileHandle().writeConfig(ConfigSave);
+                        ScreenController().restartApp(context);
+                      });
+                    },
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.logout, color: Colors.red),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            (languageType == 0) ? "تسجيل الخروج" : "Logout",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ]),
+                  ),
                 ),
               ),
             ],
@@ -234,97 +597,306 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  //?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+//?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+  Future openPasswordDilog() => showDialog(
+        context: context,
+        useSafeArea: true,
+        builder: (context) => AlertDialog(
+          title: Center(
+            child: Text(
+              languageType == 0 ? "تغيير كلمة المرور" : "Change password",
+              style: TextStyle(color: Color(0xff1776e0), fontSize: 18),
+            ),
+          ),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height / 4,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        if (value != user.password) {
+                          _oldPassError = true;
+                        } else {
+                          _oldPassError = false;
+                        }
+                      });
+                    },
+                    controller: _oldPass,
+                    autofocus: true,
+                    obscureText: true,
+                    maxLength: 32,
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: (_oldPassError)
+                            ? BorderSide(color: Colors.red)
+                            : BorderSide(color: Color(0xff1776e0)),
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                      counterText: "",
+                      label: Text(languageType == 0
+                          ? "الرمز السري الحالي"
+                          : "Old Password"),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                    ),
+                    cursorHeight: 3,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: TextField(
+                    controller: _newPass1,
+                    autofocus: true,
+                    obscureText: true,
+                    maxLength: 32,
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
+                    decoration: InputDecoration(
+                      counterText: "",
+                      label: Text(languageType == 0
+                          ? "الرمز السري الجديد "
+                          : "New Password"),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff1776e0)),
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                    ),
+                    cursorHeight: 3,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        if (value != _newPass1.text) {
+                          _newPassError = true;
+                        } else {
+                          _newPassError = false;
+                        }
+                      });
+                    },
+                    controller: _newPass2,
+                    autofocus: true,
+                    obscureText: true,
+                    maxLength: 32,
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
+                    decoration: InputDecoration(
+                      counterText: "",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: (_newPassError)
+                            ? BorderSide(color: Colors.red)
+                            : BorderSide(color: Color(0xff1776e0)),
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                      focusColor: Colors.red,
+                      label: Text(languageType == 0
+                          ? "تكرار الرمز الجديد"
+                          : "Reapeat New Password"),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                    ),
+                    cursorHeight: 3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: TextButton(
+                  child: Text(languageType == 0 ? "تغيير" : "submit",
+                      style: TextStyle(fontSize: 18)),
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+
   _switchToEdit() {
     setState(() {
       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       //*******       Start of the switch function of the data */
       if (!_isEdit) {
         _name = TextField(
-          decoration: InputDecoration(hintText: user.name),
-        );
-        _email = TextField(
-          decoration: InputDecoration(hintText: user.email),
-        );
-        _gender = TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editName,
+          maxLength: 20,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
           decoration: InputDecoration(
-            hintText: languageType == 0
-                ? user.gender.toLowerCase() == "male"
-                    ? "ذكر"
-                    : "أنثى"
-                : user.gender,
+            counterText: '',
+            hintText: user.name,
+            hintStyle: TextStyle(color: Colors.grey),
           ),
         );
-        _birthDate = TextField(
-          decoration: InputDecoration(hintText: user.birthDate),
-        );
-        _phoneNumber = TextField(
-          decoration: InputDecoration(hintText: user.phoneNumber),
-        );
-        _organaiationName = TextField(
-          decoration: InputDecoration(hintText: user.orginaizationName),
-        );
-        _passportID = TextField(
-          decoration: InputDecoration(hintText: user.personalID),
+        _email = TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editEmail,
+          maxLength: 32,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+          decoration: InputDecoration(
+              counterText: '',
+              hintText: user.email,
+              hintStyle: TextStyle(color: Colors.grey)),
         );
 
+        _birthDate = TextField(
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+                context: context,
+                firstDate: DateTime(1900),
+                initialDate: DateTime.now(),
+                lastDate: DateTime.now());
+
+            if (pickedDate != null) {
+              String foramteDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+              setState(() {
+                _editBirthDate.text = foramteDate;
+              });
+            } else {}
+          },
+          readOnly: true,
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editBirthDate,
+          decoration: InputDecoration(
+              hintText: user.birthDate,
+              hintStyle: TextStyle(color: Colors.grey)),
+        );
+        _phoneNumber = TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editPHoneNumber,
+          maxLength: 10,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          decoration: InputDecoration(
+              counterText: '',
+              hintText: user.phoneNumber,
+              hintStyle: TextStyle(color: Colors.grey)),
+        );
+        _organaiationName = TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editOrganaiztionName,
+          maxLength: 24,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+          decoration: InputDecoration(
+              counterText: '',
+              hintText: user.orginaizationName,
+              hintStyle: TextStyle(color: Colors.grey)),
+        );
+        _passportID = TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          controller: _editPersonalID,
+          maxLength: 8,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+          decoration: InputDecoration(
+              counterText: '',
+              hintText: user.personalID,
+              hintStyle: TextStyle(color: Colors.grey)),
+        );
         _isEdit = true;
       } else {
         _name = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.name,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
         _email = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.email,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
-        _gender = Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            languageType == 0
-                ? user.gender.toLowerCase() == "male"
-                    ? "ذكر"
-                    : "أنثى"
-                : user.gender,
-            style: TextStyle(fontSize: 18),
-          ),
-        );
+
         _birthDate = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.birthDate,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
         _phoneNumber = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.phoneNumber,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
         _organaiationName = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.orginaizationName,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
         _passportID = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             user.personalID,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 16),
           ),
         );
         _isEdit = false;
+        _editBirthDate.text = '';
+        _editEmail.text = '';
+        _editGender = user.gender;
+        _editName.text = "";
+        _editOrganaiztionName.text = "";
+        _editPHoneNumber.text = "";
+        _editPersonalID.text = "";
       }
       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    });
+  }
+
+  Future getImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    setState(() {
+      _image = imageTemp;
+      if (_image != null) {
+        _imageProv = FileImage(_image!);
+      } else {
+        _imageProv = CachedNetworkImageProvider(user.image);
+      }
     });
   }
 }

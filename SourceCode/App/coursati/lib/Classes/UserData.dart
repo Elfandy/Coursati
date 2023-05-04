@@ -21,11 +21,11 @@ class UserData {
       password,
       email,
       birthDate,
-      gender,
+      
       orginaizationName,
       personalID,
       phoneNumber;
-  int notifications;
+  int notifications,gender;
   int? trainingCenterId;
 }
 

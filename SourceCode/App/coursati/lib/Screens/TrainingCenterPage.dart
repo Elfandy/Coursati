@@ -115,7 +115,10 @@ class _TrainingCenterState extends State<TrainingCenter> {
                             borderRadius: BorderRadius.circular(20),
                             splashFactory:
                                 InkSparkle.constantTurbulenceSeedSplashFactory,
-                            onTap: () {},
+                            onTap: () {
+                              
+
+                            },
                             //////////////////////////////////////////////////
                             ///
                             ///

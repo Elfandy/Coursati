@@ -39,7 +39,6 @@ class TrainingCenterData {
 
   String get viper => "viber://chat?number=$phoneNumber";
 }
-
 class TrainingCenter extends TrainingCenterData {
   TrainingCenter({
     required id,

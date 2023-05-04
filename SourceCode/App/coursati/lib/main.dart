@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:coursati/Classes/UserData.dart';
+import 'package:http/http.dart' as http;
 import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:flutter/material.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +7,8 @@ import 'Classes/GlobalVariables.dart';
 import 'Screens/main_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'Widgets/ErrorServer.dart';
 
 //////////////////////////////////////////////////////////////////
 ////
@@ -21,6 +21,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 ///
 ///
 ///
+// Future getToken() async {
+//   return await Dio().post("http://192.168.1.11:8000/api/auth/token",
+//       data: {"email": "nader@email.com", "password": "password"});
+// }
 
 void main() async {
 //*----------------------------------------
@@ -30,23 +34,27 @@ void main() async {
     //!!! This is for checking the connection to the server
     //?????????????????????????????????????????????????????????
     // checkServer().then((value) {
-    //   if (value==1) {
-    //      FileHandle().readConfig().then(
-    //   (value) {
-    //     if (value != null) {
-    //       FileHandle().extractConfigData(value);
-    //     } else {
-    //       FileHandle().writeConfig(ConfigSave);
-    //     }
+    //   if (value == 1) {
+    //     FileHandle().readConfig().then(
+    //       (value) {
+    //         if (value != null) {
+    //           FileHandle().extractConfigData(value);
+    //         } else {
+    //           FileHandle().writeConfig(ConfigSave);
+    //         }
     runApp(const MainApp());
-    //   },
-    // );
+    //       },
+    //     );
     //   } else {
-    //     runApp( ServerError(error:value));
+    //     runApp(ServerError(error: value));
     //   }
     // });
 //! This is the temp run remove it
-
+    // getToken().then(
+    //   (value) {
+    //     print(value.toString());
+    //   },
+    // );
 //* this is the local saving restore function
   }, (_, s) {});
 }
@@ -116,5 +124,23 @@ class MainApp extends StatelessWidget {
       ),
       themeMode: themeSelector[(isDark) ? 1 : 0],
     );
+  }
+}
+
+Future<int> checkServer() async {
+  http.Response response;
+  try {
+    //*** This is the default server check */
+    // response = await http.get(Uri.parse(server));
+    //!! temp server check
+
+    response = await http.get(Uri.parse("http://192.168.1.11:8000"));
+  } catch (e) {
+    return 0;
+  }
+  if (response.statusCode == 200) {
+    return 1;
+  } else {
+    return 2;
   }
 }

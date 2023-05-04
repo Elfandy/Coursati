@@ -104,41 +104,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
 
-            (user.token != "")
-                ? Center(
-                    child: InkWell(
-                      splashColor: Colors.red,
-                      onTap: () {
-                        setState(() {
-                          user = UserData(
-                              name: "",
-                              image: "",
-                              token: "",
-                              notifications: 0,
-                              password: "",
-                              birthDate: "",
-                              email: "",
-                              gender: "",
-                              id: 0);
-                          FileHandle().writeConfig(ConfigSave);
-                          ScreenController().restartApp(context);
-                        });
-                      },
-                      child: Ink(
-                        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                        child: Row(
-                          children: [
-                            Text(
-                              (languageType == 0) ? "تسجيل الخروج" : "Logout",
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
-
             //*! last Thing in the page
             const Spacer(),
             ElevatedButton(
