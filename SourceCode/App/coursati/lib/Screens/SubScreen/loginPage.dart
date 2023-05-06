@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
-import '../../Services/Controller/FileHandle.dart';
 import '../../Widgets/Signin/SignUpTextFeild.dart';
 
 class loginPage extends StatefulWidget {
@@ -25,9 +25,10 @@ class _loginPageState extends State<loginPage> {
   TextEditingController _birthDate = TextEditingController();
   TextEditingController _loginEmail = TextEditingController();
   TextEditingController _loginPass = TextEditingController();
-  int _isSelected = 1, _gender = 0;
-  int _accountFound = 0;
+  TextEditingController _passRepeat = TextEditingController();
+  bool PasswordRepeatCheck = true;
 
+  int _isSelected = 1, _gender = 0, _accountFound = 0, _passOk = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +116,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _name.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {},
+                                onChange: (value) {},
                                 text_ar: "الاسم",
                                 text_en: "Name",
                                 textController: _name,
@@ -131,7 +132,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _email.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {},
+                                onChange: (value) {},
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _email,
@@ -147,34 +148,49 @@ class _loginPageState extends State<loginPage> {
                                             offset: _password.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {},
+                                onChange: (value) {},
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _password,
                                 eyeOfSeeing: true,
                                 password: true,
                               ),
+                              //??????????????????????????????????????????????????????????????????????
+                              (_passOk == 1)
+                                  ? Text(
+                                      "passwords are not the same",
+                                      style: TextStyle(color: Colors.red),
+                                    )
+                                  : Container(),
+
                               SignupTextFeild(
                                 icon: Icons.lock_outline_rounded,
                                 onTap: () {
-                                  if (_loginPass.selection ==
+                                  if (_passRepeat.selection ==
                                       TextSelection.fromPosition(TextPosition(
                                           offset:
-                                              _loginPass.text.length - 1))) {
-                                    _loginPass.selection =
+                                              _passRepeat.text.length - 1))) {
+                                    _passRepeat.selection =
                                         TextSelection.fromPosition(TextPosition(
-                                            offset: _loginPass.text.length));
+                                            offset: _passRepeat.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {
-                                  
+                                onChange: (value) {
+                                  setState(() {
+                                    if (_password.text == value) {
+                                      _passOk = 2;
+                                    } else {
+                                      _passOk = 1;
+                                    }
+                                  });
                                 },
                                 text_ar: "تأكيد الرمز السري",
                                 text_en: "Confirm password",
-                                textController: _loginPass,
+                                textController: _passRepeat,
                                 eyeOfSeeing: true,
                                 password: true,
                               ),
+                              //????????????????????????????????????????????????????????????????????????
                               SignupTextFeild(
                                 icon: Icons.calendar_today,
                                 onTap: () async {
@@ -193,7 +209,8 @@ class _loginPageState extends State<loginPage> {
                                     });
                                   } else {}
                                 },
-                                onEdidingComplete: () {},
+                                // onTapOutSide: (event) {},
+                                onChange: (value) {},
                                 text_ar: "المبلاد",
                                 text_en: "Birth Date",
                                 textController: _birthDate,
@@ -269,7 +286,7 @@ class _loginPageState extends State<loginPage> {
                                             offset: _loginEmail.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {},
+                                onChange: (value) {},
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _loginEmail,
@@ -286,7 +303,8 @@ class _loginPageState extends State<loginPage> {
                                             offset: _loginPass.text.length));
                                   }
                                 },
-                                onEdidingComplete: () {},
+                                onChange: (value) {},
+                                
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _loginPass,
@@ -305,16 +323,24 @@ class _loginPageState extends State<loginPage> {
                         if (_password.text.trim() != "" &&
                             _email.text.trim() != "" &&
                             _name.text.trim() != "" &&
-                            _birthDate.text.trim() != "") {
-                          users.add(UserData(
-                            birthDate: _birthDate.text.trim(),
-                            email: _email.text.trim(),
-                            name: _name.text.trim(),
-                            password: _password.text.trim(),
-                            token: "54g4g45g45g4g45g",
-                            gender: _gender,
-                            id: 010,
-                          ));
+                            _birthDate.text.trim() != "" &&
+                            _passOk == 2) {
+                          //????????????????????????????????????????????????????????????????
+                          // users.add(UserData(
+                          //   birthDate: _birthDate.text.trim(),
+                          //   email: _email.text.trim(),
+                          //   name: _name.text.trim(),
+                          //   password: _password.text.trim(),
+                          //   token: "",
+                          //   gender: _gender,
+                          //   id: 010,
+                          // ));
+                          register(
+                              email: _email.text,
+                              birthdate: _birthDate.text,
+                              gender: _gender,
+                              name: _name.text,
+                              password: _password.text);
                           showDialog(
                             context: context,
                             barrierDismissible: true,
@@ -328,17 +354,18 @@ class _loginPageState extends State<loginPage> {
                             },
                           ).then(
                             (value) {
-                              _password.text = "";
-                              _email.text = "";
-                              _name.text = "";
-                              _birthDate.text = "";
-                              user.gender = 0;
-                              user.name = _name.text;
-                              user.birthDate = _birthDate.text;
-                              user.email = _email.text;
-                              user.password = _password.text;
+                              // _password.text = "";
+                              // _email.text = "";
+                              // _name.text = "";
+                              // _birthDate.text = "";
+                              // user.gender = 0;
+                              // user.name = _name.text;
+                              // user.birthDate = _birthDate.text;
+                              // user.email = _email.text;
+                              // user.password = _password.text;
                             },
                           );
+                          //???????????????????????????????????????????????????????????????????????
                         }
                       } else {
                         if (_loginEmail.text.isNotEmpty &&
@@ -453,4 +480,26 @@ class _loginPageState extends State<loginPage> {
       print(exception) {}
     }
   }
+
+//????????????????????????????????????????????????????????????????
+  Future register(
+      {String email = "",
+      String password = "",
+      String name = "",
+      // int id = 0,
+      String birthdate = "",
+      int gender = 0}) async {
+    try {
+      return await Dio().post("$onlineServer/api/register", data: {
+        "email": email,
+        "password": password,
+        "name": name,
+        // "id": id,
+        "birthdate": DateTime.parse(birthdate)
+      });
+    } catch (exception) {
+      print(exception) {}
+    }
+  }
+  //???????????????????????????????????????????????????????????????????????
 }
