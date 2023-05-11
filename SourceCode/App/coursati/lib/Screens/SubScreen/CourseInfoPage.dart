@@ -24,7 +24,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     name: "",
     trainingCenterID: 0,
     image: "",
-    id: 0,
+    id: '',
     active: false,
     description: """""",
     discount: 0,

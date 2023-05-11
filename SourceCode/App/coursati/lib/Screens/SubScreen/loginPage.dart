@@ -304,7 +304,6 @@ class _loginPageState extends State<loginPage> {
                                   }
                                 },
                                 onChange: (value) {},
-                                
                                 text_ar: "الرمز السري",
                                 text_en: "Password",
                                 textController: _loginPass,
@@ -376,6 +375,7 @@ class _loginPageState extends State<loginPage> {
                             Map<String, dynamic> _userTemp =
                                 json.decode(value.toString());
                             user.token = _userTemp["token"];
+
                             //**** Fetch credintials */
                             getCredintials(user.token).then((value) {
                               Map<String, dynamic> _userCredinitals =
@@ -384,11 +384,15 @@ class _loginPageState extends State<loginPage> {
                               user.name = _userCredinitals['name'];
                               user.email = _userCredinitals['email'];
                               user.id = _userCredinitals['id'];
-                              user.birthDate = _userCredinitals['birthdate'];
-                              user.gender = _userCredinitals['gender'];
+
+                              // user.birthDate = _userCredinitals['birthdate'];
+
+                              // user.gender = _userCredinitals['gender'];
+
                               user.image =
                                   "$onlineServer/storage/${_userCredinitals['avatar']}";
                               _accountFound = 1;
+
                               if (_accountFound == 1) {
                                 if (widget.contextIn.widget.toString() ==
                                     "TCNotLogged") {
@@ -401,35 +405,6 @@ class _loginPageState extends State<loginPage> {
                               }
                             });
                           });
-
-                          // for (int i = 0; i < users.length; i++) {
-                          //   if (_loginEmail.text.trim() == users[i].email &&
-                          //       _loginPass.text.trim() == users[i].password) {
-                          //     _accountFound = 1;
-                          //     user.name = users[i].name;
-                          //     user.birthDate = users[i].birthDate;
-                          //     user.email = _loginEmail.text;
-                          //     user.password = _loginEmail.text;
-                          //     user.notifications = users[i].notifications;
-                          //     user.image = users[i].image;
-                          //     user.token = users[i].token;
-                          //     user.trainingCenterId = users[i].trainingCenterId;
-                          //     user.gender = users[i].gender;
-                          //     FileHandle().writeConfig(ConfigSave);
-
-                          //     //!! this is for filling the data of the training center
-                          //     if (user.trainingCenterId != null) {
-                          //       for (int i = 0;
-                          //           i < trainingCenterData.length;
-                          //           i++) {
-                          //         if (user.trainingCenterId ==
-                          //             trainingCenterData[i].id) {
-                          //           TC = trainingCenterData[i];
-                          //         }
-                          //       }
-                          //     }
-                          //   }
-                          // }
                         }
                       }
                     },

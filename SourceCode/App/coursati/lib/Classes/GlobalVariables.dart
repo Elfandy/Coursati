@@ -16,8 +16,9 @@ final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
 
 //!!!!!!!!!
 //!!!!!!!!!
-String server = "http://192.168.1.7";
-// "http://192.168.43.126";`
+String server =
+// "http://192.168.1.7";
+    "http://192.168.43.126";
 // "http://192.168.1.9";
 // "http://192.168.43.20";
 // "http://192.168.238.20";
@@ -87,31 +88,32 @@ int picker = 0;
 //     id: 4893123,
 //     trainingCenterId: 0091);
 
-UserData user = UserData(
-    name: "",
-    image: "",
-    token: "",
-    notifications: 0,
-    password: "",
-    birthDate: "",
-    email: "",
-    gender: 0,
-    id: 0);
+UserData user =
 // UserData(
-//     name: "ريان",
-//     image:
-//         "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-//     token: "g45g45g45g45g45g45g4g",
-//     notifications: 120,
-//     password: "123",
-//     birthDate: "2000/5/2",
-//     email: "ryan@gmail.com",
+//     name: "",
+//     image: "",
+//     token: "",
+//     notifications: 0,
+//     password: "",
+//     birthDate: "",
+//     email: "",
 //     gender: 0,
-//     id: 4893123,
-//     trainingCenterId: 0091,
-//     orginaizationName: "coursati",
-//     personalID: "NY6D8DWE",
-//     phoneNumber: "0910502646");
+//     id: 0);
+    UserData(
+        name: "ريان",
+        image:
+            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+        token: "g45g45g45g45g45g45g4g",
+        notifications: 120,
+        password: "123",
+        birthDate: "2000/5/2",
+        email: "ryan@gmail.com",
+        gender: 0,
+        id: 4893123,
+        trainingCenterId: 0091,
+        orginaizationName: "coursati",
+        personalID: "NY6D8DWE",
+        phoneNumber: "0910502646");
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -176,7 +178,7 @@ List<Course> courseBLD = [
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -226,7 +228,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -282,7 +284,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -319,7 +321,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -359,7 +361,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -409,7 +411,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -465,7 +467,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -502,7 +504,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -540,7 +542,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -590,7 +592,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -646,7 +648,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -683,7 +685,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -721,7 +723,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -771,7 +773,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -827,7 +829,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -864,7 +866,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -902,7 +904,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -952,7 +954,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -1008,7 +1010,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -1045,7 +1047,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -1083,7 +1085,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -1133,7 +1135,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -1189,7 +1191,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -1226,7 +1228,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,
@@ -1264,7 +1266,7 @@ and 1980s.""",
     name: "البرمجة باستخدام لغة الجافا",
     trainingCenterID: 0091,
     image: "${server}/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg",
-    id: 12331212,
+    id: '12331212',
     active: true,
     description: """Our core Java programming tutorial is designed for
 students and working professionals. Java is an
@@ -1314,7 +1316,7 @@ and 1980s.""",
     trainingCenterID: 0091,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_breaking_from_virus_blue_4k_04db82b1-9fc8-422b-ac2b-8f31cccbf54d.png",
-    id: 87654321,
+    id: '87654321',
     active: true,
     description: """Malware analysis is the process of understanding
 the behavior and purpose of a suspicious file or URL. 
@@ -1370,7 +1372,7 @@ and 1980s.""",
     name: "إدارة الوقت",
     trainingCenterID: 0004,
     image: "${server}/Images/kelly-sikkema-io0ZLYbu31s-unsplash.jpg",
-    id: 12345678,
+    id: '12345678',
     active: false,
     description: """""",
     discount: 0,
@@ -1407,7 +1409,7 @@ and 1980s.""",
     trainingCenterID: 0123,
     image:
         "${server}/Images/XD_Slipcy_mobile_device_cyber_attacks_blue_bfdc907f-2c89-48ae-9f83-4a3ec69de897.png",
-    id: 00932131,
+    id: '00932131',
     active: true,
     description: """""",
     discount: 20,

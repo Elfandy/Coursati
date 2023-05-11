@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
-
 import '../Classes/GlobalVariables.dart';
 import '../Widgets/TrainingCenter/TCLoggedIn.dart';
 import '../Widgets/TrainingCenter/TCNotLoggedIn.dart';
+import 'SubScreen/TrainingCenterBranchPersonalPage.dart';
+import 'SubScreen/TrainingCenterPersonalPage.dart';
 
 class TrainingCenter extends StatefulWidget {
   const TrainingCenter({super.key});
@@ -30,6 +32,22 @@ class _TrainingCenterState extends State<TrainingCenter> {
       return const TCLoggedIn();
     }
     return Scaffold(
+      floatingActionButton: Align(
+          alignment: AlignmentDirectional.bottomStart,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 40, left: 40, bottom: 15),
+            child: FloatingActionButton(
+              backgroundColor: Color(0xee1776e0),
+              heroTag: "add",
+              onPressed: () {},
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              child: const Icon(
+                Icons.add,
+                size: 50,
+                color: Colors.white,
+              ),
+            ),
+          )),
       body: Stack(
         children: [
           Container(
@@ -63,26 +81,29 @@ class _TrainingCenterState extends State<TrainingCenter> {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: Column(children: [
-                          CachedNetworkImage(
-                            imageUrl: TC.logo,
-                            height: 120,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 30),
-                            child: Text(
-                              " ${(languageType == 0) ? "مركز ${TC.name}" : "${TC.name} Center"}",
-                              style: const TextStyle(
-                                fontSize: 32,
-                              ),
+                        child: Column(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: TC.logo,
+                              height: 120,
                             ),
-                          )
-                        ]),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: Text(
+                                " ${(languageType == 0) ? "مركز ${TC.name}" : "${TC.name} Center"}",
+                                style: const TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 10),
                       child: Text(
                         (languageType == 0) ? "الفرع الرئيسي" : "Main Branch",
                         style: const TextStyle(
@@ -116,19 +137,10 @@ class _TrainingCenterState extends State<TrainingCenter> {
                             splashFactory:
                                 InkSparkle.constantTurbulenceSeedSplashFactory,
                             onTap: () {
-                              
-
+                              Navigator.of(context).push(ScreenController()
+                                  .createRoute(
+                                      TrainingCenterPersonal(tc: TC), 1));
                             },
-                            //////////////////////////////////////////////////
-                            ///
-                            ///
-                            ///Here where you write your code on tap
-
-                            ///////////////////////////////////////////////////
-                            ///
-                            ///
-                            ///
-
                             splashColor: const Color(0xdd1776e0),
                             child: CachedNetworkImage(
                               errorWidget: (context, url, error) =>
@@ -217,7 +229,13 @@ class _TrainingCenterState extends State<TrainingCenter> {
 
                                         splashFactory: InkSparkle
                                             .constantTurbulenceSeedSplashFactory,
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              ScreenController().createRoute(
+                                                  TrainingCenterBranchPersonal(
+                                                      tc: TC.branch![i]),
+                                                  1));
+                                        },
                                         //////////////////////////////////////////////////
                                         ///
                                         ///

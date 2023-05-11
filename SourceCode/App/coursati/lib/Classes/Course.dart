@@ -50,9 +50,9 @@ class Course {
     required this.trainerData,
     this.period,
   });
-  final int id, duration, trainer, trainingCenterID;
+  final int duration, trainer, trainingCenterID;
   int? periodsRepeats, period;
-  final String name, description, image, icon, trainingCenterName;
+  final String id, name, description, image, icon, trainingCenterName;
   final List<Tag> tags;
   final double price, discount;
   final DateTime startingDate;
