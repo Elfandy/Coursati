@@ -40,6 +40,16 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    //*** This is the temp TrainingCenter local data insert */
+    if (user.trainingCenterId != null) {
+      for (int i = 0; i < trainingCenterData.length; i++) {
+        if (user.trainingCenterId == trainingCenterData[i].id) {
+          TC = trainingCenterData[i];
+        }
+      }
+    }
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
     return WillPopScope(
       onWillPop: _onPop,
       child: Scaffold(

@@ -208,26 +208,29 @@ class _SearchPageState extends State<SearchPage> {
                                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                                       Center(
-                                          child: ElevatedButton(
-                                        child: Text(
-                                          (languageType == 0)
-                                              ? "إعادة ضبط"
-                                              : "Reset",
-                                          style: TextStyle(
-                                              color: (isDark)
-                                                  ? Color(0xff424242)
-                                                  : Colors.white),
+                                        child: ElevatedButton(
+                                          child: Text(
+                                            (languageType == 0)
+                                                ? "إعادة ضبط"
+                                                : "Reset",
+                                            style: TextStyle(
+                                                color: (isDark)
+                                                    ? Color(0xff424242)
+                                                    : Colors.white),
+                                          ),
+                                          onPressed: () {
+                                            setState(
+                                              () {
+                                                _selectedTags = [
+                                                  _tagTypeList[0]
+                                                ];
+                                                _selectedTypes = [];
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          },
                                         ),
-                                        onPressed: () {
-                                          setState(
-                                            () {
-                                              _selectedTags = [_tagTypeList[0]];
-                                              _selectedTypes = [];
-                                              Navigator.of(context).pop();
-                                            },
-                                          );
-                                        },
-                                      )),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -236,7 +239,7 @@ class _SearchPageState extends State<SearchPage> {
                           },
                         );
                       });
-                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     },
                     icon: const Image(
                       image: AssetImage("Assets/Icons/options.png"),
@@ -246,7 +249,7 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           const Spacer(),
           Image(
             image: const AssetImage(
