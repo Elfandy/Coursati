@@ -10,6 +10,8 @@ class CoursesViewPage extends StatefulWidget {
 class _CoursesViewPageState extends State<CoursesViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Container(),
+    );
   }
 }
