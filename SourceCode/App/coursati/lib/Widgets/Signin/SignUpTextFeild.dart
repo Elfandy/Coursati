@@ -15,6 +15,7 @@ class SignupTextFeild extends StatefulWidget {
     this.password = false,
     this.eyeOfSeeing = false,
     required this.onTap,
+    required this.onChange,
   });
   String text_ar, text_en;
   IconData icon;
@@ -22,6 +23,7 @@ class SignupTextFeild extends StatefulWidget {
   int? maxLingth;
   bool readOnly, password, eyeOfSeeing;
   void Function() onTap;
+  void Function(String?) onChange;
 
   @override
   State<SignupTextFeild> createState() => _SignupTextFeildState();
@@ -43,6 +45,8 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
           obscureText: widget.password,
           enableSuggestions: !widget.password,
           autocorrect: !widget.password,
+          onChanged: widget.onChange,
+          // onTapOutside: widget.onTapOutSide,
           maxLengthEnforcement:
               MaxLengthEnforcement.truncateAfterCompositionEnds,
           readOnly: widget.readOnly,

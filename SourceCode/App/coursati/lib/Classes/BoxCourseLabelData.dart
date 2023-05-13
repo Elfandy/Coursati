@@ -7,5 +7,5 @@ class BoxCourseLabelData {
   String location_in;
   String label;
   String image;
-  int id;
+  String id;
 }
