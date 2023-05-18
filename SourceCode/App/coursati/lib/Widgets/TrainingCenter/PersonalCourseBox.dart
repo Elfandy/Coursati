@@ -75,7 +75,7 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
                   progressIndicatorBuilder: (context, url, progress) => Center(
                     child: CircularProgressIndicator(value: progress.progress),
                   ),
-                  imageUrl: widget.bld.image,
+                  imageUrl: widget.bld.image!,
                   imageBuilder: (context, imageProvider) => Ink(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -139,7 +139,7 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      CourseDetailedPage(name: widget.bld.label),
+      CourseDetailedPage(name: widget.bld.name!),
       1,
     ));
 

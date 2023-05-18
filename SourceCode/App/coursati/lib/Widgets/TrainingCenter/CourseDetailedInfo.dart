@@ -38,7 +38,6 @@ class _CourseDetailedPageState extends State<CourseDetailedPage> {
       image: "",
       major: "",
       name: "",
-      rating: 0,
     ),
   );
 

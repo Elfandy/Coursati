@@ -83,7 +83,7 @@ class _TagChipState extends State<TagChip> {
         padding: widget.padding,
         backgroundColor: _background,
         label: Text(
-          (languageType == 0) ? widget.tag.name_ar : widget.tag.name_en,
+          (languageType == 0) ? widget.tag.name_ar! : widget.tag.name_en!,
           style: _style,
         ),
       ),

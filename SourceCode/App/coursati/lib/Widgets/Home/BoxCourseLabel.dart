@@ -23,7 +23,7 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
             width: 140,
             child: Text(
               softWrap: true,
-              widget.bld.label,
+              widget.bld.name!,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,

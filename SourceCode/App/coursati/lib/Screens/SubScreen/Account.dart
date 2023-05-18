@@ -17,6 +17,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  double Boxsize = 400;
   Widget _name = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
@@ -140,8 +141,8 @@ class _AccountPageState extends State<AccountPage> {
               ),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               //***   This is the grid view for the info */
-              SizedBox(
-                height: 400,
+              Container(
+                height: (user.phoneNumber == '') ? (Boxsize - 170) : Boxsize,
                 child: GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,

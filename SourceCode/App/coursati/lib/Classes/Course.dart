@@ -5,7 +5,7 @@ import 'Trainer.dart';
 import 'TrainingCenter.dart';
 
 // class CourseFields {
-//   static final String id = "_id";
+//   static final String id = "id";
 //   static final String name = "name";
 
 //   static final String duration = "duration";
@@ -32,7 +32,7 @@ class Course {
     required this.id,
     required this.duration,
     required this.name,
-    required this.tags,
+    this.tags = const [],
     required this.price,
     required this.discount,
     required this.startingDate,
@@ -53,7 +53,7 @@ class Course {
   final int duration, trainer, trainingCenterID;
   int? periodsRepeats, period;
   final String id, name, description, image, icon, trainingCenterName;
-  final List<Tag> tags;
+  final List tags;
   final double price, discount;
   final DateTime startingDate;
   final bool active, full, repeats;
@@ -74,7 +74,7 @@ class Course {
         tags = json['tags'],
         price = json['price'],
         discount = json['discount'],
-        startingDate = json['startingDate'],
+        startingDate = DateTime.parse(json['startingDate']),
         active = json['active'],
         full = json['full'],
         repeats = json['repeats'],

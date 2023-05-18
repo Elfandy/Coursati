@@ -26,6 +26,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
       _trainingCenterName = TextEditingController(),
       _email = TextEditingController(),
       _trainingCenterPhoneNumber = TextEditingController(),
+      _location = TextEditingController(),
       _website = TextEditingController(),
       _facebook = TextEditingController(),
       _description = TextEditingController(),
@@ -39,6 +40,8 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
   //!!!!!!!!!!!
 
   File? _image;
+
+  bool passsportError = false, orgNameError = false, phoneNumError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -188,20 +191,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter
-                                      .singleLineFormatter,
+                                  FilteringTextInputFormatter.allow(english),
                                 ],
                                 maxLength: 8,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _id.text = _id.text.toUpperCase();
-                                    if (english.hasMatch(value)) {
-                                      _id.text = value;
-                                    } else {
-                                      _id.text = '';
-                                    }
-                                  });
-                                },
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
                                 decoration: InputDecoration(
@@ -256,6 +248,14 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
                                 decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: (orgNameError)
+                                          ? Colors.red
+                                          : Color(0xffdddddd),
+                                    ),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                   counterText: "",
                                   label: Row(children: [
                                     const Icon(
@@ -275,21 +275,14 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                         style: TextStyle(color: Colors.red)),
                                   ]),
                                   border: OutlineInputBorder(
-                                    borderSide: const BorderSide(),
+                                    borderSide:
+                                        const BorderSide(color: Colors.red),
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
                               ),
                             ),
-                            Visibility(
-                              visible: _showPersonalPhonenymberErrorMessage,
-                              child: Text(
-                                languageType == 0
-                                    ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
-                                    : "Phone number needs to starts with 091,092,094,095",
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            ),
+
                             Focus(
                               onFocusChange: (value) {
                                 if (!value) {
@@ -339,6 +332,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            (_showPersonalPhonenymberErrorMessage)
+                                                ? Colors.red
+                                                : Color(0xffdddddd),
+                                      ),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
                                     counterText: "",
                                     label: Row(children: [
                                       const Icon(
@@ -365,7 +367,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                 ),
                               ),
                             ),
-
+                            Visibility(
+                              visible: _showPersonalPhonenymberErrorMessage,
+                              child: Text(
+                                languageType == 0
+                                    ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
+                                    : "Phone number needs to starts with 091,092,094,095",
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ),
                             //* This is for creating an OTP function for the phoen number
                             // Text((languageType == 0)
                             //     ? ""
@@ -568,163 +578,65 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      //   child: SizedBox(
-                      //     width: MediaQuery.of(context).size.width,
-                      //     child: Container(
-                      //       decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.circular(200),
-                      //         border: Border.all(color: const Color(0xffdddddd)),
-                      //       ),
-                      //       child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.start,
-                      //         children: [
-                      //           const Padding(
-                      //             padding: EdgeInsets.all(10.0),
-                      //             child: Icon(Icons.location_on),
-                      //           ),
-                      //           Expanded(
-                      //             child: DropdownButton(
-                      //               isExpanded: true,
-                      //               underline: Container(),
-                      //               value: _dropDownValue,
-                      //               style: TextStyle(
-                      //                 color: isDark ? Colors.white : Colors.black,
-                      //                 fontSize: 18,
-                      //               ),
-                      //               items: locations
-                      //                   .map<DropdownMenuItem<String>>(
-                      //                       (Location value) {
-                      //                 return DropdownMenuItem<String>(
-                      //                   value: (languageType == 0)
-                      //                       ? value.city_ar
-                      //                       : value.city_en,
-                      //                   child: Text(
-                      //                     (languageType == 0)
-                      //                         ? value.city_ar
-                      //                         : value.city_en,
-                      //                   ),
-                      //                 );
-                      //               }).toList(),
-                      //               onChanged: (value) {
-                      //                 setState(() {
-                      //                   _dropDownValue = value!;
-                      //                 });
-                      //               },
-                      //             ),
-                      //           ),
-                      //           const SizedBox(width: 10),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      DropdownSearch<String>(
-                        popupProps: const PopupProps.menu(
-                          showSelectedItems: true,
-                        ),
-                        items: [
-                          "Brazil",
-                          "Italia (Disabled)",
-                          "Tunisia",
-                          'Canada'
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Menu mode",
-                            hintText: "country in menu mode",
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(200),
+                          border: Border.all(
+                            color: const Color(0xff424242),
                           ),
                         ),
-                        onChanged: print,
-                        selectedItem: "Brazil",
-                      ),
-
-                      SearchField(
-                        suggestions: [
-                          for (Location i in locations)
-                            SearchFieldListItem(
-                              languageType == 0 ? i.city_ar : i.city_en,
-                            )
-                        ],
-                        onSubmit: (p0) {
-                          setState(() {
-                            _dropDownValue = p0;
-                          });
-                        },
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: DropdownSearch<String>(
-                          popupProps: const PopupProps.menu(
-                            showSearchBox: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20, left: 20),
+                          child: SearchField(
+                            searchStyle: TextStyle(
+                                color: isDark ? Colors.white : Colors.black),
+                            suggestions: [
+                              for (Location i in locations)
+                                SearchFieldListItem(
+                                  languageType == 0 ? i.city_ar : i.city_en,
+                                )
+                            ],
+                            onSubmit: (p0) {
+                              setState(() {
+                                _dropDownValue = p0;
+                              });
+                            },
+                            hint: "العنوان",
+                            controller: _location,
+                            suggestionsDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: isDark ? Colors.grey[200] : Colors.white,
+                            ),
+                            maxSuggestionsInViewPort: 5,
+                            suggestionDirection: SuggestionDirection.down,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^[a-zA-Z\u0621-\u064A]+'))
+                            ],
+                            scrollbarAlwaysVisible: false,
                           ),
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                              dropdownSearchDecoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  label: Row(
-                                    children: [
-                                      const Icon(Icons.location_on),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(languageType == 0
-                                          ? "العنوان"
-                                          : "Address"),
-                                      const Text("*",
-                                          style: TextStyle(color: Colors.red)),
-                                    ],
-                                  ))),
-                          items: [
-                            for (Location i in locations)
-                              languageType == 0 ? i.city_ar : i.city_en,
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              _dropDownValue = value;
-                            });
-                          },
-                          selectedItem: _dropDownValue,
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      //   child: TextField(
-                      //     controller: _address,
-                      //     selectionControls: EmptyTextSelectionControls(),
-                      //     maxLengthEnforcement:
-                      //         MaxLengthEnforcement.truncateAfterCompositionEnds,
-                      //     inputFormatters: [
-                      //       FilteringTextInputFormatter.singleLineFormatter,
-                      //     ],
-                      //     maxLength: 32,
-                      //     style:
-                      //         const TextStyle(color: Colors.black, fontSize: 16),
-                      //     decoration: InputDecoration(
-                      //       counterText: "",
-                      //       label: Row(children: [
-                      //         const Icon(
-                      //           Icons.location_on,
-                      //           size: 20,
-                      //         ),
-                      //         const SizedBox(
-                      //           width: 10,
-                      //         ),
-                      //         Text(
-                      //           (languageType == 0) ? _dropDownValue : "Address",
-                      //           style: const TextStyle(fontSize: 16),
-                      //         ),
-                      //       ]),
-                      //       border: OutlineInputBorder(
-                      //         borderSide: const BorderSide(),
-                      //         borderRadius: BorderRadius.circular(50),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                       Visibility(
                         visible: _showTrainingCenterPhoneNumberErrorMessage,
                         child: Text(

@@ -43,7 +43,6 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       image: "",
       major: "",
       name: "",
-      rating: 0,
     ),
   );
 
@@ -428,35 +427,35 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                   ],
                                 ),
                                 //? this is the rating bar
-                                RatingBar(
-                                    initialRating: _course.trainerData.rating,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 30,
-                                    ratingWidget: RatingWidget(
-                                      full: const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      half: (languageType == 0)
-                                          ? Transform.scale(
-                                              scaleX: -1,
-                                              child: const Icon(
-                                                Icons.star_half,
-                                                color: Colors.amber,
-                                              ),
-                                            )
-                                          : const Icon(
-                                              Icons.star_half,
-                                              color: Colors.amber,
-                                            ),
-                                      empty: const Icon(
-                                        Icons.star_border_outlined,
-                                        color: Colors.amber,
-                                      ),
-                                    ),
-                                    onRatingUpdate: (value) {})
+                                // RatingBar(
+                                //     initialRating: _course.trainerData.rating,
+                                //     direction: Axis.horizontal,
+                                //     allowHalfRating: true,
+                                //     itemCount: 5,
+                                //     itemSize: 30,
+                                //     ratingWidget: RatingWidget(
+                                //       full: const Icon(
+                                //         Icons.star,
+                                //         color: Colors.amber,
+                                //       ),
+                                //       half: (languageType == 0)
+                                //           ? Transform.scale(
+                                //               scaleX: -1,
+                                //               child: const Icon(
+                                //                 Icons.star_half,
+                                //                 color: Colors.amber,
+                                //               ),
+                                //             )
+                                //           : const Icon(
+                                //               Icons.star_half,
+                                //               color: Colors.amber,
+                                //             ),
+                                //       empty: const Icon(
+                                //         Icons.star_border_outlined,
+                                //         color: Colors.amber,
+                                //       ),
+                                //     ),
+                                //     onRatingUpdate: (value) {})
                               ],
                             ),
                           ],

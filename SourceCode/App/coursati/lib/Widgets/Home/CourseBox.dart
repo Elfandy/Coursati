@@ -4,6 +4,7 @@ import 'package:coursati/Widgets/Home/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../../Classes/GlobalVariables.dart';
 import '../../Screens/SubScreen/TrainingCenterInfoPage.dart';
 import '../../Services/ScreenController.dart';
 
@@ -46,9 +47,8 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
           ),
           child: Material(
             elevation: 5,
-            shadowColor: (Theme.of(context).brightness == Brightness.light)
-                ? const Color(0xff1776e0)
-                : Colors.grey,
+            shadowColor:Color(0xff1776e0),
+                
             borderRadius: BorderRadius.circular(20),
             child: Container(
               decoration: BoxDecoration(
@@ -56,7 +56,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
                 gradient: const LinearGradient(
                   colors: [
                     Color(0xff000000),
-                    Color(0x22ffffff),
+                    Color(0x22444444),
                     Color(0x00000000),
                   ],
                   begin: Alignment.bottomCenter,
@@ -75,7 +75,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
                   progressIndicatorBuilder: (context, url, progress) => Center(
                     child: CircularProgressIndicator(value: progress.progress),
                   ),
-                  imageUrl: widget.bld.image,
+                  imageUrl: widget.bld.image!,
                   imageBuilder: (context, imageProvider) => Ink(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -118,7 +118,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      CourseInfoPage(name: widget.bld.label),
+      CourseInfoPage(name: widget.bld.name!),
       2,
     ));
 

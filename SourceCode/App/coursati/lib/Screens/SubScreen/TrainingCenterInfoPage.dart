@@ -306,9 +306,9 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                   child: Text(
                                                     (languageType == 0)
                                                         ? _trainingCenter
-                                                            .tags[i].name_ar
+                                                            .tags[i].name_ar!
                                                         : _trainingCenter
-                                                            .tags[i].name_en,
+                                                            .tags[i].name_en!,
                                                     style: _tagsStyle,
                                                   ),
                                                 ),

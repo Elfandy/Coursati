@@ -1,8 +1,6 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:flutter/material.dart';
 
-
-
 class BoxCourseLabelPersonal extends StatefulWidget {
   BoxCourseLabelPersonal({super.key, required this.bld});
   BoxCourseLabelData bld;
@@ -22,7 +20,7 @@ class _BoxCourseLabelPersonalState extends State<BoxCourseLabelPersonal> {
             width: 140,
             child: Text(
               softWrap: true,
-              widget.bld.label,
+              widget.bld.name!,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,

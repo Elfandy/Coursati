@@ -465,7 +465,8 @@ class _loginPageState extends State<loginPage> {
       String birthdate = "",
       int gender = 0}) async {
     try {
-      return await Dio().post("$onlineServer/api/register", data: {
+      // return await Dio().post("$onlineServer/api/register", data: {
+      return await Dio().post("$apiTestServer/Register", data: {
         "email": email,
         "password": password,
         "name": name,

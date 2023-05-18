@@ -52,7 +52,7 @@ class _ShowTCState extends State<ShowTC> {
                     _visibleSearch = true;
                     _searching.clear();
                     for (BoxTCLabelData i in trainingCenterBLDSmall) {
-                      if (i.name
+                      if (i.name!
                           .toLowerCase()
                           .contains(_search.text.toLowerCase())) {
                         _searching.add(i);

@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'Location.dart';
 import 'TagData.dart';
 
-class TrainingCenterData {
-  TrainingCenterData({
+class TrainingCenter {
+  TrainingCenter({
     required this.id,
+    required this.branch,
     required this.close,
     required this.description,
     required this.email,
@@ -18,12 +19,12 @@ class TrainingCenterData {
     required this.rating,
     required this.tags,
     required this.image,
-    required this.facebook,
-    required this.website,
-    required this.ViperAllow,
-    required this.WhatsAppAllow,
+    required this.logo,
+    this.facebook = "",
+    this.website = "",
+    this.ViperAllow = false,
+    this.WhatsAppAllow = false,
   });
-
   int id;
   String name, description, phoneNumber, email, image, facebook, website;
   Location location;
@@ -31,53 +32,33 @@ class TrainingCenterData {
   List<Tag> tags;
   double rating;
 
-  bool WhatsAppAllow, ViperAllow;
+  bool WhatsAppAllow = false, ViperAllow = false;
 
   String get whatsApp => (Platform.isIOS)
       ? "whatsapp://wa.me/$phoneNumber/?text="
       : "https://api.whatsapp.com/send?phone=$phoneNumber=";
 
   String get viper => "viber://chat?number=$phoneNumber";
-}
-class TrainingCenter extends TrainingCenterData {
-  TrainingCenter({
-    required id,
-    required this.branch,
-    required close,
-    required description,
-    required email,
-    required location,
-    required name,
-    required open,
-    required phoneNumber,
-    required rating,
-    required tags,
-    required image,
-    required this.logo,
-    facebook = "",
-    website = "",
-    viperAllow = false,
-    whatsAppAllow = false,
-  }) : super(
-          close: close,
-          description: description,
-          email: email,
-          id: id,
-          image: image,
-          location: location,
-          name: name,
-          open: open,
-          phoneNumber: phoneNumber,
-          rating: rating,
-          tags: tags,
-          facebook: facebook,
-          website: website,
-          ViperAllow: viperAllow,
-          WhatsAppAllow: whatsAppAllow,
-        );
-
   String logo;
   List<TrainingCenterBranch>? branch;
+
+  TrainingCenter.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        name = json["name"],
+        logo = json["logo"],
+        email = json["email"],
+        description = json["description"],
+        facebook = json["facebook"],
+        image = json["image"],
+        tags = json["tags"],
+        phoneNumber = json["phoneNum"],
+        WhatsAppAllow = json["whatsApp"],
+        branch = json["branch"],
+        close = json["close"],
+        location = json["location"],
+        open = json["open"],
+        rating = json["rating"],
+        website = json["website"];
 }
 
 // class TrainingCenterFields {
@@ -100,40 +81,39 @@ class TrainingCenter extends TrainingCenterData {
 //   static final String whatsAppAllow = "whatsAppAllow";
 // }
 
-class TrainingCenterBranch extends TrainingCenterData {
+class TrainingCenterBranch {
   TrainingCenterBranch({
-    required id,
-    required close,
-    required description,
-    required email,
-    required location,
-    required name,
-    required open,
-    phoneNumber = "",
-    required rating,
-    required tags,
-    required image,
-    facebook = "",
-    website = "",
-    viperAllow = false,
-    whatsAppAllow = false,
-  }) : super(
-          close: close,
-          description: description,
-          email: email,
-          id: id,
-          image: image,
-          location: location,
-          name: name,
-          open: open,
-          phoneNumber: phoneNumber,
-          rating: rating,
-          tags: tags,
-          facebook: facebook,
-          website: website,
-          ViperAllow: viperAllow,
-          WhatsAppAllow: whatsAppAllow,
-        );
+    required this.id,
+    required this.close,
+    required this.description,
+    required this.email,
+    required this.location,
+    required this.name,
+    required this.open,
+    this.phoneNumber = "",
+    required this.rating,
+    required this.tags,
+    required this.image,
+    this.facebook = "",
+    this.website = "",
+    this.ViperAllow = false,
+    this.WhatsAppAllow = false,
+  });
+
+  int id;
+  String name, description, phoneNumber, email, image, facebook, website;
+  Location location;
+  TimeOfDay open, close;
+  List<Tag> tags;
+  double rating;
+
+  bool WhatsAppAllow, ViperAllow;
+
+  String get whatsApp => (Platform.isIOS)
+      ? "whatsapp://wa.me/$phoneNumber/?text="
+      : "https://api.whatsapp.com/send?phone=$phoneNumber=";
+
+  String get viper => "viber://chat?number=$phoneNumber";
 }
 
 // class TrainingCenteBranchFields {

@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/Location.dart';
 import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'BoxCourseLabelData.dart';
@@ -11,18 +12,26 @@ import 'UserData.dart';
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-final RegExp english = RegExp(r'^[a-zA-Z]+');
+final RegExp english = RegExp(r'^[0-9a-zA-Z]+');
 final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
 
 //!!!!!!!!!
 //!!!!!!!!!
 String server =
 // "http://192.168.1.7";
-    "http://192.168.43.126";
-// "http://192.168.1.9";
+// "http://192.168.43.126";
+    "http://192.168.1.7";
 // "http://192.168.43.20";
 // "http://192.168.238.20";
+// "http://192.168.1.153";
+
 String onlineServer = "http://192.168.43.128:8000";
+
+String apiTestServer = "https://apimocha.com/coursatitest/";
+final Dio dioTestApi = Dio(BaseOptions(
+  baseUrl: apiTestServer,
+  contentType: 'application/json',
+));
 
 String ConfigSave =
     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
@@ -99,21 +108,32 @@ UserData user =
 //     email: "",
 //     gender: 0,
 //     id: 0);
+    // UserData(
+    //     name: "ريان",
+    //     image:
+    //         "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+    //     token: "g45g45g45g45g45g45g4g",
+    //     notifications: 120,
+    //     password: "123",
+    //     birthDate: "2000/5/2",
+    //     email: "ryan@gmail.com",
+    //     gender: 0,
+    //     id: 4893123,
+    //     trainingCenterId: 0091,
+    //     orginaizationName: "coursati",
+    //     personalID: "NY6D8DWE",
+    //     phoneNumber: "0910502646");
     UserData(
-        name: "ريان",
+        name: "سالم",
         image:
-            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-        token: "g45g45g45g45g45g45g4g",
-        notifications: 120,
-        password: "123",
+            "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+        token: "g45g4g4g45g45g45g45g4g45g45g",
+        notifications: 3,
+        password: "54321",
         birthDate: "2000/5/2",
-        email: "ryan@gmail.com",
+        email: "salem@gmail.com",
         gender: 0,
-        id: 4893123,
-        trainingCenterId: 0091,
-        orginaizationName: "coursati",
-        personalID: "NY6D8DWE",
-        phoneNumber: "0910502646");
+        id: 6543213);
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -220,7 +240,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -277,7 +296,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -313,7 +331,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -352,7 +369,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
 
@@ -403,7 +419,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -460,7 +475,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -496,7 +510,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -535,7 +548,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
   Course(
@@ -584,7 +596,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -641,7 +652,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -677,7 +687,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -716,7 +725,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
   Course(
@@ -765,7 +773,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -822,7 +829,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -858,7 +864,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -897,7 +902,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
   Course(
@@ -946,7 +950,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -1003,7 +1006,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -1039,7 +1041,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -1078,7 +1079,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
   Course(
@@ -1127,7 +1127,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -1184,7 +1183,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -1220,7 +1218,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -1259,7 +1256,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
   Course(
@@ -1308,7 +1304,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 3.2,
     ),
   ),
   Course(
@@ -1365,7 +1360,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 1.5,
     ),
   ),
   Course(
@@ -1401,7 +1395,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 4.8,
     ),
   ),
   Course(
@@ -1440,7 +1433,6 @@ and 1980s.""",
       image: "${server}/Images/ali-morshedlou-WMD64tMfc4k-unsplash.jpg",
       major: "Programming",
       name: "Bill Gates",
-      rating: 2.2,
     ),
   ),
 ];
@@ -1480,8 +1472,8 @@ they need to make our world a safer place.""",
     logo: "${server}/Images/Asset%201%20(2).png",
     facebook: "https://www.facebook.com",
     website: "https://www.octal.com.ly",
-    viperAllow: true,
-    whatsAppAllow: true,
+    ViperAllow: true,
+    WhatsAppAllow: true,
   ),
   TrainingCenter(
     branch: null,
@@ -1546,8 +1538,8 @@ they need to make our world a safer place.""",
     ],
     image: "${server}/Images/marc-olivier-jodoin--HIiNFXcbtQ-unsplash.jpg",
     logo: "${server}/Images/Asset%202.png",
-    viperAllow: true,
-    whatsAppAllow: true,
+    ViperAllow: true,
+    WhatsAppAllow: true,
   ),
   TrainingCenter(
     branch: null,

@@ -1,4 +1,5 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
+import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -42,6 +43,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.bld.cityAr);
     try {
       return ScaleTransition(
         scale: _boxAnimationController,
@@ -54,9 +56,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
           ),
           child: Material(
             elevation: 5,
-            shadowColor: (Theme.of(context).brightness == Brightness.light)
-                ? const Color(0xff1776e0)
-                : Colors.grey,
+            shadowColor: const Color(0xff1776e0),
             borderRadius: BorderRadius.circular(20),
             child: Container(
               decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                 gradient: const LinearGradient(
                   colors: [
                     Color(0xff000000),
-                    Color(0x22ffffff),
+                    Color(0x22444444),
                     Color(0x00000000),
                   ],
                   begin: Alignment.bottomCenter,
@@ -89,11 +89,11 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
 
                 splashColor: const Color(0xdd1776e0),
                 child: CachedNetworkImage(
-
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-              progressIndicatorBuilder: (context, url, progress) =>
-                  Center(child: CircularProgressIndicator(value: progress.progress)),
-                  imageUrl: widget.bld.image,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                      child:
+                          CircularProgressIndicator(value: progress.progress)),
+                  imageUrl: widget.bld.image!,
                   imageBuilder: (context, imageProvider) => Ink(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -109,7 +109,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image(
-                            image: CachedNetworkImageProvider(widget.bld.logo),
+                            image: CachedNetworkImageProvider(widget.bld.logo!),
                             height: 30,
                             width: 30,
                           ),
@@ -153,7 +153,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      TrainingCenterPage(name: widget.bld.name),
+      TrainingCenterPage(name: widget.bld.name!),
       2,
     ));
   }

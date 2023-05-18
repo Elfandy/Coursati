@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:coursati/Classes/BoxTCLabelData.dart';
+import 'package:coursati/Classes/Location.dart';
 import 'package:coursati/Screens/SubScreen/ShowAllTC.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
@@ -31,30 +34,47 @@ class _HomePageState extends State<HomePage> {
   ///
 
 //? ------------------------------------------------------------------------------------------
-  @override
-  Widget build(BuildContext context) {
-    for (int i = 0; i < trainingCenterData.length; i++) {
-      trainingCenterBLDSmall.add(BoxTCLabelData(
-          address: trainingCenterData[i].location,
-          id: trainingCenterData[i].id,
-          image: trainingCenterData[i].image,
-          logo: trainingCenterData[i].logo,
-          name: trainingCenterData[i].name));
-    }
-    for (int i = 0; i < courseBLD.length; i++) {
-      for (int j = 0; j < trainingCenterData.length; j++) {
-        if (trainingCenterData[j].id == courseBLD[i].trainingCenterID) {
-          courseBLDsmall.add(BoxCourseLabelData(
-            location_in: (languageType == 0)
-                ? trainingCenterData[j].location.city_ar
-                : trainingCenterData[j].location.city_en,
-            id: courseBLD[i].id,
-            image: courseBLD[i].image,
-            label: courseBLD[i].name,
-          ));
+
+  Future<List<BoxCourseLabelData>> fetchCourses() async {
+    var url = "Course1";
+    List<BoxCourseLabelData> courses = [];
+    try {
+      var response = await dioTestApi.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> coursesJson = response.data["course"];
+
+        for (var coursesJson in coursesJson) {
+          courses.add(BoxCourseLabelData.fromJson(coursesJson));
         }
       }
+    } catch (e) {
+      print(e);
     }
+    return courses;
+  }
+
+  Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
+    var url = "TrainingCenter1";
+    List<BoxTCLabelData> tC = [];
+    try {
+      var response = await dioTestApi.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> tCJson = response.data["TrainingCenter"];
+
+        for (var tCJson in tCJson) {
+          tC.add(BoxTCLabelData.fromJson(tCJson));
+        
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return tC;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -104,7 +124,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 15,
+                  height: 30,
                 ),
                 Row(
                   children: [
@@ -127,54 +147,87 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    child: Row(
-                      children: [
-                        //////////////////////////////////////////////////////////////
-                        ///
-                        ///
-                        ///
-                        ///
-                        ///
+                FutureBuilder(
+                  future: fetchCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      List<BoxCourseLabelData> _courses = snapshot.data!;
 
-                        for (int i = 0;
-                            i <
-                                ((courseBLDsmall.length < 7)
-                                    ? courseBLDsmall.length
-                                    : 7);
-                            i++)
-                          CourseBox(
-                            bld: courseBLDsmall[i],
-                          ),
-
-                        RoundedButton(
-                          icon: Icon(
-                            (languageType == 0)
-                                ? Icons.keyboard_arrow_left
-                                : Icons.keyboard_arrow_right,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              ScreenController()
-                                  .createRoute(const ShowCourses(), 3),
+                      return Container(
+                        width: double.infinity,
+                        height: 250,
+                        child: ListView.builder(
+                          itemCount:
+                              (_courses.length > 7) ? 7 : _courses.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return CourseBox(
+                              bld: BoxCourseLabelData(
+                                  id: _courses[index].id,
+                                  image: _courses[index].image,
+                                  name: _courses[index].name,
+                                  location_in: _courses[index].location_in),
                             );
-                          },
-                          size: 80,
+                          }),
                         ),
-                        /////////////////////////////////////////////////////////
-                        ///
-                        ///
-                        ///
-                        ///
-                      ],
-                    ),
-                  ),
+                      );
+                    } else {
+                      return Container(
+                          width: double.infinity,
+                          height: 250,
+                          child: Center(child: CircularProgressIndicator()));
+                    }
+                  },
                 ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Padding(
+                //     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                //     child: Row(
+                //       children: [
+                //         //////////////////////////////////////////////////////////////
+                //         ///
+                //         ///
+                //         ///
+                //         ///
+                //         ///
+
+                //         for (int i = 0;
+                //             i <
+                //                 ((courseBLDsmall.length < 7)
+                //                     ? courseBLDsmall.length
+                //                     : 7);
+                //             i++)
+                //           CourseBox(
+                //             bld: courseBLDsmall[i],
+                //           ),
+
+                //         RoundedButton(
+                //           icon: Icon(
+                //             (languageType == 0)
+                //                 ? Icons.keyboard_arrow_left
+                //                 : Icons.keyboard_arrow_right,
+                //             size: 40,
+                //             color: Colors.white,
+                //           ),
+                //           onPressed: () {
+                //             Navigator.of(context).push(
+                //               ScreenController()
+                //                   .createRoute(const ShowCourses(), 3),
+                //             );
+                //           },
+                //           size: 80,
+                //         ),
+                //         /////////////////////////////////////////////////////////
+                //         ///
+                //         ///
+                //         ///
+                //         ///
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(
                     children: [
@@ -204,45 +257,84 @@ class _HomePageState extends State<HomePage> {
                   ///
                   ///
                   ///
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      child: Row(
-                        children: [
-                          //////////////////////////////////////////////////
-                          ///
-                          for (int i = 0;
-                              i <
-                                  ((trainingCenterBLDSmall.length < 7)
-                                      ? trainingCenterBLDSmall.length
-                                      : 7);
-                              i++)
-                            TCBox(
-                              bld: trainingCenterBLDSmall[i],
-                            ),
+                  ///
+                  ///
 
-                          RoundedButton(
-                            icon: Icon(
-                              (languageType == 0)
-                                  ? Icons.keyboard_arrow_left
-                                  : Icons.keyboard_arrow_right,
-                              size: 40,
-                              color: Colors.white,
+                  FutureBuilder(
+                      future: fetchTrainingCenter(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<BoxTCLabelData> _Tc = snapshot.data!;
+
+                          return Container(
+                            width: double.infinity,
+                            height: 250,
+                            child: ListView.builder(
+                              itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: ((context, index) {
+                                return TCBox(
+                                  bld: BoxTCLabelData(
+                                    id: _Tc[index].id,
+                                    image: _Tc[index].image,
+                                    name: _Tc[index].name,
+                                    logo: _Tc[index].logo,
+                                    cityAr: _Tc[index].cityAr,
+                                    cityEn: _Tc[index].cityEn,
+                                  ),
+                                );
+                              }),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                ScreenController()
-                                    .createRoute(const ShowTC(), 3),
-                              );
-                            },
-                            color: const Color(0xff1776e0),
-                            size: 80,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                          );
+                        } else {
+                          return Container(
+                              width: double.infinity,
+                              height: 250,
+                              child:
+                                  Center(child: CircularProgressIndicator()));
+                        }
+                      }),
+
+                  // SingleChildScrollView(
+                  //   scrollDirection: Axis.horizontal,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  //     child: Row(
+                  //       children: [
+                  //         //////////////////////////////////////////////////
+                  //         ///
+                  //         for (int i = 0;
+                  //             i <
+                  //                 ((trainingCenterBLDSmall.length < 7)
+                  //                     ? trainingCenterBLDSmall.length
+                  //                     : 7);
+                  //             i++)
+                  //           TCBox(
+                  //             bld: trainingCenterBLDSmall[i],
+                  //           ),
+
+                  //         RoundedButton(
+                  //           icon: Icon(
+                  //             (languageType == 0)
+                  //                 ? Icons.keyboard_arrow_left
+                  //                 : Icons.keyboard_arrow_right,
+                  //             size: 40,
+                  //             color: Colors.white,
+                  //           ),
+                  //           onPressed: () {
+                  //             Navigator.of(context).push(
+                  //               ScreenController()
+                  //                   .createRoute(const ShowTC(), 3),
+                  //             );
+                  //           },
+                  //           color: const Color(0xff1776e0),
+                  //           size: 80,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ]
                     //////////////////////////////////////////////////////////////////////////////////
                     ///
