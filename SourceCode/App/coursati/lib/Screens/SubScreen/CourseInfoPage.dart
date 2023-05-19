@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Screens/SubScreen/MapScreen.dart';
 import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
@@ -158,7 +159,22 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     ),
                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     //? This is the side where simple data is in
-
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(ScreenController()
+                              .createRoute(
+                                  TrainingCenterPage(
+                                      name: _course.trainingCenterName),
+                                  1));
+                        },
+                        child: Text(
+                          "${(languageType == 0) ? "مركز ${_course.trainingCenterName}" : "${_course.trainingCenterName} Center"}",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -294,11 +310,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).push(ScreenController()
-                              .createRoute(
-                                  TrainingCenterPage(
-                                      name: _course.trainingCenterName),
-                                  1));
+                          Navigator.of(context).push(
+                              ScreenController().createRoute(MapScreen(), 1));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -315,7 +328,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               width: 10,
                             ),
                             Text(
-                              "${(languageType == 0) ? "مركز ${_course.trainingCenterName}" : "${_course.trainingCenterName} Center"} - ${(languageType == 0) ? _course.location.city_ar : _course.location.city_en}",
+                              "${(languageType == 0) ? _course.location.city_ar : _course.location.city_en}",
                               style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
