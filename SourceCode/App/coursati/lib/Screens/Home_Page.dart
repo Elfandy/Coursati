@@ -57,11 +57,12 @@ class _HomePageState extends State<HomePage> {
   Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
     var url = "TrainingCenter1";
     List<BoxTCLabelData> tC = [];
+
     try {
       var response = await dioTestApi.get(url);
       if (response.statusCode == 200) {
         List<dynamic> tCJson = response.data["TrainingCenter"];
-
+        print("hello ");
         for (var tCJson in tCJson) {
           tC.add(BoxTCLabelData.fromJson(tCJson));
         }
@@ -279,8 +280,6 @@ class _HomePageState extends State<HomePage> {
                                     image: _Tc[index].image,
                                     name: _Tc[index].name,
                                     logo: _Tc[index].logo,
-                                    cityAr: _Tc[index].cityAr,
-                                    cityEn: _Tc[index].cityEn,
                                   ),
                                 );
                               }),

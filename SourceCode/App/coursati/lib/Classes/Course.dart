@@ -50,9 +50,16 @@ class Course {
     required this.trainerData,
     this.period,
   });
-  final int duration, trainingCenterID;
+  final int duration;
   int? periodsRepeats, period;
-  final String id, name, trainer, description, image, icon, trainingCenterName;
+  final String id,
+      name,
+      trainer,
+      description,
+      image,
+      icon,
+      trainingCenterName,
+      trainingCenterID;
   final List<Tag> tags;
   final double price, discount;
   final DateTime startingDate;
@@ -69,7 +76,7 @@ class Course {
         duration: json['duration'],
         image: json['image'],
         trainer: json['trainer'],
-        trainingCenterID: json['trainingCenterID'],
+        trainingCenterID: json['trainingCenterID'].toString(),
         periodsRepeats: json['periodsRepeats'],
         period: json['period'],
         description: json['description'],

@@ -43,7 +43,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.bld.cityAr);
+    
     try {
       return ScaleTransition(
         scale: _boxAnimationController,
@@ -153,7 +153,7 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      TrainingCenterPage(name: widget.bld.name!),
+      TrainingCenterPage(id: widget.bld.id!),
       2,
     ));
   }

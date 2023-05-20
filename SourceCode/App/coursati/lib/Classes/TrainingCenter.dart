@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:flutter/material.dart';
 
 import 'Location.dart';
@@ -22,43 +23,79 @@ class TrainingCenter {
     required this.logo,
     this.facebook = "",
     this.website = "",
-    this.ViperAllow = false,
-    this.WhatsAppAllow = false,
+    this.viperAllow = false,
+    this.whatsAppNum = "",
   });
-  int id;
-  String name, description, phoneNumber, email, image, facebook, website;
+
+  String id,
+      name,
+      description,
+      phoneNumber,
+      email,
+      image,
+      facebook,
+      website,
+      whatsAppNum;
   Locations location;
   TimeOfDay open, close;
   List<Tag> tags;
   double rating;
 
-  bool WhatsAppAllow = false, ViperAllow = false;
+  bool viperAllow = false;
 
   String get whatsApp => (Platform.isIOS)
-      ? "whatsapp://wa.me/$phoneNumber/?text="
-      : "https://api.whatsapp.com/send?phone=$phoneNumber=";
+      ? "whatsapp://wa.me/$whatsAppNum/?text="
+      : "https://api.whatsapp.com/send?phone=$whatsAppNum=";
 
   String get viper => "viber://chat?number=$phoneNumber";
   String logo;
   List<TrainingCenterBranch>? branch;
 
-  TrainingCenter.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        name = json["name"],
-        logo = json["logo"],
-        email = json["email"],
-        description = json["description"],
-        facebook = json["facebook"],
-        image = json["image"],
-        tags = json["tags"],
-        phoneNumber = json["phoneNum"],
-        WhatsAppAllow = json["whatsApp"],
-        branch = json["branch"],
-        close = json["close"],
-        location = json["location"],
-        open = json["open"],
-        rating = json["rating"],
-        website = json["website"];
+  factory TrainingCenter.fromJson(Map<String, dynamic> json) {
+    var tagObjsJson = json['tags'] as List;
+    List<Tag> _tags =
+        tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
+    var BranchOBJ = json['tags'] as List;
+    List<TrainingCenterBranch> _branch =
+        BranchOBJ.map((tagJson) => TrainingCenterBranch.fromJson(tagJson))
+            .toList();
+    return TrainingCenter(
+        id: json["id"],
+        name: json["name"],
+        logo: json["logo"],
+        email: json["email"],
+        description: json["description"],
+        facebook: json["facebook"],
+        image: json["image"],
+        tags: _tags,
+        phoneNumber: json["phoneNumber"],
+        whatsAppNum: json["whatsApp"],
+        branch: _branch,
+        close: json["close"] as TimeOfDay,
+        location: Locations.fromJson(json["location"]),
+        open: json["open"],
+        rating: json["rating"],
+        website: json["website"]);
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "logo": logo,
+        "email": email,
+        "description": description,
+        "facebook": facebook,
+        "image": image,
+        "tags": tags,
+        "phoneNumber": phoneNumber,
+        "whatsApp": whatsAppNum,
+        "branch": branch,
+        "close": close,
+        "location": location,
+        "open": open,
+        "rating": rating,
+        "website": website
+      };
 }
 
 // class TrainingCenterFields {
@@ -97,23 +134,70 @@ class TrainingCenterBranch {
     this.facebook = "",
     this.website = "",
     this.ViperAllow = false,
-    this.WhatsAppAllow = false,
+    this.whatsAppNum = "",
   });
 
   int id;
-  String name, description, phoneNumber, email, image, facebook, website;
+  String name,
+      description,
+      phoneNumber,
+      email,
+      image,
+      facebook,
+      website,
+      whatsAppNum;
   Locations location;
   TimeOfDay open, close;
   List<Tag> tags;
   double rating;
 
-  bool WhatsAppAllow, ViperAllow;
+  bool ViperAllow;
 
   String get whatsApp => (Platform.isIOS)
-      ? "whatsapp://wa.me/$phoneNumber/?text="
-      : "https://api.whatsapp.com/send?phone=$phoneNumber=";
+      ? "whatsapp://wa.me/$whatsAppNum;/?text="
+      : "https://api.whatsapp.com/send?phone=$whatsAppNum;=";
 
   String get viper => "viber://chat?number=$phoneNumber";
+
+  factory TrainingCenterBranch.fromJson(Map<String, dynamic> json) {
+    var tagObjsJson = json['tags'] as List;
+    List<Tag> _tags =
+        tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
+
+    return TrainingCenterBranch(
+      id: json["id"],
+      name: json["name"],
+      email: json["email"],
+      description: json["description"],
+      facebook: json["facebook"],
+      image: json["image"],
+      tags: _tags,
+      phoneNumber: json["phoneNumber"],
+      whatsAppNum: json["whatsApp"],
+      close: json["close"],
+      location: Locations.fromJson(json["location"]),
+      open: json["open"],
+      rating: json["rating"],
+      website: json["website"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "description": description,
+        "facebook": facebook,
+        "image": image,
+        "tags": tags,
+        "phoneNumber": phoneNumber,
+        "whatsApp": whatsAppNum,
+        "close": close,
+        "location": location,
+        "open": open,
+        "rating": rating,
+        "website": website
+      };
 }
 
 // class TrainingCenteBranchFields {

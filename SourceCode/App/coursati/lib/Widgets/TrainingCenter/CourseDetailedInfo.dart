@@ -16,7 +16,7 @@ class CourseDetailedPage extends StatefulWidget {
 class _CourseDetailedPageState extends State<CourseDetailedPage> {
   Course _course = Course(
     name: "",
-    trainingCenterID: 0,
+    trainingCenterID: "0",
     image: "",
     id: '',
     active: false,

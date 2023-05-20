@@ -48,10 +48,6 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
                 SizedBox(
                   width: 6,
                 ),
-                Text((widget.bld.cityAr != null)?
-                  (languageType == 0) ? widget.bld.cityAr! : widget.bld.cityEn!:"",
-                  style: TextStyle(color: Colors.white, fontSize: 10),
-                ),
               ],
             ),
             SizedBox(

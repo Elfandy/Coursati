@@ -136,7 +136,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               Navigator.of(context).push(ScreenController()
                                   .createRoute(
                                       TrainingCenterPage(
-                                          name: _course.trainingCenterName),
+                                          id: _course.trainingCenterID),
                                       1));
                             },
                             child: Text(
@@ -507,7 +507,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     Map<String, dynamic> course = {"id": id};
     Course _course = Course(
       name: "",
-      trainingCenterID: 0,
+      trainingCenterID: "0",
       image: "",
       id: '',
       active: false,
@@ -530,12 +530,11 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
         name: "",
       ),
     );
-    var getter;
+
     try {
       var response = await dioTestApi.post(url, data: course);
       if (response.statusCode == 200) {
-        getter = response.data;
-        _course = Course.fromJson(getter);
+        _course = Course.fromJson(response.data);
       }
     } catch (e) {
       print(e);
