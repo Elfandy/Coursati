@@ -10,7 +10,9 @@ import '../Classes/Course.dart';
 import '../Classes/TagData.dart';
 import '../Classes/Trainer.dart';
 import '../Classes/TrainingCenter.dart';
+import '../Services/ScreenController.dart';
 import '../Widgets/CustomeWidgets/TagChip.dart';
+import 'SubScreen/AllMapScreen.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -23,8 +25,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Tag> _selectedTags = [], _selectedTypes = [];
   final List<Tag> _tagTypeList = [
     Tag(id: 1, name_ar: "دورة", name_en: "Course"),
-    Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center"),
-    Tag(id: 3, name_ar: "مدرب", name_en: "Trainer")
+    Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
   ];
   // bool _selectedRepeat = false;
   refresh() {
@@ -48,39 +49,7 @@ class _SearchPageState extends State<SearchPage> {
   bool searching = false;
   @override
   Widget build(BuildContext context) {
-    TextField _input = TextField(
-      textAlignVertical: TextAlignVertical.center,
-      textAlign: TextAlign.start,
-      cursorWidth: 1,
-      style: TextStyle(color: (isDark) ? Colors.white : Colors.black),
-      onSubmitted: (value) async {
-        if (value != '') {
-          setState(() {
-            searching = true;
-          });
-        } else {
-          setState(() {
-            searching = false;
-          });
-        }
-      },
-      onTap: () {
-        if (_search.selection ==
-            TextSelection.fromPosition(
-                TextPosition(offset: _search.text.length - 1))) {
-          _search.selection = TextSelection.fromPosition(
-              TextPosition(offset: _search.text.length));
-        }
-      },
-      controller: _search,
-      cursorHeight: 20,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        hintText: (languageType == 0) ? "البحث" : "Search",
-        contentPadding: const EdgeInsets.all(2.5),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-      ),
-    );
+    print(courseBLD[0].toJson());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -93,7 +62,62 @@ class _SearchPageState extends State<SearchPage> {
                 Container(
                     height: 40,
                     width: (MediaQuery.of(context).size.width / 1.3),
-                    child: _input),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      textAlign: TextAlign.start,
+                      cursorWidth: 1,
+                      style: TextStyle(
+                          color: (isDark) ? Colors.white : Colors.black),
+                      onSubmitted: (value) {
+                        if (value != '') {
+                          setState(() {
+                            searching = true;
+                          });
+                        } else {
+                          setState(() {
+                            searching = false;
+                          });
+                        }
+                      },
+                      onTapOutside: (event) {
+                        if (_search.text != '') {
+                        } else {
+                          setState(() {
+                            searching = false;
+                          });
+                        }
+                      },
+                      onTap: () {
+                        if (_search.selection ==
+                            TextSelection.fromPosition(TextPosition(
+                                offset: _search.text.length - 1))) {
+                          _search.selection = TextSelection.fromPosition(
+                              TextPosition(offset: _search.text.length));
+                        }
+                      },
+                      controller: _search,
+                      cursorHeight: 20,
+                      decoration: InputDecoration(
+                        prefixIcon: IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: () {
+                            if (_search.text != '') {
+                              setState(() {
+                                searching = true;
+                              });
+                            } else {
+                              setState(() {
+                                searching = false;
+                              });
+                            }
+                          },
+                        ),
+                        hintText: (languageType == 0) ? "البحث" : "Search",
+                        contentPadding: const EdgeInsets.all(2.5),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    )),
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Container(
@@ -185,16 +209,6 @@ class _SearchPageState extends State<SearchPage> {
                                               minuimumSelection: 1,
                                               selected: _selectedTypes,
                                               tag: _tagTypeList[1],
-                                            ),
-                                            TagChip(
-                                              passiveBackgroundColor: (isDark)
-                                                  ? const Color.fromRGBO(
-                                                      250, 250, 250, 0.5)
-                                                  : const Color.fromRGBO(
-                                                      200, 200, 200, 0.5),
-                                              minuimumSelection: 1,
-                                              selected: _selectedTypes,
-                                              tag: _tagTypeList[2],
                                             ),
                                           ],
                                         ),
@@ -292,8 +306,6 @@ class _SearchPageState extends State<SearchPage> {
                         } else if (SearchJson["type"] == "trainingcenter") {
                           _TrainingCenterList.add(
                               BoxTCLabelData.fromJson(SearchJson));
-                        } else if (SearchJson["type"] == "trainer") {
-                          _TrainersList.add(Trainer.fromJson(SearchJson));
                         }
                       }
 
@@ -330,6 +342,22 @@ class _SearchPageState extends State<SearchPage> {
                           style: const TextStyle(
                               fontSize: 32, color: Color(0xff999999)),
                         ),
+                        Text(
+                          (languageType == 0) ? "أو" : "OR",
+                          style: const TextStyle(
+                              fontSize: 26, color: Color(0xff999999)),
+                        ),
+                        TextButton(
+                          child: Text(
+                            (languageType == 0) ? "إذهب للخريطة" : "Go To Map",
+                            style: const TextStyle(
+                                fontSize: 32, color: Color(0xff1776e0)),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(ScreenController()
+                                .createRoute(AllMapScreen(), 1));
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -354,7 +382,6 @@ class _SearchPageState extends State<SearchPage> {
     try {
       _TrainingCenterList.clear();
       _CourseList.clear();
-      _TrainersList.clear();
       var response = await dioTestApi.post(
         url,
         data: json.encode(listJson),

@@ -212,9 +212,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            (languageType == 0)
-                                ? _trainingCenter.location.city_ar
-                                : _trainingCenter.location.city_en,
+                            _trainingCenter.location.city!,
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
@@ -259,11 +257,8 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                 width: 10,
                                               ),
                                               Text(
-                                                (languageType == 0)
-                                                    ? _trainingCenter.branch![i]
-                                                        .location.city_ar
-                                                    : _trainingCenter.branch![i]
-                                                        .location.city_en,
+                                                _trainingCenter
+                                                    .branch![i].location.city!,
                                                 style: _branchStyle,
                                               ),
                                             ]),

@@ -7,7 +7,7 @@ class Trainer {
       // required this.rating,
       required this.image});
 
-  int id;
+  String id;
   String name, major, discription, image;
   // double rating;
 
@@ -17,6 +17,13 @@ class Trainer {
         major = json['major'],
         discription = json["discription"],
         image = json["image"];
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "major": major,
+        "discription": discription,
+        "image": image
+      };
 }
 
 // class TrainerFields {

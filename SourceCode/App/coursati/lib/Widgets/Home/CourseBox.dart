@@ -118,7 +118,7 @@ class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      CourseInfoPage(name: widget.bld.name!),
+      CourseInfoPage(id: widget.bld.name!),
       2,
     ));
 

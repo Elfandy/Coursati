@@ -165,9 +165,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                         ? Alignment.bottomRight
                                         : Alignment.bottomLeft,
                                     child: Text(
-                                      (languageType == 0)
-                                          ? TC.location.city_ar
-                                          : TC.location.city_en,
+                                      TC.location.city!,
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 28,
@@ -276,11 +274,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                                     ? Alignment.bottomRight
                                                     : Alignment.bottomLeft,
                                                 child: Text(
-                                                  (languageType == 0)
-                                                      ? TC.branch![i].location
-                                                          .city_ar
-                                                      : TC.branch![i].location
-                                                          .city_en,
+                                                  TC.branch![i].location.city!,
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 28,

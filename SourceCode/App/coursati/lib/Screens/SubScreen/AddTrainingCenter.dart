@@ -2,12 +2,16 @@ import 'dart:io';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:searchfield/searchfield.dart';
 
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/Location.dart';
+import '../../Classes/TrainingCenter.dart';
+import '../../Services/ScreenController.dart';
+import '../../Widgets/TrainingCenter/SetLoationMap.dart';
 
 class AddTrainingCenterPage extends StatefulWidget {
   const AddTrainingCenterPage({super.key});
@@ -32,7 +36,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
       _description = TextEditingController(),
       _whatsapp = TextEditingController();
   String? _dropDownValue;
-
+  Locations locationData = Locations(city: "", id: 0, lat: 0, lng: 0);
   // Location? _dropDownValue = locations.first;
 
   bool _showPersonalPhonenymberErrorMessage = false,
@@ -587,43 +591,69 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(200),
-                          border: Border.all(
-                            color: const Color(0xff424242),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 20, left: 20),
-                          child: SearchField(
-                            searchStyle: TextStyle(
-                                color: isDark ? Colors.white : Colors.black),
-                            suggestions: [
-                              for (Location i in locations)
-                                SearchFieldListItem(
-                                  languageType == 0 ? i.city_ar : i.city_en,
-                                )
-                            ],
-                            onSubmit: (p0) {
-                              setState(() {
-                                _dropDownValue = p0;
-                              });
-                            },
-                            hint: "العنوان",
-                            controller: _location,
-                            suggestionsDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: isDark ? Colors.grey[200] : Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: TextField(
+                          style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black),
+                          decoration: InputDecoration(
+                            counterText: "",
+                            label: Row(children: [
+                              const Icon(
+                                Icons.location_on,
+                                size: 20,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                (languageType == 0) ? "العنوان" : "Address",
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const Text("*",
+                                  style: TextStyle(color: Colors.red)),
+                            ]),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(),
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                            maxSuggestionsInViewPort: 5,
-                            suggestionDirection: SuggestionDirection.down,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^[a-zA-Z\u0621-\u064A]+'))
-                            ],
-                            scrollbarAlwaysVisible: false,
                           ),
+                          controller: _location,
+                          readOnly: true,
+                          onTap: () {
+                            setState(() {
+                              Navigator.of(context)
+                                  .push(ScreenController()
+                                      .createRoute(SetLocationMap(), 0))
+                                  .then(
+                                (value) {
+                                  if (value.latitude != 0 &&
+                                      value.longitude != 0) {
+                                    locationData.lat = value.latitude;
+                                    locationData.lng = value.longitude;
+
+//!!!!!
+                                    //** This is the code for getting the name of the city out of the coodinates of the Training center */
+                                    fetchCityName(locationData.lat!,
+                                            locationData.lng!)
+                                        .then(
+                                      (value) {
+                                        locationData.city =
+                                            value == "null" ? "" : value;
+                                        _location.text = locationData.city!;
+                                      },
+                                    );
+                                  } else {
+                                    _location.text = "";
+                                  }
+                                },
+                              );
+                            });
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^[a-zA-Z\u0621-\u064A]+'))
+                          ],
                         ),
                       ),
 
@@ -637,15 +667,6 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                      Visibility(
-                        visible: _showTrainingCenterPhoneNumberErrorMessage,
-                        child: Text(
-                          languageType == 0
-                              ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
-                              : "Phone number  needs to starts with 091,092,094,095",
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ),
                       Focus(
                         onFocusChange: (value) {
                           if (!value) {
@@ -720,6 +741,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ),
                         ),
                       ),
+                      Visibility(
+                        visible: _showTrainingCenterPhoneNumberErrorMessage,
+                        child: Text(
+                          languageType == 0
+                              ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
+                              : "Phone number  needs to starts with 091,092,094,095",
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: TextField(
@@ -775,17 +805,8 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                   TextPosition(offset: _facebook.text.length));
                             }
                           },
-                          onChanged: (value) {
-                            setState(() {
-                              if (english.hasMatch(value)) {
-                                _facebook.text = value;
-                              } else {
-                                _facebook.text = '';
-                              }
-                            });
-                          },
+                          onChanged: (value) {},
                           controller: _facebook,
-                          selectionControls: EmptyTextSelectionControls(),
                           maxLengthEnforcement: MaxLengthEnforcement.enforced,
                           inputFormatters: [
                             FilteringTextInputFormatter.singleLineFormatter,
@@ -1079,7 +1100,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              _dropDownValue ?? "Empty",
+                              _location.text ,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xff1776e0),
@@ -1271,5 +1292,16 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
     setState(() {
       _image = imageTemp;
     });
+  }
+
+  Future<String> fetchCityName(double lat, double lng) async {
+    var address = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(locationData.lat, locationData.lng));
+    var first = address.first;
+    return first.locality.toString();
+  }
+
+  Future SendData(TrainingCenter tc)async {
+    
   }
 }

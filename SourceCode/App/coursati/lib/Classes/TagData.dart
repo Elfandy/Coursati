@@ -10,6 +10,8 @@ class Tag {
       : id = json["id"],
         name_ar = json["NameAR"],
         name_en = json["NameEN"];
+
+        
 }
 
 // class TagFields {

@@ -27,7 +27,7 @@ class TrainingCenter {
   });
   int id;
   String name, description, phoneNumber, email, image, facebook, website;
-  Location location;
+  Locations location;
   TimeOfDay open, close;
   List<Tag> tags;
   double rating;
@@ -102,7 +102,7 @@ class TrainingCenterBranch {
 
   int id;
   String name, description, phoneNumber, email, image, facebook, website;
-  Location location;
+  Locations location;
   TimeOfDay open, close;
   List<Tag> tags;
   double rating;
