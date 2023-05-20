@@ -64,7 +64,6 @@ class _HomePageState extends State<HomePage> {
 
         for (var tCJson in tCJson) {
           tC.add(BoxTCLabelData.fromJson(tCJson));
-        
         }
       }
     } catch (e) {

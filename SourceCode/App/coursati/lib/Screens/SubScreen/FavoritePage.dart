@@ -4,6 +4,8 @@ import '../../Classes/GlobalVariables.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
+
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
 

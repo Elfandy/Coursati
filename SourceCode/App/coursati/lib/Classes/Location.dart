@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:json_annotation/json_annotation.dart';
-
-
 
 class Location {
   Location({required this.id, required this.city_ar, required this.city_en});
