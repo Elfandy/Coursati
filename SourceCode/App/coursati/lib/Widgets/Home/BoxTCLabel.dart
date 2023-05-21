@@ -21,7 +21,7 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
         Container(
           child: Text(
             softWrap: true,
-            widget.bld.name,
+            widget.bld.name!,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -47,12 +47,6 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
                 ),
                 SizedBox(
                   width: 6,
-                ),
-                Text(
-                  (languageType == 0)
-                      ? widget.bld.address.city_ar
-                      : widget.bld.address.city_en,
-                  style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
               ],
             ),

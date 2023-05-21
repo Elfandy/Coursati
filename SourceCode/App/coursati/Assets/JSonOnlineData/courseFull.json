@@ -1,0 +1,7 @@
+{"name":" البرمجة باستخدام لغة الجافا","duration": 60,"image":" http://192.168.1.7/Images/yustinus-tjiuwanda-BCBGahg0MH0-unsplash.jpg","trainerData": {"id":"1","name":"noor mohammed",
+"major":"Programming","discription":"hello i am noor mohammed",
+"image":"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"},
+"trainingCenterID": 91, "period": 1, "description": "Our core Java programming tutorial is designed for","id": "12331212", "trainingCenterName": "Octal",
+ "tags": [{"id":1,"NameAR":"برمجة","NameEN":"Programming"}], "price": 300.0, "discount": 0.0, "startingDate": "2023-06-01 00:00:00.000", "active": "true",
+  "full":"false", "repeats": true, "location": {"id":1,"city":"janzour","lat":32.812645192365466, 
+"lng":13.013509624082142}, "trainer":"001" , "icon": "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq"}

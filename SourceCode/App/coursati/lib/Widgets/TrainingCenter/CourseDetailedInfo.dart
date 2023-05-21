@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../Classes/Course.dart';
@@ -17,7 +16,7 @@ class CourseDetailedPage extends StatefulWidget {
 class _CourseDetailedPageState extends State<CourseDetailedPage> {
   Course _course = Course(
     name: "",
-    trainingCenterID: 0,
+    trainingCenterID: "0",
     image: "",
     id: '',
     active: false,
@@ -28,17 +27,16 @@ class _CourseDetailedPageState extends State<CourseDetailedPage> {
     price: 0,
     startingDate: DateTime(2023),
     tags: [],
-    trainer: 0,
+    trainer: "0",
     icon: "",
     location: locations[0],
     repeats: false,
     trainerData: Trainer(
-      id: 0,
+      id: "0",
       discription: """""",
       image: "",
       major: "",
       name: "",
-      rating: 0,
     ),
   );
 

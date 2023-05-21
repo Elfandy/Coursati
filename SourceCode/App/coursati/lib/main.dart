@@ -28,8 +28,8 @@ import 'Widgets/ErrorServer.dart';
 
 void main() async {
 //*----------------------------------------
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  // runZonedGuarded(() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
 
     //!!! This is for checking the connection to the server
     //?????????????????????????????????????????????????????????
@@ -56,7 +56,7 @@ void main() async {
     //   },
     // );
 //* this is the local saving restore function
-  }, (_, s) {});
+  // }, (_, s) {});
 }
 
 class MainApp extends StatelessWidget {

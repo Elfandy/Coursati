@@ -4,6 +4,10 @@
         android:label="coursati"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- google maps Api Key -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBbg24GYIH8LvMFHWMkK7QGqLcsMMk0n3w"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

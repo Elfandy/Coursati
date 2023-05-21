@@ -51,7 +51,7 @@ class _ShowCoursesState extends State<ShowCourses> {
                     _visibleSearch = true;
                     _searching.clear();
                     for (BoxCourseLabelData i in courseBLDsmall) {
-                      if (i.label
+                      if (i.name!
                           .toLowerCase()
                           .contains(_search.text.toLowerCase())) {
                         _searching.add(i);

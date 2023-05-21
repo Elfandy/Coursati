@@ -129,9 +129,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  languageType == 0
-                                      ? widget.tc.location.city_ar
-                                      : widget.tc.location.city_en,
+                                 
+                                       widget.tc.location.city!,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 32,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../Classes/GlobalVariables.dart';
-import '../../main.dart';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -11,6 +14,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,7 @@ class _FavoritePageState extends State<FavoritePage> {
           style: TextStyle(color: Colors.black54),
         ),
       ),
-      body: Container(),
+      body: Container()
     );
   }
 }

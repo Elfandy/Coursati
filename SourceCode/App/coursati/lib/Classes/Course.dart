@@ -5,7 +5,7 @@ import 'Trainer.dart';
 import 'TrainingCenter.dart';
 
 // class CourseFields {
-//   static final String id = "_id";
+//   static final String id = "id";
 //   static final String name = "name";
 
 //   static final String duration = "duration";
@@ -32,7 +32,7 @@ class Course {
     required this.id,
     required this.duration,
     required this.name,
-    required this.tags,
+    this.tags = const [],
     required this.price,
     required this.discount,
     required this.startingDate,
@@ -50,37 +50,49 @@ class Course {
     required this.trainerData,
     this.period,
   });
-  final int duration, trainer, trainingCenterID;
+  final int duration;
   int? periodsRepeats, period;
-  final String id, name, description, image, icon, trainingCenterName;
+  final String id,
+      name,
+      trainer,
+      description,
+      image,
+      icon,
+      trainingCenterName,
+      trainingCenterID;
   final List<Tag> tags;
   final double price, discount;
   final DateTime startingDate;
   final bool active, full, repeats;
-  final Location location;
+  final Locations location;
   final Trainer trainerData;
 
-  Course.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        duration = json['duration'],
-        image = json['image'],
-        trainer = json['trainer'],
-        trainingCenterID = json['trainingCenterID'],
-        periodsRepeats = json['periodsRepeats'],
-        period = json['period'],
-        description = json['description'],
-        id = json['id'],
-        trainingCenterName = json['trainingCenterName'],
-        tags = json['tags'],
-        price = json['price'],
-        discount = json['discount'],
-        startingDate = json['startingDate'],
-        active = json['active'],
-        full = json['full'],
-        repeats = json['repeats'],
-        location = json['location'],
-        trainerData = json['trainerData'],
-        icon = json['icon'];
+  factory Course.fromJson(Map<String, dynamic> json) {
+    var tagObjsJson = json['tags'] as List;
+    List<Tag> _tags =
+        tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
+    return Course(
+        name: json['name'],
+        duration: json['duration'],
+        image: json['image'],
+        trainer: json['trainer'],
+        trainingCenterID: json['trainingCenterID'].toString(),
+        periodsRepeats: json['periodsRepeats'],
+        period: json['period'],
+        description: json['description'],
+        id: json['id'],
+        trainingCenterName: json['trainingCenterName'],
+        tags: _tags,
+        price: json['price'],
+        discount: json['discount'],
+        startingDate: DateTime.parse(json['startingDate']),
+        active: json['active'],
+        full: json['full'],
+        repeats: json['repeats'],
+        location: Locations.fromJson(json['location']),
+        trainerData: Trainer.fromJson(json['trainerData']),
+        icon: json['icon']);
+  }
 
   Map<String, dynamic> toJson() => {
         'name': name,
