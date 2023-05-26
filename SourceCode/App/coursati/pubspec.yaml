@@ -38,15 +38,15 @@ dependencies:
   dio: ^5.1.1
   dropdown_button2: ^2.1.0
   dropdown_search: ^5.0.6
+  firebase_core: ^2.13.0
+  firebase_messaging: ^14.6.1
   flutter:
     sdk: flutter
   flutter_geocoder: ^0.2.2-nullsafety
   flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.2.19
   flutter_rating_bar: ^4.0.1
-  flutter_sms: ^2.3.3
   flutter_svg: ^2.0.5
-  flutter_termii: ^0.2.1
   fluttertoast: ^8.2.1
 
   google_maps_flutter: ^2.2.6

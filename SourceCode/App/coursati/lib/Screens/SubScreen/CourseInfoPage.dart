@@ -196,87 +196,25 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      const Icon(
-                                        Icons.attach_money,
-                                        size: 30,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "${_course.price}\$",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      const Icon(
-                                        Icons.autorenew_rounded,
-                                        size: 30,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        (_course.repeats)
-                                            ? (languageType == 0)
-                                                ? "يتجدد"
-                                                : "Reapeats"
-                                            : (languageType == 0)
-                                                ? "لا يتجدد"
-                                                : "No repeats",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    size: 30,
                                   ),
-                                ),
-                                (_course.repeats)
-                                    ? Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            30, 10, 30, 0),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            const Icon(
-                                              Icons.event_repeat,
-                                              size: 30,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "${_course.periodsRepeats}${(_course.period == 0) ? (languageType == 0) ? " اسبوع" : " Week" : (_course.period == 1) ? (languageType == 0) ? " شهر" : "Month" : (_course.period == 2) ? (languageType == 0) ? " سنة" : " Year" : "Unkown"}",
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : Container(),
-                              ],
+                                  Text(
+                                    "${_course.price}",
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

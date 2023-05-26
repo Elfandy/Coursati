@@ -59,6 +59,28 @@ class TrainingCenter {
     List<TrainingCenterBranch> _branch =
         BranchOBJ.map((tagJson) => TrainingCenterBranch.fromJson(tagJson))
             .toList();
+    String _close = json["close"];
+    int hhC = 0;
+    if (_close.endsWith('PM')) hhC = 12;
+    _close = _close.split(' ')[0];
+    TimeOfDay _closeTime = TimeOfDay(
+      hour: hhC +
+          int.parse(_close.split(":")[0]) %
+              24, // in case of a bad time format entered manually by the user
+      minute: int.parse(_close.split(":")[1]) % 60,
+    );
+
+    String _start = json["open"];
+    int hhs = 0;
+    if (_start.endsWith('PM')) hhs = 12;
+    _start = _start.split(' ')[0];
+    TimeOfDay _starttime = TimeOfDay(
+      hour: hhs +
+          int.parse(_start.split(":")[0]) %
+              24, // in case of a bad time format entered manually by the user
+      minute: int.parse(_start.split(":")[1]) % 60,
+    );
+
     return TrainingCenter(
         id: json["id"],
         name: json["name"],
@@ -71,9 +93,9 @@ class TrainingCenter {
         phoneNumber: json["phoneNumber"],
         whatsAppNum: json["whatsApp"],
         branch: _branch,
-        close: json["close"] as TimeOfDay,
+        close: _closeTime,
         location: Locations.fromJson(json["location"]),
-        open: json["open"],
+        open: _starttime,
         rating: json["rating"],
         website: json["website"]);
   }
@@ -96,6 +118,18 @@ class TrainingCenter {
         "rating": rating,
         "website": website
       };
+
+  TimeOfDay timefromString(String time) {
+    int hh = 0;
+    if (time.endsWith('PM')) hh = 12;
+    time = time.split(' ')[0];
+    return TimeOfDay(
+      hour: hh +
+          int.parse(time.split(":")[0]) %
+              24, // in case of a bad time format entered manually by the user
+      minute: int.parse(time.split(":")[1]) % 60,
+    );
+  }
 }
 
 // class TrainingCenterFields {

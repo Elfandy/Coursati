@@ -1,16 +1,9 @@
-import 'dart:convert';
 import 'package:coursati/Classes/BoxTCLabelData.dart';
-import 'package:coursati/Classes/Location.dart';
-import 'package:coursati/Screens/SubScreen/ShowAllTC.dart';
-import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
-import '../Widgets/Home/RoundedButton.dart';
-import 'SubScreen/ShowAllCourse.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -62,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       var response = await dioTestApi.get(url);
       if (response.statusCode == 200) {
         List<dynamic> tCJson = response.data["TrainingCenter"];
-        print("hello ");
+
         for (var tCJson in tCJson) {
           tC.add(BoxTCLabelData.fromJson(tCJson));
         }

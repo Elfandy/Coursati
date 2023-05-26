@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "280695079354",
+    "firebase_url": "https://coursati-f8d75-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "coursati-f8d75",
+    "storage_bucket": "coursati-f8d75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280695079354:android:b0d678aa8342ff7ed4dd83",
+        "android_client_info": {
+          "package_name": "com.Coursati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280695079354-lfl59tg55690k7391n7cmutvinjkbp04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbbCLaCxlqv5XMJB8d_Q_EccOX-hd9Rms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280695079354-lfl59tg55690k7391n7cmutvinjkbp04.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "280695079354-4qodj8t3b28aqptb44f2vpdnvp82ltmb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coursati"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280695079354:android:0f8a1bbaba470a61d4dd83",
+        "android_client_info": {
+          "package_name": "com.example.coursati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280695079354-lfl59tg55690k7391n7cmutvinjkbp04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbbCLaCxlqv5XMJB8d_Q_EccOX-hd9Rms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280695079354-lfl59tg55690k7391n7cmutvinjkbp04.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "280695079354-4qodj8t3b28aqptb44f2vpdnvp82ltmb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coursati"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

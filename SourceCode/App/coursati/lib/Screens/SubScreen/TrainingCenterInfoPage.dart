@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Screens/SubScreen/MapScreen.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           TrainingCenter _trainingCenter = snapshot.data!;
+          print(_trainingCenter.branch);
           return SafeArea(
               child: Stack(children: [
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -179,38 +181,48 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                         //? this is the location of the main branch of the center
                         Padding(
                           padding: _labelPad,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 25,
-                                height: 25,
-                                child: Image.asset(
-                                  "Assets/Icons/map-pin-location.png",
-                                  color: (isDark) ? Colors.white : Colors.black,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(ScreenController()
+                                  .createRoute(
+                                      MapScreen(loc: _trainingCenter.location),
+                                      1));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: Image.asset(
+                                    "Assets/Icons/map-pin-location.png",
+                                    color:
+                                        (isDark) ? Colors.white : Colors.black,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                (languageType == 0)
-                                    ? "العنوان: "
-                                    : "ِAddress: ",
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                _trainingCenter.location.city!,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  (languageType == 0)
+                                      ? "العنوان: "
+                                      : "Address: ",
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _trainingCenter.location.city!,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         //?This is the branches place of the center
-                        (_trainingCenter.branch != null)
+                        (_trainingCenter.branch!.isNotEmpty)
                             ? Padding(
                                 padding: _labelPad,
                                 child: Column(
@@ -261,62 +273,56 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
 
                                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                       //? this is the tags place of the center
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 20),
-                                            child: Text(
-                                              (languageType == 0)
-                                                  ? "الوسوم"
-                                                  : "Tags",
-                                              style: _labeleStyle,
-                                            ),
-                                          ),
-                                          Wrap(
-                                            children: [
-                                              for (int i = 0;
-                                                  i <
-                                                      _trainingCenter
-                                                          .tags.length;
-                                                  i++)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color: const Color(
-                                                            0xffdddddd)),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        (languageType == 0)
-                                                            ? _trainingCenter
-                                                                .tags[i]
-                                                                .name_ar!
-                                                            : _trainingCenter
-                                                                .tags[i]
-                                                                .name_en!,
-                                                        style: _tagsStyle,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          )
-                                        ],
-                                      )
                                     ]))
                             : Container(),
                         //* Second try of the tags place
 
+                        (_trainingCenter.tags.isNotEmpty)
+                            ? Padding(
+                                padding: _labelPad,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: Text(
+                                        (languageType == 0) ? "الوسوم" : "Tags",
+                                        style: _labeleStyle,
+                                      ),
+                                    ),
+                                    Wrap(
+                                      children: [
+                                        for (int i = 0;
+                                            i < _trainingCenter.tags.length;
+                                            i++)
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color:
+                                                      const Color(0xffdddddd)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  (languageType == 0)
+                                                      ? _trainingCenter
+                                                          .tags[i].name_ar!
+                                                      : _trainingCenter
+                                                          .tags[i].name_en!,
+                                                  style: _tagsStyle,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Container(),
                         // Padding(
                         //     padding: const EdgeInsets.all(8.0),
                         //     child:
