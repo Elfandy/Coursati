@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
         // تحديث بيانات المستخدم
-    Route::post('/update', 'App\Http\Controllers\UserController@update');
+    Route::post('/user/update', 'App\Http\Controllers\UserController@update');
     //  يطلب بيانات المستخدم APP /     TOKEN ارسال
     Route::get('/user', function (Request $request) {
         return $request->user();
@@ -21,7 +21,6 @@ Route::post('/auth/token', [\App\Http\Controllers\Auth\TokenController::class, '
 Route::post('/register', 'App\Http\Controllers\UserController@register'); 
 
 
-// Non deleted user 
 
 //Route::delete('/auth/token/logout', [\App\Http\Controllers\Auth\TokenController::class, 'destroy']);
 
@@ -38,6 +37,8 @@ Route::get('/tags',[App\tag::class, 'tag']);
 //TRAINING CENTER CONTROLLERS
 //home page
 Route::get('/tc', [App\trainingcenter::class, 'trainingcenter']);
+Route::post('/search', [App\trainingcenter::class, 'search']);
+
 
 Route::post('/tc/add', [App\trainingcenter::class, 'add']);
 Route::post('/tc/update', [App\trainingcenter::class, 'updater']);
@@ -45,12 +46,16 @@ Route::post('/tc/update', [App\trainingcenter::class, 'updater']);
 Route::post('/tc/noti', [App\trainingcenter::class, 'noti']);
 //المراكز التريبية اللتي تم إضافتها مؤخراً
 Route::post('/tc/pending', [App\trainingcenter::class, 'pending']);
+//update a new rate
+Route::post('/tc/rate', [App\trainingcenter::class, 'rate']);
 
 
 
 
 
-//not done 
+
+
+
 //COURSES CONTROLLER
 Route::get('/course', [App\Course::class, 'Course']);
 Route::post('/course/add', [App\Course::class, 'add']);
