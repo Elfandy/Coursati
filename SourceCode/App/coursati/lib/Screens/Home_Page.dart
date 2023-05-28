@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
@@ -42,7 +43,9 @@ class _HomePageState extends State<HomePage> {
         }
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
     return courses;
   }

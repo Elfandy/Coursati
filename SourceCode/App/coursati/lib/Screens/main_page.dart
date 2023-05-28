@@ -1,6 +1,7 @@
 import 'package:coursati/Widgets/NetworkPopUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Classes/GlobalVariables.dart';
 import 'Home_Page.dart';
 import 'More_Page.dart';
@@ -16,7 +17,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentPage = 0;
+  int _currentPage = 2;
 
   final List<Widget> _pages = const [
     HomePage(),
@@ -41,13 +42,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     //*** This is the temp TrainingCenter local data insert */
-    if (user.trainingCenterId != null) {
-      for (int i = 0; i < trainingCenterData.length; i++) {
-        if (user.trainingCenterId == trainingCenterData[i].id) {
-          TC = trainingCenterData[i];
-        }
-      }
-    }
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
     return WillPopScope(

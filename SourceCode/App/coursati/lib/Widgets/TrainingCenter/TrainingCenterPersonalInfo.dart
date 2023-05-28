@@ -1,7 +1,9 @@
+import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:flutter/material.dart';
 
 class TrainingCenterParsonalInfo extends StatefulWidget {
-  const TrainingCenterParsonalInfo({super.key});
+   TrainingCenterParsonalInfo({super.key,required this.tc});
+  TrainingCenter tc ;
 
   @override
   State<TrainingCenterParsonalInfo> createState() =>

@@ -33,6 +33,7 @@ dependencies:
   build_runner: ^2.1.1
   cached_network_image: ^3.2.3
   chips_choice: ^3.0.0
+  cloud_firestore: ^4.7.1
   connectivity_plus: ^2.3.6
   cupertino_icons: ^1.0.2
   dio: ^5.1.1
@@ -48,7 +49,6 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.5
   fluttertoast: ^8.2.1
-
   google_maps_flutter: ^2.2.6
   image_picker: ^0.8.7+4
   internet_popup: ^1.0.8+5

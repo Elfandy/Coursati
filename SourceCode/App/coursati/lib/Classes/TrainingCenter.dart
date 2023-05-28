@@ -9,7 +9,7 @@ import 'TagData.dart';
 class TrainingCenter {
   TrainingCenter({
     required this.id,
-    required this.branch,
+
     required this.close,
     required this.description,
     required this.email,
@@ -49,7 +49,7 @@ class TrainingCenter {
 
   String get viper => "viber://chat?number=$phoneNumber";
   String logo;
-  List<TrainingCenterBranch>? branch;
+ 
 
   factory TrainingCenter.fromJson(Map<String, dynamic> json) {
     var tagObjsJson = json['tags'] as List;
@@ -92,7 +92,7 @@ class TrainingCenter {
         tags: _tags,
         phoneNumber: json["phoneNumber"],
         whatsAppNum: json["whatsApp"],
-        branch: _branch,
+ 
         close: _closeTime,
         location: Locations.fromJson(json["location"]),
         open: _starttime,
@@ -111,7 +111,7 @@ class TrainingCenter {
         "tags": tags,
         "phoneNumber": phoneNumber,
         "whatsApp": whatsAppNum,
-        "branch": branch,
+
         "close": close,
         "location": location,
         "open": open,

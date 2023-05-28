@@ -40,68 +40,78 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 
-//////////////////////////////////////////////////////////////////
-////
-///
-/////
-////
-///
-///
-///
-///
-///
-///
 // Future getToken() async {
 //   return await Dio().post("http://192.168.1.11:8000/api/auth/token",
 //       data: {"email": "nader@email.com", "password": "password"});
 // }
 
 Future<void> main() async {
+  //????????????????????????????????/
+  //* FireBase Notification handling
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // TODO: Request permission
-  final messaging = FirebaseMessaging.instance;
+     runZonedGuarded(() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   checkServer().then((value) {
+//       if (value == 1) {
+        FileHandle().readConfig().then(
+          (value) {
+            if (value != null) {
+              FileHandle().extractConfigData(value);
+             
+            } else {
+              FileHandle().writeConfig(ConfigSave);
+                
+             }
+                runApp(MainApp());
+             });
 
-  final settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
+            //  }else{ runApp(ServerError(error: value));}});
+             }, (_, s) {});
+  // // TODO: Request permission
+  // final messaging = FirebaseMessaging.instance;
 
-  if (kDebugMode) {
-    print('Permission granted: ${settings.authorizationStatus}');
-  }
+  // final settings = await messaging.requestPermission(
+  //   alert: true,
+  //   announcement: false,
+  //   badge: true,
+  //   carPlay: false,
+  //   criticalAlert: false,
+  //   provisional: false,
+  //   sound: true,
+  // );
 
-  // TODO: Register with FCM
-  String? token = await messaging.getToken();
+  // if (kDebugMode) {
+  //   print('Permission granted: ${settings.authorizationStatus}');
+  // }
 
-  if (kDebugMode) {
-    print('Registration Token=$token');
-  }
+  // // TODO: Register with FCM
+  // String? token = await messaging.getToken();
 
-  // TODO: Set up foreground message handler
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (kDebugMode) {
-      print('Handling a foreground message: ${message.messageId}');
-      print('Message data: ${message.data}');
-      print('Message notification: ${message.notification?.title}');
-      print('Message notification: ${message.notification?.body}');
-    }
+  // if (kDebugMode) {
+    
+  //   print('Registration Token=$token');
+  // }
 
-    _messageStreamController.sink.add(message);
-  });
+  // // TODO: Set up foreground message handler
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   if (kDebugMode) {
+  //     print('Handling a foreground message: ${message.messageId}');
+  //     print('Message data: ${message.data}');
+  //     print('Message notification: ${message.notification?.title}');
+  //     print('Message notification: ${message.notification?.body}');
+  //   }
 
-  // TODO: Set up background message handler
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //   _messageStreamController.sink.add(message);
+  // });
 
+  // // TODO: Set up background message handler
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+//* end of fireBase Notification Handling
 //???????
-  runApp(MainApp());
+
 }
 
 // void main() async {
@@ -111,15 +121,15 @@ Future<void> main() async {
 
 //     //!!! This is for checking the connection to the server
 //     //?????????????????????????????????????????????????????????
-//     // checkServer().then((value) {
-//     //   if (value == 1) {
-//     //     FileHandle().readConfig().then(
-//     //       (value) {
-//     //         if (value != null) {
-//     //           FileHandle().extractConfigData(value);
-//     //         } else {
-//     //           FileHandle().writeConfig(ConfigSave);
-//     //         }
+    // checkServer().then((value) {
+    //   if (value == 1) {
+    //     FileHandle().readConfig().then(
+    //       (value) {
+    //         if (value != null) {
+    //           FileHandle().extractConfigData(value);
+    //         } else {
+    //           FileHandle().writeConfig(ConfigSave);
+    //         }
 //     await Firebase.initializeApp(
 
 //     options: DefaultFirebaseOptions.currentPlatform,
@@ -152,20 +162,26 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   String _lastMessage = "";
 
-  _MainAppState() {
-    _messageStreamController.listen((message) {
-      setState(() {
-        if (message.notification != null) {
-          _lastMessage = 'Received a notification message:'
-              '\nTitle=${message.notification?.title},'
-              '\nBody=${message.notification?.body},'
-              '\nData=${message.data}';
-        } else {
-          _lastMessage = 'Received a data message: ${message.data}';
-        }
-      });
-    });
+  @override
+  void initState() {
+    super.initState();
+    requestPermssionFireBase();
+    getToken();
   }
+  // _MainAppState() {
+  //   _messageStreamController.listen((message) {
+  //     setState(() {
+  //       if (message.notification != null) {
+  //         _lastMessage = 'Received a notification message:'
+  //             '\nTitle=${message.notification?.title},'
+  //             '\nBody=${message.notification?.body},'
+  //             '\nData=${message.data}';
+  //       } else {
+  //         _lastMessage = 'Received a data message: ${message.data}';
+  //       }
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -230,22 +246,63 @@ class _MainAppState extends State<MainApp> {
       themeMode: themeSelector[(isDark) ? 1 : 0],
     );
   }
+
+  void requestPermssionFireBase() async {
+      final messaging = FirebaseMessaging.instance;
+final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  if(settings.authorizationStatus == AuthorizationStatus.authorized){
+    if (kDebugMode) {
+      print("all good");
+    }
+  }else if(settings.authorizationStatus == AuthorizationStatus.provisional){
+    if (kDebugMode) {
+      print("granted provisonal permissons");
+    }
+  } else{
+    if (kDebugMode) {
+      print("Denied");
+    }
+  }
+  }
+
+  void getToken() async{
+    await FirebaseMessaging.instance.getToken().then((token)  {
+      setState(() {
+        deviceID = token.toString();
+        if(kDebugMode){
+          print(deviceID);
+        }
+      });
+    });
+  }
+
+  
 }
 
+
 Future<int> checkServer() async {
-  http.Response response;
+  
   try {
     //*** This is the default server check */
     // response = await http.get(Uri.parse(server));
     //!! temp server check
 
-    response = await http.get(Uri.parse("http://192.168.1.11:8000"));
-  } catch (e) {
-    return 0;
-  }
-  if (response.statusCode == 200) {
+   var response = await http.get(Uri.parse(apiTestServer));
+    if (response.statusCode == 200) {
     return 1;
   } else {
     return 2;
   }
+  } catch (e) {
+    return 0;
+  }
+  
 }

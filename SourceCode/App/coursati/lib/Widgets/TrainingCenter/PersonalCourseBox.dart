@@ -94,16 +94,16 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
                               padding: const EdgeInsets.all(10.0),
                               child: Container(
                                 padding: const EdgeInsets.all(3.0),
-                                width: 50,
+                                width: 100,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: Color(0x44000000)),
                                 child: Center(
                                   child: Text(
-                                    "A03",
+                                    widget.bld.id.toString(),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                                        color: Colors.white, fontSize: 14),
                                   ),
                                 ),
                               ),

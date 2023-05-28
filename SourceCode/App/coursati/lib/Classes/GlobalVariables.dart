@@ -31,27 +31,19 @@ String apiTestServer = "https://apimocha.com/coursatitest/";
 final Dio dioTestApi = Dio(BaseOptions(
   baseUrl: apiTestServer,
   contentType: 'application/json',
+  
 ));
+String deviceID ="";
 
 String ConfigSave =
-    "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}}";
+    "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}},deviceid=$deviceID";
 
-// final termii = Termii(
-//   url: 'https://api.ng.termii.com',
-//   apiKey: 'TL0rbCtFTSJb220qvyUcr2FoeY5sZQG4h8ELjYPSgVyCtDJ8iCZjImDHiJDyUr',
-//   senderId: 'Coursati',
-// );
 
 int languageType = 0;
 bool isDark = false;
 List<bool>? languageSelector;
 
-// Future initData() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await getlanguage();
-//   await getDarkMode();
-//   return true;
-// }
+
 
 //!deprectaed values
 // String? appName;
@@ -65,7 +57,7 @@ List<Locale> local = const [
 ];
 
 TrainingCenter TC = TrainingCenter(
-  branch: [Branches[0]],
+  // branch: [Branches[0]],
   close: TimeOfDay(hour: 0, minute: 00),
   description: """""",
   email: "",
@@ -108,32 +100,32 @@ UserData user =
 //     email: "",
 //     gender: 0,
 //     id: 0);
-    // UserData(
-    //     name: "ريان",
-    //     image:
-    //         "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
-    //     token: "g45g45g45g45g45g45g4g",
-    //     notifications: 120,
-    //     password: "123",
-    //     birthDate: "2000/5/2",
-    //     email: "ryan@gmail.com",
-    //     gender: 0,
-    //     id: 4893123,
-    //     trainingCenterId: 0091,
-    //     orginaizationName: "coursati",
-    //     personalID: "NY6D8DWE",
-    //     phoneNumber: "0910502646");
     UserData(
-        name: "سالم",
+        name: "ريان",
         image:
-            "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
-        token: "g45g4g4g45g45g45g45g4g45g45g",
-        notifications: 3,
-        password: "54321",
+            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+        token: "g45g45g45g45g45g45g4g",
+        notifications: 120,
+        password: "123",
         birthDate: "2000/5/2",
-        email: "salem@gmail.com",
+        email: "ryan@gmail.com",
         gender: 0,
-        id: 6543213);
+        id: 4893123,
+        trainingCenterId: 0091,
+        orginaizationName: "coursati",
+        personalID: "NY6D8DWE",
+        phoneNumber: "0910502646");
+    // UserData(
+    //     name: "سالم",
+    //     image:
+    //         "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+    //     token: "g45g4g4g45g45g45g45g4g45g45g",
+    //     notifications: 3,
+    //     password: "54321",
+    //     birthDate: "2000/5/2",
+    //     email: "salem@gmail.com",
+    //     gender: 0,
+    //     id: 6543213);
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -607,7 +599,7 @@ List<BoxCourseLabelData> courseBLDsmall = [];
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 List<TrainingCenter> trainingCenterData = [
   TrainingCenter(
-    branch: [Branches[0], Branches[1], Branches[2]],
+    // branch: [Branches[0], Branches[1], Branches[2]],
     close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
@@ -638,7 +630,7 @@ they need to make our world a safer place.""",
     whatsAppNum: "0910502646",
   ),
   TrainingCenter(
-    branch: null,
+    // branch: null,
     close: TimeOfDay(hour: 19, minute: 45),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
@@ -668,7 +660,7 @@ they need to make our world a safer place.""",
     logo: "${server}/Images/Asset%201.png",
   ),
   TrainingCenter(
-    branch: null,
+    // branch: null,
     close: TimeOfDay(hour: 19, minute: 06),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.
@@ -702,7 +694,7 @@ they need to make our world a safer place.""",
     logo: "${server}/Images/Asset%202.png",
   ),
   TrainingCenter(
-    branch: null,
+    // branch: null,
     close: TimeOfDay(hour: 19, minute: 00),
     description: """Advancing the Community with Hands-on Cyber
 Security Training.

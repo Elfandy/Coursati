@@ -11,8 +11,8 @@ import '../../Widgets/TrainingCenter/TrainerDetailedInfo.dart';
 import '../../Widgets/TrainingCenter/TrainingCenterPersonalInfo.dart';
 
 class TrainingCenterBranchPersonal extends StatefulWidget {
-  TrainingCenterBranchPersonal({super.key, required this.tc});
-  TrainingCenterBranch tc;
+  TrainingCenterBranchPersonal({super.key, required this.TCBranchID});
+  String TCBranchID;
 
   @override
   State<TrainingCenterBranchPersonal> createState() =>
@@ -102,9 +102,20 @@ class _TrainingCenterBranchPersonalState
                 height: 220,
                 child: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: CachedNetworkImageProvider(widget.tc.image),
-                        fit: BoxFit.cover),
+                    // image: DecorationImage(
+                    //     image: CachedNetworkImageProvider(widget.tc.image),
+                    //     fit: BoxFit.cover),
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
                   ),
                   child: Container(
                     decoration: const BoxDecoration(
@@ -130,7 +141,20 @@ class _TrainingCenterBranchPersonalState
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  widget.tc.location.city!,
+                                  // widget.tc.location.city!,
+                                                      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+                                  "",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 32,
@@ -172,7 +196,15 @@ class _TrainingCenterBranchPersonalState
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            widget.tc.name,
+                            // widget.tc.name,
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            "",
+                            
                             style: const TextStyle(fontSize: 18),
                           )
                         ],
@@ -188,7 +220,13 @@ class _TrainingCenterBranchPersonalState
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            widget.tc.email,
+                            // widget.tc.email,
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            "",
                             style: const TextStyle(fontSize: 18),
                           )
                         ],
@@ -204,7 +242,14 @@ class _TrainingCenterBranchPersonalState
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            widget.tc.phoneNumber,
+                            // widget.tc.phoneNumber,
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            "",
                             style: const TextStyle(fontSize: 18),
                           )
                         ],
@@ -222,7 +267,7 @@ class _TrainingCenterBranchPersonalState
                           ),
                           onPressed: () {
                             Navigator.of(context).push(ScreenController()
-                                .createRoute(TrainingCenterParsonalInfo(), 1));
+                                .createRoute(TrainingCenterParsonalInfo(tc: TC,), 1));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
