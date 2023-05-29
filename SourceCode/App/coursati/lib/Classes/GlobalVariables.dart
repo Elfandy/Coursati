@@ -31,19 +31,15 @@ String apiTestServer = "https://apimocha.com/coursatitest/";
 final Dio dioTestApi = Dio(BaseOptions(
   baseUrl: apiTestServer,
   contentType: 'application/json',
-  
 ));
-String deviceID ="";
+String deviceID = "";
 
 String ConfigSave =
     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}},deviceid=$deviceID";
 
-
 int languageType = 0;
 bool isDark = false;
 List<bool>? languageSelector;
-
-
 
 //!deprectaed values
 // String? appName;
@@ -112,20 +108,20 @@ UserData user =
         gender: 0,
         id: 4893123,
         trainingCenterId: 0091,
-        orginaizationName: "coursati",
+        // orginaizationName: "coursati",
         personalID: "NY6D8DWE",
         phoneNumber: "0910502646");
-    // UserData(
-    //     name: "سالم",
-    //     image:
-    //         "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
-    //     token: "g45g4g4g45g45g45g45g4g45g45g",
-    //     notifications: 3,
-    //     password: "54321",
-    //     birthDate: "2000/5/2",
-    //     email: "salem@gmail.com",
-    //     gender: 0,
-    //     id: 6543213);
+// UserData(
+//     name: "سالم",
+//     image:
+//         "https://qph.cf2.quoracdn.net/main-qimg-be1dfcd8602fc451692c482e47fdf4f6-lq",
+//     token: "g45g4g4g45g45g45g45g4g45g45g",
+//     notifications: 3,
+//     password: "54321",
+//     birthDate: "2000/5/2",
+//     email: "salem@gmail.com",
+//     gender: 0,
+//     id: 6543213);
 // //* These are the data of the app
 // ? remove after setup with Laravel
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -143,7 +139,7 @@ List<UserData> users = [
       gender: 0,
       id: 4893123,
       trainingCenterId: 0091,
-      orginaizationName: "coursati",
+      // orginaizationName: "coursati",
       personalID: "NY6D8DWE",
       phoneNumber: "0910502646"),
   UserData(
@@ -818,21 +814,7 @@ List<Locations> locations = [
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-List<Tag> tags = <Tag>[
-  Tag(id: 1, name_ar: "برمجة", name_en: "Programming"),
-  Tag(id: 2, name_ar: "هندسة", name_en: "Engineering"),
-  Tag(id: 3, name_ar: "أمن سيبراني", name_en: "Cyber Security"),
-  Tag(id: 4, name_ar: "اندرويد", name_en: "Android"),
-  Tag(id: 5, name_ar: "فيروسات", name_en: "Malware"),
-  Tag(id: 6, name_ar: "لينيكس", name_en: "Linux"),
-  Tag(id: 7, name_ar: "البرمجة الكائينية", name_en: "OOP"),
-  Tag(id: 8, name_ar: "اساسيات", name_en: "Basic"),
-  Tag(id: 9, name_ar: "جافا", name_en: "Java"),
-  Tag(id: 10, name_ar: "أمن", name_en: "Security"),
-  Tag(id: 11, name_ar: "متقدم", name_en: "Advanced"),
-  Tag(id: 12, name_ar: "إدارة", name_en: "Managment"),
-  //!!!!!!!!
-];
+List<Tag> tags = <Tag>[];
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 //**************************************************************************** */

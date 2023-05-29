@@ -1013,6 +1013,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  search_choices:
+    dependency: "direct main"
+    description:
+      name: search_choices
+      sha256: "4c379407ea642613669f788ec9b41cfb156f55800e8f69c727478c37db025c47"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.5"
   searchfield:
     dependency: "direct main"
     description:

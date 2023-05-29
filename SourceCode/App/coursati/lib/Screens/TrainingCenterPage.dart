@@ -207,12 +207,9 @@ BoxTCLabelData trainingCenter = BoxTCLabelData(name: "", image: "", logo: "", id
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         child: (branchList.isEmpty)
                             ? Container()
-                            : Container(
-                              child: ListView.builder( 
-                                itemCount: branchList.length,
-                                shrinkWrap: true,
-                                itemBuilder: ((context, index){
-                                    return Center(
+                            : Column(
+                              children:[ for(int i = 0 ;i < branchList.length;i++)
+                                 Center(
                                       child: Card(
                                         shape: BeveledRectangleBorder(
                                             borderRadius:
@@ -245,18 +242,10 @@ BoxTCLabelData trainingCenter = BoxTCLabelData(name: "", image: "", logo: "", id
                                               Navigator.of(context).push(
                                                   ScreenController().createRoute(
                                                       TrainingCenterPersonal(
-                                                          id: branchList[index].id!,mainBranch: false),
+                                                          id: branchList[i].id!,mainBranch: false),
                                                       1));
                                             },
-                                            //////////////////////////////////////////////////
-                                            ///
-                                            ///
-                                            ///Here where you write your code on tap
-                                
-                                            ///////////////////////////////////////////////////
-                                            ///
-                                            ///
-                                            ///
+                               
                                 
                                             splashColor: const Color(0xdd1776e0),
                                             child: CachedNetworkImage(
@@ -269,7 +258,7 @@ BoxTCLabelData trainingCenter = BoxTCLabelData(name: "", image: "", logo: "", id
                                                           CircularProgressIndicator(
                                                               value: progress
                                                                   .progress)),
-                                              imageUrl: branchList[index].image!,
+                                              imageUrl: branchList[i].image!,
                                               imageBuilder:
                                                   (context, imageProvider) => Ink(
                                                 decoration: BoxDecoration(
@@ -288,7 +277,7 @@ BoxTCLabelData trainingCenter = BoxTCLabelData(name: "", image: "", logo: "", id
                                                         ? Alignment.bottomRight
                                                         : Alignment.bottomLeft,
                                                     child: Text(
-                                                      branchList[index].locName!,
+                                                      branchList[i].locName!,
                                                       style: const TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 28,
@@ -301,16 +290,17 @@ BoxTCLabelData trainingCenter = BoxTCLabelData(name: "", image: "", logo: "", id
                                           ),
                                         ),
                                       ),
-                                    );}
+                             )
+                              ]
                                 ),
                                                   ),
-                            ),  
-                      )
-                    ],
+          ]),  
+                      
+                    
                   ),
                 ),
               ),
-            )
+            
           ],
         ),
       );}else{

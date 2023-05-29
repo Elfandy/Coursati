@@ -1,4 +1,6 @@
+import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Widgets/NetworkPopUp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +36,10 @@ class _MainPageState extends State<MainPage> {
     //     .initializeCustomWidget(context: context, widget: const NetworkPopup());
 
     super.initState();
-    FlutterNativeSplash.remove();
+FlutterNativeSplash.remove();
+
+fillTags();
+
   }
 
   //* This is the Builder for the app
@@ -132,5 +137,22 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
     ));
+  }
+
+  Future fillTags() async {
+    var url = "/tags";
+    try{
+      var response =  await dioTestApi.get(url);
+      if(response.statusCode == 200){
+      List<dynamic> taglist = response.data["tags"];
+      for(var tag in taglist){
+        tags.add(Tag.fromJson(tag));
+      }
+      }
+    }catch(e){
+      if(kDebugMode){
+        print(e);
+      }
+    }
   }
 }

@@ -59,13 +59,13 @@ class _AccountPageState extends State<AccountPage> {
           style: const TextStyle(fontSize: 16),
         ),
       ),
-      _organaiationName = Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          user.orginaizationName,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ),
+      // _organaiationName = Align(
+      //   alignment: AlignmentDirectional.centerStart,
+      //   child: Text(
+      //     user.orginaizationName,
+      //     style: const TextStyle(fontSize: 16),
+      //   ),
+      // ),
       _passportID = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
@@ -261,22 +261,22 @@ class _AccountPageState extends State<AccountPage> {
                             duration: const Duration(milliseconds: 100),
                             child: _phoneNumber)
                         : Container(),
-                    (user.orginaizationName != '')
-                        ? Align(
-                            alignment: AlignmentDirectional.centerEnd,
-                            child: Text(
-                              languageType == 0
-                                  ? "اسم المؤسسة:"
-                                  : "Oranaization name:",
-                              style: const TextStyle(
-                                  color: Color(0xff1776e0), fontSize: 16),
-                            ))
-                        : Container(),
-                    (user.orginaizationName != '')
-                        ? AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 100),
-                            child: _organaiationName)
-                        : Container(),
+                    // (user.orginaizationName != '')
+                    //     ? Align(
+                    //         alignment: AlignmentDirectional.centerEnd,
+                    //         child: Text(
+                    //           languageType == 0
+                    //               ? "اسم المؤسسة:"
+                    //               : "Oranaization name:",
+                    //           style: const TextStyle(
+                    //               color: Color(0xff1776e0), fontSize: 16),
+                    //         ))
+                    //     : Container(),
+                    // (user.orginaizationName != '')
+                    //     ? AnimatedSwitcher(
+                    //         duration: const Duration(milliseconds: 100),
+                    //         child: _organaiationName)
+                    //     : Container(),
                     (user.personalID != '')
                         ? Align(
                             alignment: AlignmentDirectional.centerEnd,
@@ -809,16 +809,16 @@ class _AccountPageState extends State<AccountPage> {
               hintText: user.phoneNumber,
               hintStyle: TextStyle(color: Colors.grey)),
         );
-        _organaiationName = TextField(
-          style: TextStyle(color: isDark ? Colors.white : Colors.black),
-          controller: _editOrganaiztionName,
-          maxLength: 24,
-          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          decoration: InputDecoration(
-              counterText: '',
-              hintText: user.orginaizationName,
-              hintStyle: TextStyle(color: Colors.grey)),
-        );
+        // _organaiationName = TextField(
+        //   style: TextStyle(color: isDark ? Colors.white : Colors.black),
+        //   controller: _editOrganaiztionName,
+        //   maxLength: 24,
+        //   maxLengthEnforcement: MaxLengthEnforcement.enforced,
+        //   decoration: InputDecoration(
+        //       counterText: '',
+        //       hintText: user.orginaizationName,
+        //       hintStyle: TextStyle(color: Colors.grey)),
+        // );
         _passportID = TextField(
           style: TextStyle(color: isDark ? Colors.white : Colors.black),
           controller: _editPersonalID,
@@ -860,13 +860,13 @@ class _AccountPageState extends State<AccountPage> {
             style: const TextStyle(fontSize: 16),
           ),
         );
-        _organaiationName = Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            user.orginaizationName,
-            style: const TextStyle(fontSize: 16),
-          ),
-        );
+        // _organaiationName = Align(
+        //   alignment: AlignmentDirectional.centerStart,
+        //   child: Text(
+        //     user.orginaizationName,
+        //     style: const TextStyle(fontSize: 16),
+        //   ),
+        // );
         _passportID = Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(

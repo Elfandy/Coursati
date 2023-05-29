@@ -29,11 +29,11 @@ class _NetworkPopupState extends State<NetworkPopup> {
     return WillPopScope(
       onWillPop: _onPop,
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(255, 255, 255, 0),
+        backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: (isDark) ? Color(0xf424242) : Colors.white,
+              color: (isDark) ? const Color(0xff424242) : Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             width: double.infinity,
@@ -49,7 +49,7 @@ class _NetworkPopupState extends State<NetworkPopup> {
                         ? "يبدو أنه لايوجد اتصال بالانترنت"
                         : "It semms like there is no Internet Connection",
                     style: TextStyle(
-                      color: Color(0xff1776e0),
+                      color: const Color(0xff1776e0),
                       fontSize: 20,
                       height: 1.1,
                       fontWeight: FontWeight.w500,
@@ -82,12 +82,12 @@ class _NetworkPopupState extends State<NetworkPopup> {
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
             //<-- SEE HERE
-            child: new Text((languageType == 0) ? "لا" : "No"),
+            child: Text((languageType == 0) ? "لا" : "No"),
           ),
           TextButton(
             onPressed: () => exit(0),
             // <-- SEE HERE
-            child: new Text((languageType == 0) ? "نعم" : "Yes"),
+            child: Text((languageType == 0) ? "نعم" : "Yes"),
           ),
         ],
       ),

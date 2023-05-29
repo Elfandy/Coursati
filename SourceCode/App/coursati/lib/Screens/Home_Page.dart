@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage> {
     }
     return tC;
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -122,13 +123,14 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 30,
                 ),
+                //* Popular Courses
                 Row(
                   children: [
                     const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      (languageType == 0) ? "الدورات التدريبية" : "Courses",
+                      (languageType == 0) ? "الدورات الرائجة" : "Popular Courses",
                       style: TextStyle(
                         shadows: const [
                           Shadow(
@@ -151,7 +153,7 @@ class _HomePageState extends State<HomePage> {
 
                       return Container(
                         width: double.infinity,
-                        height: 250,
+                        height: 200,
                         child: ListView.builder(
                           itemCount:
                               (_courses.length > 7) ? 7 : _courses.length,
@@ -171,59 +173,68 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       return Container(
                           width: double.infinity,
-                          height: 250,
+                          height: 200,
                           child: Center(child: CircularProgressIndicator()));
                     }
                   },
                 ),
-                // SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child: Padding(
-                //     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                //     child: Row(
-                //       children: [
-                //         //////////////////////////////////////////////////////////////
-                //         ///
-                //         ///
-                //         ///
-                //         ///
-                //         ///
+                //** New Courses */
+                  Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      (languageType == 0) ? "الدورات الجديدة" : "New Courses",
+                      style: TextStyle(
+                        shadows: const [
+                          Shadow(
+                              color: Colors.black45,
+                              offset: Offset(1, 2.2),
+                              blurRadius: 4)
+                        ],
+                        fontSize: (languageType == 0) ? 24 : 36,
+                        // color: const Color(0xff1776e0),
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+                FutureBuilder(
+                  future: fetchCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      List<BoxCourseLabelData> _courses = snapshot.data!;
 
-                //         for (int i = 0;
-                //             i <
-                //                 ((courseBLDsmall.length < 7)
-                //                     ? courseBLDsmall.length
-                //                     : 7);
-                //             i++)
-                //           CourseBox(
-                //             bld: courseBLDsmall[i],
-                //           ),
+                      return Container(
+                        width: double.infinity,
+                        height: 200,
+                        child: ListView.builder(
+                          itemCount:
+                              (_courses.length > 7) ? 7 : _courses.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return CourseBox(
+                              bld: BoxCourseLabelData(
+                                  id: _courses[index].id,
+                                  image: _courses[index].image,
+                                  name: _courses[index].name,
+                                  location_in: _courses[index].location_in),
+                            );
+                          }),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                          width: double.infinity,
+                          height: 200,
+                          child: Center(child: CircularProgressIndicator()));
+                    }
+                  },
+                ),
 
-                //         RoundedButton(
-                //           icon: Icon(
-                //             (languageType == 0)
-                //                 ? Icons.keyboard_arrow_left
-                //                 : Icons.keyboard_arrow_right,
-                //             size: 40,
-                //             color: Colors.white,
-                //           ),
-                //           onPressed: () {
-                //             Navigator.of(context).push(
-                //               ScreenController()
-                //                   .createRoute(const ShowCourses(), 3),
-                //             );
-                //           },
-                //           size: 80,
-                //         ),
-                //         /////////////////////////////////////////////////////////
-                //         ///
-                //         ///
-                //         ///
-                //         ///
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                //**  */
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(
                     children: [

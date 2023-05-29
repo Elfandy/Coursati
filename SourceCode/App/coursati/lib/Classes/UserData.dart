@@ -10,7 +10,7 @@ class UserData {
     required this.password,
     required this.gender,
     this.trainingCenterId,
-    this.orginaizationName = '',
+
     this.personalID = '',
     this.phoneNumber = '',
   });
@@ -22,7 +22,7 @@ class UserData {
       email,
       birthDate,
       
-      orginaizationName,
+
       personalID,
       phoneNumber;
   int notifications,gender;

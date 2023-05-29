@@ -71,86 +71,9 @@ Future<void> main() async {
             //  }else{ runApp(ServerError(error: value));}});
              }, (_, s) {});
   // // TODO: Request permission
-  // final messaging = FirebaseMessaging.instance;
-
-  // final settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
-
-  // if (kDebugMode) {
-  //   print('Permission granted: ${settings.authorizationStatus}');
-  // }
-
-  // // TODO: Register with FCM
-  // String? token = await messaging.getToken();
-
-  // if (kDebugMode) {
-    
-  //   print('Registration Token=$token');
-  // }
-
-  // // TODO: Set up foreground message handler
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   if (kDebugMode) {
-  //     print('Handling a foreground message: ${message.messageId}');
-  //     print('Message data: ${message.data}');
-  //     print('Message notification: ${message.notification?.title}');
-  //     print('Message notification: ${message.notification?.body}');
-  //   }
-
-  //   _messageStreamController.sink.add(message);
-  // });
-
-  // // TODO: Set up background message handler
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-//* end of fireBase Notification Handling
-//???????
+ 
 
 }
-
-// void main() async {
-// //*----------------------------------------
-//   // runZonedGuarded(() async {
-//   //   WidgetsFlutterBinding.ensureInitialized();
-
-//     //!!! This is for checking the connection to the server
-//     //?????????????????????????????????????????????????????????
-    // checkServer().then((value) {
-    //   if (value == 1) {
-    //     FileHandle().readConfig().then(
-    //       (value) {
-    //         if (value != null) {
-    //           FileHandle().extractConfigData(value);
-    //         } else {
-    //           FileHandle().writeConfig(ConfigSave);
-    //         }
-//     await Firebase.initializeApp(
-
-//     options: DefaultFirebaseOptions.currentPlatform,
-
-// );
-//     runApp(const MainApp());
-//     //       },
-//     //     );
-//     //   } else {
-//     //     runApp(ServerError(error: value));
-//     //   }
-//     // });
-// //! This is the temp run remove it
-//     // getToken().then(
-//     //   (value) {
-//     //     print(value.toString());
-//     //   },
-//     // );
-// //* this is the local saving restore function
-//   // }, (_, s) {});
-// }
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -201,6 +124,7 @@ class _MainAppState extends State<MainApp> {
       supportedLocales: local,
       locale: local[languageType],
       theme: ThemeData(
+
         colorScheme: const ColorScheme(
             //*This is the background of the app
             background: Colors.white,
@@ -221,10 +145,13 @@ class _MainAppState extends State<MainApp> {
         textTheme: const TextTheme(
           titleLarge: TextStyle(color: Colors.white),
           titleMedium: TextStyle(color: Colors.white),
+          
         ),
         fontFamily: "Tajawal",
+      
       ),
       darkTheme: ThemeData(
+        
         colorScheme: const ColorScheme(
             //*This is the background of the app
             background: Color(0xff424242),

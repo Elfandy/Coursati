@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:dropdown_search/dropdown_search.dart';
+import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_geocoder/geocoder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:searchfield/searchfield.dart';
-
+import 'package:search_choices/search_choices.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/Location.dart';
+import '../../Classes/TagData.dart';
 import '../../Classes/TrainingCenter.dart';
 import '../../Services/ScreenController.dart';
 import '../../Widgets/TrainingCenter/SetLoationMap.dart';
@@ -21,10 +21,10 @@ class AddTrainingCenterPage extends StatefulWidget {
 }
 
 class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
-  int _index = 0, _secretCode = 0;
+  int _index = 0;
   bool codeCheck = false, _emailCheck = false;
-  TextEditingController _id = TextEditingController(),
-      _companyName = TextEditingController(),
+  final TextEditingController _id = TextEditingController(),
+      // _companyName = TextEditingController(),
       _phoneNumber = TextEditingController(),
       _code = TextEditingController(),
       _trainingCenterName = TextEditingController(),
@@ -41,6 +41,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
 
   bool _showPersonalPhonenymberErrorMessage = false,
       _showTrainingCenterPhoneNumberErrorMessage = false;
+  List<int> _SearchBoxTags = [], _selectTagsNum = [];
+  List<Tag> _selectedTags = [];
+
   //!!!!!!!!!!!
 
   File? _image;
@@ -50,7 +53,6 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -74,7 +76,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(),
                                 onPressed: (_id.text != '' &&
-                                        _companyName.text != '' &&
+                                        // _companyName.text != '' &&
                                         _phoneNumber.text != '' &&
                                         (_phoneNumber.text.startsWith("091") ||
                                             _phoneNumber.text
@@ -82,27 +84,11 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                             _phoneNumber.text
                                                 .startsWith("094") ||
                                             _phoneNumber.text
-                                                .startsWith("095")))
-                                    ? (_id.text.length == 8 &&
-                                            _phoneNumber.text.length == 10)
-                                        ? details.onStepContinue
-                                        : null
-                                    : null,
-                                child: Text(
-                                  (languageType == 0) ? "التالي" : "Next",
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          )
-                        else if (_index == 1)
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(),
-                                onPressed: (_trainingCenterName.text != '' &&
-                                        _email.text != '' &&
+                                                .startsWith("095")) &&
+                                        _trainingCenterName.text != '' &&
+                                        _email.text.contains("@") &&
+                                        _email.text.indexOf("@") ==
+                                            _email.text.lastIndexOf("@") &&
                                         _dropDownValue != '' &&
                                         _trainingCenterPhoneNumber.text != '' &&
                                         _description.text.length > 100 &&
@@ -124,7 +110,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                               ),
                             ),
                           )
-                        else if (_index == 2)
+                        else if (_index == 1)
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -157,287 +143,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                 },
                 steps: [
                   Step(
-                      isActive: _index == 0,
-                      title: Text((languageType == 0) ? "شخصية" : "Personal"),
-                      content: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Image(
-                              width: MediaQuery.of(context).size.width,
-                              image: const AssetImage(
-                                  "Assets/Images/techny-patient-card-and-tests.png"),
-                              height: 150,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 20),
-                              child: Text(
-                                (languageType == 0)
-                                    ? "أكمل بياناتك الشخصية لكي تضيف مركز التدريب الخاص بك."
-                                    : "Complete Personal Info to add your Training Center.",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: TextField(
-                                onTap: () {
-                                  if (_id.selection ==
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset: _id.text.length - 1))) {
-                                    _id.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: _id.text.length));
-                                  }
-                                },
-                                controller: _id,
-                                selectionControls: EmptyTextSelectionControls(),
-                                maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(english),
-                                ],
-                                maxLength: 8,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                decoration: InputDecoration(
-                                  counterText: "",
-                                  label: Row(children: [
-                                    const Icon(
-                                      Icons.perm_identity,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      (languageType == 0)
-                                          ? "رقم جواز السفر"
-                                          : "Passport ID",
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                    const Text("*",
-                                        style: TextStyle(color: Colors.red)),
-                                  ]),
-                                  border: OutlineInputBorder(
-                                    borderSide: const BorderSide(),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: TextField(
-                                onTap: () {
-                                  if (_companyName.selection ==
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset:
-                                              _companyName.text.length - 1))) {
-                                    _companyName.selection =
-                                        TextSelection.fromPosition(TextPosition(
-                                            offset: _companyName.text.length));
-                                  }
-                                },
-                                controller: _companyName,
-                                selectionControls: EmptyTextSelectionControls(),
-                                maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter
-                                      .singleLineFormatter,
-                                ],
-                                maxLength: 32,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: (orgNameError)
-                                          ? Colors.red
-                                          : Color(0xffdddddd),
-                                    ),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  counterText: "",
-                                  label: Row(children: [
-                                    const Icon(
-                                      Icons.business,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      (languageType == 0)
-                                          ? "اسم المؤسسة"
-                                          : "Orgnaization Name",
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                    const Text("*",
-                                        style: TextStyle(color: Colors.red)),
-                                  ]),
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.red),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Focus(
-                              onFocusChange: (value) {
-                                if (!value) {
-                                  setState(
-                                    () {
-                                      if (!(_phoneNumber.text
-                                              .startsWith("091") ||
-                                          _phoneNumber.text.startsWith("092") ||
-                                          _phoneNumber.text.startsWith("094") ||
-                                          _phoneNumber.text
-                                              .startsWith("095"))) {
-                                        _showPersonalPhonenymberErrorMessage =
-                                            true;
-                                      } else {
-                                        _showPersonalPhonenymberErrorMessage =
-                                            false;
-                                      }
-                                    },
-                                  );
-                                }
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: TextField(
-                                  onTap: () {
-                                    if (_phoneNumber.selection ==
-                                        TextSelection.fromPosition(TextPosition(
-                                            offset: _phoneNumber.text.length -
-                                                1))) {
-                                      _phoneNumber.selection =
-                                          TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset: _phoneNumber
-                                                      .text.length));
-                                    }
-                                  },
-                                  controller: _phoneNumber,
-                                  selectionControls:
-                                      EmptyTextSelectionControls(),
-                                  maxLengthEnforcement:
-                                      MaxLengthEnforcement.enforced,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                  ],
-                                  maxLength: 10,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            (_showPersonalPhonenymberErrorMessage)
-                                                ? Colors.red
-                                                : Color(0xffdddddd),
-                                      ),
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    counterText: "",
-                                    label: Row(children: [
-                                      const Icon(
-                                        Icons.phone_android,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        (languageType == 0)
-                                            ? "رقم الهاتف"
-                                            : "PhoneNumber",
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                      const Text("*",
-                                          style: TextStyle(color: Colors.red)),
-                                    ]),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(),
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: _showPersonalPhonenymberErrorMessage,
-                              child: Text(
-                                languageType == 0
-                                    ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
-                                    : "Phone number needs to starts with 091,092,094,095",
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            ),
-                            //* This is for creating an OTP function for the phoen number
-                            // Text((languageType == 0)
-                            //     ? ""
-                            //     : "Send a code to verify your Phone number"),
-                            // OutlinedButton(
-                            //     child: Text((languageType == 0) ? "" : "Send Code"),
-                            //     onPressed: () async {
-                            //       setState(() {
-                            //         _secretCode = 123456;
-                            //       });
-                            //       await termii.sendSms(
-                            //         destination: "218${_phoneNumber.text}",
-                            //         message:
-                            //             "This is a test message ${_secretCode}",
-                            //       );
-                            //       Fluttertoast.showToast(
-                            //           msg: "Code Sent to ${_phoneNumber.text}",
-                            //           backgroundColor: const Color(0xff999999),
-                            //           gravity: ToastGravity.BOTTOM);
-                            //     }),
-                            // TextField(
-                            //   controller: _code,
-                            //   selectionControls: EmptyTextSelectionControls(),
-                            //   maxLengthEnforcement:
-                            //       MaxLengthEnforcement.truncateAfterCompositionEnds,
-                            //   inputFormatters: [
-                            //     FilteringTextInputFormatter.digitsOnly,
-                            //   ],
-                            //   onTapOutside: (event) {
-                            //     setState(() {
-                            //       if (_code.text == _secretCode.toString()) {
-                            //         codeCheck = true;
-                            //       }
-                            //     });
-                            //   },
-                            //   maxLength: 6,
-                            //   style: const TextStyle(
-                            //       color: Colors.black, fontSize: 16),
-                            //   decoration: InputDecoration(
-                            //     counterText: "",
-                            //     label: Text(
-                            //       (languageType == 0) ? "الرقم السري" : "Code",
-                            //       style: const TextStyle(fontSize: 16),
-                            //     ),
-                            //     border: OutlineInputBorder(
-                            //       borderSide: const BorderSide(),
-                            //       borderRadius: BorderRadius.circular(50),
-                            //     ),
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      )),
-                  Step(
-                    isActive: _index == 1,
-                    title: Text((languageType == 0)
-                        ? "مركز التدريب"
-                        : "Training Center"),
+                    isActive: _index == 0,
+                    title: Text(
+                        (languageType == 0) ? "تعبئة البيانات" : "Fill Data"),
                     content: Column(children: [
                       Image(
                         width: MediaQuery.of(context).size.width,
@@ -449,11 +157,192 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                         child: Text(
                           (languageType == 0)
-                              ? "قم بتعبئة بيانات مركز التدريب"
-                              : "Fill out the Training Center Information.",
+                              ? "قم بتعبئة البيانات لكي تستطيع طلب إنشاء مركزك التدريبي في المنصة"
+                              : "Fill out data to create your own training center in the platform.",
                           style: const TextStyle(fontSize: 20),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: TextField(
+                          onTap: () {
+                            if (_id.selection ==
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: _id.text.length - 1))) {
+                              _id.selection = TextSelection.fromPosition(
+                                  TextPosition(offset: _id.text.length));
+                            }
+                          },
+                          controller: _id,
+                          selectionControls: EmptyTextSelectionControls(),
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(english),
+                          ],
+                          maxLength: 8,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 16),
+                          decoration: InputDecoration(
+                            counterText: "",
+                            label: Row(children: [
+                              const Icon(
+                                Icons.perm_identity,
+                                size: 20,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                (languageType == 0)
+                                    ? "رقم جواز السفر"
+                                    : "Passport ID",
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const Text("*",
+                                  style: TextStyle(color: Colors.red)),
+                            ]),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Focus(
+                        onFocusChange: (value) {
+                          if (!value) {
+                            setState(
+                              () {
+                                if (!(_phoneNumber.text.startsWith("091") ||
+                                    _phoneNumber.text.startsWith("092") ||
+                                    _phoneNumber.text.startsWith("094") ||
+                                    _phoneNumber.text.startsWith("095"))) {
+                                  _showPersonalPhonenymberErrorMessage = true;
+                                } else {
+                                  _showPersonalPhonenymberErrorMessage = false;
+                                }
+                              },
+                            );
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: TextField(
+                            onTap: () {
+                              if (_phoneNumber.selection ==
+                                  TextSelection.fromPosition(TextPosition(
+                                      offset: _phoneNumber.text.length - 1))) {
+                                _phoneNumber.selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset: _phoneNumber.text.length));
+                              }
+                            },
+                            controller: _phoneNumber,
+                            selectionControls: EmptyTextSelectionControls(),
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            maxLength: 10,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: (_showPersonalPhonenymberErrorMessage)
+                                      ? Colors.red
+                                      : (languageType == 0)
+                                          ? const Color(0xffdddddd)
+                                          : Color(0xff424242),
+                                ),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              counterText: "",
+                              label: Row(children: [
+                                const Icon(
+                                  Icons.phone_android,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  (languageType == 0)
+                                      ? " رقم الهاتف الشخصي"
+                                      : "Personal phoneNumber",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const Text("*",
+                                    style: TextStyle(color: Colors.red)),
+                              ]),
+                              border: OutlineInputBorder(
+                                borderSide: const BorderSide(),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: _showPersonalPhonenymberErrorMessage,
+                        child: Text(
+                          languageType == 0
+                              ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
+                              : "Phone number needs to starts with 091,092,094,095",
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      //* This is for creating an OTP function for the phoen number
+                      // Text((languageType == 0)
+                      //     ? ""
+                      //     : "Send a code to verify your Phone number"),
+                      // OutlinedButton(
+                      //     child: Text((languageType == 0) ? "" : "Send Code"),
+                      //     onPressed: () async {
+                      //       setState(() {
+                      //         _secretCode = 123456;
+                      //       });
+                      //       await termii.sendSms(
+                      //         destination: "218${_phoneNumber.text}",
+                      //         message:
+                      //             "This is a test message ${_secretCode}",
+                      //       );
+                      //       Fluttertoast.showToast(
+                      //           msg: "Code Sent to ${_phoneNumber.text}",
+                      //           backgroundColor: const Color(0xff999999),
+                      //           gravity: ToastGravity.BOTTOM);
+                      //     }),
+                      // TextField(
+                      //   controller: _code,
+                      //   selectionControls: EmptyTextSelectionControls(),
+                      //   maxLengthEnforcement:
+                      //       MaxLengthEnforcement.truncateAfterCompositionEnds,
+                      //   inputFormatters: [
+                      //     FilteringTextInputFormatter.digitsOnly,
+                      //   ],
+                      //   onTapOutside: (event) {
+                      //     setState(() {
+                      //       if (_code.text == _secretCode.toString()) {
+                      //         codeCheck = true;
+                      //       }
+                      //     });
+                      //   },
+                      //   maxLength: 6,
+                      //   style: const TextStyle(
+                      //       color: Colors.black, fontSize: 16),
+                      //   decoration: InputDecoration(
+                      //     counterText: "",
+                      //     label: Text(
+                      //       (languageType == 0) ? "الرقم السري" : "Code",
+                      //       style: const TextStyle(fontSize: 16),
+                      //     ),
+                      //     border: OutlineInputBorder(
+                      //       borderSide: const BorderSide(),
+                      //       borderRadius: BorderRadius.circular(50),
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: TextField(
@@ -882,6 +771,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: TextField(
@@ -924,6 +814,95 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ),
                         ),
                       ),
+                      SearchChoices.multiple(
+                        items: [
+                          for (Tag tag in tags)
+                            DropdownMenuItem(
+                              child: Text((languageType == 0)
+                                  ? tag.name_ar!
+                                  : tag.name_en!),
+                            ),
+                        ],
+                        // selectedItems: _SearchBoxTags,
+                        isCaseSensitiveSearch: false,
+                        fieldDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+
+                        rightToLeft: (languageType == 0) ? true : false,
+                        onChanged: (value) {
+                          setState(() {
+                            _SearchBoxTags = value;
+                            for (var val in _SearchBoxTags) {
+                              _selectedTags.add(tags[val]);
+                            }
+                            _selectTagsNum = _SearchBoxTags;
+                          });
+                        },
+                        displayItem: (item, selected) {
+                          return (Row(children: [
+                            selected
+                                ? Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  )
+                                : Icon(
+                                    Icons.check_box_outline_blank,
+                                    color: Colors.grey,
+                                  ),
+                            SizedBox(width: 7),
+                            Expanded(
+                              child: item,
+                            ),
+                          ]));
+                        },
+                        hint: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text("Select any"),
+                        ),
+                        closeButton: null,
+                        isExpanded: true,
+                        searchHint: "Select any",
+                        searchFn: (String keyword, items) {
+                          List<int> ret = [];
+                          if (items != null && keyword.isNotEmpty) {
+                            keyword.split(" ").forEach((k) {
+                              int i = 0;
+                              items.forEach((item) {
+                                if (k.isNotEmpty &&
+                                    (item.value
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(k.toLowerCase()))) {
+                                  ret.add(i);
+                                }
+                                i++;
+                              });
+                            });
+                          }
+                          if (keyword.isEmpty) {
+                            ret = Iterable<int>.generate(items.length).toList();
+                          }
+                          return (ret);
+                        },
+                        clearIcon: Icon(Icons.clear_all),
+                        icon: Icon(Icons.arrow_drop_down_circle),
+                      ),
+                      Wrap(
+                        children: [
+                          for (var item in _selectTagsNum)
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: TagChip(
+                                passiveBackgroundColor: (isDark)
+                                    ? const Color.fromRGBO(250, 250, 250, 0.5)
+                                    : const Color.fromRGBO(200, 200, 200, 0.5),
+                                selected: [],
+                                tag: tags[item],
+                              ),
+                            )
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                         child: Row(
@@ -932,7 +911,8 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                               (languageType == 0)
                                   ? "فم بتحميل صورة مركز التدريب"
                                   : "Upload your Training Center picture",
-                              style: const TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                  fontSize: ((languageType == 0) ? 20 : 16)),
                             ),
                             const Text("*",
                                 style: TextStyle(color: Colors.red)),
@@ -953,12 +933,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                               height: 150,
                             ),
                       OutlinedButton(
-                          onPressed: getImage, child: const Text("Pic Imgae")),
+                          onPressed: getImage,
+                          child: Text((languageType == 0)
+                              ? "اختر الصورة"
+                              : "Pic Imgae")),
                     ]),
                   ),
                   Step(
-                    isActive: _index == 2,
-                    title: Text((languageType == 0) ? "ملخص" : "overview"),
+                    isActive: _index == 1,
+                    title: Text((languageType == 0) ? "الملخص" : "overview"),
                     content: Column(children: [
                       Image(
                         width: MediaQuery.of(context).size.width,
@@ -997,28 +980,28 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: Row(
-                          children: [
-                            Text(
-                              (languageType == 0)
-                                  ? "اسم المؤسسة:"
-                                  : "Orgnaization Name:",
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              _companyName.text,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff1776e0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      //   child: Row(
+                      //     children: [
+                      //       Text(
+                      //         (languageType == 0)
+                      //             ? "اسم المؤسسة:"
+                      //             : "Orgnaization Name:",
+                      //         style: const TextStyle(
+                      //             fontSize: 14, fontWeight: FontWeight.bold),
+                      //       ),
+                      //       const SizedBox(width: 10),
+                      //       Text(
+                      //         _companyName.text,
+                      //         style: const TextStyle(
+                      //           fontSize: 14,
+                      //           color: Color(0xff1776e0),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
@@ -1100,7 +1083,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              _location.text ,
+                              _location.text,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xff1776e0),
@@ -1231,7 +1214,38 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ],
                         ),
                       ),
-
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: Column(
+                          children: [
+                            Text(
+                              (languageType == 0)
+                                  ? "معلومات عن المركز:"
+                                  : "Training center description:",
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 10),
+                            Wrap(
+                              children: [
+                                for (var item in _SearchBoxTags)
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: TagChip(
+                                      passiveBackgroundColor: (isDark)
+                                          ? const Color.fromRGBO(
+                                              250, 250, 250, 0.5)
+                                          : const Color.fromRGBO(
+                                              200, 200, 200, 0.5),
+                                      selected: [],
+                                      tag: tags[item],
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       Text(
                         (languageType == 0)
                             ? "صورة مركز التدريب:"
@@ -1260,7 +1274,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                 ],
                 currentStep: _index,
                 onStepContinue: () => setState(() {
-                  if (_index < 2) {
+                  if (_index < 1) {
                     _index++;
                   } else {
                     Fluttertoast.showToast(
@@ -1301,7 +1315,5 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
     return first.locality.toString();
   }
 
-  Future SendData(TrainingCenter tc)async {
-    
-  }
+  Future SendData(TrainingCenter tc) async {}
 }

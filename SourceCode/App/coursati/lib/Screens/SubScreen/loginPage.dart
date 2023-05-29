@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -19,14 +20,14 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  TextEditingController _name = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _birthDate = TextEditingController();
-  TextEditingController _loginEmail = TextEditingController();
-  TextEditingController _loginPass = TextEditingController();
-  TextEditingController _passRepeat = TextEditingController();
-  bool PasswordRepeatCheck = true;
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _birthDate = TextEditingController();
+  final TextEditingController _loginEmail = TextEditingController();
+  final TextEditingController _loginPass = TextEditingController();
+  final TextEditingController _passRepeat = TextEditingController();
+
 
   int _isSelected = 1, _gender = 0, _accountFound = 0, _passOk = 0;
   @override
@@ -157,7 +158,7 @@ class _loginPageState extends State<loginPage> {
                               ),
                               //??????????????????????????????????????????????????????????????????????
                               (_passOk == 1)
-                                  ? Text(
+                                  ? const Text(
                                       "passwords are not the same",
                                       style: TextStyle(color: Colors.red),
                                     )
@@ -256,7 +257,7 @@ class _loginPageState extends State<loginPage> {
                                       Icons.female_rounded,
                                       size: 40,
                                       color: (_gender != 0)
-                                          ? Color.fromARGB(255, 228, 28, 228)
+                                          ? const Color.fromARGB(255, 228, 28, 228)
                                           : const Color(0xff999999),
                                     ),
                                   ),
@@ -372,25 +373,25 @@ class _loginPageState extends State<loginPage> {
                           //**** Fetch Token from server */
                           getToken(_loginEmail.text, _loginPass.text)
                               .then((value) {
-                            Map<String, dynamic> _userTemp =
+                            Map<String, dynamic> userTemp =
                                 json.decode(value.toString());
-                            user.token = _userTemp["token"];
+                            user.token = userTemp["token"];
 
                             //**** Fetch credintials */
                             getCredintials(user.token).then((value) {
-                              Map<String, dynamic> _userCredinitals =
+                              Map<String, dynamic> userCredinitals =
                                   json.decode(value.toString());
 
-                              user.name = _userCredinitals['name'];
-                              user.email = _userCredinitals['email'];
-                              user.id = _userCredinitals['id'];
+                              user.name = userCredinitals['name'];
+                              user.email = userCredinitals['email'];
+                              user.id = userCredinitals['id'];
 
                               // user.birthDate = _userCredinitals['birthdate'];
 
                               // user.gender = _userCredinitals['gender'];
 
                               user.image =
-                                  "$onlineServer/storage/${_userCredinitals['avatar']}";
+                                  "$onlineServer/storage/${userCredinitals['avatar']}";
                               _accountFound = 1;
 
                               if (_accountFound == 1) {
@@ -443,7 +444,9 @@ class _loginPageState extends State<loginPage> {
       return await Dio().post("$onlineServer/api/auth/token",
           data: {"email": email, "password": password});
     } catch (exception) {
-      print(exception);
+      if (kDebugMode) {
+        print(exception);
+      }
     }
   }
 
@@ -452,7 +455,9 @@ class _loginPageState extends State<loginPage> {
       return await Dio().get("$onlineServer/api/user",
           options: Options(headers: {'Authorization': "Bearer $token"}));
     } catch (exception) {
-      print(exception) {}
+      if(kDebugMode) {
+        print(exception);
+      }
     }
   }
 
@@ -461,20 +466,23 @@ class _loginPageState extends State<loginPage> {
       {String email = "",
       String password = "",
       String name = "",
-      // int id = 0,
       String birthdate = "",
       int gender = 0}) async {
     try {
-      // return await Dio().post("$onlineServer/api/register", data: {
+      if(email.isNotEmpty && password.isNotEmpty && name.isNotEmpty && birthdate.isNotEmpty){
       return await Dio().post("$apiTestServer/Register", data: {
         "email": email,
         "password": password,
         "name": name,
-        // "id": id,
-        "birthdate": DateTime.parse(birthdate)
-      });
+        "birthdate": DateTime.parse(birthdate),
+        "gender":gender,
+      });}
+      return "";
+      
     } catch (exception) {
-      print(exception) {}
+      if (kDebugMode) {
+        print(exception);
+      }
     }
   }
   //???????????????????????????????????????????????????????????????????????

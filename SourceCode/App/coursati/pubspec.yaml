@@ -57,6 +57,7 @@ dependencies:
   json_serializable: ^5.0.0
   path_provider: ^2.0.14
   provider: ^6.0.5
+  search_choices: ^2.2.5
   searchfield: ^0.7.7
   swipe_refresh: ^1.0.2
   url_launcher: ^6.1.10

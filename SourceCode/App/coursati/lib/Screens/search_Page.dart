@@ -47,7 +47,7 @@ class _SearchPageState extends State<SearchPage> {
   bool searching = false;
   @override
   Widget build(BuildContext context) {
-    print(courseBLD[0].toJson());
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
