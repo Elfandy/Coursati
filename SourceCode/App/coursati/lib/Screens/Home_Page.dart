@@ -1,4 +1,6 @@
 import 'package:coursati/Classes/BoxTCLabelData.dart';
+import 'package:coursati/Screens/SubScreen/ShowAllCourse.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:flutter/foundation.dart';
@@ -68,7 +70,6 @@ class _HomePageState extends State<HomePage> {
     }
     return tC;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -125,24 +126,47 @@ class _HomePageState extends State<HomePage> {
                 ),
                 //* Popular Courses
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(
-                      width: 10,
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          (languageType == 0)
+                              ? "الدورات الرائجة"
+                              : "Popular Courses",
+                          style: TextStyle(
+                            shadows: const [
+                              Shadow(
+                                  color: Colors.black45,
+                                  offset: Offset(1, 2.2),
+                                  blurRadius: 4)
+                            ],
+                            fontSize: (languageType == 0) ? 24 : 36,
+                            // color: const Color(0xff1776e0),
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
                     ),
-                    Text(
-                      (languageType == 0) ? "الدورات الرائجة" : "Popular Courses",
-                      style: TextStyle(
-                        shadows: const [
-                          Shadow(
-                              color: Colors.black45,
-                              offset: Offset(1, 2.2),
-                              blurRadius: 4)
-                        ],
-                        fontSize: (languageType == 0) ? 24 : 36,
-                        // color: const Color(0xff1776e0),
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(ScreenController()
+                                  .createRoute(ShowCourses(), 1));
+                            },
+                            child: const Text(
+                              "المزيد",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    )
                   ],
                 ),
                 FutureBuilder(
@@ -174,12 +198,13 @@ class _HomePageState extends State<HomePage> {
                       return Container(
                           width: double.infinity,
                           height: 200,
-                          child: Center(child: CircularProgressIndicator()));
+                          child:
+                              const Center(child: CircularProgressIndicator()));
                     }
                   },
                 ),
                 //** New Courses */
-                  Row(
+                Row(
                   children: [
                     const SizedBox(
                       width: 10,
@@ -229,7 +254,8 @@ class _HomePageState extends State<HomePage> {
                       return Container(
                           width: double.infinity,
                           height: 200,
-                          child: Center(child: CircularProgressIndicator()));
+                          child:
+                              const Center(child: CircularProgressIndicator()));
                     }
                   },
                 ),
@@ -296,8 +322,8 @@ class _HomePageState extends State<HomePage> {
                           return Container(
                               width: double.infinity,
                               height: 250,
-                              child:
-                                  Center(child: CircularProgressIndicator()));
+                              child: const Center(
+                                  child: CircularProgressIndicator()));
                         }
                       }),
 

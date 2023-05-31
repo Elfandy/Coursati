@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_geocoder/geocoder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:search_choices/search_choices.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/Location.dart';
@@ -561,13 +562,13 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           if (!value) {
                             setState(
                               () {
-                                if (!(_trainingCenterName.text
+                                if (!(_trainingCenterPhoneNumber.text
                                         .startsWith("091") ||
-                                    _trainingCenterName.text
+                                    _trainingCenterPhoneNumber.text
                                         .startsWith("092") ||
-                                    _trainingCenterName.text
+                                    _trainingCenterPhoneNumber.text
                                         .startsWith("094") ||
-                                    _trainingCenterName.text
+                                    _trainingCenterPhoneNumber.text
                                         .startsWith("095"))) {
                                   _showTrainingCenterPhoneNumberErrorMessage =
                                       true;
@@ -814,79 +815,34 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ),
                         ),
                       ),
-                      SearchChoices.multiple(
-                        items: [
-                          for (Tag tag in tags)
-                            DropdownMenuItem(
-                              child: Text((languageType == 0)
-                                  ? tag.name_ar!
-                                  : tag.name_en!),
-                            ),
-                        ],
-                        // selectedItems: _SearchBoxTags,
-                        isCaseSensitiveSearch: false,
-                        fieldDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                      MultiSelectDialogField(
+                        items: tags
+                            .map((e) => MultiSelectItem(e,
+                                (languageType == 0) ? e.name_ar! : e.name_en!))
+                            .toList(),
+                        listType: MultiSelectListType.CHIP,
+                        onConfirm: (values) {
+                          _selectedTags = values;
+                        },
+                        cancelText:
+                            Text((languageType == 0) ? "إلغاء" : "Cancel"),
+                        confirmText: Text((languageType == 0) ? "موافق" : "OK"),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: isDark
+                                    ? Color(0xff424242)
+                                    : Color(0xffdddddd))),
+                        dialogHeight: MediaQuery.of(context).size.height / 2,
+                        dialogWidth: MediaQuery.of(context).size.width / 2,
+                        title: Text(
+                          (languageType == 0) ? "أضف وسوم" : "Add Tags",
+                          style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black),
                         ),
-
-                        rightToLeft: (languageType == 0) ? true : false,
-                        onChanged: (value) {
-                          setState(() {
-                            _SearchBoxTags = value;
-                            for (var val in _SearchBoxTags) {
-                              _selectedTags.add(tags[val]);
-                            }
-                            _selectTagsNum = _SearchBoxTags;
-                          });
-                        },
-                        displayItem: (item, selected) {
-                          return (Row(children: [
-                            selected
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : Icon(
-                                    Icons.check_box_outline_blank,
-                                    color: Colors.grey,
-                                  ),
-                            SizedBox(width: 7),
-                            Expanded(
-                              child: item,
-                            ),
-                          ]));
-                        },
-                        hint: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text("Select any"),
+                        buttonText: Text(
+                          (languageType == 0) ? "أضف وسوم" : "Add Tags",
                         ),
-                        closeButton: null,
-                        isExpanded: true,
-                        searchHint: "Select any",
-                        searchFn: (String keyword, items) {
-                          List<int> ret = [];
-                          if (items != null && keyword.isNotEmpty) {
-                            keyword.split(" ").forEach((k) {
-                              int i = 0;
-                              items.forEach((item) {
-                                if (k.isNotEmpty &&
-                                    (item.value
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains(k.toLowerCase()))) {
-                                  ret.add(i);
-                                }
-                                i++;
-                              });
-                            });
-                          }
-                          if (keyword.isEmpty) {
-                            ret = Iterable<int>.generate(items.length).toList();
-                          }
-                          return (ret);
-                        },
-                        clearIcon: Icon(Icons.clear_all),
-                        icon: Icon(Icons.arrow_drop_down_circle),
                       ),
                       Wrap(
                         children: [

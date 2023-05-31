@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Services/ScreenController.dart';
+import 'package:coursati/Widgets/TrainingCenter/AddBranch.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxTCLabelData.dart';
@@ -52,7 +53,10 @@ class _TrainingCenterState extends State<TrainingCenter> {
                       child: FloatingActionButton(
                         backgroundColor: Color(0xee1776e0),
                         heroTag: "add",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              ScreenController().createRoute(AddBranch(), 1));
+                        },
                         materialTapTargetSize: MaterialTapTargetSize.padded,
                         child: const Icon(
                           Icons.add,

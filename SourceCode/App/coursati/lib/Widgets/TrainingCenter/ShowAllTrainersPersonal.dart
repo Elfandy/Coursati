@@ -1,14 +1,14 @@
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:flutter/material.dart';
 
-class AddCourse extends StatefulWidget {
-  const AddCourse({super.key});
+class ShowAllTrainerPersonal extends StatefulWidget {
+  const ShowAllTrainerPersonal({super.key});
 
   @override
-  State<AddCourse> createState() => _AddCourseState();
+  State<ShowAllTrainerPersonal> createState() => _ShowAllTrainerPersonalState();
 }
 
-class _AddCourseState extends State<AddCourse> {
+class _ShowAllTrainerPersonalState extends State<ShowAllTrainerPersonal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

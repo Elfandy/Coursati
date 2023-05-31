@@ -1,8 +1,10 @@
 import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/AllTrainingCenterData.dart';
-import 'package:coursati/Screens/SubScreen/AddCourse.dart';
+
 import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
+import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
+import 'package:coursati/Widgets/TrainingCenter/ShowAllTrainersPersonal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,7 @@ import '../../Classes/GlobalVariables.dart';
 import '../../Classes/TrainingCenter.dart';
 import '../../Services/ScreenController.dart';
 import '../../Widgets/Home/RoundedButton.dart';
+import '../../Widgets/TrainingCenter/AddCourse.dart';
 import '../../Widgets/TrainingCenter/AllPersonalCourse.dart';
 import '../../Widgets/TrainingCenter/PersonalCourseBox.dart';
 import '../../Widgets/TrainingCenter/TrainerDetailedInfo.dart';
@@ -76,7 +79,11 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                         "Add Trainer",
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            ScreenController()
+                                                .createRoute(AddTrainer(), 1));
+                                      },
                                     )
                                   ]),
                                 ),
@@ -385,7 +392,12 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       color: const Color(0x0c1776e0),
                                     ),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            ScreenController().createRoute(
+                                                const TrainerDetailedInfo(),
+                                                1));
+                                      },
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             20, 14, 20, 14),
@@ -466,7 +478,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                                   Navigator.of(context).push(
                                                       ScreenController()
                                                           .createRoute(
-                                                              const TrainerDetailedInfo(),
+                                                              const ShowAllTrainerPersonal(),
                                                               1));
                                                 },
                                                 style: OutlinedButton.styleFrom(
