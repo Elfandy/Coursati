@@ -19,7 +19,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentPage = 2;
+  int _currentPage = 0;
 
   final List<Widget> _pages = const [
     HomePage(),
@@ -32,14 +32,13 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     //!This is for the network popup
-    // InternetPopup()
-    //     .initializeCustomWidget(context: context, widget: const NetworkPopup());
+    InternetPopup()
+        .initializeCustomWidget(context: context, widget: const NetworkPopup());
 
     super.initState();
-FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove();
 
-fillTags();
-
+    fillTags();
   }
 
   //* This is the Builder for the app
@@ -141,16 +140,17 @@ fillTags();
 
   Future fillTags() async {
     var url = "/tags";
-    try{
-      var response =  await dioTestApi.get(url);
-      if(response.statusCode == 200){
-      List<dynamic> taglist = response.data["tags"];
-      for(var tag in taglist){
-        tags.add(Tag.fromJson(tag));
+    tags.clear();
+    try {
+      var response = await dioTestApi.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> taglist = response.data["tags"];
+        for (var tag in taglist) {
+          tags.add(Tag.fromJson(tag));
+        }
       }
-      }
-    }catch(e){
-      if(kDebugMode){
+    } catch (e) {
+      if (kDebugMode) {
         print(e);
       }
     }

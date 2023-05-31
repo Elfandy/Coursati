@@ -26,38 +26,40 @@ class _NetworkPopupState extends State<NetworkPopup> {
   //? -------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onPop,
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
-        body: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: (isDark) ? const Color(0xff424242) : Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            width: double.infinity,
-            height: 400,
-            child: Center(
-              child: Column(
-                children: [
-                  Image(
-                    image: AssetImage(image[picker]),
-                  ),
-                  Text(
-                    (languageType == 0)
-                        ? "يبدو أنه لايوجد اتصال بالانترنت"
-                        : "It semms like there is no Internet Connection",
-                    style: TextStyle(
-                      color: const Color(0xff1776e0),
-                      fontSize: 20,
-                      height: 1.1,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: (languageType == 0) ? "" : "Suravaram",
+    return Center(
+      child: WillPopScope(
+        onWillPop: _onPop,
+        child: Scaffold(
+          backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
+          body: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: (isDark) ? const Color(0xff424242) : Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              width: double.infinity,
+              height: 400,
+              child: Center(
+                child: Column(
+                  children: [
+                    Image(
+                      image: AssetImage(image[picker]),
                     ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
+                    Text(
+                      (languageType == 0)
+                          ? "يبدو أنه لايوجد اتصال بالانترنت"
+                          : "It semms like there is no Internet Connection",
+                      style: TextStyle(
+                        color: const Color(0xff1776e0),
+                        fontSize: 20,
+                        height: 1.1,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: (languageType == 0) ? "" : "Suravaram",
+                      ),
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

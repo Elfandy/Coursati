@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:coursati/Widgets/Search/SearchResults.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
@@ -21,7 +22,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Tag> _selectedTags = [], _selectedTypes = [];
-  final List<Tag> _tagTypeList = [
+  static final List<Tag> _tagTypeList = [
     Tag(id: 1, name_ar: "دورة", name_en: "Course"),
     Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
   ];
@@ -47,7 +48,8 @@ class _SearchPageState extends State<SearchPage> {
   bool searching = false;
   @override
   Widget build(BuildContext context) {
-
+    print(_selectedTypes.toString());
+    print(_tagTypeList.toString());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -262,9 +264,7 @@ class _SearchPageState extends State<SearchPage> {
                                           onPressed: () {
                                             setState(
                                               () {
-                                                _selectedTags = [
-                                                  _tagTypeList[0]
-                                                ];
+                                                _selectedTags = [];
                                                 _selectedTypes = _tagTypeList;
                                                 Navigator.of(context).pop();
                                               },
@@ -307,11 +307,7 @@ class _SearchPageState extends State<SearchPage> {
                         }
                       }
 
-                      return Container(
-                        width: double.infinity,
-                        height: 400,
-                        color: Colors.red,
-                      );
+                      return SearchResult();
                     } else {
                       return CircularProgressIndicator();
                     }

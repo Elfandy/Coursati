@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
+import 'SubScreen/ShowAllTC.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -263,26 +264,47 @@ class _HomePageState extends State<HomePage> {
                 //**  */
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
-                        width: 10,
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            (languageType == 0)
+                                ? "المراكز التدريبية"
+                                : "TrainingCenter",
+                            style: TextStyle(
+                              shadows: const [
+                                Shadow(
+                                    color: Colors.black45,
+                                    offset: Offset(1, 2.2),
+                                    blurRadius: 4)
+                              ],
+                              fontSize: (languageType == 0) ? 24 : 36,
+                              // color: const Color(0xff1776e0),
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
                       ),
-                      Text(
-                        (languageType == 0)
-                            ? "المراكز التدريبية"
-                            : "Training Centers",
-                        style: TextStyle(
-                          shadows: const [
-                            Shadow(
-                                color: Colors.black45,
-                                offset: Offset(1, 2.2),
-                                blurRadius: 4)
-                          ],
-                          fontSize: (languageType == 0) ? 24 : 36,
-                          // color: const Color(0xff1776e0),
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
+                      Row(
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(ScreenController()
+                                    .createRoute(ShowTC(), 1));
+                              },
+                              child: const Text(
+                                "المزيد",
+                                style: TextStyle(fontSize: 20),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      )
                     ],
                   ),
                   /////////////////////////////////////////////////////////
@@ -301,7 +323,7 @@ class _HomePageState extends State<HomePage> {
 
                           return Container(
                             width: double.infinity,
-                            height: 250,
+                            height: 200,
                             child: ListView.builder(
                               itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
                               scrollDirection: Axis.horizontal,
@@ -321,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                         } else {
                           return Container(
                               width: double.infinity,
-                              height: 250,
+                              height: 200,
                               child: const Center(
                                   child: CircularProgressIndicator()));
                         }

@@ -70,7 +70,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       onPressed: () {
                                         Navigator.of(context).push(
                                             ScreenController()
-                                                .createRoute(AddCourse(), 1));
+                                                .createRoute(AddCourse(trainingCenter: Data.tcData!,), 1));
                                       },
                                     ),
                                     const Divider(),
