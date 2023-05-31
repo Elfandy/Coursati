@@ -99,47 +99,102 @@ class Trainingcenter extends Model
     }
 
 
-    //pending
+    //show tc info 
+    public function showtc(request $request)
+    {
+        $userID= $request['userID'];
+        $id= $request['id'];
+
+        $tcinfo = DB::table('trainingcenter')->where('id',$id)->get();
+
+        $tags= DB::table('trainingcenter')->where('id',$id)->value('tags');
+        $arraytags = array_map('intval', explode(',', $tags));
+        $x = collect();
+        foreach($arraytags as $tag){
+             $x = $x ->concat( DB::table('tag')->where('id','like','%'.$tag.'%') 
+                                              ->select(array('id','nameAR','NameEN'))->get());
+        }
+        $ratecount = DB::table('raters')->where('tcID',$id)->count();
+        $ratesum = DB::table('raters')->where('tcID',$id)->sum('rating');
+        $check = DB::table('raters')->where('tcID',$id)->where('userID',$userID)->get();
+
+        
+
+        if($ratecount==0){
+            $tcrate=0;
+        }else{$tcrate=$ratesum/$ratecount;}
+
+        if($check=='[]'){$allowtorate='yes';}
+        else{$allowtorate='no';}
+
+        return [
+            'info'=>$tcinfo[0],
+            'tags'=>$x,
+            'rate'=>[
+            'rate'=>number_format($tcrate, 1, '.', ','),
+            'rate count'=>$ratecount,
+           'allowToRate'=>$allowtorate
+            ]
+
+        ];
+    }
+
+    //your pending
     public function pending(Request $request) {   
         $userID= $request['userID'];
         return $this->orderBy('id', 'ASC')->where('active','0')->where('userID',$userID)->get();   
     }
-
+    //rating Mangement 
     public function rate(Request $request) {   
 
-        $rate= $request['rate'];
-        $id= $request['id'];
+        $rating= $request['rating'];
+        $userID= $request['userID'];
+        $tcID= $request['tcID'];
 
-        $allrate=DB::table('trainingcenter')->where('id',$id)->value('allrating');
-        $count=DB::table('trainingcenter')->where('id',$id)->value('ratingcount');
+        $check = DB::table('raters')->where('userID',$userID)->where('tcID',$tcID)->get();
 
-        
-        $newratecount =$count + 1 ;
-        
-        $newRate=($allrate + $rate) / $newratecount;
-     
-        DB::table('trainingcenter')->where('id',$id)->update(array('rating'=>$newRate));
-        DB::table('trainingcenter')->where('id',$id)->update(array('ratingcount'=>$newratecount));
-        $newAllrating = $allrate+$rate;
-        DB::table('trainingcenter')->where('id',$id)->update(array('allrating'=>$newAllrating));
+        if($check=='[]'){
+            $data=array('userID'=>$userID,"tcID"=>$tcID,"rating"=>$rating);
+            DB::table('raters')->insert($data);
+            return 'added';
+            
+        }else {
+            return 'you can not rate/already rated this tc';
+        }  
+    }
+    public function updateRate(Request $request) {   
 
-        return 'done';
+        $rating= $request['rating'];
+        $userID= $request['userID'];
+        $tcID= $request['tcID'];
+        $data=array('userID'=>$userID,"tcID"=>$tcID,"rating"=>$rating);
+
+        DB::table('raters')->where('userID',$userID)->where('tcID',$tcID)->update($data);
+        return 'updated';
+    }
+    public function deleteRate(Request $request) {   
+
+        $userID= $request['userID'];
+        $tcID= $request['tcID'];
+        DB::table('raters')->where('userID',$userID)->where('tcID',$tcID)->delete();
+        return 'deleted';
     }
 
     //search functionality 
      public function search(Request $request) {   
-        $type= $request['type'];
-        $search= $request['search'];
-        $tags= $request['tags'];
+        $type= $request['Type'];
+        $search= $request['Search'];
+        $tags= $request['Tags'];
        $arraytags = array_map('intval', explode(',', $tags));
       
        // $tags = [1,2];
         if($type=='training center')
         {
            if($tags==null){
-            return DB::table('trainingcenter')->orderBy('created_at', 'DESC')
+            return ['listTC'=>DB::table('trainingcenter')->orderBy('created_at', 'DESC')
                                                 ->where('name','like','%'.$search.'%')
-                                                ->select(array('id','name','image','tags'))->get();
+                                                ->select(array('id','name','image'))->get()
+           ];
 
            }
            else{
@@ -147,19 +202,19 @@ class Trainingcenter extends Model
         foreach($arraytags as $tag){
              $x = $x ->concat( DB::table('trainingcenter')->where('tags','like','%'.$tag.'%') 
                                               ->where('name','like','%'.$search.'%')
-                                              ->select(array('id','name','image','tags'))
+                                              ->select(array('id','name','image'))
                                               ->orderBy('created_at', 'DESC')->get());
         } 
         $x = $x -> unique();
-        return $x ->values()->all();
+        return ['listTC'=>$x ->values()->all()];
     }      
         }
              else if($type=='course')
         
              if($tags==null){
-                return DB::table('course')->orderBy('created_at', 'DESC')
+                return ['listCourse'=>DB::table('course')->orderBy('created_at', 'DESC')
                                                     ->where('name','like','%'.$search.'%')
-                                                    ->select(array('id','name','image','tags'))->get();
+                                                    ->select(array('id','name','image'))->get()];
     
                }
                else{
@@ -167,11 +222,11 @@ class Trainingcenter extends Model
             foreach($arraytags as $tag){
                  $x = $x ->concat( DB::table('course')->where('tags','like','%'.$tag.'%') 
                                                   ->where('name','like','%'.$search.'%')
-                                                  ->select(array('id','name','image','tags'))
+                                                  ->select(array('id','name','image'))
                                                   ->orderBy('created_at', 'DESC')->get());
             } 
             $x = $x -> unique();
-            return $x ->values()->all();
+            return ['listCourse'=>$x ->values()->all()];
         }
     
         else {
