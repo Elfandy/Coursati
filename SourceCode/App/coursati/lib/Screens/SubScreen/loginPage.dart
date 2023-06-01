@@ -28,7 +28,6 @@ class _loginPageState extends State<loginPage> {
   final TextEditingController _loginPass = TextEditingController();
   final TextEditingController _passRepeat = TextEditingController();
 
-
   int _isSelected = 1, _gender = 0, _accountFound = 0, _passOk = 0;
   @override
   Widget build(BuildContext context) {
@@ -198,8 +197,10 @@ class _loginPageState extends State<loginPage> {
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context,
                                       firstDate: DateTime(1900),
-                                      initialDate: DateTime.now(),
-                                      lastDate: DateTime.now());
+                                      initialDate: DateTime.now()
+                                          .subtract(Duration(days: 2190)),
+                                      lastDate: DateTime.now()
+                                          .subtract(Duration(days: 2190)));
 
                                   if (pickedDate != null) {
                                     String foramteDate =
@@ -257,7 +258,8 @@ class _loginPageState extends State<loginPage> {
                                       Icons.female_rounded,
                                       size: 40,
                                       color: (_gender != 0)
-                                          ? const Color.fromARGB(255, 228, 28, 228)
+                                          ? const Color.fromARGB(
+                                              255, 228, 28, 228)
                                           : const Color(0xff999999),
                                     ),
                                   ),
@@ -441,8 +443,8 @@ class _loginPageState extends State<loginPage> {
 
   Future getToken(String email, String password) async {
     try {
-      return await Dio().post("$onlineServer/api/auth/token",
-          data: {"email": email, "password": password});
+      return await dioTestApi
+          .post("/auth/token", data: {"email": email, "password": password});
     } catch (exception) {
       if (kDebugMode) {
         print(exception);
@@ -452,10 +454,10 @@ class _loginPageState extends State<loginPage> {
 
   Future getCredintials(String token) async {
     try {
-      return await Dio().get("$onlineServer/api/user",
+      return await dioTestApi.get("/user",
           options: Options(headers: {'Authorization': "Bearer $token"}));
     } catch (exception) {
-      if(kDebugMode) {
+      if (kDebugMode) {
         print(exception);
       }
     }
@@ -469,16 +471,19 @@ class _loginPageState extends State<loginPage> {
       String birthdate = "",
       int gender = 0}) async {
     try {
-      if(email.isNotEmpty && password.isNotEmpty && name.isNotEmpty && birthdate.isNotEmpty){
-      return await Dio().post("$apiTestServer/Register", data: {
-        "email": email,
-        "password": password,
-        "name": name,
-        "birthdate": DateTime.parse(birthdate),
-        "gender":gender,
-      });}
+      if (email.isNotEmpty &&
+          password.isNotEmpty &&
+          name.isNotEmpty &&
+          birthdate.isNotEmpty) {
+        return await Dio().post("/Register", data: {
+          "email": email,
+          "password": password,
+          "name": name,
+          "birthdate": DateTime.parse(birthdate),
+          "gender": gender,
+        });
+      }
       return "";
-      
     } catch (exception) {
       if (kDebugMode) {
         print(exception);

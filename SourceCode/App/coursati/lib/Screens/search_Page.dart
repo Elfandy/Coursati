@@ -48,8 +48,8 @@ class _SearchPageState extends State<SearchPage> {
   bool searching = false;
   @override
   Widget build(BuildContext context) {
-    print(_selectedTypes.toString());
-    print(_tagTypeList.toString());
+    print(_tagTypeList[0]);
+    print(_tagTypeList[1]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(

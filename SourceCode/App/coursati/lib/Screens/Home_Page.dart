@@ -33,13 +33,16 @@ class _HomePageState extends State<HomePage> {
 //? ------------------------------------------------------------------------------------------
 
   Future<List<BoxCourseLabelData>> fetchCourses() async {
-    var url = "Course1";
+    var url = "/Courses/NewCourses";
     List<BoxCourseLabelData> courses = [];
     try {
       var response = await dioTestApi.get(url);
 
+      print(response);
       if (response.statusCode == 200) {
-        List<dynamic> coursesJson = response.data["course"];
+        print(response.data);
+
+        List<dynamic> coursesJson = response.data['courses'];
 
         for (var coursesJson in coursesJson) {
           courses.add(BoxCourseLabelData.fromJson(coursesJson));
@@ -47,30 +50,32 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (kDebugMode) {
+        print("courses error");
         print(e);
       }
     }
     return courses;
   }
 
-  Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
-    var url = "TrainingCenter1";
-    List<BoxTCLabelData> tC = [];
+  // Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
+  //   var url = "/TrainingCenters";
+  //   List<BoxTCLabelData> tC = [];
 
-    try {
-      var response = await dioTestApi.get(url);
-      if (response.statusCode == 200) {
-        List<dynamic> tCJson = response.data["TrainingCenter"];
+  //   try {
+  //     var response = await dioTestApi.get(url);
+  //     if (response.statusCode == 200) {
+  //       List<dynamic> tCJson = response.data["tc"];
 
-        for (var tCJson in tCJson) {
-          tC.add(BoxTCLabelData.fromJson(tCJson));
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-    return tC;
-  }
+  //       for (var tCJson in tCJson) {
+  //         tC.add(BoxTCLabelData.fromJson(tCJson));
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print("trainingcenter error");
+  //     print(e);
+  //   }
+  //   return tC;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -315,39 +320,39 @@ class _HomePageState extends State<HomePage> {
                   ///
                   ///
 
-                  FutureBuilder(
-                      future: fetchTrainingCenter(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          List<BoxTCLabelData> _Tc = snapshot.data!;
+                  // FutureBuilder(
+                  //     future: fetchTrainingCenter(),
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.connectionState == ConnectionState.done) {
+                  //         List<BoxTCLabelData> _Tc = snapshot.data!;
 
-                          return Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: ListView.builder(
-                              itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemBuilder: ((context, index) {
-                                return TCBox(
-                                  bld: BoxTCLabelData(
-                                    id: _Tc[index].id,
-                                    image: _Tc[index].image,
-                                    name: _Tc[index].name,
-                                    logo: _Tc[index].logo,
-                                  ),
-                                );
-                              }),
-                            ),
-                          );
-                        } else {
-                          return Container(
-                              width: double.infinity,
-                              height: 200,
-                              child: const Center(
-                                  child: CircularProgressIndicator()));
-                        }
-                      }),
+                  //         return Container(
+                  //           width: double.infinity,
+                  //           height: 200,
+                  //           child: ListView.builder(
+                  //             itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
+                  //             scrollDirection: Axis.horizontal,
+                  //             shrinkWrap: true,
+                  //             itemBuilder: ((context, index) {
+                  //               return TCBox(
+                  //                 bld: BoxTCLabelData(
+                  //                   id: _Tc[index].id,
+                  //                   image: _Tc[index].image,
+                  //                   name: _Tc[index].name,
+                  //                   logo: _Tc[index].logo,
+                  //                 ),
+                  //               );
+                  //             }),
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         return Container(
+                  //             width: double.infinity,
+                  //             height: 200,
+                  //             child: const Center(
+                  //                 child: CircularProgressIndicator()));
+                  //       }
+                  //     }),
 
                   // SingleChildScrollView(
                   //   scrollDirection: Axis.horizontal,

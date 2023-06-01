@@ -43,7 +43,6 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    
     try {
       return ScaleTransition(
         scale: _boxAnimationController,
@@ -93,7 +92,9 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
                   progressIndicatorBuilder: (context, url, progress) => Center(
                       child:
                           CircularProgressIndicator(value: progress.progress)),
-                  imageUrl: widget.bld.image!,
+                  imageUrl: widget.bld.image != null
+                      ? (serverStorage + widget.bld.image!)
+                      : "https://images.unsplash.com/photo-1610056494052-6a4f83a8368c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
                   imageBuilder: (context, imageProvider) => Ink(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),

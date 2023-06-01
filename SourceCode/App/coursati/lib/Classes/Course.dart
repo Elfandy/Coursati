@@ -61,6 +61,7 @@ class Course {
       trainingCenterName,
       trainingCenterID;
   final List<Tag> tags;
+
   final double price, discount;
   final DateTime startingDate;
   final bool active, full, repeats;
@@ -68,7 +69,7 @@ class Course {
   final Trainer trainerData;
 
   factory Course.fromJson(Map<String, dynamic> json) {
-    var tagObjsJson = json['tags'] as List;
+    var tagObjsJson = json['tags'];
     List<Tag> _tags =
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
     return Course(
@@ -80,7 +81,7 @@ class Course {
         periodsRepeats: json['periodsRepeats'],
         period: json['period'],
         description: json['description'],
-        id: json['id'],
+        id: json['id'].toString(),
         trainingCenterName: json['trainingCenterName'],
         tags: _tags,
         price: json['price'],

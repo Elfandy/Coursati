@@ -52,27 +52,22 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-     runZonedGuarded(() async {
+  runZonedGuarded(() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   checkServer().then((value) {
 //       if (value == 1) {
-        FileHandle().readConfig().then(
-          (value) {
-            if (value != null) {
-              FileHandle().extractConfigData(value);
-             
-            } else {
-              FileHandle().writeConfig(ConfigSave);
-                
-             }
-                runApp(MainApp());
-             });
+    FileHandle().readConfig().then((value) {
+      if (value != null) {
+        FileHandle().extractConfigData(value);
+      } else {
+        FileHandle().writeConfig(ConfigSave);
+      }
+      runApp(MainApp());
+    });
 
-            //  }else{ runApp(ServerError(error: value));}});
-             }, (_, s) {});
+    //  }else{ runApp(ServerError(error: value));}});
+  }, (_, s) {});
   // // TODO: Request permission
- 
-
 }
 
 class MainApp extends StatefulWidget {
@@ -124,7 +119,6 @@ class _MainAppState extends State<MainApp> {
       supportedLocales: local,
       locale: local[languageType],
       theme: ThemeData(
-
         colorScheme: const ColorScheme(
             //*This is the background of the app
             background: Colors.white,
@@ -145,13 +139,10 @@ class _MainAppState extends State<MainApp> {
         textTheme: const TextTheme(
           titleLarge: TextStyle(color: Colors.white),
           titleMedium: TextStyle(color: Colors.white),
-          
         ),
         fontFamily: "Tajawal",
-      
       ),
       darkTheme: ThemeData(
-        
         colorScheme: const ColorScheme(
             //*This is the background of the app
             background: Color(0xff424242),
@@ -175,61 +166,57 @@ class _MainAppState extends State<MainApp> {
   }
 
   void requestPermssionFireBase() async {
-      final messaging = FirebaseMessaging.instance;
-final settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  if(settings.authorizationStatus == AuthorizationStatus.authorized){
-    if (kDebugMode) {
-      print("all good");
+    final messaging = FirebaseMessaging.instance;
+    final settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      if (kDebugMode) {
+        print("all good");
+      }
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      if (kDebugMode) {
+        print("granted provisonal permissons");
+      }
+    } else {
+      if (kDebugMode) {
+        print("Denied");
+      }
     }
-  }else if(settings.authorizationStatus == AuthorizationStatus.provisional){
-    if (kDebugMode) {
-      print("granted provisonal permissons");
-    }
-  } else{
-    if (kDebugMode) {
-      print("Denied");
-    }
-  }
   }
 
-  void getToken() async{
-    await FirebaseMessaging.instance.getToken().then((token)  {
+  void getToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         deviceID = token.toString();
-        if(kDebugMode){
+        if (kDebugMode) {
           print(deviceID);
         }
       });
     });
   }
-
-  
 }
 
-
 Future<int> checkServer() async {
-  
   try {
     //*** This is the default server check */
     // response = await http.get(Uri.parse(server));
     //!! temp server check
 
-   var response = await http.get(Uri.parse(apiTestServer));
+    var response = await http.get(Uri.parse(onlineServer));
     if (response.statusCode == 200) {
-    return 1;
-  } else {
-    return 2;
-  }
+      return 1;
+    } else {
+      return 2;
+    }
   } catch (e) {
     return 0;
   }
-  
 }

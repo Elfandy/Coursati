@@ -13,7 +13,8 @@ import '../../Classes/GlobalVariables.dart';
 import '../../Classes/TrainingCenter.dart';
 import '../../Services/ScreenController.dart';
 import '../../Widgets/Home/RoundedButton.dart';
-import '../../Widgets/TrainingCenter/AddCourse.dart';
+import '../../Widgets/TrainingCenter/ADDCourse/AddCourse.dart';
+import '../../Widgets/TrainingCenter/ADDCourse/ContainerForCourse.dart';
 import '../../Widgets/TrainingCenter/AllPersonalCourse.dart';
 import '../../Widgets/TrainingCenter/PersonalCourseBox.dart';
 import '../../Widgets/TrainingCenter/TrainerDetailedInfo.dart';
@@ -69,8 +70,11 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).push(
-                                            ScreenController()
-                                                .createRoute(AddCourse(trainingCenter: Data.tcData!,), 1));
+                                            ScreenController().createRoute(
+                                                ContainerForCourse(
+                                                  trainingCenter: Data.tcData!,
+                                                ),
+                                                1));
                                       },
                                     ),
                                     const Divider(),

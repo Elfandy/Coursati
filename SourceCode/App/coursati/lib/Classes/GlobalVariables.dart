@@ -25,11 +25,15 @@ String server =
 // "http://192.168.238.20";
 // "http://192.168.1.153";
 
-String onlineServer = "http://192.168.43.128:8000";
+String serverStorage = "http://192.168.43.128:8000/storage/";
+
+// String onlineServer = "http://192.168.2.103:8000/api/";
+String onlineServer = "http://192.168.43.128:8000/api/";
 
 String apiTestServer = "https://apimocha.com/coursatitest/";
+// String apiTestServer = "https://192.168.43.128:8000/api/";
 final Dio dioTestApi = Dio(BaseOptions(
-  baseUrl: apiTestServer,
+  baseUrl: onlineServer,
   contentType: 'application/json',
 ));
 String deviceID = "";
@@ -99,7 +103,7 @@ UserData user =
     UserData(
         name: "ريان",
         image:
-            "${server}/Images/shrajan_sci_fi_headphones8k_dfdb6871-06d3-44d5-82b3-c983f5e3d4f1.png",
+            "https://images.unsplash.com/photo-1683580735117-5432c7d9e001?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
         token: "g45g45g45g45g45g45g4g",
         notifications: 120,
         password: "123",
