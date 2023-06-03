@@ -33,7 +33,7 @@ String onlineServer = "http://192.168.43.128:8000/api/";
 String apiTestServer = "https://apimocha.com/coursatitest/";
 // String apiTestServer = "https://192.168.43.128:8000/api/";
 final Dio dioTestApi = Dio(BaseOptions(
-  baseUrl: onlineServer,
+  baseUrl: apiTestServer,
   contentType: 'application/json',
 ));
 String deviceID = "";

@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 //? ------------------------------------------------------------------------------------------
 
   Future<List<BoxCourseLabelData>> fetchCourses() async {
-    var url = "/Courses/NewCourses";
+    var url = "/Course1";
     List<BoxCourseLabelData> courses = [];
     try {
       var response = await dioTestApi.get(url);
@@ -55,6 +55,51 @@ class _HomePageState extends State<HomePage> {
       }
     }
     return courses;
+  }
+
+  // Future<List<BoxCourseLabelData>> fetchCourses() async {
+  //   var url = "/Courses/NewCourses";
+  //   List<BoxCourseLabelData> courses = [];
+  //   try {
+  //     var response = await dioTestApi.get(url);
+
+  //     print(response);
+  //     if (response.statusCode == 200) {
+  //       print(response.data);
+
+  //       List<dynamic> coursesJson = response.data['courses'];
+
+  //       for (var coursesJson in coursesJson) {
+  //         courses.add(BoxCourseLabelData.fromJson(coursesJson));
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("courses error");
+  //       print(e);
+  //     }
+  //   }
+  //   return courses;
+  // }
+
+  Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
+    var url = "/TrainingCenter1";
+    List<BoxTCLabelData> tC = [];
+
+    try {
+      var response = await dioTestApi.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> tCJson = response.data["tc"];
+
+        for (var tCJson in tCJson) {
+          tC.add(BoxTCLabelData.fromJson(tCJson));
+        }
+      }
+    } catch (e) {
+      print("trainingcenter error");
+      print(e);
+    }
+    return tC;
   }
 
   // Future<List<BoxTCLabelData>> fetchTrainingCenter() async {

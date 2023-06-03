@@ -85,8 +85,11 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).push(
-                                            ScreenController()
-                                                .createRoute(AddTrainer(), 1));
+                                            ScreenController().createRoute(
+                                                AddTrainer(
+                                                    trainingCenter:
+                                                        Data.tcData!),
+                                                1));
                                       },
                                     )
                                   ]),
