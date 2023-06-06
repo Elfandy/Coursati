@@ -53,10 +53,10 @@ class TrainingCenter {
     var tagObjsJson = json['tags'] as List;
     List<Tag> _tags =
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
-    var BranchOBJ = json['tags'] as List;
-    List<TrainingCenterBranch> _branch =
-        BranchOBJ.map((tagJson) => TrainingCenterBranch.fromJson(tagJson))
-            .toList();
+    // var BranchOBJ = json['tags'] as List;
+    // List<TrainingCenterBranch> _branch =
+    //     BranchOBJ.map((tagJson) => TrainingCenterBranch.fromJson(tagJson))
+    //         .toList();
     String _close = json["close"];
     int hhC = 0;
     if (_close.endsWith('PM')) hhC = 12;

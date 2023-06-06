@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_geocoder/geocoder.dart';
+
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/TCLocation.dart';
 
@@ -36,40 +36,7 @@ class _AllMapScreenState extends State<AllMapScreen> {
     super.initState();
   }
 
-  // LatLng location = LatLng(15, 32);
-  // String name = "course";
-// void _currentLocation() async {
-
-//     // Create a map controller
-//     final GoogleMapController controller = await _controller.future;
-//     LocationData currentLocation;
-//     var location = new Location();
-//     try {
-//         // Find and store your location in a variable
-//         currentLocation = await location.getLocation();
-//     } on Exception {
-//         currentLocation = null;
-//     }
-
-//     // Move the map camera to the found location using the controller
-//     controller.animateCamera(CameraUpdate.newCameraPosition(
-//         CameraPosition(
-//             bearing: 0,
-//             target: LatLng(currentLocation.latitude, currentLocation.longitude),
-//             zoom: 17.0,
-//         ),
-//     ));
-// }
-
-  // Set<Marker> _createMarker(LatLng location, String markerName) {
-  //   return {
-  //     Marker(
-  //       markerId: MarkerId(markerName),
-  //       position: location,
-  //     )
-  //   };
-  // }
-
+  // Lat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,17 +98,17 @@ class _AllMapScreenState extends State<AllMapScreen> {
     } catch (e) {
       print(e);
     }
-    
 
     Set<Marker> mark = {};
     for (int i = 0; i < list.length; i++) {
       mark.add(Marker(
           markerId: MarkerId(list[i].id),
           position: LatLng(list[i].lat, list[i].lng),
+          draggable: true,
           infoWindow: InfoWindow(
               title: (languageType == 0 ? "<  " : "") +
                   list[i].name +
-                  (languageType == 0 ? " مركز" : " Course Center  >"),
+                  (languageType == 0 ? "" : "  >"),
               onTap: () {
                 //** Going to TrainingCenter page */
               })));

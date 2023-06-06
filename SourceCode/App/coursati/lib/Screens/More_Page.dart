@@ -91,9 +91,26 @@ class _MorePageState extends State<MorePage> {
                   image: const AssetImage("Assets/Icons/about.png"),
                   label: (languageType == 0) ? "حول" : "About",
                   onPressed: () {
-                    Navigator.of(context).push(
-                      ScreenController().createRoute(const AboutPage(), 1),
-                    );
+                    // Navigator.of(context).push(
+                    //   ScreenController().createRoute(const AboutPage(), 1),
+                    // );
+                    showAboutDialog(
+                        context: context,
+                        children: [
+                          Text(
+                            (languageType == 0)
+                                ? "كورساتي هي منصة للتجميع جميع مراكز التدريب و كورساتهم في مكان واحد للمساعدة في تسهيل عملية البحث و الإنضمام لها"
+                                : "Coursati is a platform for collecting and viewing the Training centers and there courses in one platform to help eas the search for the right course to enroll in",
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                        applicationIcon: Image.asset(
+                          "Assets/Icons/Logo.png",
+                          width: 40,
+                          height: 40,
+                        ));
                   },
                 ),
               ],

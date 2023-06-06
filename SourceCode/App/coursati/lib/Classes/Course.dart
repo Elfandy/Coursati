@@ -69,7 +69,7 @@ class Course {
   final Trainer trainerData;
 
   factory Course.fromJson(Map<String, dynamic> json) {
-    var tagObjsJson = json['tags'];
+    var tagObjsJson = json['tags'] as List;
     List<Tag> _tags =
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
     return Course(

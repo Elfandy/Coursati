@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_geocoder/geocoder.dart';
+
+import 'package:geocoder2/geocoder2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:search_choices/search_choices.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/Location.dart';
 import '../../Classes/TagData.dart';
@@ -1265,10 +1265,14 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
   }
 
   Future<String> fetchCityName(double lat, double lng) async {
-    var address = await Geocoder.local.findAddressesFromCoordinates(
-        Coordinates(locationData.lat, locationData.lng));
-    var first = address.first;
-    return first.locality.toString();
+    GeoData address = await Geocoder2.getDataFromCoordinates(
+        language: "en",
+        latitude: lat,
+        longitude: lng,
+        googleMapApiKey: "AIzaSyBbg24GYIH8LvMFHWMkK7QGqLcsMMk0n3w");
+
+    var first = address.address;
+    return first.toString();
   }
 
   Future SendData(TrainingCenter tc) async {}

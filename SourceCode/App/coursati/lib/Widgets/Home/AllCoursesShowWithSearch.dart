@@ -1,6 +1,7 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
+import 'package:coursati/Widgets/TrainingCenter/PersonalCourseBox.dart';
 import 'package:flutter/material.dart';
 
 class AllCoursesShowWithSearch extends StatefulWidget {
@@ -65,7 +66,7 @@ class _AllCoursesShowWithSearchState extends State<AllCoursesShowWithSearch> {
           child: Wrap(
             children: [
               for (BoxCourseLabelData i in widget.courses)
-                CourseBox(
+                PersonalCourseBox(
                   bld: i,
                 ),
             ],
@@ -76,7 +77,7 @@ class _AllCoursesShowWithSearchState extends State<AllCoursesShowWithSearch> {
           child: Wrap(
             children: [
               for (BoxCourseLabelData i in _searching)
-                CourseBox(
+                PersonalCourseBox(
                   bld: i,
                 ),
             ],

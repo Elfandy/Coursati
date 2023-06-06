@@ -22,7 +22,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Tag> _selectedTags = [], _selectedTypes = [];
-  static final List<Tag> _tagTypeList = [
+  final List<Tag> _tagTypeList = [
     Tag(id: 1, name_ar: "دورة", name_en: "Course"),
     Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
   ];
@@ -33,23 +33,23 @@ class _SearchPageState extends State<SearchPage> {
 
   final TextEditingController _search = TextEditingController();
 
-  List<BoxTCLabelData> _TrainingCenterList = [];
-  List<BoxCourseLabelData> _CourseList = [];
-  List<Trainer> _TrainersList = [];
+  final List<BoxTCLabelData> _TrainingCenterList = [];
+  final List<BoxCourseLabelData> _CourseList = [];
+  final List<Trainer> _TrainersList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedTags = [];
-    _selectedTypes = _tagTypeList;
+    _selectedTags.clear();
+    _selectedTypes.clear();
+    _selectedTypes.add(_tagTypeList[0]);
+    _selectedTypes.add(_tagTypeList[1]);
   }
 
   bool searching = false;
   @override
   Widget build(BuildContext context) {
-    print(_tagTypeList[0]);
-    print(_tagTypeList[1]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -257,15 +257,19 @@ class _SearchPageState extends State<SearchPage> {
                                                 ? "إعادة ضبط"
                                                 : "Reset",
                                             style: TextStyle(
-                                                color: (isDark)
-                                                    ? Color(0xff424242)
-                                                    : Colors.white),
+                                                color: Colors.white,
+                                                fontSize: 18),
                                           ),
                                           onPressed: () {
                                             setState(
                                               () {
-                                                _selectedTags = [];
-                                                _selectedTypes = _tagTypeList;
+                                                _selectedTags.clear();
+                                                _selectedTypes.clear();
+                                                _selectedTypes
+                                                    .add(_tagTypeList[0]);
+                                                _selectedTypes
+                                                    .add(_tagTypeList[1]);
+
                                                 Navigator.of(context).pop();
                                               },
                                             );

@@ -71,7 +71,7 @@ class _MapScreenState extends State<MapScreen> {
     _center = LatLng(widget.loc.lat!, widget.loc.lng!);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {

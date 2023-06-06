@@ -2,6 +2,7 @@ import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:coursati/Screens/SubScreen/ShowAllCourse.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
+import 'package:coursati/Widgets/Home/RoundedButton.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +39,7 @@ class _HomePageState extends State<HomePage> {
     try {
       var response = await dioTestApi.get(url);
 
-      print(response);
       if (response.statusCode == 200) {
-        print(response.data);
-
         List<dynamic> coursesJson = response.data['courses'];
 
         for (var coursesJson in coursesJson) {
@@ -365,79 +363,79 @@ class _HomePageState extends State<HomePage> {
                   ///
                   ///
 
-                  // FutureBuilder(
-                  //     future: fetchTrainingCenter(),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.connectionState == ConnectionState.done) {
-                  //         List<BoxTCLabelData> _Tc = snapshot.data!;
+                  FutureBuilder(
+                      future: fetchTrainingCenter(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<BoxTCLabelData> _Tc = snapshot.data!;
 
-                  //         return Container(
-                  //           width: double.infinity,
-                  //           height: 200,
-                  //           child: ListView.builder(
-                  //             itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
-                  //             scrollDirection: Axis.horizontal,
-                  //             shrinkWrap: true,
-                  //             itemBuilder: ((context, index) {
-                  //               return TCBox(
-                  //                 bld: BoxTCLabelData(
-                  //                   id: _Tc[index].id,
-                  //                   image: _Tc[index].image,
-                  //                   name: _Tc[index].name,
-                  //                   logo: _Tc[index].logo,
-                  //                 ),
-                  //               );
-                  //             }),
-                  //           ),
-                  //         );
-                  //       } else {
-                  //         return Container(
-                  //             width: double.infinity,
-                  //             height: 200,
-                  //             child: const Center(
-                  //                 child: CircularProgressIndicator()));
-                  //       }
-                  //     }),
+                          return Container(
+                            width: double.infinity,
+                            height: 200,
+                            child: ListView.builder(
+                              itemCount: (_Tc.length > 7) ? 7 : _Tc.length,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: ((context, index) {
+                                return TCBox(
+                                  bld: BoxTCLabelData(
+                                    id: _Tc[index].id,
+                                    image: _Tc[index].image,
+                                    name: _Tc[index].name,
+                                    logo: _Tc[index].logo,
+                                  ),
+                                );
+                              }),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                              width: double.infinity,
+                              height: 200,
+                              child: const Center(
+                                  child: CircularProgressIndicator()));
+                        }
+                      }),
 
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  //     child: Row(
-                  //       children: [
-                  //         //////////////////////////////////////////////////
-                  //         ///
-                  //         for (int i = 0;
-                  //             i <
-                  //                 ((trainingCenterBLDSmall.length < 7)
-                  //                     ? trainingCenterBLDSmall.length
-                  //                     : 7);
-                  //             i++)
-                  //           TCBox(
-                  //             bld: trainingCenterBLDSmall[i],
-                  //           ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      child: Row(
+                        children: [
+                          //////////////////////////////////////////////////
+                          ///
+                          for (int i = 0;
+                              i <
+                                  ((trainingCenterBLDSmall.length < 7)
+                                      ? trainingCenterBLDSmall.length
+                                      : 7);
+                              i++)
+                            TCBox(
+                              bld: trainingCenterBLDSmall[i],
+                            ),
 
-                  //         RoundedButton(
-                  //           icon: Icon(
-                  //             (languageType == 0)
-                  //                 ? Icons.keyboard_arrow_left
-                  //                 : Icons.keyboard_arrow_right,
-                  //             size: 40,
-                  //             color: Colors.white,
-                  //           ),
-                  //           onPressed: () {
-                  //             Navigator.of(context).push(
-                  //               ScreenController()
-                  //                   .createRoute(const ShowTC(), 3),
-                  //             );
-                  //           },
-                  //           color: const Color(0xff1776e0),
-                  //           size: 80,
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                          RoundedButton(
+                            icon: Icon(
+                              (languageType == 0)
+                                  ? Icons.keyboard_arrow_left
+                                  : Icons.keyboard_arrow_right,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                ScreenController()
+                                    .createRoute(const ShowTC(), 3),
+                              );
+                            },
+                            color: const Color(0xff1776e0),
+                            size: 80,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ]
                     //////////////////////////////////////////////////////////////////////////////////
                     ///

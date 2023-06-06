@@ -40,14 +40,14 @@ class _AddTrainerState extends State<AddTrainer> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            // Container(
-            //   width: MediaQuery.of(context).size.width / 1.5,
-            //   height: 270,
-            //   child: Image.asset(
-            //     "Assets/Images/techny-artificial-intelligence-on-tablet-screen.gif",
-            //     fit: BoxFit.contain,
-            //   ),
-            // ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              height: 270,
+              child: Image.asset(
+                "Assets/Images/juicy-ai-person-detection-slash-face-id.png",
+                fit: BoxFit.contain,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(

@@ -3,8 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/AllTrainingCenterData.dart';
 
 import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
+import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
-import 'package:coursati/Widgets/TrainingCenter/ShowAllTrainersPersonal.dart';
+import 'package:coursati/Widgets/TrainingCenter/AllPersonalTrainers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
             if (snapshot.data != null) {
               AllTrainingCenterData Data =
                   AllTrainingCenterData.fromJson(snapshot.data);
+
               return Scaffold(
                 floatingActionButton: Align(
                     alignment: AlignmentDirectional.bottomStart,
@@ -354,7 +356,9 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     ScreenController().createRoute(
-                                        const AllPersonalCourse(), 1),
+                                        AllPersonalCourse(
+                                            tcID: Data.tcData!.id),
+                                        1),
                                   );
                                 },
                                 size: 80,
@@ -415,7 +419,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                               style:
                                                   const TextStyle(fontSize: 20),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
                                             Text(
@@ -436,7 +440,10 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       child: Stack(
                                         children: [
                                           Blur(
-                                            blur: 3,
+                                            blur: 2,
+                                            blurColor: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(200),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 borderRadius:
@@ -448,16 +455,13 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 14, 20, 14),
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
                                                   children: [
                                                     Text(
                                                       Data.trainers[3].id,
                                                       style: const TextStyle(
                                                           fontSize: 20),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 20,
                                                     ),
                                                     Text(
@@ -472,21 +476,12 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                           ),
                                           Center(
                                             child: OutlinedButton(
-                                                child: const Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      20, 8, 20, 8),
-                                                  child: Text(
-                                                    "more",
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  ),
-                                                ),
                                                 onPressed: () {
-                                                  Navigator.of(context).push(
-                                                      ScreenController()
-                                                          .createRoute(
-                                                              const ShowAllTrainerPersonal(),
-                                                              1));
+                                                  // Navigator.of(context).push(
+                                                  //     ScreenController()
+                                                  //         .createRoute(
+                                                  //             const AllPersonalTrainers(),
+                                                  //             1));
                                                 },
                                                 style: OutlinedButton.styleFrom(
                                                     elevation: 3,
@@ -499,7 +494,16 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        200)))),
+                                                                        200))),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      20, 8, 20, 8),
+                                                  child: Text(
+                                                    "more",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                )),
                                           )
                                         ],
                                       ),
@@ -606,7 +610,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                     ),
                                     Text(
                                       Data.tcData!.rating.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Color(0xff1776e0),
                                           fontSize: 18),
                                     ),
@@ -626,10 +630,10 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                 ),
               );
             } else {
-              return Center(child: Text("Your request took to long"));
+              return const Center(child: Text("Your request took to long"));
             }
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

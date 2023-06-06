@@ -43,18 +43,19 @@ dependencies:
   firebase_messaging: ^14.6.1
   flutter:
     sdk: flutter
-  flutter_geocoder: ^0.2.2-nullsafety
+  flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.2.19
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.5
   fluttertoast: ^8.2.1
+  geocoder2: ^1.4.0
   google_maps_flutter: ^2.2.6
   image_picker: ^0.8.7+4
   internet_popup: ^1.0.8+5
   intl: ^0.17.0
-  json_annotation: ^4.1.0
-  json_serializable: ^5.0.0
+  json_annotation: ^4.8.0
+
   multi_select_flutter: ^4.1.3
   path_provider: ^2.0.14
   provider: ^6.0.5
@@ -186,6 +187,26 @@ flutter_native_splash:
   #info_plist_files:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "Assets/Icons/Logo_empty.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "Assets/Icons/Logo_empty.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "Assets/Icons/Logo_empty.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "Assets/Icons/Logo_empty.png"
+
 
 dev_dependencies:
   flutter_lints: ^2.0.0

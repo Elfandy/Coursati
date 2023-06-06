@@ -1,23 +1,23 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
-import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:coursati/Screens/SubScreen/CourseInfoPage.dart';
+import 'package:coursati/Widgets/Home/BoxCourseLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../../Classes/GlobalVariables.dart';
+import '../../Screens/SubScreen/TrainingCenterInfoPage.dart';
 import '../../Services/ScreenController.dart';
-import 'BoxCourseLabelPersonal.dart';
-import 'CourseDetailedInfo.dart';
 
-class PersonalCourseBox extends StatefulWidget {
-  const PersonalCourseBox({super.key, required this.bld});
+class CourseBox extends StatefulWidget {
+  const CourseBox({super.key, required this.bld});
 
   final BoxCourseLabelData bld;
 
   @override
-  State<PersonalCourseBox> createState() => _PersonalCourseBoxState();
+  State<CourseBox> createState() => _CourseBoxState();
 }
 
-class _PersonalCourseBoxState extends State<PersonalCourseBox>
-    with TickerProviderStateMixin {
+class _CourseBoxState extends State<CourseBox> with TickerProviderStateMixin {
   late AnimationController _boxAnimationController;
 
   @override
@@ -41,13 +41,13 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
         child: Container(
           margin: const EdgeInsets.fromLTRB(15, 5, 0, 20),
           width: (MediaQuery.of(context).size.width / 2.3),
-          height: (MediaQuery.of(context).size.height / 4),
+          height: (MediaQuery.of(context).size.height / 3.6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),
           child: Material(
             elevation: 5,
-            shadowColor: (isDark) ? const Color(0xff1776e0) : Colors.grey,
+            shadowColor: Color(0xff1776e0),
             borderRadius: BorderRadius.circular(20),
             child: Container(
               decoration: BoxDecoration(
@@ -74,7 +74,9 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
                   progressIndicatorBuilder: (context, url, progress) => Center(
                     child: CircularProgressIndicator(value: progress.progress),
                   ),
-                  imageUrl: widget.bld.image!,
+                  imageUrl: widget.bld.image != null
+                      ? (/*serverStorage + */ widget.bld.image!)
+                      : "https://images.unsplash.com/photo-1610056494052-6a4f83a8368c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
                   imageBuilder: (context, imageProvider) => Ink(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -87,33 +89,12 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Align(
-                            alignment: AlignmentDirectional.topStart,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(3.0),
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color(0x44000000)),
-                                child: Center(
-                                  child: Text(
-                                    widget.bld.id.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                            )),
-                        Spacer(),
                         Row(
                           children: [
                             const SizedBox(
                               width: 10,
                             ),
-                            BoxCourseLabelPersonal(bld: widget.bld),
+                            BoxCourseLabel(bld: widget.bld),
                           ],
                         ),
                         const SizedBox(
@@ -138,8 +119,8 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      CourseDetailedInfo(id: widget.bld.id!),
-      1,
+      CourseInfoPage(id: widget.bld.name!),
+      2,
     ));
 
     /////////////////////////////////////////////////////////////////////

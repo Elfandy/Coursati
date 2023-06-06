@@ -273,7 +273,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                         //               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         //               //? this is the tags place of the center
                         //             ]))
-                            // : Container(),
+                        // : Container(),
                         //* Second try of the tags place
 
                         (trainingCenter.tags.isNotEmpty)
@@ -631,7 +631,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
       description: """""",
       email: "",
       id: "0",
-      location: locations[1],
+      location: locations[0],
       name: "",
       open: const TimeOfDay(hour: 0, minute: 0),
       phoneNumber: "",
