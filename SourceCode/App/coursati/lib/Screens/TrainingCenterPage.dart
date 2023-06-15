@@ -45,26 +45,6 @@ class _TrainingCenterState extends State<TrainingCenter> {
             if (snapshot.data != null) {
               trainingCenter = BoxTCLabelData.fromJson(snapshot.data);
               return Scaffold(
-                floatingActionButton: Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 40, left: 40, bottom: 15),
-                      child: FloatingActionButton(
-                        backgroundColor: Color(0xee1776e0),
-                        heroTag: "add",
-                        onPressed: () {
-                          Navigator.of(context).push(
-                              ScreenController().createRoute(AddBranch(), 1));
-                        },
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                        child: const Icon(
-                          Icons.add,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )),
                 body: Stack(
                   children: [
                     Container(
@@ -110,7 +90,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                           padding:
                                               const EdgeInsets.only(top: 30),
                                           child: Text(
-                                            " ${(languageType == 0) ? "مركز ${trainingCenter.name}" : "${trainingCenter.name} Center"}",
+                                            " ${(languageType == 0) ? " ${trainingCenter.name}" : "${trainingCenter.name} "}",
                                             style: const TextStyle(
                                               fontSize: 32,
                                             ),
@@ -345,6 +325,35 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                               ),
                                             )
                                         ]),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Color.fromARGB(160, 23, 117, 224),
+                                          fixedSize: Size(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.2,
+                                              80),
+                                          shape: ContinuousRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40))),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            ScreenController()
+                                                .createRoute(AddBranch(), 1));
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ]),
                         ),

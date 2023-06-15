@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:coursati/Classes/Location.dart';
 import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
+import 'package:coursati/Widgets/TrainingCenter/SetLoationMap.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:geocoder2/geocoder2.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class TrainingCenterParsonalInfo extends StatefulWidget {
@@ -27,6 +32,7 @@ class _TrainingCenterParsonalInfoState
       _website = TextEditingController(),
       _facebook = TextEditingController(),
       _discription = TextEditingController();
+  late Locations locationData;
 
   TextEditingController _nameEdit = TextEditingController(),
       _emailEdit = TextEditingController(),
@@ -38,6 +44,7 @@ class _TrainingCenterParsonalInfoState
       _websiteEdit = TextEditingController(),
       _facebookEdit = TextEditingController(),
       _discriptionEdit = TextEditingController();
+  late Locations locationDataEdit;
 
   List<Tag> _selectedTags = [];
   bool isEditing = false;
@@ -51,10 +58,13 @@ class _TrainingCenterParsonalInfoState
       _whatsApp.text = widget.tc.whatsAppNum;
       _closeTime.text = "${widget.tc.close.hour}:${widget.tc.close.minute}";
       _openTime.text = "${widget.tc.open.hour}:${widget.tc.open.minute}";
-      _location.text = widget.tc.location.city!;
+
       _website.text = widget.tc.website;
       _facebook.text = widget.tc.facebook;
       _discription.text = widget.tc.description;
+      locationData = widget.tc.location;
+      locationDataEdit = locationData;
+      _location.text = locationData.city!;
     });
     super.initState();
   }
@@ -78,7 +88,8 @@ class _TrainingCenterParsonalInfoState
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text((languageType == 0) ? "معلومات المركز" : "Center Info"),
+          title: Text((languageType == 0) ? "معلومات المركز" : "Center Info",
+              style: TextStyle(color: isDark ? Colors.white : Colors.black)),
         ),
         floatingActionButton: (!isEditing)
             ? FloatingActionButton(
@@ -267,7 +278,7 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
-                      readOnly: !isEditing,
+                      readOnly: true,
                       controller: !isEditing ? _location : _locationEdit,
                       decoration: InputDecoration(
                         label:
@@ -276,6 +287,45 @@ class _TrainingCenterParsonalInfoState
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
+                      onTap: () {
+                        if (isEditing) {
+                          setState(() {
+                            Navigator.of(context)
+                                .push(ScreenController()
+                                    .createRoute(SetLocationMap(), 0))
+                                .then(
+                              (value) {
+                                if (value != null) {
+                                  if (value.latitude != 0 &&
+                                      value.longitude != 0) {
+                                    locationDataEdit.lat = value.latitude;
+                                    locationDataEdit.lng = value.longitude;
+
+                                    //!!!!!
+                                    //** This is the code for getting the name of the city out of the coodinates of the Training center */
+                                    fetchCityName(locationDataEdit.lat!,
+                                            locationDataEdit.lng!)
+                                        .then(
+                                      (value) {
+                                        locationDataEdit.city =
+                                            value == "null" ? "" : value;
+                                        _locationEdit.text =
+                                            locationDataEdit.city!;
+                                      },
+                                    );
+                                  } else {
+                                    _location.text = "";
+                                  }
+                                }
+                              },
+                            );
+                          });
+                        }
+                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^[a-zA-Z\u0621-\u064A]+'))
+                      ],
                     ),
                   ),
                 ),
@@ -402,30 +452,49 @@ class _TrainingCenterParsonalInfoState
                         ))
                     : Container(),
                 isEditing
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                fixedSize: Size(120, 40)),
-                            child: Text((languageType == 0) ? "تعديل" : "Edit"),
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                isEditing = !isEditing;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                fixedSize: Size(120, 40)),
-                            child:
-                                Text((languageType == 0) ? "إلغاء" : "Cancel"),
-                          )
-                        ],
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(120, 40)),
+                              child: Text(
+                                (languageType == 0) ? "تعديل" : "Edit",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  isEditing = !isEditing;
+                                  _nameEdit.text = _name.text;
+                                  _emailEdit.text = _email.text;
+                                  _phoneNumberEdit.text = _phoneNumber.text;
+                                  _whatsAppEdit.text = _whatsApp.text;
+                                  _closeTimeEdit.text = _closeTime.text;
+                                  _openTimeEdit.text = _openTime.text;
+                                  _locationEdit.text = _location.text;
+                                  _websiteEdit.text = _website.text;
+                                  _facebookEdit.text = _facebook.text;
+                                  _discriptionEdit.text = _discription.text;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(120, 40)),
+                              child: Text(
+                                (languageType == 0) ? "إلغاء" : "Cancel",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     : Container(),
                 !isEditing
@@ -490,6 +559,17 @@ class _TrainingCenterParsonalInfoState
         ),
       ),
     );
+  }
+
+  Future<String> fetchCityName(double lat, double lng) async {
+    GeoData address = await Geocoder2.getDataFromCoordinates(
+        language: "en",
+        latitude: lat,
+        longitude: lng,
+        googleMapApiKey: "AIzaSyBbg24GYIH8LvMFHWMkK7QGqLcsMMk0n3w");
+
+    var first = address.address;
+    return first.toString();
   }
 
   Future DeleteTC(int id) async {}

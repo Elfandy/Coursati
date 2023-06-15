@@ -310,7 +310,11 @@ class _SearchPageState extends State<SearchPage> {
                               BoxTCLabelData.fromJson(SearchJson));
                         }
                       }
-
+                      _TrainingCenterList.forEach(
+                        (element) {
+                          print(element);
+                        },
+                      );
                       return SearchResult();
                     } else {
                       return CircularProgressIndicator();
@@ -365,8 +369,37 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  // Future<List> fetchSearch() async {
+  //   var url = "search/multy";
+  //   Map search = {};
+  //   String jsonTags = json.encode(_selectedTags);
+  //   String jsonType = json.encode(_selectedTypes);
+  //   List SearchJson = [];
+  //   Map<String, dynamic> listJson = {
+  //     "Search": _search.text,
+  //     "Tags": _selectedTags,
+  //     "Types": _selectedTypes
+  //   };
+
+  //   try {
+  //     _TrainingCenterList.clear();
+  //     _CourseList.clear();
+  //     var response = await dioTestApi.post(
+  //       url,
+  //       data: json.encode(listJson),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       SearchJson = response.data["search"];
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return SearchJson;
+  // }
+
   Future<List> fetchSearch() async {
-    var url = "search/multy";
+    var url = "Search/";
     Map search = {};
     String jsonTags = json.encode(_selectedTags);
     String jsonType = json.encode(_selectedTypes);

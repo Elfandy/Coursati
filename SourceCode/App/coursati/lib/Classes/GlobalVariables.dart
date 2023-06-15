@@ -29,8 +29,6 @@ List<Tag> _tagTypeList = [
   Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
 ];
 String serverStorage = "http://192.168.43.128:8000/storage/";
-
-// String onlineServer = "http://192.168.2.103:8000/api/";
 String onlineServer = "http://192.168.43.128:8000/api/";
 
 String apiTestServer = "https://apimocha.com/coursatitest/";

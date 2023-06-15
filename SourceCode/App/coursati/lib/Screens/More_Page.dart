@@ -1,10 +1,9 @@
-import 'package:coursati/Screens/SubScreen/About.dart';
+import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Screens/SubScreen/Account.dart';
 import 'package:coursati/Screens/SubScreen/Settings.dart';
-import 'package:coursati/Services/Animations.dart';
 import 'package:coursati/Widgets/More/OptionButton.dart';
 import 'package:flutter/material.dart';
-import '../Classes/GlobalVariables.dart';
+
 import '../Services/ScreenController.dart';
 import '../Widgets/More/AvatarGuestMore.dart';
 import '../Widgets/More/AvatarMore.dart';
@@ -103,7 +102,9 @@ class _MorePageState extends State<MorePage> {
                                 : "Coursati is a platform for collecting and viewing the Training centers and there courses in one platform to help eas the search for the right course to enroll in",
                             softWrap: true,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: (isDark) ? Colors.white : Colors.black),
                           ),
                         ],
                         applicationIcon: Image.asset(

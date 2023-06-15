@@ -33,3 +33,20 @@ class Trainer {
 //   static final String discription = "discription";
 //   static final String rating = "rating";
 // }
+
+class BLDTrainer {
+  BLDTrainer({
+    required this.id,
+    required this.name,
+  });
+  String id;
+  String name;
+
+  BLDTrainer.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'];
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
+}

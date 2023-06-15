@@ -1,17 +1,13 @@
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
-
 import 'package:flutter/services.dart';
-
 import 'package:geocoder2/geocoder2.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 import '../../Classes/Location.dart';
 import '../../Classes/TagData.dart';
-import '../../Classes/TrainingCenter.dart';
 import '../../Services/ScreenController.dart';
 import '../../Widgets/TrainingCenter/SetLoationMap.dart';
 
@@ -492,6 +488,9 @@ class _AddBranchState extends State<AddBranch> {
                 },
                 cancelText: Text((languageType == 0) ? "إلغاء" : "Cancel"),
                 confirmText: Text((languageType == 0) ? "موافق" : "OK"),
+                selectedItemsTextStyle: TextStyle(color: Colors.white),
+                itemsTextStyle: TextStyle(color: Colors.white),
+                selectedColor: Color(0xff1776e0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
@@ -507,21 +506,21 @@ class _AddBranchState extends State<AddBranch> {
                 ),
               ),
               //?????????????????????????????????????????
-              Wrap(
-                children: [
-                  for (var item in _selectTagsNum)
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: TagChip(
-                        passiveBackgroundColor: (isDark)
-                            ? const Color.fromRGBO(250, 250, 250, 0.5)
-                            : const Color.fromRGBO(200, 200, 200, 0.5),
-                        selected: [],
-                        tag: tags[item],
-                      ),
-                    )
-                ],
-              ),
+              // Wrap(
+              //   children: [
+              //     for (var item in _selectTagsNum)
+              //       Padding(
+              //         padding: const EdgeInsets.all(4.0),
+              //         child: TagChip(
+              //           passiveBackgroundColor: (isDark)
+              //               ? const Color.fromRGBO(250, 250, 250, 0.5)
+              //               : const Color.fromRGBO(200, 200, 200, 0.5),
+              //           selected: [],
+              //           tag: tags[item],
+              //         ),
+              //       )
+              //   ],
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Row(
@@ -560,7 +559,9 @@ class _AddBranchState extends State<AddBranch> {
                     style: ElevatedButton.styleFrom(
                         fixedSize:
                             Size(MediaQuery.of(context).size.width / 1.5, 40)),
-                    onPressed: () {},
+                    onPressed: () {
+                      SendData();
+                    },
                     child: Text(
                       (languageType == 0) ? "أضف فرع" : "Add branch",
                       style: TextStyle(color: Colors.white),
@@ -593,5 +594,25 @@ class _AddBranchState extends State<AddBranch> {
     return first.toString();
   }
 
-  Future SendData(TrainingCenter tc) async {}
+  Future SendData() async {
+    var dio = Dio();
+    var url = '';
+    if (_image != null) {
+      String filename = _image!.path.split('/').last;
+
+      FormData data = FormData.fromMap({
+        'key': 'a61a05535acdc0725e9dd85d8a97d567',
+        'image': await MultipartFile.fromFile(_image!.path, filename: filename),
+        'name': '$filename'
+      });
+
+      var response = await dio.post(
+        "https://api.imgbb.com/1/upload",
+        data: data,
+        onSendProgress: (count, total) {
+          print("$count . $total");
+        },
+      );
+    }
+  }
 }

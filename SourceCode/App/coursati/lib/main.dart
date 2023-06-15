@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:coursati/firebase_options.dart';
+import 'package:cr_file_saver/file_saver.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:coursati/Services/Controller/FileHandle.dart';
@@ -56,6 +57,8 @@ Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   checkServer().then((value) {
 //       if (value == 1) {
+    CRFileSaver.requestWriteExternalStoragePermission();
+
     FileHandle().readConfig().then((value) {
       if (value != null) {
         FileHandle().extractConfigData(value);

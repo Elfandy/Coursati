@@ -33,38 +33,13 @@ class _HomePageState extends State<HomePage> {
 
 //? ------------------------------------------------------------------------------------------
 
-  Future<List<BoxCourseLabelData>> fetchCourses() async {
-    var url = "/Course1";
-    List<BoxCourseLabelData> courses = [];
-    try {
-      var response = await dioTestApi.get(url);
-
-      if (response.statusCode == 200) {
-        List<dynamic> coursesJson = response.data['courses'];
-
-        for (var coursesJson in coursesJson) {
-          courses.add(BoxCourseLabelData.fromJson(coursesJson));
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print("courses error");
-        print(e);
-      }
-    }
-    return courses;
-  }
-
   // Future<List<BoxCourseLabelData>> fetchCourses() async {
-  //   var url = "/Courses/NewCourses";
+  //   var url = "/Course1";
   //   List<BoxCourseLabelData> courses = [];
   //   try {
   //     var response = await dioTestApi.get(url);
 
-  //     print(response);
   //     if (response.statusCode == 200) {
-  //       print(response.data);
-
   //       List<dynamic> coursesJson = response.data['courses'];
 
   //       for (var coursesJson in coursesJson) {
@@ -80,28 +55,32 @@ class _HomePageState extends State<HomePage> {
   //   return courses;
   // }
 
-  Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
-    var url = "/TrainingCenter1";
-    List<BoxTCLabelData> tC = [];
-
+  Future<List<BoxCourseLabelData>> fetchCourses() async {
+    var url = "Courses/NewCourses";
+    List<BoxCourseLabelData> courses = [];
     try {
       var response = await dioTestApi.get(url);
-      if (response.statusCode == 200) {
-        List<dynamic> tCJson = response.data["tc"];
 
-        for (var tCJson in tCJson) {
-          tC.add(BoxTCLabelData.fromJson(tCJson));
+      if (response.statusCode == 200) {
+        print(response.data);
+
+        List<dynamic> coursesJson = response.data['courses'];
+
+        for (var coursesJson in coursesJson) {
+          courses.add(BoxCourseLabelData.fromJson(coursesJson));
         }
       }
     } catch (e) {
-      print("trainingcenter error");
-      print(e);
+      if (kDebugMode) {
+        print("courses error");
+        print(e);
+      }
     }
-    return tC;
+    return courses;
   }
 
   // Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
-  //   var url = "/TrainingCenters";
+  //   var url = "/TrainingCenter1";
   //   List<BoxTCLabelData> tC = [];
 
   //   try {
@@ -119,6 +98,28 @@ class _HomePageState extends State<HomePage> {
   //   }
   //   return tC;
   // }
+
+  Future fetch_Data_from_server() async {}
+
+  Future<List<BoxTCLabelData>> fetchTrainingCenter() async {
+    var url = "/TrainingCenters";
+    List<BoxTCLabelData> tC = [];
+
+    try {
+      var response = await dioTestApi.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> tCJson = response.data["tc"];
+
+        for (var tCJson in tCJson) {
+          tC.add(BoxTCLabelData.fromJson(tCJson));
+        }
+      }
+    } catch (e) {
+      print("trainingcenter error");
+      print(e);
+    }
+    return tC;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,9 +184,7 @@ class _HomePageState extends State<HomePage> {
                           width: 10,
                         ),
                         Text(
-                          (languageType == 0)
-                              ? "الدورات الرائجة"
-                              : "Popular Courses",
+                          (languageType == 0) ? "الدورات التدريبية" : "Courses",
                           style: TextStyle(
                             shadows: const [
                               Shadow(
@@ -368,7 +367,6 @@ class _HomePageState extends State<HomePage> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           List<BoxTCLabelData> _Tc = snapshot.data!;
-
                           return Container(
                             width: double.infinity,
                             height: 200,

@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-
+import 'package:cr_file_saver/file_saver.dart';
+import 'package:cr_file_saver/generated/assets.dart';
 import '../../Classes/GlobalVariables.dart';
 
 class FileHandle {

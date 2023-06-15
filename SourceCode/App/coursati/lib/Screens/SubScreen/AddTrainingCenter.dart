@@ -828,11 +828,12 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                             Text((languageType == 0) ? "إلغاء" : "Cancel"),
                         confirmText: Text((languageType == 0) ? "موافق" : "OK"),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(
-                                color: isDark
-                                    ? Color(0xff424242)
-                                    : Color(0xffdddddd))),
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                            color:
+                                isDark ? Color(0xff424242) : Color(0xffdddddd),
+                          ),
+                        ),
                         dialogHeight: MediaQuery.of(context).size.height / 2,
                         dialogWidth: MediaQuery.of(context).size.width / 2,
                         title: Text(

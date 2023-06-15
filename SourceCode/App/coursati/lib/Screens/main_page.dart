@@ -144,7 +144,7 @@ class _MainPageState extends State<MainPage> {
     try {
       var response = await dioTestApi.get(url);
       if (response.statusCode == 200) {
-        List<dynamic> taglist = response.data["tags"];
+        List<dynamic> taglist = response.data;
         for (var tag in taglist) {
           tags.add(Tag.fromJson(tag));
         }

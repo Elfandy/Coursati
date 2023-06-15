@@ -1,11 +1,13 @@
 import 'package:coursati/Classes/BoxCourseLabelData.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:coursati/Classes/Trainer.dart';
+import 'package:coursati/Widgets/TrainingCenter/CourseDetailed/CourseDetailedfetchData.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../Services/ScreenController.dart';
 import 'BoxCourseLabelPersonal.dart';
-import 'CourseDetailedInfo.dart';
+import 'CourseDetailed/CourseDetailedInfo.dart';
 
 class PersonalCourseBox extends StatefulWidget {
   const PersonalCourseBox({super.key, required this.bld});
@@ -137,10 +139,13 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
     _boxAnimationController.forward().then((value) => {
           _boxAnimationController.reverse(),
         });
-    Navigator.of(context).push(ScreenController().createRoute(
-      CourseDetailedInfo(id: widget.bld.id!),
-      1,
-    ));
+
+    await getAllTrainers(id: widget.bld.id).then((value) {
+      Navigator.of(context).push(ScreenController().createRoute(
+        CourseDetailedfetchData(id: widget.bld.id!, trainers: value),
+        1,
+      ));
+    });
 
     /////////////////////////////////////////////////////////////////////
     ///
@@ -152,5 +157,23 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
     ///
     ///
     ////////////////////////////////////////////////////////////////////
+  }
+
+  Future<List<BLDTrainer>> getAllTrainers({required id}) async {
+    var url = "/TrainersCourse";
+    try {
+      List<dynamic> list;
+      List<BLDTrainer> trainers = [];
+      var response = await dioTestApi.post(url, data: {"id": id});
+      if (response.statusCode == 200) {
+        list = response.data;
+        list.forEach((element) {
+          trainers.add(BLDTrainer.fromJson(element));
+        });
+
+        return trainers;
+      }
+    } catch (ex) {}
+    return [];
   }
 }
