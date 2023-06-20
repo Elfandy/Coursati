@@ -6,6 +6,7 @@ import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
 import 'package:coursati/Widgets/TrainingCenter/AllPersonalTrainers.dart';
+import 'package:coursati/Widgets/TrainingCenter/TrainerDetiled/TrainerDetailedfetchData.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ import '../../Widgets/TrainingCenter/ADDCourse/AddCourse.dart';
 import '../../Widgets/TrainingCenter/ADDCourse/ContainerForCourse.dart';
 import '../../Widgets/TrainingCenter/AllPersonalCourse.dart';
 import '../../Widgets/TrainingCenter/PersonalCourseBox.dart';
-import '../../Widgets/TrainingCenter/TrainerDetailedInfo.dart';
+import '../../Widgets/TrainingCenter/TrainerDetiled/TrainerDetailedInfo.dart';
 import '../../Widgets/TrainingCenter/TrainingCenterPersonalInfo.dart';
 
 class TrainingCenterPersonal extends StatefulWidget {
@@ -406,7 +407,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       onTap: () {
                                         Navigator.of(context).push(
                                             ScreenController().createRoute(
-                                                const TrainerDetailedInfo(),
+                                                TrainerDetailedFetchData(
+                                                    id: Data.trainers[i].id),
                                                 1));
                                       },
                                       child: Padding(

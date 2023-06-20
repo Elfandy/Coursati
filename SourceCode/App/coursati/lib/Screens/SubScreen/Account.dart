@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  double Boxsize = 400;
+  double Boxsize = 270;
   Widget _name = Align(
         alignment: AlignmentDirectional.centerStart,
         child: Text(
@@ -87,7 +88,14 @@ class _AccountPageState extends State<AccountPage> {
       _newPass2 = TextEditingController();
   int? _editGender = user.gender;
   File? _image;
-  ImageProvider _imageProv = CachedNetworkImageProvider(user.image);
+  String _imageEdit = user.image;
+  ImageProvider? _imageProv;
+  @override
+  void initState() {
+    super.initState();
+    _imageProv = CachedNetworkImageProvider(_imageEdit);
+  }
+
   bool _newPassError = false, _oldPassError = false;
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //**** Start of build function */
@@ -125,7 +133,9 @@ class _AccountPageState extends State<AccountPage> {
                   height: 20,
                 ),
                 CircleAvatar(
-                  backgroundImage: _imageProv,
+                  backgroundImage: _isEdit
+                      ? _imageProv
+                      : CachedNetworkImageProvider(user.image.trim()),
                   radius: 100,
                   child: _isEdit
                       ? Align(
@@ -149,7 +159,7 @@ class _AccountPageState extends State<AccountPage> {
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //***   This is the grid view for the info */
                 Container(
-                  height: (user.phoneNumber == '') ? (Boxsize - 170) : Boxsize,
+                  height: (user.personalID == '') ? Boxsize : (Boxsize + 50),
                   child: GridView.count(
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
@@ -581,21 +591,30 @@ class _AccountPageState extends State<AccountPage> {
                     height: 60,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(),
-                      onPressed: () {
-                        setState(() {
-                          user = UserData(
-                              name: "",
-                              image: "",
-                              token: "",
-                              notifications: 0,
-                              password: "",
-                              birthDate: "",
-                              email: "",
-                              gender: 0,
-                              id: 0);
-                          FileHandle().writeConfig(ConfigSave);
-                          ScreenController().restartApp(context);
-                        });
+                      onPressed: () async {
+                        try {
+                          await dioTestApi
+                              .delete('auth/logout',
+                                  options: Options(headers: {
+                                    'Authorization': "Bearer ${user.token}"
+                                  }))
+                              .then((value) {});
+                          setState(() {
+                            user = UserData(
+                                name: "",
+                                image: "",
+                                token: "",
+                                notifications: 0,
+                                password: "",
+                                birthDate: "",
+                                email: "",
+                                gender: 0,
+                                id: 0);
+
+                            FileHandle().writeConfig(ConfigSave);
+                            ScreenController().restartApp(context);
+                          });
+                        } catch (ex) {}
                       },
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

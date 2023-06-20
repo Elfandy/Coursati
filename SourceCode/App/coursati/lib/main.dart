@@ -10,7 +10,7 @@ import 'Classes/GlobalVariables.dart';
 import 'Screens/main_page.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 import 'Widgets/ErrorServer.dart';
 // core Flutter primitives
 import 'package:flutter/foundation.dart';
@@ -58,6 +58,7 @@ Future<void> main() async {
 //   checkServer().then((value) {
 //       if (value == 1) {
     CRFileSaver.requestWriteExternalStoragePermission();
+    Permission.location;
 
     FileHandle().readConfig().then((value) {
       if (value != null) {
@@ -65,7 +66,7 @@ Future<void> main() async {
       } else {
         FileHandle().writeConfig(ConfigSave);
       }
-      runApp(MainApp());
+      runApp(const MainApp());
     });
 
     //  }else{ runApp(ServerError(error: value));}});

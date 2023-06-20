@@ -39,7 +39,7 @@ class _MorePageState extends State<MorePage> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: (user.token != "")
                     ? (MediaQuery.of(context).size.height / 2.6)
                     : (MediaQuery.of(context).size.height / 3.3),
@@ -52,7 +52,7 @@ class _MorePageState extends State<MorePage> {
               ),
             ],
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Column(
               children: [

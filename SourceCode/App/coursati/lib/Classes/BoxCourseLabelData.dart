@@ -1,3 +1,5 @@
+import 'package:coursati/Classes/GlobalVariables.dart';
+
 class BoxCourseLabelData {
   BoxCourseLabelData(
       {required this.location_in,
@@ -12,7 +14,7 @@ class BoxCourseLabelData {
   BoxCourseLabelData.fromJson(Map<String, dynamic> json) {
     id = json["id"].toString();
     name = json["name"];
-    image = json["image"];
+    image = serverStorage + json["image"];
     location_in = json["location_in"];
   }
 

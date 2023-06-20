@@ -28,13 +28,15 @@ List<Tag> _tagTypeList = [
   Tag(id: 1, name_ar: "دورة", name_en: "Course"),
   Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
 ];
-String serverStorage = "http://192.168.43.128:8000/storage/";
-String onlineServer = "http://192.168.43.128:8000/api/";
+// String serverStorage = "";
+String ser = "192.168.43.98";
+String serverStorage = "http://$ser/coursatidash/public/storage/";
+String onlineServer = "http://$ser/coursatidash/public/api/";
 
 String apiTestServer = "https://apimocha.com/coursatitest/";
 // String apiTestServer = "https://192.168.43.128:8000/api/";
 final Dio dioTestApi = Dio(BaseOptions(
-  baseUrl: apiTestServer,
+  baseUrl: onlineServer,
   contentType: 'application/json',
 ));
 String deviceID = "";
@@ -90,32 +92,31 @@ int picker = 0;
 //     id: 4893123,
 //     trainingCenterId: 0091);
 
-UserData user =
+UserData user = UserData(
+    name: "",
+    image: "",
+    token: "",
+    notifications: 0,
+    password: "",
+    birthDate: "",
+    email: "",
+    gender: 0,
+    id: 0);
 // UserData(
-//     name: "",
-//     image: "",
-//     token: "",
-//     notifications: 0,
-//     password: "",
-//     birthDate: "",
-//     email: "",
+//     name: "ريان",
+//     image:
+//         "https://images.unsplash.com/photo-1683580735117-5432c7d9e001?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+//     token: "g45g45g45g45g45g45g4g",
+//     notifications: 120,
+//     password: "123",
+//     birthDate: "2000/5/2",
+//     email: "ryan@gmail.com",
 //     gender: 0,
-//     id: 0);
-    UserData(
-        name: "ريان",
-        image:
-            "https://images.unsplash.com/photo-1683580735117-5432c7d9e001?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-        token: "g45g45g45g45g45g45g4g",
-        notifications: 120,
-        password: "123",
-        birthDate: "2000/5/2",
-        email: "ryan@gmail.com",
-        gender: 0,
-        id: 4893123,
-        trainingCenterId: 0091,
-        // orginaizationName: "coursati",
-        personalID: "NY6D8DWE",
-        phoneNumber: "0910502646");
+//     id: 4893123,
+//     trainingCenterId: 0091,
+//     // orginaizationName: "coursati",
+//     personalID: "NY6D8DWE",
+//     phoneNumber: "0910502646");
 // UserData(
 //     name: "سالم",
 //     image:

@@ -4,12 +4,12 @@ class Tag {
   String? name_ar, name_en;
 
   Map<String, dynamic> toJson() =>
-      {"id": id, "NameAR": name_ar, "NameEN": name_en};
+      {"id": id, "nameAR": name_ar, "nameEN": name_en};
 
   Tag.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        name_ar = json["NameAR"],
-        name_en = json["NameEN"];
+        name_ar = json["nameAR"],
+        name_en = json["nameEN"];
 }
 
 // class TagFields {

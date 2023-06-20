@@ -32,6 +32,7 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
       lowerBound: 1.0,
       upperBound: 1.03,
     );
+
     super.initState();
   }
 

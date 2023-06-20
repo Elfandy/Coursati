@@ -26,7 +26,6 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
   bool codeCheck = false, _emailCheck = false;
   final TextEditingController _id = TextEditingController(),
       // _companyName = TextEditingController(),
-      _phoneNumber = TextEditingController(),
       _code = TextEditingController(),
       _trainingCenterName = TextEditingController(),
       _email = TextEditingController(),
@@ -78,14 +77,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                 style: ElevatedButton.styleFrom(),
                                 onPressed: (_id.text != '' &&
                                         // _companyName.text != '' &&
-                                        _phoneNumber.text != '' &&
-                                        (_phoneNumber.text.startsWith("091") ||
-                                            _phoneNumber.text
-                                                .startsWith("092") ||
-                                            _phoneNumber.text
-                                                .startsWith("094") ||
-                                            _phoneNumber.text
-                                                .startsWith("095")) &&
+
                                         _trainingCenterName.text != '' &&
                                         _email.text.contains("@") &&
                                         _email.text.indexOf("@") ==
@@ -210,81 +202,6 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                         ),
                       ),
 
-                      Focus(
-                        onFocusChange: (value) {
-                          if (!value) {
-                            setState(
-                              () {
-                                if (!(_phoneNumber.text.startsWith("091") ||
-                                    _phoneNumber.text.startsWith("092") ||
-                                    _phoneNumber.text.startsWith("094") ||
-                                    _phoneNumber.text.startsWith("095"))) {
-                                  _showPersonalPhonenymberErrorMessage = true;
-                                } else {
-                                  _showPersonalPhonenymberErrorMessage = false;
-                                }
-                              },
-                            );
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: TextField(
-                            onTap: () {
-                              if (_phoneNumber.selection ==
-                                  TextSelection.fromPosition(TextPosition(
-                                      offset: _phoneNumber.text.length - 1))) {
-                                _phoneNumber.selection =
-                                    TextSelection.fromPosition(TextPosition(
-                                        offset: _phoneNumber.text.length));
-                              }
-                            },
-                            controller: _phoneNumber,
-                            selectionControls: EmptyTextSelectionControls(),
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            maxLength: 10,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: (_showPersonalPhonenymberErrorMessage)
-                                      ? Colors.red
-                                      : (languageType == 0)
-                                          ? const Color(0xffdddddd)
-                                          : Color(0xff424242),
-                                ),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              counterText: "",
-                              label: Row(children: [
-                                const Icon(
-                                  Icons.phone_android,
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  (languageType == 0)
-                                      ? " رقم الهاتف الشخصي"
-                                      : "Personal phoneNumber",
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const Text("*",
-                                    style: TextStyle(color: Colors.red)),
-                              ]),
-                              border: OutlineInputBorder(
-                                borderSide: const BorderSide(),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       Visibility(
                         visible: _showPersonalPhonenymberErrorMessage,
                         child: Text(
@@ -966,29 +883,6 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           children: [
                             Text(
                               (languageType == 0)
-                                  ? "رقم الهاتف الشخصي:"
-                                  : "Personal phone Number:",
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              _phoneNumber.text,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff1776e0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: Row(
-                          children: [
-                            Text(
-                              (languageType == 0)
                                   ? "اسم مركز التدريب:"
                                   : "Training Center Name:",
                               style: const TextStyle(
@@ -1234,6 +1128,8 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                   if (_index < 1) {
                     _index++;
                   } else {
+                    // TrainingCenter tc = TrainingCenter(description: _description.text,email: _email.text,image: (await multipart_image),);
+                    // SendData();
                     Fluttertoast.showToast(
                         msg: (languageType == 0)
                             ? "تم إرسال الطلب للمراجعة"
@@ -1276,5 +1172,10 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
     return first.toString();
   }
 
-  Future SendData(TrainingCenter tc) async {}
+  Future SendData(TrainingCenter tc) async {
+    var url = "";
+    // try{
+
+    // }
+  }
 }

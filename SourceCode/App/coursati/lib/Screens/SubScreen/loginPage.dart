@@ -27,6 +27,7 @@ class _loginPageState extends State<loginPage> {
   final TextEditingController _loginEmail = TextEditingController();
   final TextEditingController _loginPass = TextEditingController();
   final TextEditingController _passRepeat = TextEditingController();
+  final TextEditingController _phonenumber = TextEditingController();
 
   int _isSelected = 1, _gender = 0, _accountFound = 0, _passOk = 0;
   @override
@@ -136,6 +137,23 @@ class _loginPageState extends State<loginPage> {
                                 text_ar: "البريد الإلكتروني",
                                 text_en: "Email",
                                 textController: _email,
+                              ),
+                              SignupTextFeild(
+                                icon: Icons.phone,
+                                onTap: () {
+                                  if (_phonenumber.selection ==
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _phonenumber.text.length - 1))) {
+                                    _loginEmail.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _phonenumber.text.length));
+                                  }
+                                },
+                                onChange: (value) {},
+                                text_ar: "رقم الهاتف الشخصي",
+                                text_en: "Personal phone number",
+                                textController: _phonenumber,
                               ),
                               SignupTextFeild(
                                 icon: Icons.lock_outline_rounded,
@@ -326,6 +344,7 @@ class _loginPageState extends State<loginPage> {
                             _email.text.trim() != "" &&
                             _name.text.trim() != "" &&
                             _birthDate.text.trim() != "" &&
+                            _phonenumber.text.trim() != "" &&
                             _passOk == 2) {
                           //????????????????????????????????????????????????????????????????
                           // users.add(UserData(
@@ -342,7 +361,8 @@ class _loginPageState extends State<loginPage> {
                               birthdate: _birthDate.text,
                               gender: _gender,
                               name: _name.text,
-                              password: _password.text);
+                              password: _password.text,
+                              phonenum: _phonenumber.text);
                           showDialog(
                             context: context,
                             barrierDismissible: true,
@@ -375,38 +395,44 @@ class _loginPageState extends State<loginPage> {
                           //**** Fetch Token from server */
                           getToken(_loginEmail.text, _loginPass.text)
                               .then((value) {
-                            Map<String, dynamic> userTemp =
-                                json.decode(value.toString());
-                            user.token = userTemp["token"];
-
-                            //**** Fetch credintials */
-                            getCredintials(user.token).then((value) {
-                              Map<String, dynamic> userCredinitals =
+                            if (value != null) {
+                              Map<String, dynamic> userTemp =
                                   json.decode(value.toString());
+                              user.token = userTemp["token"];
 
-                              user.name = userCredinitals['name'];
-                              user.email = userCredinitals['email'];
-                              user.id = userCredinitals['id'];
+                              //**** Fetch credintials */
+                              getCredintials(user.token).then((value) {
+                                Map<String, dynamic> userCredinitals =
+                                    json.decode(value.toString());
 
-                              // user.birthDate = _userCredinitals['birthdate'];
+                                user.name = userCredinitals['name'];
+                                user.email = userCredinitals['email'];
+                                user.id = userCredinitals['id'];
 
-                              // user.gender = _userCredinitals['gender'];
+                                user.birthDate = userCredinitals['birthdate'];
 
-                              user.image =
-                                  "$onlineServer/storage/${userCredinitals['avatar']}";
-                              _accountFound = 1;
+                                user.gender = userCredinitals['gender'];
+                                user.phoneNumber =
+                                    userCredinitals['phonenumber'];
+                                user.hasTC = userCredinitals['hasTC'];
 
-                              if (_accountFound == 1) {
-                                if (widget.contextIn.widget.toString() ==
-                                    "TCNotLogged") {
-                                  ScreenController().restartApp(context);
-                                } else {
-                                  Navigator.pop(context, true);
+                                user.image = "${userCredinitals['avatar']}";
+                                _accountFound = 1;
+
+                                if (_accountFound == 1) {
+                                  if (widget.contextIn.widget.toString() ==
+                                      "TCNotLogged") {
+                                    ScreenController().restartApp(context);
+                                  } else {
+                                    Navigator.pop(context, true);
+                                  }
+                                } else if (_accountFound == 0) {
+                                  _accountFound = 2;
                                 }
-                              } else if (_accountFound == 0) {
-                                _accountFound = 2;
-                              }
-                            });
+                              });
+                            } else {
+                              print("not found");
+                            }
                           });
                         }
                       }
@@ -443,8 +469,8 @@ class _loginPageState extends State<loginPage> {
 
   Future getToken(String email, String password) async {
     try {
-      return await dioTestApi
-          .post("/auth/token", data: {"email": email, "password": password});
+      return await dioTestApi.post("auth/token",
+          data: {"email": email, "password": password, "deviceID": deviceID});
     } catch (exception) {
       if (kDebugMode) {
         print(exception);
@@ -454,7 +480,7 @@ class _loginPageState extends State<loginPage> {
 
   Future getCredintials(String token) async {
     try {
-      return await dioTestApi.get("/user",
+      return await dioTestApi.post("user",
           options: Options(headers: {'Authorization': "Bearer $token"}));
     } catch (exception) {
       if (kDebugMode) {
@@ -465,25 +491,29 @@ class _loginPageState extends State<loginPage> {
 
 //????????????????????????????????????????????????????????????????
   Future register(
-      {String email = "",
-      String password = "",
-      String name = "",
-      String birthdate = "",
-      int gender = 0}) async {
+      {required String email,
+      required String password,
+      required String name,
+      required String birthdate,
+      required int gender,
+      required String phonenum}) async {
     try {
       if (email.isNotEmpty &&
           password.isNotEmpty &&
           name.isNotEmpty &&
-          birthdate.isNotEmpty) {
-        return await Dio().post("/Register", data: {
+          birthdate.isNotEmpty &&
+          phonenum.isNotEmpty) {
+        FormData form = FormData.fromMap({
           "email": email,
           "password": password,
           "name": name,
-          "birthdate": DateTime.parse(birthdate),
+          "birthdate": birthdate,
           "gender": gender,
+          "phonenumber": phonenum
         });
+        return await dioTestApi.post("register", data: form);
       }
-      return "";
+      return "hello";
     } catch (exception) {
       if (kDebugMode) {
         print(exception);

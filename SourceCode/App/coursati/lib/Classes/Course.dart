@@ -75,7 +75,7 @@ class Course {
     return Course(
         name: json['name'],
         duration: json['duration'],
-        image: json['image'],
+        image: serverStorage + json['image'],
         trainer: json['trainer'],
         trainingCenterID: json['trainingCenterID'].toString(),
         periodsRepeats: json['periodsRepeats'],
@@ -92,7 +92,7 @@ class Course {
         repeats: json['repeats'],
         location: Locations.fromJson(json['location']),
         trainerData: Trainer.fromJson(json['trainerData']),
-        icon: json['icon']);
+        icon: serverStorage + json['icon']);
   }
 
   Map<String, dynamic> toJson() => {

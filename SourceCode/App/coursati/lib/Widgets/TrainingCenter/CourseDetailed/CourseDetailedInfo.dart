@@ -50,7 +50,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
         trainer = item;
       }
     }
-
+    _nameEdit = _name;
+    _discriptionEdit = _discription;
+    _durationEdit = _duration;
+    _priceEdit = _price;
+    _startDateEdit = _startDate;
+    _trainerEdit = _trainer;
     super.initState();
   }
 

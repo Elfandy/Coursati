@@ -1,3 +1,5 @@
+import 'package:coursati/Classes/GlobalVariables.dart';
+
 class Trainer {
   Trainer(
       {required this.discription,
@@ -16,11 +18,11 @@ class Trainer {
         name = json['name'],
         major = json['major'],
         discription = json["discription"],
-        image = json["image"];
+        image = serverStorage + json["image"];
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "major": major,
+        "major": serverStorage + major,
         "discription": discription,
         "image": image
       };
