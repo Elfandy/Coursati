@@ -29,7 +29,9 @@ List<Tag> _tagTypeList = [
   Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
 ];
 // String serverStorage = "";
-String ser = "192.168.43.98";
+// String ser = "192.168.43.98";
+String ser = "192.168.1.174";
+
 String serverStorage = "http://$ser/coursatidash/public/storage/";
 String onlineServer = "http://$ser/coursatidash/public/api/";
 
@@ -37,6 +39,8 @@ String apiTestServer = "https://apimocha.com/coursatitest/";
 // String apiTestServer = "https://192.168.43.128:8000/api/";
 final Dio dioTestApi = Dio(BaseOptions(
   baseUrl: onlineServer,
+  connectTimeout: const Duration(seconds: 3),
+  sendTimeout: Duration(seconds: 5),
   contentType: 'application/json',
 ));
 String deviceID = "";

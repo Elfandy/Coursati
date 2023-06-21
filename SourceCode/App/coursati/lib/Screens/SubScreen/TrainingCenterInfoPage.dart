@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coursati/Screens/SubScreen/MapScreen.dart';
+import 'package:coursati/Screens/SubScreen/MapScreenTC.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -182,9 +182,18 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                           padding: labelPad,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.of(context).push(ScreenController()
-                                  .createRoute(
-                                      MapScreen(loc: trainingCenter.location),
+                              Navigator.of(context)
+                                  .push(ScreenController().createRoute(
+                                      MapScreen(
+                                        tc: trainingCenter,
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              ScreenController().createRoute(
+                                                  TrainingCenterPage(
+                                                      id: trainingCenter.id),
+                                                  0));
+                                        },
+                                      ),
                                       1));
                             },
                             child: Row(

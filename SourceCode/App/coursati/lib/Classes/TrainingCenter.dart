@@ -8,7 +8,7 @@ import 'TagData.dart';
 
 class TrainingCenter {
   TrainingCenter({
-    required this.id,
+    this.id = '0',
     required this.close,
     required this.description,
     required this.email,
@@ -16,7 +16,7 @@ class TrainingCenter {
     required this.name,
     required this.open,
     required this.phoneNumber,
-    required this.rating,
+    this.rating = 1.0,
     required this.tags,
     required this.image,
     required this.logo,
@@ -98,20 +98,18 @@ class TrainingCenter {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "logo": serverStorage + logo,
         "email": email,
         "description": description,
         "facebook": facebook,
-        "image": serverStorage + image,
+        "image": image,
         "tags": tags,
         "phoneNumber": phoneNumber,
         "whatsApp": whatsAppNum,
         "close": close,
         "location": location,
         "open": open,
-        "rating": rating,
         "website": website
       };
 

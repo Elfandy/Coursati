@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:coursati/firebase_options.dart';
 import 'package:cr_file_saver/file_saver.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:flutter/material.dart';
@@ -182,16 +183,16 @@ class _MainAppState extends State<MainApp> {
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       if (kDebugMode) {
-        print("all good");
+        Fluttertoast.showToast(msg: "all good");
       }
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       if (kDebugMode) {
-        print("granted provisonal permissons");
+        Fluttertoast.showToast(msg: "granted provisonal permissons");
       }
     } else {
       if (kDebugMode) {
-        print("Denied");
+        Fluttertoast.showToast(msg: "Denied");
       }
     }
   }
@@ -214,7 +215,8 @@ Future<int> checkServer() async {
     // response = await http.get(Uri.parse(server));
     //!! temp server check
 
-    var response = await http.get(Uri.parse(onlineServer));
+    var response =
+        await http.get(Uri.parse(onlineServer + "Courses/NewCourses"));
     if (response.statusCode == 200) {
       return 1;
     } else {

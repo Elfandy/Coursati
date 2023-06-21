@@ -6,6 +6,8 @@ import 'package:coursati/Widgets/Home/RoundedButton.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Classes/BoxCourseLabelData.dart';
 import '../Classes/GlobalVariables.dart';
 import 'SubScreen/ShowAllTC.dart';
@@ -62,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       var response = await dioTestApi.get(url);
 
       if (response.statusCode == 200) {
-        print(response.data);
+        // print(response.data);
 
         List<dynamic> coursesJson = response.data['courses'];
 
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (kDebugMode) {
-        print("courses error");
+        Fluttertoast.showToast(msg: "courses error");
         print(e);
       }
     }
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage> {
         }
       }
     } catch (e) {
-      print("trainingcenter error");
+      Fluttertoast.showToast(msg: "trainingcenter error");
       print(e);
     }
     return tC;
@@ -174,83 +176,136 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 30,
                 ),
-                //* Popular Courses
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 1.1,
+                      height: 220,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: ImageSlideshow(
+                          autoPlayInterval: 3000,
+                          isLoop: true,
+                          indicatorColor: Color(0xff1776e0),
+                          initialPage: 1,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: OutlinedButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      shape: ContinuousRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50))),
+                                  child: Text(
+                                    "hello world",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Image(
+                              image: AssetImage(
+                                "Assets/Images/Random/dedsec-1678670415951-1579.jpg",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            Image.asset(
+                                "Assets/Images/Random/dfqprx6-a72fa41d-6260-4bba-955f-8deb7f8c6ea5.jpg",
+                                fit: BoxFit.cover),
+                            Image.asset("Assets/Images/Random/UIgpYm.webp",
+                                fit: BoxFit.cover),
+                            Image.asset("Assets/Images/Random/wp4994116.webp",
+                                fit: BoxFit.cover),
+                            Image.asset("Assets/Images/priscilla-unsplash.jpg",
+                                fit: BoxFit.cover),
+                          ],
                         ),
-                        Text(
-                          (languageType == 0) ? "الدورات التدريبية" : "Courses",
-                          style: TextStyle(
-                            shadows: const [
-                              Shadow(
-                                  color: Colors.black45,
-                                  offset: Offset(1, 2.2),
-                                  blurRadius: 4)
-                            ],
-                            fontSize: (languageType == 0) ? 24 : 36,
-                            // color: const Color(0xff1776e0),
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).push(ScreenController()
-                                  .createRoute(ShowCourses(), 1));
-                            },
-                            child: const Text(
-                              "المزيد",
-                              style: TextStyle(fontSize: 20),
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
-                FutureBuilder(
-                  future: fetchCourses(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      List<BoxCourseLabelData> _courses = snapshot.data!;
 
-                      return Container(
-                        width: double.infinity,
-                        height: 200,
-                        child: ListView.builder(
-                          itemCount:
-                              (_courses.length > 7) ? 7 : _courses.length,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemBuilder: ((context, index) {
-                            return CourseBox(
-                              bld: BoxCourseLabelData(
-                                  id: _courses[index].id,
-                                  image: _courses[index].image,
-                                  name: _courses[index].name,
-                                  location_in: _courses[index].location_in),
-                            );
-                          }),
-                        ),
-                      );
-                    } else {
-                      return Container(
-                          width: double.infinity,
-                          height: 200,
-                          child:
-                              const Center(child: CircularProgressIndicator()));
-                    }
-                  },
-                ),
+                //* Popular Courses
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Row(
+                //       children: [
+                //         const SizedBox(
+                //           width: 10,
+                //         ),
+                //         Text(
+                //           (languageType == 0) ? "الدورات التدريبية" : "Courses",
+                //           style: TextStyle(
+                //             shadows: const [
+                //               Shadow(
+                //                   color: Colors.black45,
+                //                   offset: Offset(1, 2.2),
+                //                   blurRadius: 4)
+                //             ],
+                //             fontSize: (languageType == 0) ? 24 : 36,
+                //             // color: const Color(0xff1776e0),
+                //           ),
+                //           textAlign: TextAlign.start,
+                //         ),
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         TextButton(
+                //             onPressed: () {
+                //               Navigator.of(context).push(ScreenController()
+                //                   .createRoute(ShowCourses(), 1));
+                //             },
+                //             child: const Text(
+                //               "المزيد",
+                //               style: TextStyle(fontSize: 20),
+                //             )),
+                //         const SizedBox(
+                //           width: 10,
+                //         ),
+                //       ],
+                //     )
+                //   ],
+                // ),
+                // FutureBuilder(
+                //   future: fetchCourses(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.done) {
+                //       List<BoxCourseLabelData> _courses = snapshot.data!;
+
+                //       return Container(
+                //         width: double.infinity,
+                //         height: 200,
+                //         child: ListView.builder(
+                //           itemCount:
+                //               (_courses.length > 7) ? 7 : _courses.length,
+                //           scrollDirection: Axis.horizontal,
+                //           shrinkWrap: true,
+                //           itemBuilder: ((context, index) {
+                //             return CourseBox(
+                //               bld: BoxCourseLabelData(
+                //                   id: _courses[index].id,
+                //                   image: _courses[index].image,
+                //                   name: _courses[index].name,
+                //                   location_in: _courses[index].location_in),
+                //             );
+                //           }),
+                //         ),
+                //       );
+                //     } else {
+                //       return Container(
+                //           width: double.infinity,
+                //           height: 200,
+                //           child:
+                //               const Center(child: CircularProgressIndicator()));
+                //     }
+                //   },
+                // ),
                 //** New Courses */
                 Row(
                   children: [

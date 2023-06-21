@@ -46,7 +46,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
 
   //!!!!!!!!!!!
 
-  File? _image;
+  File? _image, _logo;
 
   bool passsportError = false, orgNameError = false, phoneNumError = false;
 
@@ -1128,7 +1128,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                   if (_index < 1) {
                     _index++;
                   } else {
-                    // TrainingCenter tc = TrainingCenter(description: _description.text,email: _email.text,image: (await multipart_image),);
+                    // TrainingCenter tc = TrainingCenter(
+                      
+                    //   description: _description.text,
+                    //   email: _email.text,
+                    //   image: (await multipart_image),
+                    //   name:_trainingCenterName.text,
+                    //   close: _
+
+                    //   );
                     // SendData();
                     Fluttertoast.showToast(
                         msg: (languageType == 0)
@@ -1173,9 +1181,17 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
   }
 
   Future SendData(TrainingCenter tc) async {
-    var url = "";
-    // try{
-
-    // }
+    var url = "tc/add";
+    try {
+      var response = await dioTestApi.post(url, data: tc.toJson());
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "Request sent.");
+      } else {
+        Fluttertoast.showToast(msg: "Request not sent check server status");
+      }
+    } catch (exception) {
+      Fluttertoast.showToast(
+          msg: "There was an error connecting to the Server");
+    }
   }
 }

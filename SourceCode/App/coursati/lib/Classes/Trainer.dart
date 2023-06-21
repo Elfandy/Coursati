@@ -22,7 +22,7 @@ class Trainer {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "major": serverStorage + major,
+        "major": major,
         "discription": discription,
         "image": image
       };

@@ -84,13 +84,13 @@ class _AllMapScreenState extends State<AllMapScreen> {
   }
 
   Future<Set<Marker>> fetchTrainingCenter() async {
-    var url = "allTrainingCenterLocation";
+    var url = "map";
 
     List<TCLocation> list = [];
     try {
       var response = await dioTestApi.get(url);
       if (response.statusCode == 200) {
-        List<dynamic> tcJson = response.data["TrainingCenter"];
+        List<dynamic> tcJson = response.data["tc"];
         for (var tcJson in tcJson) {
           list.add(TCLocation.fromJson(tcJson));
         }
@@ -102,7 +102,7 @@ class _AllMapScreenState extends State<AllMapScreen> {
     Set<Marker> mark = {};
     for (int i = 0; i < list.length; i++) {
       mark.add(Marker(
-          markerId: MarkerId(list[i].id),
+          markerId: MarkerId(list[i].id.toString()),
           position: LatLng(list[i].lat, list[i].lng),
           draggable: true,
           infoWindow: InfoWindow(

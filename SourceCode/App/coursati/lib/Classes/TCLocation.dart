@@ -4,12 +4,13 @@ class TCLocation {
       required this.lat,
       required this.lng,
       required this.name});
-  String id, name;
+  String name;
+  int id;
   double lat, lng;
 
   TCLocation.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        lat = json["lat"],
-        lng = json["lng"],
+        lat = json["latitude"],
+        lng = json["longitude"],
         name = json["name"];
 }

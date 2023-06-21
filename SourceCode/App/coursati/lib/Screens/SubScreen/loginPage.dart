@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../../Classes/GlobalVariables.dart';
@@ -356,37 +357,15 @@ class _loginPageState extends State<loginPage> {
                           //   gender: _gender,
                           //   id: 010,
                           // ));
-                          register(
-                              email: _email.text,
-                              birthdate: _birthDate.text,
-                              gender: _gender,
-                              name: _name.text,
-                              password: _password.text,
-                              phonenum: _phonenumber.text);
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) {
-                              return const AlertDialog(
-                                title: Text(
-                                  "The Account has been created",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              );
-                            },
-                          ).then(
-                            (value) {
-                              // _password.text = "";
-                              // _email.text = "";
-                              // _name.text = "";
-                              // _birthDate.text = "";
-                              // user.gender = 0;
-                              // user.name = _name.text;
-                              // user.birthDate = _birthDate.text;
-                              // user.email = _email.text;
-                              // user.password = _password.text;
-                            },
-                          );
+                          dynamic response = register(
+                                  email: _email.text,
+                                  birthdate: _birthDate.text,
+                                  gender: _gender,
+                                  name: _name.text,
+                                  password: _password.text,
+                                  phonenum: _phonenumber.text)
+                              .then((error) {});
+
                           //???????????????????????????????????????????????????????????????????????
                         }
                       } else {
@@ -511,12 +490,23 @@ class _loginPageState extends State<loginPage> {
           "gender": gender,
           "phonenumber": phonenum
         });
-        return await dioTestApi.post("register", data: form);
+        var response = await dioTestApi.post("register", data: form).catchError(
+          (error) {
+            Fluttertoast.showToast(
+                msg:
+                    "There was an error connecting to the server\nthe error hit:$error");
+          },
+        );
+        if (response.statusCode == 200) {
+          Fluttertoast.showToast(msg: "All done");
+        }
       }
-      return "hello";
+      Fluttertoast.showToast(
+          msg: "Please fill all the fields to Rigister a new account.");
     } catch (exception) {
       if (kDebugMode) {
-        print(exception);
+        Fluttertoast.showToast(
+            msg: "There was an error using this data please check your data");
       }
     }
   }

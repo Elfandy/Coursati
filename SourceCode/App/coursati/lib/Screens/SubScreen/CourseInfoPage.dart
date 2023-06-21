@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coursati/Screens/SubScreen/MapScreen.dart';
+import 'package:coursati/Screens/SubScreen/MapScreenTC.dart';
 import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
+import 'package:coursati/Screens/SubScreen/mapScreenCourse.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -224,9 +225,20 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: InkWell(
                             onTap: () {
-                              Navigator.of(context).push(ScreenController()
-                                  .createRoute(
-                                      MapScreen(loc: _course.location), 1));
+                              Navigator.of(context)
+                                  .push(ScreenController().createRoute(
+                                      MapScreenCourse(
+                                        course: _course,
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              ScreenController().createRoute(
+                                                  MapScreenCourse(
+                                                      course: _course,
+                                                      onTap: () {}),
+                                                  0));
+                                        },
+                                      ),
+                                      1));
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

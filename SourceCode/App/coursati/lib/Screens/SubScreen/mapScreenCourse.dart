@@ -1,19 +1,22 @@
+import 'package:coursati/Classes/Course.dart';
+import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../Classes/GlobalVariables.dart';
-import '../../Classes/Location.dart';
 
-class MapScreen extends StatefulWidget {
-  MapScreen({super.key, required this.loc});
-  Locations loc;
+class MapScreenCourse extends StatefulWidget {
+  MapScreenCourse({super.key, required this.course, required this.onTap});
+  Course course;
+  void Function() onTap;
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapScreenCourse> createState() => _MapScreenCourseState();
 }
 
 //
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenCourseState extends State<MapScreenCourse> {
   late GoogleMapController mapController;
 
   LatLng _center = const LatLng(32.87027040045473, 13.173934429128234);
@@ -62,13 +65,14 @@ class _MapScreenState extends State<MapScreen> {
       Marker(
         markerId: MarkerId(markerName),
         position: location,
+        onTap: widget.onTap,
       )
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    _center = LatLng(widget.loc.lat!, widget.loc.lng!);
+    _center = LatLng(widget.course.location.lat!, widget.course.location.lng!);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -90,7 +94,12 @@ class _MapScreenState extends State<MapScreen> {
         buildingsEnabled: true,
         myLocationEnabled: true,
         markers: _createMarker(
-            LatLng(widget.loc.lat!, widget.loc.lng!), widget.loc.city!),
+            LatLng(widget.course.location.lat!, widget.course.location.lng!),
+            widget.course.location.city!),
+        onTap: (argument) {
+          Navigator.of(context).push(ScreenController()
+              .createRoute(TrainingCenterPage(id: widget.course.id), 0));
+        },
         initialCameraPosition: CameraPosition(target: _center, zoom: 15.0),
       ),
     );
