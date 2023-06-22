@@ -34,23 +34,23 @@ class Course {
     required this.name,
     this.tags = const [],
     required this.price,
-    required this.discount,
+    this.discount = 0,
     required this.startingDate,
     required this.active,
     required this.trainer,
     required this.trainingCenterID,
     required this.description,
-    required this.full,
+    this.full = false,
     required this.image,
     required this.location,
     this.icon = "",
     this.trainingCenterName = "",
     this.periodsRepeats,
-    required this.repeats,
+    this.repeats = false,
     required this.trainerData,
     this.period,
   });
-  final int duration;
+  final int duration, active;
   int? periodsRepeats, period;
   final String id,
       name,
@@ -64,7 +64,7 @@ class Course {
 
   final double price, discount;
   final DateTime startingDate;
-  final bool active, full, repeats;
+  final bool full, repeats;
   final Locations location;
   final Trainer trainerData;
 
@@ -74,25 +74,22 @@ class Course {
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
     return Course(
         name: json['name'],
-        duration: json['duration'],
+        duration: json['duration'] as int,
         image: serverStorage + json['image'],
-        trainer: json['trainer'],
-        trainingCenterID: json['trainingCenterID'].toString(),
+        trainer: json['trainers'],
+        trainingCenterID: json['TC'].toString(),
         periodsRepeats: json['periodsRepeats'],
         period: json['period'],
         description: json['description'],
         id: json['id'].toString(),
-        trainingCenterName: json['trainingCenterName'],
+        trainingCenterName: json['TCname'],
         tags: _tags,
         price: json['price'],
-        discount: json['discount'],
-        startingDate: DateTime.parse(json['startingDate']),
-        active: json['active'],
-        full: json['full'],
-        repeats: json['repeats'],
-        location: Locations.fromJson(json['location']),
-        trainerData: Trainer.fromJson(json['trainerData']),
-        icon: serverStorage + json['icon']);
+        startingDate: DateTime.parse(json['startDate']),
+        active: json['state'],
+        location: Locations.fromJson(json['location'][0]),
+        trainerData: Trainer.fromJson(json['trainer'][0]),
+        icon: serverStorage + json['TClogo']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -100,19 +97,16 @@ class Course {
         'duration': duration,
         'image': image,
         'trainer': trainer,
-        'trainingCenterID': trainingCenterID,
+        'TC': trainingCenterID,
         'periodsRepeats': periodsRepeats,
         'period': period,
         'description': description,
         'id': id,
-        'trainingCenterName': trainingCenterName,
+        'TCname': trainingCenterName,
         'tags': tags,
         'price': price,
-        'discount': discount,
-        'startingDate': startingDate,
-        'active': active,
-        'full': full,
-        'repeats': repeats,
+        'startDate': startingDate,
+        'state': active,
         'location': location,
         'trainerData': trainerData,
         'icon': icon,

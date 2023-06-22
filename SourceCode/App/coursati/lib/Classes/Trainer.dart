@@ -14,10 +14,10 @@ class Trainer {
   // double rating;
 
   Trainer.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : id = json['id'].toString(),
         name = json['name'],
         major = json['major'],
-        discription = json["discription"],
+        discription = json["description"],
         image = serverStorage + json["image"];
   Map<String, dynamic> toJson() => {
         "id": id,

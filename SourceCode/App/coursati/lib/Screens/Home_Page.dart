@@ -1,6 +1,12 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Classes/Ads.dart';
 import 'package:coursati/Classes/BoxTCLabelData.dart';
 import 'package:coursati/Screens/SubScreen/ShowAllCourse.dart';
+import 'package:coursati/Screens/main_page.dart';
 import 'package:coursati/Services/ScreenController.dart';
+import 'package:coursati/Widgets/Home/AdsPage.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/Home/RoundedButton.dart';
 import 'package:coursati/Widgets/Home/TCBox.dart';
@@ -124,6 +130,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fillTags();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -179,50 +191,132 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Center(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      height: 220,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: ImageSlideshow(
-                          autoPlayInterval: 3000,
-                          isLoop: true,
-                          indicatorColor: Color(0xff1776e0),
-                          initialPage: 1,
-                          children: [
-                            TextButton(
-                              onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: OutlinedButton(
-                                  onPressed: () {},
-                                  style: OutlinedButton.styleFrom(
-                                      shape: ContinuousRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50))),
-                                  child: Text(
-                                    "hello world",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Image(
-                              image: AssetImage(
-                                "Assets/Images/Random/dedsec-1678670415951-1579.jpg",
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                            Image.asset(
-                                "Assets/Images/Random/dfqprx6-a72fa41d-6260-4bba-955f-8deb7f8c6ea5.jpg",
-                                fit: BoxFit.cover),
-                            Image.asset("Assets/Images/Random/UIgpYm.webp",
-                                fit: BoxFit.cover),
-                            Image.asset("Assets/Images/Random/wp4994116.webp",
-                                fit: BoxFit.cover),
-                            Image.asset("Assets/Images/priscilla-unsplash.jpg",
-                                fit: BoxFit.cover),
-                          ],
+                    child: Hero(
+                      transitionOnUserGestures: true,
+                      tag: "adsHero",
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        height: 220,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: FutureBuilder(
+                            future: getAds(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                List<Ads> ads = [];
+                                for (var ad in snapshot.data) {
+                                  ads.add(Ads.fromJson(ad));
+                                }
+
+                                return ImageSlideshow(
+                                  isLoop: true,
+                                  indicatorColor: Color(0xff1776e0),
+                                  initialPage: 1,
+                                  autoPlayInterval: 5000,
+                                  children: [
+                                    for (int i = 0; i < ads.length; i++)
+                                      InkWell(
+                                        splashColor: Colors.blue,
+                                        splashFactory: InkRipple.splashFactory,
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                AdsPage(ad: ads[i]),
+                                          ));
+                                        },
+                                        child: Ink(
+                                          child: Stack(
+                                              fit: StackFit.expand,
+                                              children: [
+                                                CachedNetworkImage(
+                                                    imageUrl: ads[i].image,
+                                                    fit: BoxFit.cover),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 20),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            1.4,
+                                                        child: Stack(children: [
+                                                          Text(
+                                                            ads[i].title,
+                                                            softWrap: true,
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            textWidthBasis:
+                                                                TextWidthBasis
+                                                                    .longestLine,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              // color: Colors.white,
+                                                              foreground: Paint()
+                                                                ..style =
+                                                                    PaintingStyle
+                                                                        .stroke
+                                                                ..color =
+                                                                    Colors.black
+                                                                ..strokeWidth = 2,
+                                                              // color: Colors.white,
+                                                              fontSize: 24,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            ads[i].title,
+                                                            softWrap: true,
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            textWidthBasis:
+                                                                TextWidthBasis
+                                                                    .longestLine,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 24,
+                                                            ),
+                                                          )
+                                                        ]),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ]),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -467,24 +561,6 @@ class _HomePageState extends State<HomePage> {
                             TCBox(
                               bld: trainingCenterBLDSmall[i],
                             ),
-
-                          RoundedButton(
-                            icon: Icon(
-                              (languageType == 0)
-                                  ? Icons.keyboard_arrow_left
-                                  : Icons.keyboard_arrow_right,
-                              size: 40,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                ScreenController()
-                                    .createRoute(const ShowTC(), 3),
-                              );
-                            },
-                            color: const Color(0xff1776e0),
-                            size: 80,
-                          ),
                         ],
                       ),
                     ),
@@ -504,5 +580,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future getAds() async {
+    var url = "latestads";
+
+    try {
+      var response = await dioTestApi.get(url);
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (ex) {
+      if (kDebugMode) {
+        print(ex);
+      }
+    }
   }
 }

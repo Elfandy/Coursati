@@ -51,7 +51,7 @@ class _CourseDetailedfetchDataState extends State<CourseDetailedfetchData> {
       trainingCenterID: "0",
       image: "",
       id: '',
-      active: false,
+      active: 0,
       description: """""",
       discount: 0,
       duration: 0,

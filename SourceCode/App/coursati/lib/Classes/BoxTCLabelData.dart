@@ -14,10 +14,10 @@ class BoxTCLabelData {
   String? locName = "";
 
   BoxTCLabelData.fromJson(Map<String, dynamic> json) {
-    id = json["id"].toString();
-    name = json["name"];
-    logo = json["logo"];
-    image = serverStorage + json["image"];
-    locName = json["locName"];
+    id = json["id"].toString().trim();
+    name = json["name"].trim();
+    logo = serverStorage + json["logo"].trim();
+    image = serverStorage + json["image"].trim();
+    locName = json["locName"].trim();
   }
 }

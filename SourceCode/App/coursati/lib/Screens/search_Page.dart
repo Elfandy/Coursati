@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:coursati/Screens/main_page.dart';
 import 'package:coursati/Widgets/Search/SearchResults.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class _SearchPageState extends State<SearchPage> {
     _selectedTypes.clear();
     _selectedTypes.add(_tagTypeList[0]);
     _selectedTypes.add(_tagTypeList[1]);
+    fillTags();
   }
 
   bool searching = false;

@@ -453,14 +453,14 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   }
 
   Future<Course> getCourseData(String id) async {
-    var url = "showCourseData";
-    Map<String, dynamic> course = {"id": id};
+    var url = "CourseInfo";
+
     Course _course = Course(
       name: "",
       trainingCenterID: "0",
       image: "",
       id: '',
-      active: false,
+      active: 0,
       description: """""",
       discount: 0,
       duration: 0,
@@ -482,9 +482,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     );
 
     try {
-      var response = await dioTestApi.post(url, data: course);
+      print(id);
+      var response = await dioTestApi.post(url, data: {"id": int.parse(id)});
       if (response.statusCode == 200) {
-        _course = Course.fromJson(response.data);
+        _course = Course.fromJson(response.data['info'][0]);
       }
     } catch (e) {
       print(e);

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coursati/Screens/main_page.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/TrainingCenter/AddBranch.dart';
-import 'package:coursati/Widgets/TrainingCenter/TrainerDetiled/TrainerDetailedInfo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxTCLabelData.dart';
@@ -26,6 +26,12 @@ class _TrainingCenterState extends State<TrainingCenter> {
   BoxTCLabelData trainingCenter =
       BoxTCLabelData(name: "", image: "", logo: "", id: "");
 // late BoxTCLabelData trainingCenter ;
+
+  @override
+  void initState() {
+    super.initState();
+    fillTags();
+  }
 
   //??????????????????????????????????????????????????????????????????????????????
   @override

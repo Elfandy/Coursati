@@ -19,7 +19,9 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
+          width: 140,
           child: Text(
+            maxLines: 2,
             softWrap: true,
             widget.bld.name!,
             style: const TextStyle(

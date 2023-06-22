@@ -325,7 +325,7 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
       trainingCenterID: "0",
       image: "",
       id: '',
-      active: false,
+      active: 0,
       description: """""",
       discount: 0,
       duration: 0,

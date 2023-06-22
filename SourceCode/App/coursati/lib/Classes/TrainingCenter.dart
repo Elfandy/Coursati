@@ -26,15 +26,8 @@ class TrainingCenter {
     this.whatsAppNum = "",
   });
 
-  String id,
-      name,
-      description,
-      phoneNumber,
-      email,
-      image,
-      facebook,
-      website,
-      whatsAppNum;
+  String id, name, description, phoneNumber, email, image;
+  String? facebook, website, whatsAppNum;
   Locations location;
   TimeOfDay open, close;
   List<Tag> tags;
@@ -57,49 +50,57 @@ class TrainingCenter {
     // List<TrainingCenterBranch> _branch =
     //     BranchOBJ.map((tagJson) => TrainingCenterBranch.fromJson(tagJson))
     //         .toList();
-    String _close = json["close"];
-    int hhC = 0;
-    if (_close.endsWith('PM')) hhC = 12;
-    _close = _close.split(' ')[0];
-    TimeOfDay _closeTime = TimeOfDay(
-      hour: hhC +
-          int.parse(_close.split(":")[0]) %
-              24, // in case of a bad time format entered manually by the user
-      minute: int.parse(_close.split(":")[1]) % 60,
-    );
+    // String _close = json["closeTime"].toString();
+    // int hhC = 0;
+    // if (_close.endsWith('PM')) hhC = 12;
+    // _close = _close.split(' ')[0];
+    // TimeOfDay _closeTime = TimeOfDay(
+    //   hour: hhC +
+    //       int.parse(_close.split(":")[0]) %
+    //           24, // in case of a bad time format entered manually by the user
+    //   minute: int.parse(_close.split(":")[1]) % 60,
+    // );
 
-    String _start = json["open"];
-    int hhs = 0;
-    if (_start.endsWith('PM')) hhs = 12;
-    _start = _start.split(' ')[0];
-    TimeOfDay _starttime = TimeOfDay(
-      hour: hhs +
-          int.parse(_start.split(":")[0]) %
-              24, // in case of a bad time format entered manually by the user
-      minute: int.parse(_start.split(":")[1]) % 60,
-    );
+    // String _start = json["openTime"].toString();
+    // int hhs = 0;
+    // if (_start.endsWith('PM')) hhs = 12;
+    // _start = _start.split(' ')[0];
+    // TimeOfDay _starttime = TimeOfDay(
+    //   hour: hhs +
+    //       int.parse(_start.split(":")[0]) %
+    //           24, // in case of a bad time format entered manually by the user
+    //   minute: int.parse(_start.split(":")[1]) % 60,
+    // );
 
     return TrainingCenter(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
-        logo: serverStorage + json["logo"],
+        logo: serverStorage + json["logo"].trim(),
         email: json["email"],
         description: json["description"],
         facebook: json["facebook"],
-        image: serverStorage + json["image"],
+        image: serverStorage + json["image"].trim(),
         tags: _tags,
-        phoneNumber: json["phoneNumber"],
-        whatsAppNum: json["whatsApp"],
-        close: _closeTime,
-        location: Locations.fromJson(json["location"]),
-        open: _starttime,
-        rating: json["rating"],
+        phoneNumber: json["phonenumber"],
+        whatsAppNum: json["whatsapp"],
+        close: TimeOfDay(
+            hour: (json["closeTime"].round() as int),
+            minute: (int.parse(json["closeTime"].toString().split('.').last))),
+        location: Locations(
+            lat: json["latitude"],
+            lng: json["longitude"],
+            city: json["locName"],
+            id: 1),
+        open: TimeOfDay(
+            hour: (json["openTime"].round() as int),
+            minute: (int.parse(json["openTime"].toString().split('.').last))),
+        rating: double.parse(json["rate"]['rate']),
         website: json["website"]);
   }
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "logo": serverStorage + logo,
+        "logo": logo,
         "email": email,
         "description": description,
         "facebook": facebook,

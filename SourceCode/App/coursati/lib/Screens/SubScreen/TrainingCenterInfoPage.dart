@@ -168,7 +168,7 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                               ),
                               Text(
                                 (languageType == 0)
-                                    ? " ${trainingCenter.open.hour}:${(trainingCenter.open.minute.toInt() < 10) ? "0${trainingCenter.open.minute}" : trainingCenter.open.minute.toString()} - ${trainingCenter.close.hour}:${(trainingCenter.close.minute.toInt() < 10) ? "0${trainingCenter.close.minute}" : trainingCenter.close.minute.toString()}"
+                                    ? " ${trainingCenter.close.hour}:${(trainingCenter.close.minute.toInt() < 10) ? "0${trainingCenter.close.minute}" : trainingCenter.close.minute.toString()} - ${trainingCenter.open.hour}:${(trainingCenter.open.minute.toInt() < 10) ? "0${trainingCenter.open.minute}" : trainingCenter.open.minute.toString()}"
                                     : " ${trainingCenter.open.hour}:${(trainingCenter.open.minute.toInt() < 10) ? "0${trainingCenter.open.minute}" : trainingCenter.open.minute.toString()} - ${trainingCenter.close.hour}:${(trainingCenter.close.minute.toInt() < 10) ? "0${trainingCenter.close.minute}" : trainingCenter.close.minute.toString()}",
                                 style: const TextStyle(fontSize: 16),
                               ),
@@ -403,7 +403,8 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                       children: [
-                                        (trainingCenter.facebook != "")
+                                        (trainingCenter.facebook != "" &&
+                                                trainingCenter.facebook != null)
                                             ? Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
@@ -415,9 +416,15 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                           Icons.facebook,
                                                           size: 40),
                                                       onPressed: () {
-                                                        _launchSocial(
-                                                            trainingCenter
-                                                                .facebook);
+                                                        _launchSocial(trainingCenter
+                                                                .facebook!
+                                                                .startsWith(
+                                                                    'https')
+                                                            ? trainingCenter
+                                                                .facebook!
+                                                            : "https://" +
+                                                                trainingCenter
+                                                                    .facebook!);
                                                       },
                                                     ),
                                                     const Text(
@@ -430,7 +437,8 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                 ),
                                               )
                                             : Container(),
-                                        (trainingCenter.website != "")
+                                        (trainingCenter.website != null &&
+                                                trainingCenter.website != '')
                                             ? Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
@@ -442,9 +450,15 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                                           Icons.web_asset,
                                                           size: 40),
                                                       onPressed: () {
-                                                        _launchSocial(
-                                                            trainingCenter
-                                                                .website);
+                                                        _launchSocial(trainingCenter
+                                                                .website!
+                                                                .startsWith(
+                                                                    'http')
+                                                            ? trainingCenter
+                                                                .website!
+                                                            : "http://" +
+                                                                trainingCenter
+                                                                    .website!);
                                                       },
                                                     ),
                                                     const Text(
@@ -633,8 +647,8 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
   }
 
   Future<TrainingCenter> getTCData(String id) async {
-    var url = "showTrainingCenterData";
-    TrainingCenter trainingCenter0 = TrainingCenter(
+    var url = "TrainingCenterInfo";
+    TrainingCenter trainingCenter = TrainingCenter(
       // branch: null,
       close: const TimeOfDay(hour: 0, minute: 0),
       description: """""",
@@ -649,17 +663,16 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
       image: "",
       logo: "",
     );
-    Map<String, dynamic> trainingCenter = {"id": id};
 
     try {
-      var response = await dioTestApi.post(url, data: trainingCenter);
+      var response = await dioTestApi.post(url, data: {"id": id});
       if (response.statusCode == 200) {
-        trainingCenter0 = TrainingCenter.fromJson(response.data);
+        trainingCenter = TrainingCenter.fromJson(response.data['info']);
       }
     } catch (e) {
       print(e);
     }
-    return trainingCenter0;
+    return trainingCenter;
   }
   // TrainingCenter? getTCData(String name) {
   //   for (int i = 0; i < trainingCenterData.length; i++) {

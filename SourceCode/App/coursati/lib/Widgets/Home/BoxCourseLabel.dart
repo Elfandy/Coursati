@@ -24,6 +24,8 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
             child: Text(
               softWrap: true,
               widget.bld.name!,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,

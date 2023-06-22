@@ -30,7 +30,7 @@ List<Tag> _tagTypeList = [
 ];
 // String serverStorage = "";
 // String ser = "192.168.43.98";
-String ser = "192.168.1.174";
+String ser = "192.168.43.128";
 
 String serverStorage = "http://$ser/coursatidash/public/storage/";
 String onlineServer = "http://$ser/coursatidash/public/api/";

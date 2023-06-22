@@ -37,8 +37,6 @@ class _MainPageState extends State<MainPage> {
 
     super.initState();
     FlutterNativeSplash.remove();
-
-    fillTags();
   }
 
   //* This is the Builder for the app
@@ -137,22 +135,22 @@ class _MainPageState extends State<MainPage> {
       ),
     ));
   }
+}
 
-  Future fillTags() async {
-    var url = "tags";
-    tags.clear();
-    try {
-      var response = await dioTestApi.get(url);
-      if (response.statusCode == 200) {
-        List<dynamic> taglist = response.data;
-        for (var tag in taglist) {
-          tags.add(Tag.fromJson(tag));
-        }
+Future fillTags() async {
+  var url = "tags";
+  tags.clear();
+  try {
+    var response = await dioTestApi.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> taglist = response.data;
+      for (var tag in taglist) {
+        tags.add(Tag.fromJson(tag));
       }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print(e);
     }
   }
 }

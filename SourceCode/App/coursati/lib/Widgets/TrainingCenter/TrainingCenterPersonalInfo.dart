@@ -55,12 +55,12 @@ class _TrainingCenterParsonalInfoState
       _name.text = widget.tc.name;
       _email.text = widget.tc.email;
       _phoneNumber.text = widget.tc.phoneNumber;
-      _whatsApp.text = widget.tc.whatsAppNum;
+      _whatsApp.text = widget.tc.whatsAppNum ?? "";
       _closeTime.text = "${widget.tc.close.hour}:${widget.tc.close.minute}";
       _openTime.text = "${widget.tc.open.hour}:${widget.tc.open.minute}";
 
-      _website.text = widget.tc.website;
-      _facebook.text = widget.tc.facebook;
+      _website.text = widget.tc.website ?? "";
+      _facebook.text = widget.tc.facebook ?? "";
       _discription.text = widget.tc.description;
       locationData = widget.tc.location;
       locationDataEdit = locationData;

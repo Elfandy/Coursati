@@ -14,7 +14,6 @@ class Location {
   String city_en, city_ar;
 }
 
-
 class Locations {
   Locations(
       {required this.id,
@@ -26,9 +25,9 @@ class Locations {
   double? lat, lng;
 
   Locations.fromJson(Map<String, dynamic> json)
-      : lat = json["lat"],
-        lng = json["lng"],
-        city = json["city"];
+      : lat = json["latitude"],
+        lng = json["longitude"],
+        city = json["locName"];
 
   Map<String, dynamic> toJson() => {"lat": lat, "lng": lng, "city": city};
 }
