@@ -195,128 +195,120 @@ class _HomePageState extends State<HomePage> {
                       transitionOnUserGestures: true,
                       tag: "adsHero",
                       child: Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        height: 220,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: FutureBuilder(
-                            future: getAds(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                List<Ads> ads = [];
-                                for (var ad in snapshot.data) {
-                                  ads.add(Ads.fromJson(ad));
-                                }
-
-                                return ImageSlideshow(
-                                  isLoop: true,
-                                  indicatorColor: Color(0xff1776e0),
-                                  initialPage: 1,
-                                  autoPlayInterval: 5000,
-                                  children: [
-                                    for (int i = 0; i < ads.length; i++)
-                                      InkWell(
-                                        splashColor: Colors.blue,
-                                        splashFactory: InkRipple.splashFactory,
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                AdsPage(ad: ads[i]),
-                                          ));
-                                        },
-                                        child: Ink(
-                                          child: Stack(
-                                              fit: StackFit.expand,
-                                              children: [
-                                                CachedNetworkImage(
-                                                    imageUrl: ads[i].image,
-                                                    fit: BoxFit.cover),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 20),
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            1.4,
-                                                        child: Stack(children: [
-                                                          Text(
-                                                            ads[i].title,
-                                                            softWrap: true,
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textWidthBasis:
-                                                                TextWidthBasis
-                                                                    .longestLine,
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              // color: Colors.white,
-                                                              foreground: Paint()
-                                                                ..style =
-                                                                    PaintingStyle
-                                                                        .stroke
-                                                                ..color =
-                                                                    Colors.black
-                                                                ..strokeWidth = 2,
-                                                              // color: Colors.white,
-                                                              fontSize: 24,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            ads[i].title,
-                                                            softWrap: true,
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textWidthBasis:
-                                                                TextWidthBasis
-                                                                    .longestLine,
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 24,
-                                                            ),
-                                                          )
-                                                        ]),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ]),
-                                        ),
-                                      ),
-                                  ],
-                                );
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                        // width: MediaQuery.of(context).size.width / 1.1,
+                        height: 240,
+                        child: FutureBuilder(
+                          future: getAds(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              List<Ads> ads = [];
+                              for (var ad in snapshot.data) {
+                                ads.add(Ads.fromJson(ad));
                               }
-                            },
-                          ),
+
+                              return ImageSlideshow(
+                                isLoop: true,
+                                indicatorColor: Color(0xff1776e0),
+                                initialPage: 1,
+                                autoPlayInterval: 5000,
+                                children: [
+                                  for (int i = 0; i < ads.length; i++)
+                                    InkWell(
+                                      splashColor: Colors.blue,
+                                      splashFactory: InkRipple.splashFactory,
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdsPage(ad: ads[i]),
+                                        ));
+                                      },
+                                      child: Ink(
+                                        child: Stack(
+                                            fit: StackFit.expand,
+                                            children: [
+                                              CachedNetworkImage(
+                                                  imageUrl: ads[i].image,
+                                                  fit: BoxFit.cover),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 20),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              1.4,
+                                                      child: Stack(children: [
+                                                        Text(
+                                                          ads[i].title,
+                                                          softWrap: true,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textWidthBasis:
+                                                              TextWidthBasis
+                                                                  .longestLine,
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            // color: Colors.white,
+                                                            foreground: Paint()
+                                                              ..style =
+                                                                  PaintingStyle
+                                                                      .stroke
+                                                              ..color =
+                                                                  Colors.black
+                                                              ..strokeWidth = 2,
+                                                            // color: Colors.white,
+                                                            fontSize: 20,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          ads[i].title,
+                                                          softWrap: true,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textWidthBasis:
+                                                              TextWidthBasis
+                                                                  .longestLine,
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                            fontSize: 20,
+                                                          ),
+                                                        )
+                                                      ]),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ]),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
                         ),
                       ),
                     ),
