@@ -22,7 +22,8 @@ class _ShowTCState extends State<ShowTC> {
         appBar: AppBar(
           iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
           elevation: 2,
-          title: Text((languageType == 0) ? "الدورات" : "Courses",
+          title: Text(
+              (languageType == 0) ? "المراكز التدريبية" : "Training Center",
               style: TextStyle(color: (isDark) ? Colors.white : Colors.black)),
           backgroundColor: (isDark) ? Color(0xff424242) : Colors.white,
         ),
@@ -42,13 +43,14 @@ class _ShowTCState extends State<ShowTC> {
   }
 
   Future<List<BoxTCLabelData>> getData() async {
-    var url = "TrainingCenter1";
+    var url = "/TrainingCenters";
     List<BoxTCLabelData> tC = [];
 
     try {
       var response = await dioTestApi.get(url);
       if (response.statusCode == 200) {
-        List<dynamic> tCJson = response.data["TrainingCenter"];
+        List<dynamic> tCJson = response.data["tc"];
+        print(response.data);
 
         for (var tCJson in tCJson) {
           tC.add(BoxTCLabelData.fromJson(tCJson));

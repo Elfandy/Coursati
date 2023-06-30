@@ -4,16 +4,17 @@ import 'package:coursati/Widgets/Home/CourseBox.dart';
 import 'package:coursati/Widgets/TrainingCenter/PersonalCourseBox.dart';
 import 'package:flutter/material.dart';
 
-class AllCoursesShowWithSearch extends StatefulWidget {
-  AllCoursesShowWithSearch({super.key, required this.courses});
+class AllCoursesShowWithSearchPersonal extends StatefulWidget {
+  AllCoursesShowWithSearchPersonal({super.key, required this.courses});
   List<BoxCourseLabelData> courses;
 
   @override
-  State<AllCoursesShowWithSearch> createState() =>
-      _AllCoursesShowWithSearchState();
+  State<AllCoursesShowWithSearchPersonal> createState() =>
+      _AllCoursesShowWithSearchPersonalState();
 }
 
-class _AllCoursesShowWithSearchState extends State<AllCoursesShowWithSearch> {
+class _AllCoursesShowWithSearchPersonalState
+    extends State<AllCoursesShowWithSearchPersonal> {
   TextEditingController _search = TextEditingController();
   bool _visibleSearch = false;
 
@@ -66,7 +67,7 @@ class _AllCoursesShowWithSearchState extends State<AllCoursesShowWithSearch> {
           child: Wrap(
             children: [
               for (BoxCourseLabelData i in widget.courses)
-                CourseBox(
+                PersonalCourseBox(
                   bld: i,
                 ),
             ],
@@ -77,7 +78,7 @@ class _AllCoursesShowWithSearchState extends State<AllCoursesShowWithSearch> {
           child: Wrap(
             children: [
               for (BoxCourseLabelData i in _searching)
-                CourseBox(
+                PersonalCourseBox(
                   bld: i,
                 ),
             ],

@@ -4,6 +4,7 @@ import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Screens/main_page.dart';
 import 'package:coursati/Widgets/Search/SearchResults.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../Classes/BoxCourseLabelData.dart';
@@ -33,7 +34,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   final TextEditingController _search = TextEditingController();
-
   final List<BoxTCLabelData> _TrainingCenterList = [];
   final List<BoxCourseLabelData> _CourseList = [];
   final List<Trainer> _TrainersList = [];
@@ -71,23 +71,13 @@ class _SearchPageState extends State<SearchPage> {
                       style: TextStyle(
                           color: (isDark) ? Colors.white : Colors.black),
                       onSubmitted: (value) {
-                        if (value != '') {
-                          setState(() {
+                        setState(() {
+                          if (_search.text != '') {
                             searching = true;
-                          });
-                        } else {
-                          setState(() {
+                          } else {
                             searching = false;
-                          });
-                        }
-                      },
-                      onTapOutside: (event) {
-                        if (_search.text != '') {
-                        } else {
-                          setState(() {
-                            searching = false;
-                          });
-                        }
+                          }
+                        });
                       },
                       onTap: () {
                         if (_search.selection ==
@@ -97,22 +87,21 @@ class _SearchPageState extends State<SearchPage> {
                               TextPosition(offset: _search.text.length));
                         }
                       },
+                      onEditingComplete: () {
+                        setState(() {
+                          if (_search.text != '') {
+                            searching = true;
+                          } else {
+                            searching = false;
+                          }
+                        });
+                      },
                       controller: _search,
                       cursorHeight: 20,
                       decoration: InputDecoration(
-                        prefixIcon: IconButton(
+                        prefixIcon: const IconButton(
                           icon: Icon(Icons.search),
-                          onPressed: () {
-                            if (_search.text != '') {
-                              setState(() {
-                                searching = true;
-                              });
-                            } else {
-                              setState(() {
-                                searching = false;
-                              });
-                            }
-                          },
+                          onPressed: null,
                         ),
                         hintText: (languageType == 0) ? "البحث" : "Search",
                         contentPadding: const EdgeInsets.all(2.5),
@@ -400,7 +389,7 @@ class _SearchPageState extends State<SearchPage> {
   //   return SearchJson;
   // }
 
-  Future<List> fetchSearch() async {
+  Future fetchSearch() async {
     var url = "Search/";
     Map search = {};
     String jsonTags = json.encode(_selectedTags);
@@ -422,9 +411,12 @@ class _SearchPageState extends State<SearchPage> {
 
       if (response.statusCode == 200) {
         SearchJson = response.data["search"];
+        return SearchJson;
+      } else {
+        return false;
       }
-    } catch (e) {
-      print(e);
+    } catch (exception) {
+      if (kDebugMode) print(exception);
     }
     return SearchJson;
   }

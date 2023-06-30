@@ -6,9 +6,11 @@ import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:coursati/Widgets/TrainingCenter/ADDCourse/ContainerForCourse.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -23,7 +25,7 @@ class AddTrainer extends StatefulWidget {
 
 class _AddTrainerState extends State<AddTrainer> {
   TextEditingController _name = TextEditingController(),
-      major = TextEditingController(),
+      _major = TextEditingController(),
       _descitpion = TextEditingController();
 
   File? _image;
@@ -49,11 +51,27 @@ class _AddTrainerState extends State<AddTrainer> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                  child: Text(
+                languageType == 0
+                    ? "ادخل بيانات المدرب ﻷضافته للمركز التدريبي"
+                    : "Enter The Trainer Details to add him to training center.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              )),
+            ),
+            Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
                 controller: _name,
+                maxLines: 1,
+                maxLength: 45,
                 style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 decoration: InputDecoration(
+                  counterText: "",
                   labelText:
                       (languageType == 0) ? "اسم المدرب" : "Trainer Name",
                   // labelStyle: TextStyle(color:)
@@ -66,9 +84,13 @@ class _AddTrainerState extends State<AddTrainer> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
-                controller: _name,
+                controller: _major,
+                maxLines: 1,
+                maxLength: 45,
                 style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 decoration: InputDecoration(
+                  counterText: "",
+
                   labelText: (languageType == 0) ? "التخصص" : "Major",
                   // labelStyle: TextStyle(color:)
                   border: OutlineInputBorder(
@@ -83,6 +105,7 @@ class _AddTrainerState extends State<AddTrainer> {
                 controller: _descitpion,
                 minLines: 1,
                 maxLines: 50,
+                maxLength: 2500,
                 inputFormatters: [],
                 style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 decoration: InputDecoration(
@@ -111,11 +134,11 @@ class _AddTrainerState extends State<AddTrainer> {
               ),
             ),
             _image != null
-                ? Image.file(
-                    _image!,
-                    width: 10,
-                    height: 200,
-                    fit: BoxFit.cover,
+                ? CircleAvatar(
+                    radius: 100,
+                    foregroundImage: FileImage(
+                      _image!,
+                    ),
                   )
                 : Image(
                     width: MediaQuery.of(context).size.width,
@@ -139,9 +162,32 @@ class _AddTrainerState extends State<AddTrainer> {
                   child:
                       Text((languageType == 0) ? "اختر الصورة" : "Pic Imgae")),
             ),
-            ElevatedButton(
-                onPressed: () {},
-                child: Text((languageType == 0) ? "إضافة" : "Create"))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: ElevatedButton(
+                  onPressed: () {
+                    if (_name.text.isEmpty) {
+                      return;
+                    }
+                    if (_major.text.isEmpty) {}
+                    if (_descitpion.text.isEmpty) {}
+                    if (_image == null) {}
+
+                    if (_name.text.isNotEmpty &&
+                        _descitpion.text.isNotEmpty &&
+                        _major.text.isNotEmpty &&
+                        _image != null) {}
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: ContinuousRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      fixedSize:
+                          Size((MediaQuery.of(context).size.width / 1.5), 50)),
+                  child: Text(
+                    (languageType == 0) ? "إضافة" : "Create",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            )
           ],
         ),
       ),
@@ -155,5 +201,34 @@ class _AddTrainerState extends State<AddTrainer> {
     setState(() {
       _image = imageTemp;
     });
+  }
+
+  Future setTrainer(
+      {required String name,
+      required String major,
+      required String description,
+      required File image}) async {
+    var url = "";
+    try {
+      var response = await dioTestApi.post(url, data: {
+        'name': name,
+        'major': major,
+        'description': description,
+        'image': image
+      });
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: languageType == 0
+                ? "تمت الإضافة بنجاح."
+                : "Added succesfully.");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (exception) {
+      if (kDebugMode) {
+        print(exception);
+      }
+    }
   }
 }

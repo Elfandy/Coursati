@@ -50,9 +50,11 @@ class Course {
     required this.trainerData,
     this.period,
   });
-  final int duration, active;
-  int? periodsRepeats, period;
-  final String id,
+  final int active;
+  double duration;
+  double? period;
+  int? periodsRepeats;
+  String id,
       name,
       trainer,
       description,
@@ -60,13 +62,13 @@ class Course {
       icon,
       trainingCenterName,
       trainingCenterID;
-  final List<Tag> tags;
+  List<Tag> tags;
 
-  final double price, discount;
-  final DateTime startingDate;
-  final bool full, repeats;
-  final Locations location;
-  final Trainer trainerData;
+  double price, discount;
+  DateTime startingDate;
+  bool full, repeats;
+  Locations location;
+  Trainer trainerData;
 
   factory Course.fromJson(Map<String, dynamic> json) {
     var tagObjsJson = json['tags'] as List;
@@ -74,17 +76,17 @@ class Course {
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
     return Course(
         name: json['name'],
-        duration: json['duration'] as int,
+        duration: (double.parse(json['duration'].toString())),
         image: serverStorage + json['image'],
         trainer: json['trainers'],
         trainingCenterID: json['TC'].toString(),
         periodsRepeats: json['periodsRepeats'],
-        period: json['period'],
+        period: (double.parse(json['period'].toString())),
         description: json['description'],
         id: json['id'].toString(),
         trainingCenterName: json['TCname'],
         tags: _tags,
-        price: json['price'],
+        price: (double.parse(json['price'].toString())),
         startingDate: DateTime.parse(json['startDate']),
         active: json['state'],
         location: Locations.fromJson(json['location'][0]),

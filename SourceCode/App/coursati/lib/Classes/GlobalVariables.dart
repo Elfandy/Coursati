@@ -39,7 +39,7 @@ String apiTestServer = "https://apimocha.com/coursatitest/";
 // String apiTestServer = "https://192.168.43.128:8000/api/";
 final Dio dioTestApi = Dio(BaseOptions(
   baseUrl: onlineServer,
-  connectTimeout: const Duration(seconds: 3),
+  connectTimeout: const Duration(seconds: 10),
   sendTimeout: Duration(seconds: 60),
   receiveTimeout: Duration(seconds: 10),
   contentType: 'application/json',

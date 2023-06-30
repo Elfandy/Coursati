@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:coursati/Classes/TrainingCenter.dart';
+import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
 import 'package:coursati/firebase_options.dart';
 import 'package:cr_file_saver/file_saver.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -113,8 +115,36 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
-      // home: const MainPage(),
       home: const MainPage(),
+//       home: AddTrainer(
+//         trainingCenter: TrainingCenter(
+// //     // branch: [Branches[0], Branches[1], Branches[2]],
+//           close: TimeOfDay(hour: 19, minute: 00),
+//           description: """Advancing the Community with Hands-on Cyber
+// Security Training.
+// It is our ongoing mission to empower cyber security
+//  professionals with the practical skills and knowledge
+//  they need to make our world a safer place.
+// Advancing the Community with Hands-on Cyber Security
+// Training.
+// It is our ongoing mission to empower cyber security
+// professionals with the practical skills and knowledge
+// they need to make our world a safer place.""",
+//           email: "Octal@gmail.com",
+//           id: "0091",
+//           location: locations[3],
+//           name: "Octal",
+//           open: TimeOfDay(hour: 8, minute: 00),
+//           phoneNumber: "0911234567",
+//           rating: 3.8,
+//           tags: [],
+//           image: "${server}/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
+//           logo: "${server}/Images/Asset%201%20(2).png",
+//           facebook: "https://www.facebook.com",
+//           website: "https://www.octal.com.ly",
+//           whatsAppNum: "0910502646",
+//         ),
+//       ),
 
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,

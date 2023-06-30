@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/Ads.dart';
 import 'package:coursati/Classes/BoxTCLabelData.dart';
-import 'package:coursati/Screens/SubScreen/ShowAllCourse.dart';
+import 'package:coursati/Screens/SubScreen/ShowAllCoursePersonal.dart';
 import 'package:coursati/Screens/main_page.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/Home/AdsPage.dart';
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       var response = await dioTestApi.get(url);
 
       if (response.statusCode == 200) {
-        // print(response.data);
+        print(response.data);
 
         List<dynamic> coursesJson = response.data['courses'];
 
@@ -80,7 +80,6 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (kDebugMode) {
-        Fluttertoast.showToast(msg: "courses error");
         print(e);
       }
     }
@@ -123,7 +122,6 @@ class _HomePageState extends State<HomePage> {
         }
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: "trainingcenter error");
       print(e);
     }
     return tC;
@@ -199,183 +197,198 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
-                            List<Ads> ads = [];
-                            for (var ad in snapshot.data) {
-                              ads.add(Ads.fromJson(ad));
-                            }
-                            return ImageSlideshow(
-                                isLoop: true,
-                                indicatorColor: Color(0xff1776e0),
-                                initialPage: 1,
-                                autoPlayInterval: 5000,
-                                children: [
-                                  for (int i = 0; i < ads.length; i++)
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      width: MediaQuery.of(context).size.width /
-                                          1.1,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              3,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                AdsPage(ad: ads[i]),
-                                          ));
-                                        },
-                                        child: Stack(children: [
-                                          CachedNetworkImage(
-                                              imageUrl: ads[i].image,
-                                              progressIndicatorBuilder: (context,
-                                                      url, progress) =>
-                                                  Center(
-                                                      child:
-                                                          CircularProgressIndicator()),
-                                              fit: BoxFit.cover,
-                                              width: double.infinity),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: double.infinity,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 20),
-                                                child: Stack(children: [
-                                                  Text(
-                                                    ads[i].title,
-                                                    softWrap: true,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textWidthBasis:
-                                                        TextWidthBasis
-                                                            .longestLine,
-                                                    textAlign: TextAlign.start,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      // color: Colors.white,
-                                                      foreground: Paint()
-                                                        ..style =
-                                                            PaintingStyle.stroke
-                                                        ..color = Colors.black
-                                                        ..strokeWidth = 2,
-                                                      // color: Colors.white,
-                                                      fontSize: 20,
+                            if (snapshot.data != null) {
+                              List<Ads> ads = [];
+                              for (var ad in snapshot.data) {
+                                ads.add(Ads.fromJson(ad));
+                              }
+                              return ImageSlideshow(
+                                  isLoop: true,
+                                  indicatorColor: Color(0xff1776e0),
+                                  initialPage: 1,
+                                  autoPlayInterval: 5000,
+                                  children: [
+                                    for (int i = 0; i < ads.length; i++)
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.1,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                3,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdsPage(ad: ads[i]),
+                                            ));
+                                          },
+                                          child: Stack(children: [
+                                            CachedNetworkImage(
+                                                imageUrl: ads[i].image,
+                                                progressIndicatorBuilder: (context,
+                                                        url, progress) =>
+                                                    Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                fit: BoxFit.cover,
+                                                width: double.infinity),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 20),
+                                                  child: Stack(children: [
+                                                    Text(
+                                                      ads[i].title,
+                                                      softWrap: true,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textWidthBasis:
+                                                          TextWidthBasis
+                                                              .longestLine,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        // color: Colors.white,
+                                                        foreground: Paint()
+                                                          ..style =
+                                                              PaintingStyle
+                                                                  .stroke
+                                                          ..color = Colors.black
+                                                          ..strokeWidth = 2,
+                                                        // color: Colors.white,
+                                                        fontSize: 20,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    ads[i].title,
-                                                    softWrap: true,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textWidthBasis:
-                                                        TextWidthBasis
-                                                            .longestLine,
-                                                    textAlign: TextAlign.start,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                      fontSize: 20,
-                                                    ),
-                                                  )
-                                                ]),
-                                              ),
-                                            ],
-                                          ),
-                                        ]),
+                                                    Text(
+                                                      ads[i].title,
+                                                      softWrap: true,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textWidthBasis:
+                                                          TextWidthBasis
+                                                              .longestLine,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                      ),
+                                                    )
+                                                  ]),
+                                                ),
+                                              ],
+                                            ),
+                                          ]),
+                                        ),
                                       ),
-                                    ),
-                                  //     OutlinedButton(
+                                    //     OutlinedButton(
 
-                                  //         style: OutlinedButton.styleFrom(
-                                  //           shape: ContinuousRectangleBorder(
-                                  //             borderRadius:
-                                  //                 BorderRadius.circular(50),
-                                  //           ),
+                                    //         style: OutlinedButton.styleFrom(
+                                    //           shape: ContinuousRectangleBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(50),
+                                    //           ),
 
-                                  //         ),
-                                  //         onPressed: () {},
-                                  //         child: Stack(
-                                  //           fit: StackFit.expand,
-                                  //           children: [
-                                  //             Padding(
-                                  //               padding:
-                                  //                   const EdgeInsets.symmetric(
-                                  //                       horizontal: 10,
-                                  //                       vertical: 20),
-                                  //               child: Container(
-                                  //                 width: MediaQuery.of(context)
-                                  //                         .size
-                                  //                         .width /
-                                  //                     1.4,
-                                  //                 decoration: BoxDecoration(
-                                  //                     borderRadius:
-                                  //                         BorderRadius.circular(
-                                  //                             50)),
-                                  //                 child: Stack(children: [
-                                  //                   Text(
-                                  //                     ads[i].title,
-                                  //                     softWrap: true,
-                                  //                     maxLines: 1,
-                                  //                     overflow:
-                                  //                         TextOverflow.ellipsis,
-                                  //                     textWidthBasis:
-                                  //                         TextWidthBasis
-                                  //                             .longestLine,
-                                  //                     textAlign:
-                                  //                         TextAlign.start,
-                                  //                     style: TextStyle(
-                                  //                       fontWeight:
-                                  //                           FontWeight.bold,
-                                  //                       // color: Colors.white,
-                                  //                       foreground: Paint()
-                                  //                         ..style =
-                                  //                             PaintingStyle
-                                  //                                 .stroke
-                                  //                         ..color = Colors.black
-                                  //                         ..strokeWidth = 2,
-                                  //                       // color: Colors.white,
-                                  //                       fontSize: 20,
-                                  //                     ),
-                                  //                   ),
-                                  //                   Text(
-                                  //                     ads[i].title,
-                                  //                     softWrap: true,
-                                  //                     maxLines: 1,
-                                  //                     overflow:
-                                  //                         TextOverflow.ellipsis,
-                                  //                     textWidthBasis:
-                                  //                         TextWidthBasis
-                                  //                             .longestLine,
-                                  //                     textAlign:
-                                  //                         TextAlign.start,
-                                  //                     style: TextStyle(
-                                  //                       fontWeight:
-                                  //                           FontWeight.bold,
-                                  //                       color: Colors.white,
-                                  //                       fontSize: 20,
-                                  //                     ),
-                                  //                   )
-                                  //                 ]),
-                                  //               ),
-                                  //             ),
-                                  //           ],
-                                  //         ))
-                                ]);
+                                    //         ),
+                                    //         onPressed: () {},
+                                    //         child: Stack(
+                                    //           fit: StackFit.expand,
+                                    //           children: [
+                                    //             Padding(
+                                    //               padding:
+                                    //                   const EdgeInsets.symmetric(
+                                    //                       horizontal: 10,
+                                    //                       vertical: 20),
+                                    //               child: Container(
+                                    //                 width: MediaQuery.of(context)
+                                    //                         .size
+                                    //                         .width /
+                                    //                     1.4,
+                                    //                 decoration: BoxDecoration(
+                                    //                     borderRadius:
+                                    //                         BorderRadius.circular(
+                                    //                             50)),
+                                    //                 child: Stack(children: [
+                                    //                   Text(
+                                    //                     ads[i].title,
+                                    //                     softWrap: true,
+                                    //                     maxLines: 1,
+                                    //                     overflow:
+                                    //                         TextOverflow.ellipsis,
+                                    //                     textWidthBasis:
+                                    //                         TextWidthBasis
+                                    //                             .longestLine,
+                                    //                     textAlign:
+                                    //                         TextAlign.start,
+                                    //                     style: TextStyle(
+                                    //                       fontWeight:
+                                    //                           FontWeight.bold,
+                                    //                       // color: Colors.white,
+                                    //                       foreground: Paint()
+                                    //                         ..style =
+                                    //                             PaintingStyle
+                                    //                                 .stroke
+                                    //                         ..color = Colors.black
+                                    //                         ..strokeWidth = 2,
+                                    //                       // color: Colors.white,
+                                    //                       fontSize: 20,
+                                    //                     ),
+                                    //                   ),
+                                    //                   Text(
+                                    //                     ads[i].title,
+                                    //                     softWrap: true,
+                                    //                     maxLines: 1,
+                                    //                     overflow:
+                                    //                         TextOverflow.ellipsis,
+                                    //                     textWidthBasis:
+                                    //                         TextWidthBasis
+                                    //                             .longestLine,
+                                    //                     textAlign:
+                                    //                         TextAlign.start,
+                                    //                     style: TextStyle(
+                                    //                       fontWeight:
+                                    //                           FontWeight.bold,
+                                    //                       color: Colors.white,
+                                    //                       fontSize: 20,
+                                    //                     ),
+                                    //                   )
+                                    //                 ]),
+                                    //               ),
+                                    //             ),
+                                    //           ],
+                                    //         ))
+                                  ]);
+                            } else {
+                              return Center(
+                                child: Text(
+                                  languageType == 0
+                                      ? "يبدو انه يوجد خطاء في الاتصال بالخادم الرجاء المحاولة لاحقا."
+                                      : "There seems That There is a problem Connecting to the server Please try again later.",
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
                           } else {
                             return Center(
                               child: CircularProgressIndicator(),
@@ -466,24 +479,47 @@ class _HomePageState extends State<HomePage> {
                 // ),
                 //** New Courses */
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(
-                      width: 10,
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          (languageType == 0)
+                              ? "الدورات الجديدة"
+                              : "New Courses",
+                          style: TextStyle(
+                            shadows: const [
+                              Shadow(
+                                  color: Colors.black45,
+                                  offset: Offset(1, 2.2),
+                                  blurRadius: 4)
+                            ],
+                            fontSize: (languageType == 0) ? 24 : 36,
+                            // color: const Color(0xff1776e0),
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
                     ),
-                    Text(
-                      (languageType == 0) ? "الدورات الجديدة" : "New Courses",
-                      style: TextStyle(
-                        shadows: const [
-                          Shadow(
-                              color: Colors.black45,
-                              offset: Offset(1, 2.2),
-                              blurRadius: 4)
-                        ],
-                        fontSize: (languageType == 0) ? 24 : 36,
-                        // color: const Color(0xff1776e0),
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(ScreenController()
+                                  .createRoute(ShowCourses(), 1));
+                            },
+                            child: const Text(
+                              "المزيد",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    )
                   ],
                 ),
                 FutureBuilder(

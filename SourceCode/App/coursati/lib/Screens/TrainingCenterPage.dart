@@ -49,7 +49,6 @@ class _TrainingCenterState extends State<TrainingCenter> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data != null) {
-              print(snapshot.data);
               if (snapshot.data == 'No_TC') {
                 //! THis is where the screen of user is loged in but doesnot have a training center
                 return const TCLoggedIn();

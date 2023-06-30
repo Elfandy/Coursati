@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -921,7 +920,6 @@ class _AccountPageState extends State<AccountPage> {
         _editEmail.text = '';
         _editGender = user.gender;
         _editName.text = "";
-        _editOrganaiztionName.text = "";
         _editPHoneNumber.text = "";
         _editPersonalID.text = "";
       }

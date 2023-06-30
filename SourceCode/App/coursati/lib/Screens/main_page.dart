@@ -37,6 +37,7 @@ class _MainPageState extends State<MainPage> {
 
     super.initState();
     FlutterNativeSplash.remove();
+    fillTags();
   }
 
   //* This is the Builder for the app
@@ -144,6 +145,7 @@ Future fillTags() async {
     var response = await dioTestApi.get(url);
     if (response.statusCode == 200) {
       List<dynamic> taglist = response.data;
+      print(response.data);
       for (var tag in taglist) {
         tags.add(Tag.fromJson(tag));
       }

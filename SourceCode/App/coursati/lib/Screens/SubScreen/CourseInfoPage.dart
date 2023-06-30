@@ -465,7 +465,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       discount: 0,
       duration: 0,
       full: false,
-      price: 0,
+      price: 0.0,
       startingDate: DateTime(2023),
       tags: [],
       trainer: "0",
@@ -486,6 +486,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       var response = await dioTestApi.post(url, data: {"id": int.parse(id)});
       if (response.statusCode == 200) {
         _course = Course.fromJson(response.data['info'][0]);
+        print(response.data);
       }
     } catch (e) {
       print(e);

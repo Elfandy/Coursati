@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -27,7 +28,9 @@ class _AddBranchState extends State<AddBranch> {
       _website = TextEditingController(),
       _facebook = TextEditingController(),
       _description = TextEditingController(),
-      _whatsapp = TextEditingController();
+      _whatsapp = TextEditingController(),
+      _openTime = TextEditingController(),
+      _closeTime = TextEditingController();
   String? _dropDownValue;
   Locations locationData = Locations(city: "", id: 0, lat: 0, lng: 0);
   // Location? _dropDownValue = locations.first;
@@ -224,7 +227,74 @@ class _AddBranchState extends State<AddBranch> {
                   ],
                 ),
               ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: TextField(
+                        onTap: _openTime.text.isEmpty
+                            ? () {
+                                Fluttertoast.showToast(
+                                    msg: languageType == 0
+                                        ? "عليك اختيار وقت الفتح قبل"
+                                        : "You have to add openTime before.");
+                              }
+                            : () async => {
+                                  await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((value) {
+                                    if (value != null)
+                                      _closeTime.text =
+                                          "${value!.hour}:${value.minute}";
+                                  }),
+                                },
+                        readOnly: true,
+                        controller: _closeTime,
+                        decoration: InputDecoration(
+                          label: Text(
+                              (languageType == 0) ? "وقت اﻹغلاق" : "closeTime"),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: TextField(
+                        onTap: () async => {
+                          await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now())
+                              .then((value) {
+                            setState(() {
+                              if (value != null)
+                                _openTime.text =
+                                    "${value!.hour}:${value.minute}";
+                            });
+                          }),
+                        },
+                        readOnly: true,
+                        controller: _openTime,
+                        decoration: InputDecoration(
+                          label: Text(
+                              (languageType == 0) ? "وقت الفتح" : "openTime"),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -7,24 +7,24 @@ import 'Location.dart';
 import 'TagData.dart';
 
 class TrainingCenter {
-  TrainingCenter({
-    this.id = '0',
-    required this.close,
-    required this.description,
-    required this.email,
-    required this.location,
-    required this.name,
-    required this.open,
-    required this.phoneNumber,
-    this.rating = 1.0,
-    required this.tags,
-    required this.image,
-    required this.logo,
-    this.facebook = "",
-    this.website = "",
-    this.viperAllow = false,
-    this.whatsAppNum = "",
-  });
+  TrainingCenter(
+      {this.id = '0',
+      required this.close,
+      required this.description,
+      required this.email,
+      required this.location,
+      required this.name,
+      required this.open,
+      required this.phoneNumber,
+      this.rating = 1.0,
+      required this.tags,
+      required this.image,
+      required this.logo,
+      this.facebook = "",
+      this.website = "",
+      this.viperAllow = false,
+      this.whatsAppNum = "",
+      this.branchCount});
 
   String id, name, description, phoneNumber, email, image, logo;
   String? facebook, website, whatsAppNum;
@@ -32,6 +32,7 @@ class TrainingCenter {
   TimeOfDay open, close;
   List<Tag> tags;
   double rating;
+  int? branchCount;
 
   bool viperAllow = false;
 
@@ -94,7 +95,8 @@ class TrainingCenter {
             hour: (json["openTime"].round() as int),
             minute: (int.parse(json["openTime"].toString().split('.').last))),
         rating: double.parse(json["rate"]),
-        website: json["website"]);
+        website: json["website"],
+        branchCount: json['branchcount']);
   }
 
   Map<String, dynamic> toJson() => {

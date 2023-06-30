@@ -1,6 +1,7 @@
 import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/AllTrainingCenterData.dart';
+import 'package:coursati/Classes/BoxCourseLabelData.dart';
 
 import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
 import 'package:coursati/Widgets/Home/CourseBox.dart';
@@ -43,6 +44,12 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
             if (snapshot.data != null) {
               AllTrainingCenterData Data =
                   AllTrainingCenterData.fromJson(snapshot.data);
+              List<BoxCourseLabelData> activeCourses = [];
+              Data.courses.forEach((element) {
+                if (element.state == 1) {
+                  activeCourses.add(element);
+                }
+              });
 
               return Scaffold(
                 floatingActionButton: Align(
@@ -548,8 +555,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       "ِActive courses: ",
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    const Text(
-                                      "10",
+                                    Text(
+                                      activeCourses.length.toString(),
                                       style: TextStyle(
                                           color: Color(0xff1776e0),
                                           fontSize: 18),
@@ -561,8 +568,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       "All courses: ",
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    const Text(
-                                      "34",
+                                    Text(
+                                      Data.courses.length.toString(),
                                       style: TextStyle(
                                           color: Color(0xff1776e0),
                                           fontSize: 18),
@@ -578,8 +585,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       "ِTrainers: ",
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    const Text(
-                                      "15",
+                                    Text(
+                                      Data.trainers.length.toString(),
                                       style: TextStyle(
                                           color: Color(0xff1776e0),
                                           fontSize: 18),
@@ -595,8 +602,8 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       "Branches: ",
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    const Text(
-                                      "3",
+                                    Text(
+                                      Data.tcData!.branchCount.toString(),
                                       style: TextStyle(
                                           color: Color(0xff1776e0),
                                           fontSize: 18),
@@ -649,12 +656,11 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
     try {
       var response = await dioTestApi.post(url, data: {"tcID": id});
       if (response.statusCode == 200) {
-        print(response.data);
         return response.data;
       }
-    } catch (e) {
+    } catch (exception) {
       if (kDebugMode) {
-        print(e);
+        print(exception);
       }
     }
   }

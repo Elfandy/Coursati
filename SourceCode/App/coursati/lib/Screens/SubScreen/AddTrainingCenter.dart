@@ -465,7 +465,67 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ],
                         ),
                       ),
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: TextField(
+                                onTap: () async => {
+                                  await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((value) {
+                                    if (value != null)
+                                      _closeTime.text =
+                                          "${value!.hour}:${value.minute}";
+                                  }),
+                                },
+                                readOnly: true,
+                                controller: _closeTime,
+                                decoration: InputDecoration(
+                                  label: Text((languageType == 0)
+                                      ? "وقت اﻹغلاق"
+                                      : "closeTime"),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: TextField(
+                                onTap: () async => {
+                                  await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((value) {
+                                    if (value != null)
+                                      _openTime.text =
+                                          "${value!.hour}:${value.minute}";
+                                  }),
+                                },
+                                readOnly: true,
+                                controller: _openTime,
+                                decoration: InputDecoration(
+                                  label: Text((languageType == 0)
+                                      ? "وقت الفتح"
+                                      : "openTime"),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
