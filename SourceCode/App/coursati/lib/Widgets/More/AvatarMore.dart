@@ -1,3 +1,4 @@
+import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../Classes/UserData.dart';
@@ -21,8 +22,9 @@ class _AvatarMoreState extends State<AvatarMore> {
           height: 20,
         ),
         CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(
-            widget.user.image,
+          backgroundColor: isDark ? Colors.grey[200] : Colors.white,
+          backgroundImage: NetworkImage(
+            serverStorage + widget.user.image,
           ),
           radius: 50,
         ),

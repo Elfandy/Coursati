@@ -95,8 +95,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                       child: Column(
                                         children: [
                                           CachedNetworkImage(
-                                            imageUrl: serverStorage +
-                                                trainingCenter.logo!,
+                                            imageUrl: trainingCenter.logo!,
                                             height: 120,
                                           ),
                                           Padding(

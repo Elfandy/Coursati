@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/Ads.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AdsPage extends StatefulWidget {
@@ -34,13 +32,14 @@ class _AdsPageState extends State<AdsPage> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Center(
             child: Text(
               widget.ad.description,
               maxLines: 10,
               softWrap: true,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontSize: 18,
+                  color: isDark ? Colors.grey[200] : Colors.grey[600]),
             ),
           ),
           Spacer(),
@@ -49,7 +48,10 @@ class _AdsPageState extends State<AdsPage> {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(),
                 onPressed: () {},
-                child: Text(languageType == 0 ? "اذهب للموقع" : "Go to Link")),
+                child: Text(
+                  languageType == 0 ? "اذهب للموقع" : "Go to Link",
+                  style: TextStyle(color: Colors.white),
+                )),
           )
         ]),
       ),

@@ -44,7 +44,7 @@ class _CourseDetailedfetchDataState extends State<CourseDetailedfetchData> {
   }
 
   Future<Course> getCourseData(String id) async {
-    var url = "showCourseData";
+    var url = "CourseInfo";
     Map<String, dynamic> course = {"id": id};
     Course _course = Course(
       name: "",
@@ -75,7 +75,7 @@ class _CourseDetailedfetchDataState extends State<CourseDetailedfetchData> {
     try {
       var response = await dioTestApi.post(url, data: course);
       if (response.statusCode == 200) {
-        _course = Course.fromJson(response.data);
+        _course = Course.fromJson(response.data['info'][0]);
       }
     } catch (e) {
       print(e);

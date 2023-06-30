@@ -8,10 +8,10 @@ class BoxTCLabelData {
       required this.image,
       required this.logo,
       required this.id,
-      this.locName = ""});
+      this.locName});
   String? name, logo, image;
   String? id;
-  String? locName = "";
+  String? locName;
 
   BoxTCLabelData.fromJson(Map<String, dynamic> json) {
     id = json["id"].toString().trim();

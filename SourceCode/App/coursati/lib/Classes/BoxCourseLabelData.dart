@@ -10,12 +10,14 @@ class BoxCourseLabelData {
   String? name;
   String? image;
   String? id;
+  String? courseID;
 
   BoxCourseLabelData.fromJson(Map<String, dynamic> json) {
     id = json["id"].toString();
     name = json["name"];
     image = serverStorage + json["image"].trim();
-    location_in = json["locName"];
+    location_in = json["locName"] ?? '';
+    courseID = json['courseID'] ?? '';
   }
 
   Map<String, dynamic> toJson() =>

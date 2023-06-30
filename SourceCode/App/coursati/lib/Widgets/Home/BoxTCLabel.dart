@@ -50,6 +50,7 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
                 SizedBox(
                   width: 6,
                 ),
+                Text(widget.bld.locName.toString())
               ],
             ),
             SizedBox(

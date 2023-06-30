@@ -100,10 +100,11 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: Color(0x44000000)),
-                                child: Center(
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
                                   child: Text(
-                                    widget.bld.id.toString(),
-                                    textAlign: TextAlign.center,
+                                    widget.bld.courseID.toString(),
+                                    textAlign: TextAlign.start,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 14),
                                   ),
@@ -161,13 +162,13 @@ class _PersonalCourseBoxState extends State<PersonalCourseBox>
   }
 
   Future<List<BLDTrainer>> getAllTrainers({required id}) async {
-    var url = "/TrainersCourse";
+    var url = "CourseInfo";
     try {
       List<dynamic> list;
       List<BLDTrainer> trainers = [];
       var response = await dioTestApi.post(url, data: {"id": id});
       if (response.statusCode == 200) {
-        list = response.data;
+        list = response.data['info'];
         list.forEach((element) {
           trainers.add(BLDTrainer.fromJson(element));
         });

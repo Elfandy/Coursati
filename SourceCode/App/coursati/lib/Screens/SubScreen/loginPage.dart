@@ -232,7 +232,7 @@ class _loginPageState extends State<loginPage> {
                                 },
                                 // onTapOutSide: (event) {},
                                 onChange: (value) {},
-                                text_ar: "المبلاد",
+                                text_ar: "الميلاد",
                                 text_en: "Birth Date",
                                 textController: _birthDate,
                                 readOnly: true,
@@ -374,7 +374,7 @@ class _loginPageState extends State<loginPage> {
                           //**** Fetch Token from server */
                           getToken(_loginEmail.text, _loginPass.text)
                               .then((value) {
-                            if (value != null) {
+                            if (value != null && value != "'message':'0'") {
                               Map<String, dynamic> userTemp =
                                   json.decode(value.toString());
                               user.token = userTemp["token"];
@@ -394,7 +394,8 @@ class _loginPageState extends State<loginPage> {
                                 user.phoneNumber =
                                     userCredinitals['phonenumber'];
                                 user.hasTC = userCredinitals['hasTC'];
-
+                                user.personalID =
+                                    userCredinitals['passportID'].toString();
                                 user.image = "${userCredinitals['avatar']}";
                                 _accountFound = 1;
 

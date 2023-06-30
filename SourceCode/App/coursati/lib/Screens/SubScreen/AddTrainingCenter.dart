@@ -34,7 +34,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
       _website = TextEditingController(),
       _facebook = TextEditingController(),
       _description = TextEditingController(),
-      _whatsapp = TextEditingController();
+      _whatsapp = TextEditingController(),
+      _closeTime = TextEditingController(),
+      _openTime = TextEditingController();
   String? _dropDownValue;
   Locations locationData = Locations(city: "", id: 0, lat: 0, lng: 0);
   // Location? _dropDownValue = locations.first;
@@ -783,7 +785,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           children: [
                             Text(
                               (languageType == 0)
-                                  ? "فم بتحميل صورة مركز التدريب"
+                                  ? "قم بتحميل صورة مركز التدريب"
                                   : "Upload your Training Center picture",
                               style: TextStyle(
                                   fontSize: ((languageType == 0) ? 20 : 16)),
@@ -793,24 +795,86 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ],
                         ),
                       ),
-                      _image != null
-                          ? Image.file(
-                              _image!,
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            )
-                          : Image(
-                              width: MediaQuery.of(context).size.width,
-                              image: const AssetImage(
-                                  "Assets/Images/techny-tablet-with-stylus-for-design.png"),
-                              height: 150,
+
+                      Column(
+                        children: [
+                          const Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                Text("الصورة", style: TextStyle(fontSize: 18)),
+                          ),
+                          _image != null
+                              ? Image.file(
+                                  _image!,
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  image: const AssetImage(
+                                      "Assets/Images/techny-tablet-with-stylus-for-design.png"),
+                                  height: 200,
+                                ),
+                          ElevatedButton(
+                              onPressed: getImage,
+                              child: Text(
+                                (languageType == 0)
+                                    ? "اختر الصورة"
+                                    : "Pic Imgae",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                        ],
+                      ),
+                      const Divider(thickness: 2),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("الشعار",
+                                  style: TextStyle(fontSize: 18)),
                             ),
-                      OutlinedButton(
-                          onPressed: getImage,
-                          child: Text((languageType == 0)
-                              ? "اختر الصورة"
-                              : "Pic Imgae")),
+                            _logo != null
+                                ? CircleAvatar(
+                                    backgroundColor: Colors.black,
+                                    radius: 60.3,
+                                    child: CircleAvatar(
+                                      radius: 60,
+                                      backgroundColor: Colors.white,
+                                      child: Image.file(
+                                        _logo!,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.6,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : const CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: Colors.white,
+                                    child: Image(
+                                      image: const AssetImage(
+                                          "Assets/Images/techny-tablet-with-stylus-for-design.png"),
+                                      height: 150,
+                                    ),
+                                  ),
+                            ElevatedButton(
+                                onPressed: getLogo,
+                                child: Text(
+                                  (languageType == 0)
+                                      ? "اختر الشعار"
+                                      : "Pic Logo",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ],
+                        ),
+                      ),
                     ]),
                   ),
                   Step(
@@ -1043,6 +1107,67 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                               ),
                             )
                           : Container(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: TextField(
+                                onTap: () async => {
+                                  await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((value) {
+                                    if (value != null)
+                                      _closeTime.text =
+                                          "${value!.hour}:${value.minute}";
+                                  }),
+                                },
+                                readOnly: true,
+                                controller: _closeTime,
+                                decoration: InputDecoration(
+                                  label: Text((languageType == 0)
+                                      ? "وقت اﻹغلاق"
+                                      : "closeTime"),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: TextField(
+                                onTap: () async => {
+                                  await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((value) {
+                                    if (value != null)
+                                      _openTime.text =
+                                          "${value!.hour}:${value.minute}";
+                                  }),
+                                },
+                                readOnly: true,
+                                controller: _openTime,
+                                decoration: InputDecoration(
+                                  label: Text((languageType == 0)
+                                      ? "وقت الفتح"
+                                      : "openTime"),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                         child: Column(
@@ -1129,12 +1254,12 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                     _index++;
                   } else {
                     // TrainingCenter tc = TrainingCenter(
-                      
+
                     //   description: _description.text,
                     //   email: _email.text,
                     //   image: (await multipart_image),
                     //   name:_trainingCenterName.text,
-                    //   close: _
+                    //   close: TimeOfDay(hour: ),
 
                     //   );
                     // SendData();
@@ -1166,6 +1291,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
     final imageTemp = File(image.path);
     setState(() {
       _image = imageTemp;
+    });
+  }
+
+  Future getLogo() async {
+    final logo = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (logo == null) return;
+    final imageTemp = File(logo.path);
+    setState(() {
+      _logo = imageTemp;
     });
   }
 

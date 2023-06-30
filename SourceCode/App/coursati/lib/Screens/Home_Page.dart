@@ -194,122 +194,194 @@ class _HomePageState extends State<HomePage> {
                     child: Hero(
                       transitionOnUserGestures: true,
                       tag: "adsHero",
-                      child: Container(
-                        // width: MediaQuery.of(context).size.width / 1.1,
-                        height: 240,
-                        child: FutureBuilder(
-                          future: getAds(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              List<Ads> ads = [];
-                              for (var ad in snapshot.data) {
-                                ads.add(Ads.fromJson(ad));
-                              }
-
-                              return ImageSlideshow(
+                      child: FutureBuilder(
+                        future: getAds(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            List<Ads> ads = [];
+                            for (var ad in snapshot.data) {
+                              ads.add(Ads.fromJson(ad));
+                            }
+                            return ImageSlideshow(
                                 isLoop: true,
                                 indicatorColor: Color(0xff1776e0),
                                 initialPage: 1,
                                 autoPlayInterval: 5000,
                                 children: [
                                   for (int i = 0; i < ads.length; i++)
-                                    InkWell(
-                                      splashColor: Colors.blue,
-                                      splashFactory: InkRipple.splashFactory,
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              AdsPage(ad: ads[i]),
-                                        ));
-                                      },
-                                      child: Ink(
-                                        child: Stack(
-                                            fit: StackFit.expand,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      width: MediaQuery.of(context).size.width /
+                                          1.1,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              3,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                AdsPage(ad: ads[i]),
+                                          ));
+                                        },
+                                        child: Stack(children: [
+                                          CachedNetworkImage(
+                                              imageUrl: ads[i].image,
+                                              progressIndicatorBuilder: (context,
+                                                      url, progress) =>
+                                                  Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
+                                              fit: BoxFit.cover,
+                                              width: double.infinity),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              CachedNetworkImage(
-                                                  imageUrl: ads[i].image,
-                                                  fit: BoxFit.cover),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
+                                              SizedBox(
+                                                width: double.infinity,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
                                                         horizontal: 10,
                                                         vertical: 20),
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              1.4,
-                                                      child: Stack(children: [
-                                                        Text(
-                                                          ads[i].title,
-                                                          softWrap: true,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          textWidthBasis:
-                                                              TextWidthBasis
-                                                                  .longestLine,
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            // color: Colors.white,
-                                                            foreground: Paint()
-                                                              ..style =
-                                                                  PaintingStyle
-                                                                      .stroke
-                                                              ..color =
-                                                                  Colors.black
-                                                              ..strokeWidth = 2,
-                                                            // color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          ads[i].title,
-                                                          softWrap: true,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          textWidthBasis:
-                                                              TextWidthBasis
-                                                                  .longestLine,
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        )
-                                                      ]),
+                                                child: Stack(children: [
+                                                  Text(
+                                                    ads[i].title,
+                                                    softWrap: true,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textWidthBasis:
+                                                        TextWidthBasis
+                                                            .longestLine,
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      // color: Colors.white,
+                                                      foreground: Paint()
+                                                        ..style =
+                                                            PaintingStyle.stroke
+                                                        ..color = Colors.black
+                                                        ..strokeWidth = 2,
+                                                      // color: Colors.white,
+                                                      fontSize: 20,
                                                     ),
                                                   ),
-                                                ],
+                                                  Text(
+                                                    ads[i].title,
+                                                    softWrap: true,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textWidthBasis:
+                                                        TextWidthBasis
+                                                            .longestLine,
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                    ),
+                                                  )
+                                                ]),
                                               ),
-                                            ]),
+                                            ],
+                                          ),
+                                        ]),
                                       ),
                                     ),
-                                ],
-                              );
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ),
+                                  //     OutlinedButton(
+
+                                  //         style: OutlinedButton.styleFrom(
+                                  //           shape: ContinuousRectangleBorder(
+                                  //             borderRadius:
+                                  //                 BorderRadius.circular(50),
+                                  //           ),
+
+                                  //         ),
+                                  //         onPressed: () {},
+                                  //         child: Stack(
+                                  //           fit: StackFit.expand,
+                                  //           children: [
+                                  //             Padding(
+                                  //               padding:
+                                  //                   const EdgeInsets.symmetric(
+                                  //                       horizontal: 10,
+                                  //                       vertical: 20),
+                                  //               child: Container(
+                                  //                 width: MediaQuery.of(context)
+                                  //                         .size
+                                  //                         .width /
+                                  //                     1.4,
+                                  //                 decoration: BoxDecoration(
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             50)),
+                                  //                 child: Stack(children: [
+                                  //                   Text(
+                                  //                     ads[i].title,
+                                  //                     softWrap: true,
+                                  //                     maxLines: 1,
+                                  //                     overflow:
+                                  //                         TextOverflow.ellipsis,
+                                  //                     textWidthBasis:
+                                  //                         TextWidthBasis
+                                  //                             .longestLine,
+                                  //                     textAlign:
+                                  //                         TextAlign.start,
+                                  //                     style: TextStyle(
+                                  //                       fontWeight:
+                                  //                           FontWeight.bold,
+                                  //                       // color: Colors.white,
+                                  //                       foreground: Paint()
+                                  //                         ..style =
+                                  //                             PaintingStyle
+                                  //                                 .stroke
+                                  //                         ..color = Colors.black
+                                  //                         ..strokeWidth = 2,
+                                  //                       // color: Colors.white,
+                                  //                       fontSize: 20,
+                                  //                     ),
+                                  //                   ),
+                                  //                   Text(
+                                  //                     ads[i].title,
+                                  //                     softWrap: true,
+                                  //                     maxLines: 1,
+                                  //                     overflow:
+                                  //                         TextOverflow.ellipsis,
+                                  //                     textWidthBasis:
+                                  //                         TextWidthBasis
+                                  //                             .longestLine,
+                                  //                     textAlign:
+                                  //                         TextAlign.start,
+                                  //                     style: TextStyle(
+                                  //                       fontWeight:
+                                  //                           FontWeight.bold,
+                                  //                       color: Colors.white,
+                                  //                       fontSize: 20,
+                                  //                     ),
+                                  //                   )
+                                  //                 ]),
+                                  //               ),
+                                  //             ),
+                                  //           ],
+                                  //         ))
+                                ]);
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),
@@ -518,11 +590,11 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: ((context, index) {
                                 return TCBox(
                                   bld: BoxTCLabelData(
-                                    id: _Tc[index].id,
-                                    image: _Tc[index].image,
-                                    name: _Tc[index].name,
-                                    logo: _Tc[index].logo,
-                                  ),
+                                      id: _Tc[index].id,
+                                      image: _Tc[index].image,
+                                      name: _Tc[index].name,
+                                      logo: _Tc[index].logo,
+                                      locName: _Tc[index].locName),
                                 );
                               }),
                             ),

@@ -26,7 +26,7 @@ class TrainingCenter {
     this.whatsAppNum = "",
   });
 
-  String id, name, description, phoneNumber, email, image;
+  String id, name, description, phoneNumber, email, image, logo;
   String? facebook, website, whatsAppNum;
   Locations location;
   TimeOfDay open, close;
@@ -40,7 +40,6 @@ class TrainingCenter {
       : "https://api.whatsapp.com/send?phone=$whatsAppNum=";
 
   String get viper => "viber://chat?number=$phoneNumber";
-  String logo;
 
   factory TrainingCenter.fromJson(Map<String, dynamic> json) {
     var tagObjsJson = json['tags'] as List;
@@ -94,7 +93,7 @@ class TrainingCenter {
         open: TimeOfDay(
             hour: (json["openTime"].round() as int),
             minute: (int.parse(json["openTime"].toString().split('.').last))),
-        rating: double.parse(json["rate"]['rate']),
+        rating: double.parse(json["rate"]),
         website: json["website"]);
   }
 

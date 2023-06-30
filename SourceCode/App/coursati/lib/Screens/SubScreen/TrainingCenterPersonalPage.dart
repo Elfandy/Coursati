@@ -346,24 +346,26 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                     ),
                                 ]),
                               ),
-                              RoundedButton(
-                                icon: Icon(
-                                  (languageType == 0)
-                                      ? Icons.keyboard_arrow_left
-                                      : Icons.keyboard_arrow_right,
-                                  size: 40,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    ScreenController().createRoute(
-                                        AllPersonalCourse(
-                                            tcID: Data.tcData!.id),
-                                        1),
-                                  );
-                                },
-                                size: 80,
-                              ),
+                              Data.courses.length > 4
+                                  ? RoundedButton(
+                                      icon: Icon(
+                                        (languageType == 0)
+                                            ? Icons.keyboard_arrow_left
+                                            : Icons.keyboard_arrow_right,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          ScreenController().createRoute(
+                                              AllPersonalCourse(
+                                                  tcID: Data.tcData!.id),
+                                              1),
+                                        );
+                                      },
+                                      size: 80,
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -643,11 +645,11 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
   }
 
   Future getAllData(String id) async {
-    var url = "/user/AllTrainingCenterData";
+    var url = "/tc/mytc/info";
     try {
-      var response = await dioTestApi
-          .post(url, data: {"id": user.id, "trainingCenter": id});
+      var response = await dioTestApi.post(url, data: {"tcID": id});
       if (response.statusCode == 200) {
+        print(response.data);
         return response.data;
       }
     } catch (e) {

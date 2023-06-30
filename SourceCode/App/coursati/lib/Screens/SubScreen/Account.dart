@@ -93,7 +93,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
-    _imageProv = CachedNetworkImageProvider(_imageEdit);
+    _imageProv = NetworkImage(serverStorage + _imageEdit);
   }
 
   bool _newPassError = false, _oldPassError = false;
@@ -133,9 +133,10 @@ class _AccountPageState extends State<AccountPage> {
                   height: 20,
                 ),
                 CircleAvatar(
+                  backgroundColor: isDark ? Colors.grey[200] : Colors.white,
                   backgroundImage: _isEdit
                       ? _imageProv
-                      : CachedNetworkImageProvider(user.image.trim()),
+                      : NetworkImage(serverStorage + user.image.trim()),
                   radius: 100,
                   child: _isEdit
                       ? Align(
@@ -937,7 +938,7 @@ class _AccountPageState extends State<AccountPage> {
       if (_image != null) {
         _imageProv = FileImage(_image!);
       } else {
-        _imageProv = CachedNetworkImageProvider(user.image);
+        _imageProv = NetworkImage(serverStorage + user.image);
       }
     });
   }
