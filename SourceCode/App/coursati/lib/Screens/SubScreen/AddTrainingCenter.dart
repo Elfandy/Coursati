@@ -95,7 +95,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                             _trainingCenterPhoneNumber.text
                                                 .startsWith("094") ||
                                             _trainingCenterPhoneNumber.text
-                                                .startsWith("095")))
+                                                .startsWith("095") ||
+                                            _trainingCenterPhoneNumber.text
+                                                .startsWith("093")))
                                     ? details.onStepContinue
                                     : null,
                                 child: Text(

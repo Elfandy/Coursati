@@ -366,7 +366,7 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                         Navigator.of(context).push(
                                           ScreenController().createRoute(
                                               AllPersonalCourse(
-                                                  tcID: Data.tcData!.id),
+                                                  courses: Data.courses),
                                               1),
                                         );
                                       },

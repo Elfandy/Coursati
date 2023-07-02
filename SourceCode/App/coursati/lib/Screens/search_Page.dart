@@ -42,11 +42,12 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    fillTags();
+
     _selectedTags.clear();
     _selectedTypes.clear();
     _selectedTypes.add(_tagTypeList[0]);
     _selectedTypes.add(_tagTypeList[1]);
-    fillTags();
   }
 
   bool searching = false;

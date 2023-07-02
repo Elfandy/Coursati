@@ -279,26 +279,32 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                 style: _labeleStyle,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                              child: Wrap(
-                                spacing: 10,
-                                runSpacing: 10,
-                                children: [
-                                  for (Tag i in _course.tags)
-                                    TagChip(
-                                      passiveBackgroundColor: (isDark)
-                                          ? const Color.fromARGB(
-                                              183, 250, 250, 250)
-                                          : const Color.fromRGBO(
-                                              200, 200, 200, 0.5),
-                                      selected: [],
-                                      tag: i,
-                                      selectable: false,
+                            _course.tags.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 20, 20, 0),
+                                    child: Wrap(
+                                      spacing: 10,
+                                      runSpacing: 10,
+                                      children: [
+                                        for (Tag i in _course.tags)
+                                          TagChip(
+                                            passiveBackgroundColor: (isDark)
+                                                ? const Color.fromARGB(
+                                                    183, 250, 250, 250)
+                                                : const Color.fromRGBO(
+                                                    200, 200, 200, 0.5),
+                                            selected: [],
+                                            tag: i,
+                                            selectable: false,
+                                          ),
+                                      ],
                                     ),
-                                ],
-                              ),
-                            )
+                                  )
+                                : Center(
+                                    child: Text(languageType == 0
+                                        ? "لا يوجد وسوم"
+                                        : "No Tags here."))
                           ],
                         ),
                         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -482,11 +488,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     );
 
     try {
-      print(id);
       var response = await dioTestApi.post(url, data: {"id": int.parse(id)});
       if (response.statusCode == 200) {
         _course = Course.fromJson(response.data['info'][0]);
-        print(response.data);
       }
     } catch (e) {
       print(e);

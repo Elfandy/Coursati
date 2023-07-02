@@ -511,8 +511,8 @@ class _HomePageState extends State<HomePage> {
                               Navigator.of(context).push(ScreenController()
                                   .createRoute(ShowCourses(), 1));
                             },
-                            child: const Text(
-                              "المزيد",
+                            child: Text(
+                              languageType == 0 ? "المزيد" : "More",
                               style: TextStyle(fontSize: 20),
                             )),
                         const SizedBox(
@@ -592,8 +592,8 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.of(context).push(ScreenController()
                                     .createRoute(ShowTC(), 1));
                               },
-                              child: const Text(
-                                "المزيد",
+                              child: Text(
+                                languageType == 0 ? "المزيد" : "More",
                                 style: TextStyle(fontSize: 20),
                               )),
                           const SizedBox(

@@ -1,7 +1,7 @@
 class Tag {
   Tag({required this.id, required this.name_ar, required this.name_en});
   int? id;
-  String? name_ar, name_en;
+  String name_ar, name_en;
 
   Map<String, dynamic> toJson() =>
       {"id": id, "nameAR": name_ar, "nameEN": name_en};

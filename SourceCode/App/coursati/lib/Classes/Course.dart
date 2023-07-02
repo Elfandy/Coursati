@@ -72,7 +72,7 @@ class Course {
 
   factory Course.fromJson(Map<String, dynamic> json) {
     var tagObjsJson = json['tags'] as List;
-    List<Tag> _tags =
+    List<Tag> tags =
         tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
     return Course(
         name: json['name'],
@@ -85,7 +85,7 @@ class Course {
         description: json['description'],
         id: json['id'].toString(),
         trainingCenterName: json['TCname'],
-        tags: _tags,
+        tags: tags,
         price: (double.parse(json['price'].toString())),
         startingDate: DateTime.parse(json['startDate']),
         active: json['state'],
