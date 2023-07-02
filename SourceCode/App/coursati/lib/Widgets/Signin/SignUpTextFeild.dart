@@ -4,24 +4,24 @@ import 'package:flutter/services.dart';
 import '../../Classes/GlobalVariables.dart';
 
 class SignupTextFeild extends StatefulWidget {
-  SignupTextFeild({
-    super.key,
-    required this.icon,
-    required this.textController,
-    required this.text_ar,
-    required this.text_en,
-    this.maxLingth,
-    this.readOnly = false,
-    this.password = false,
-    this.eyeOfSeeing = false,
-    required this.onTap,
-    required this.onChange,
-  });
+  SignupTextFeild(
+      {super.key,
+      required this.icon,
+      required this.textController,
+      required this.text_ar,
+      required this.text_en,
+      this.maxLingth,
+      this.readOnly = false,
+      this.password = false,
+      this.eyeOfSeeing = false,
+      required this.onTap,
+      required this.onChange,
+      this.numbers = false});
   String text_ar, text_en;
   IconData icon;
   TextEditingController textController;
   int? maxLingth;
-  bool readOnly, password, eyeOfSeeing;
+  bool readOnly, password, eyeOfSeeing, numbers;
   void Function() onTap;
   void Function(String?) onChange;
 
@@ -39,7 +39,7 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(50, 10, 50, 5),
       child: SizedBox(
-        height: 50,
+        height: 60,
         child: TextField(
           selectionControls: EmptyTextSelectionControls(),
           obscureText: widget.password,
@@ -47,12 +47,16 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
           autocorrect: !widget.password,
           onChanged: widget.onChange,
           // onTapOutside: widget.onTapOutSide,
-          maxLengthEnforcement:
-              MaxLengthEnforcement.truncateAfterCompositionEnds,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
           readOnly: widget.readOnly,
-          inputFormatters: [
-            FilteringTextInputFormatter.singleLineFormatter,
-          ],
+          inputFormatters: widget.numbers
+              ? [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  FilteringTextInputFormatter.digitsOnly
+                ]
+              : [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                ],
           maxLength: widget.maxLingth,
           onTap: widget.onTap,
           style: TextStyle(
