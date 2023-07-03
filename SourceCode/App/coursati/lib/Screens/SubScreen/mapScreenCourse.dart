@@ -10,7 +10,7 @@ import '../../Classes/GlobalVariables.dart';
 class MapScreenCourse extends StatefulWidget {
   MapScreenCourse({super.key, required this.course, required this.onTap});
   Course course;
-  void Function() onTap;
+  void Function()? onTap;
   @override
   State<MapScreenCourse> createState() => _MapScreenCourseState();
 }
@@ -97,8 +97,8 @@ class _MapScreenCourseState extends State<MapScreenCourse> {
             LatLng(widget.course.location.lat!, widget.course.location.lng!),
             widget.course.location.city!),
         onTap: (argument) {
-          Navigator.of(context).push(ScreenController()
-              .createRoute(TrainingCenterPage(id: widget.course.id), 0));
+          // Navigator.of(context).push(ScreenController()
+          //     .createRoute(TrainingCenterPage(id: widget.course.id), 0));
         },
         initialCameraPosition: CameraPosition(target: _center, zoom: 15.0),
       ),

@@ -48,6 +48,7 @@ class _BoxCourseLabelState extends State<BoxCourseLabel> {
                       ? "${widget.bld.location_in}"
                       : "${widget.bld.location_in}",
                   softWrap: true,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: (languageType == 0) ? 10 : 12),

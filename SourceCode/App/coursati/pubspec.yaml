@@ -51,6 +51,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.5
   fluttertoast: ^8.2.1
+
   geocoder2: ^1.4.0
   google_maps_flutter: ^2.2.6
   image_picker: ^0.8.7+4

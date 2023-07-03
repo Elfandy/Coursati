@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Screens/main_page.dart';
+import 'package:coursati/Widgets/Home/CourseBox.dart';
+import 'package:coursati/Widgets/Home/TCBox.dart';
 import 'package:coursati/Widgets/Search/SearchResults.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +41,8 @@ class _SearchPageState extends State<SearchPage> {
   final List<BoxCourseLabelData> _CourseList = [];
   final List<Trainer> _TrainersList = [];
 
+  var mystreamBuilder;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -58,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+            padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -73,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                           color: (isDark) ? Colors.white : Colors.black),
                       onSubmitted: (value) {
                         setState(() {
-                          if (_search.text != '') {
+                          if (_search.text.isNotEmpty) {
                             searching = true;
                           } else {
                             searching = false;
@@ -89,13 +94,13 @@ class _SearchPageState extends State<SearchPage> {
                         }
                       },
                       onEditingComplete: () {
-                        setState(() {
-                          if (_search.text != '') {
-                            searching = true;
-                          } else {
-                            searching = false;
-                          }
-                        });
+                        // setState(() {
+                        //   if (_search.text.isNotEmpty) {
+                        //     searching = true;
+                        //   } else {
+                        //     searching = false;
+                        //   }
+                        // });
                       },
                       controller: _search,
                       cursorHeight: 20,
@@ -292,24 +297,43 @@ class _SearchPageState extends State<SearchPage> {
                   future: fetchSearch(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      List SearchJson = snapshot.data!;
-                      for (var SearchJson in SearchJson) {
-                        if (SearchJson["type"] == "course") {
-                          _CourseList.add(
-                              BoxCourseLabelData.fromJson(SearchJson));
-                        } else if (SearchJson["type"] == "trainingcenter") {
-                          _TrainingCenterList.add(
-                              BoxTCLabelData.fromJson(SearchJson));
+                      Map<String, dynamic> SearchJson = snapshot.data!;
+                      SearchJson.forEach((key, value) {
+                        if (key == "listCourse") {
+                          for (var val in value)
+                            _CourseList.add(BoxCourseLabelData.fromJson(val));
+                        } else if (key == "listTC") {
+                          for (var val in value)
+                            _TrainingCenterList.add(
+                                BoxTCLabelData.fromJson(val));
                         }
-                      }
-                      _TrainingCenterList.forEach(
-                        (element) {
-                          print(element);
-                        },
-                      );
-                      return SearchResult();
+                      });
+                      // for (var SearchJson in SearchJson) {
+                      //   if (SearchJson["type"] == "course") {
+                      //     _CourseList.add(
+                      //         BoxCourseLabelData.fromJson(SearchJson));
+                      //   } else if (SearchJson["type"] == "trainingcenter") {
+                      //     _TrainingCenterList.add(
+                      //         BoxTCLabelData.fromJson(SearchJson));
+                      //   }
+                      // }
+                      // return Container();
+                      //******************************  This is the Search result widget */
+                      return Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height / 1.3,
+                          // child: SearchResult(
+                          //   courseList: _CourseList,
+                          //   trainingCenterList: _TrainingCenterList,
+                          // ),
+                          child: searchResult(
+                              courseList: _CourseList,
+                              trainingCenterList: _TrainingCenterList));
+                      //**************** This is the Search result */
                     } else {
-                      return CircularProgressIndicator();
+                      return Container(
+                          height: MediaQuery.of(context).size.height / 1.3,
+                          child: Center(child: CircularProgressIndicator()));
                     }
                   },
                 )
@@ -391,27 +415,29 @@ class _SearchPageState extends State<SearchPage> {
   // }
 
   Future fetchSearch() async {
-    var url = "Search/";
+    var url = "Search";
     Map search = {};
     String jsonTags = json.encode(_selectedTags);
     String jsonType = json.encode(_selectedTypes);
-    List SearchJson = [];
-    Map<String, dynamic> listJson = {
+    Map<String, dynamic> SearchJson = {};
+    FormData form = FormData.fromMap({
       "Search": _search.text,
       "Tags": _selectedTags,
-      "Types": _selectedTypes
-    };
+      "Type": _selectedTypes
+    });
 
     try {
       _TrainingCenterList.clear();
       _CourseList.clear();
       var response = await dioTestApi.post(
         url,
-        data: json.encode(listJson),
+        data: form,
       );
 
       if (response.statusCode == 200) {
-        SearchJson = response.data["search"];
+        print(response.data);
+        SearchJson = response.data;
+
         return SearchJson;
       } else {
         return false;
@@ -420,5 +446,93 @@ class _SearchPageState extends State<SearchPage> {
       if (kDebugMode) print(exception);
     }
     return SearchJson;
+  }
+
+  Widget searchResult(
+      {required List<BoxCourseLabelData> courseList,
+      required List<BoxTCLabelData> trainingCenterList}) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              toolbarHeight: 0,
+              bottom: TabBar(
+                indicatorColor: Color(0xff1776e0),
+                unselectedLabelColor: Colors.grey,
+                labelColor: Color(0xff1776e0),
+                tabs: [
+                  Tab(
+                    child: Icon(Icons.menu_book_sharp),
+                  ),
+                  Tab(
+                    child: Icon(Icons.home_work_outlined),
+                  )
+                ],
+              )),
+          body: TabBarView(
+            children: [
+              (courseList.isNotEmpty)
+                  ? ListView(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                for (BoxCourseLabelData course in courseList)
+                                  CourseBox(bld: course)
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                              "Assets/Images/techny-searching-the-web-on-tablet.gif"),
+                          Text(languageType == 0
+                              ? "يبدو انه لا يوجد دورات بالبحث المطلوب"
+                              : "There seems there are no courses"),
+                        ],
+                      ),
+                    ),
+              (trainingCenterList.isNotEmpty)
+                  ? ListView(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                for (BoxTCLabelData trainingCenter
+                                    in trainingCenterList)
+                                  TCBox(bld: trainingCenter)
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                              "Assets/Images/techny-searching-the-web-on-tablet.gif"),
+                          Text(languageType == 0
+                              ? "يبدو انه لا يوجد مراكز تدريبية بالبحث المطلوب"
+                              : "There seems there are no Training center"),
+                        ],
+                      ),
+                    ),
+            ],
+          )),
+    );
   }
 }

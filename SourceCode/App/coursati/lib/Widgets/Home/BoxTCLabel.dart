@@ -23,6 +23,7 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
           child: Text(
             maxLines: 2,
             softWrap: true,
+            overflow: TextOverflow.ellipsis,
             widget.bld.name!,
             style: const TextStyle(
               color: Colors.white,
@@ -39,9 +40,6 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 4,
-                ),
                 Image.asset(
                   "Assets/Icons/map-pin-location.png",
                   scale: 6,
@@ -50,7 +48,14 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
                 SizedBox(
                   width: 6,
                 ),
-                Text(widget.bld.locName.toString())
+                Container(
+                  width: 120,
+                  child: Text(
+                    widget.bld.locName.toString(),
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
               ],
             ),
             SizedBox(

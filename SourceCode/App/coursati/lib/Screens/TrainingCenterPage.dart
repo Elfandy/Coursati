@@ -49,7 +49,7 @@ class _TrainingCenterState extends State<TrainingCenter> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data != null) {
-              if (snapshot.data == 'No_TC') {
+              if (snapshot.data == "No_TC") {
                 //! THis is where the screen of user is loged in but doesnot have a training center
                 return const TCLoggedIn();
               } else {
@@ -353,8 +353,9 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(
-                                                160, 23, 117, 224),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    160, 23, 117, 224),
                                             fixedSize: Size(
                                                 MediaQuery.of(context)
                                                         .size
@@ -364,14 +365,18 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                             shape: ContinuousRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(40))),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.add,
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
                                           Navigator.of(context).push(
-                                              ScreenController()
-                                                  .createRoute(AddBranch(), 1));
+                                              ScreenController().createRoute(
+                                                  AddBranch(
+                                                      tcID: trainingCenter.id!,
+                                                      name:
+                                                          trainingCenter.name!),
+                                                  1));
                                         },
                                       ),
                                     ),
@@ -385,12 +390,12 @@ class _TrainingCenterState extends State<TrainingCenter> {
                 );
               }
             } else {
-              return Center(
+              return const Center(
                 child: Text("Your request took to long"),
               );
             }
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         });
     // TrainerDetailedInfo();

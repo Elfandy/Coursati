@@ -484,8 +484,10 @@ class _loginPageState extends State<loginPage> {
                                 children: [
                                   (_accountFound == 2)
                                       ? Container(
-                                          child: const Text(
-                                            "Your Email/Password is wrong",
+                                          child: Text(
+                                            languageType == 0
+                                                ? "بيانات الدخول خاطئة الرجاء التأكد من بياناتك"
+                                                : "Your Email/Password is wrong",
                                             style: TextStyle(color: Colors.red),
                                           ),
                                         )
@@ -750,7 +752,7 @@ class _loginPageState extends State<loginPage> {
                                 } else {
                                   _loginemailCheck = 0;
                                 }
-                                if (_password.text.length < 8) {
+                                if (_loginPass.text.length < 8) {
                                   _loginpasswordCheck = 1;
                                 } else {
                                   _loginpasswordCheck = 0;

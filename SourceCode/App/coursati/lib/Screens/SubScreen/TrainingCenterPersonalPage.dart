@@ -78,13 +78,20 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                         "Add Course",
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                            ScreenController().createRoute(
-                                                ContainerForCourse(
-                                                  trainingCenter: Data.tcData!,
-                                                ),
-                                                1));
+                                      onPressed: () async {
+                                        bool result =
+                                            await Navigator.of(context).push(
+                                                ScreenController().createRoute(
+                                                    ContainerForCourse(
+                                                      trainingCenter:
+                                                          Data.tcData!,
+                                                    ),
+                                                    1));
+                                        if (result) {
+                                          setState(() {
+                                            Navigator.pop(context);
+                                          });
+                                        }
                                       },
                                     ),
                                     const Divider(),
@@ -175,14 +182,21 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Text(
-                                            Data.tcData!.location.city!,
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 32,
-                                                shadows: [
-                                                  Shadow(color: Colors.black)
-                                                ]),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                150,
+                                            child: Text(
+                                              Data.tcData!.name,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 32,
+                                                  shadows: [
+                                                    Shadow(color: Colors.black)
+                                                  ]),
+                                            ),
                                           ),
                                         ),
                                         Padding(
@@ -223,13 +237,13 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                   children: [
                                     Text(
                                       languageType == 0
-                                          ? "مركز التدريب:"
-                                          : "Training Center:",
+                                          ? "الموقع:"
+                                          : "Location:",
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      Data.tcData!.name,
+                                      Data.tcData!.location.city!,
                                       style: const TextStyle(fontSize: 18),
                                     )
                                   ],

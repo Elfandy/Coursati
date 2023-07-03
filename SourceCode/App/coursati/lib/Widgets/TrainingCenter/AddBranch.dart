@@ -13,8 +13,8 @@ import '../../Services/ScreenController.dart';
 import '../../Widgets/TrainingCenter/SetLoationMap.dart';
 
 class AddBranch extends StatefulWidget {
-  const AddBranch({super.key});
-
+  AddBranch({super.key, required this.tcID, required this.name});
+  String tcID, name;
   @override
   State<AddBranch> createState() => _AddBranchState();
 }
@@ -34,7 +34,7 @@ class _AddBranchState extends State<AddBranch> {
   String? _dropDownValue;
   Locations locationData = Locations(city: "", id: 0, lat: 0, lng: 0);
   // Location? _dropDownValue = locations.first;
-
+  double _openDouble = 0, _closeDouble = 0;
   bool _showPersonalPhonenymberErrorMessage = false,
       _showTrainingCenterPhoneNumberErrorMessage = false;
   List<int> _SearchBoxTags = [], _selectTagsNum = [];
@@ -227,73 +227,80 @@ class _AddBranchState extends State<AddBranch> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: TextField(
-                        onTap: _openTime.text.isEmpty
-                            ? () {
-                                Fluttertoast.showToast(
-                                    msg: languageType == 0
-                                        ? "عليك اختيار وقت الفتح قبل"
-                                        : "You have to add openTime before.");
-                              }
-                            : () async => {
-                                  await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now())
-                                      .then((value) {
-                                    if (value != null)
-                                      _closeTime.text =
-                                          "${value!.hour}:${value.minute}";
-                                  }),
-                                },
-                        readOnly: true,
-                        controller: _closeTime,
-                        decoration: InputDecoration(
-                          label: Text(
-                              (languageType == 0) ? "وقت اﻹغلاق" : "closeTime"),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: TextField(
+                          onTap: () async => {
+                            await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now())
+                                .then((value) {
+                              setState(() {
+                                if (value != null)
+                                  _openTime.text =
+                                      "${value!.hour}:${value.minute}";
+                                _openDouble = double.parse(
+                                    "${value!.hour}.${value.minute}");
+                              });
+                            }),
+                          },
+                          readOnly: true,
+                          controller: _openTime,
+                          decoration: InputDecoration(
+                            label: Text(
+                                (languageType == 0) ? "وقت الفتح" : "openTime"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: TextField(
-                        onTap: () async => {
-                          await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now())
-                              .then((value) {
-                            setState(() {
-                              if (value != null)
-                                _openTime.text =
-                                    "${value!.hour}:${value.minute}";
-                            });
-                          }),
-                        },
-                        readOnly: true,
-                        controller: _openTime,
-                        decoration: InputDecoration(
-                          label: Text(
-                              (languageType == 0) ? "وقت الفتح" : "openTime"),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: TextField(
+                          onTap: _openTime.text.isEmpty
+                              ? () {
+                                  Fluttertoast.showToast(
+                                      msg: languageType == 0
+                                          ? "عليك اختيار وقت الفتح قبل"
+                                          : "You have to add openTime before.");
+                                }
+                              : () async => {
+                                    await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now())
+                                        .then((value) {
+                                      if (value != null)
+                                        _closeTime.text =
+                                            "${value!.hour}:${value.minute}";
+                                      _closeDouble = double.parse(
+                                          "${value!.hour}.${value.minute}");
+                                    }),
+                                  },
+                          readOnly: true,
+                          controller: _closeTime,
+                          decoration: InputDecoration(
+                            label: Text((languageType == 0)
+                                ? "وقت اﻹغلاق"
+                                : "closeTime"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -616,15 +623,40 @@ class _AddBranchState extends State<AddBranch> {
               OutlinedButton(
                   onPressed: getImage,
                   child:
-                      Text((languageType == 0) ? "اختر الصورة" : "Pic Imgae")),
+                      Text((languageType == 0) ? "اختر الصورة" : "Pic Image")),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize:
                             Size(MediaQuery.of(context).size.width / 1.5, 40)),
-                    onPressed: () {
-                      SendData();
+                    onPressed: () async {
+                      List<int> tagsNum = [];
+                      for (var element in _selectedTags) {
+                        tagsNum.add(element.id!);
+                      }
+
+                      FormData form = FormData.fromMap({
+                        'name': widget.name,
+                        'tcID': widget.tcID,
+                        'description': _description.text,
+                        'email': _email.text,
+                        'image': await MultipartFile.fromFile(_image!.path,
+                            filename: _image!.path.split('/').last),
+                        'imageName': _image!.path.split('/').last,
+                        'openTime': _openDouble,
+                        'closeTime': _closeDouble,
+                        'longitude': locationData.lng,
+                        'latitude': locationData.lat,
+                        'locName': _location.text,
+                        'phonenumber': _trainingCenterPhoneNumber.text,
+                        'website': _website.text,
+                        'facebook': _facebook.text,
+                        'whatsapp': _whatsapp.text,
+                        'tags': {for (var element in tagsNum) element},
+                        'userID': user.id
+                      });
+                      SendData(form);
                     },
                     child: Text(
                       (languageType == 0) ? "أضف فرع" : "Add branch",
@@ -658,25 +690,29 @@ class _AddBranchState extends State<AddBranch> {
     return first.toString();
   }
 
-  Future SendData() async {
-    var dio = Dio();
-    var url = '';
-    if (_image != null) {
-      String filename = _image!.path.split('/').last;
-
-      FormData data = FormData.fromMap({
-        'key': 'a61a05535acdc0725e9dd85d8a97d567',
-        'image': await MultipartFile.fromFile(_image!.path, filename: filename),
-        'name': '$filename'
-      });
-
-      var response = await dio.post(
-        "https://api.imgbb.com/1/upload",
-        data: data,
-        onSendProgress: (count, total) {
-          print("$count . $total");
-        },
-      );
+  Future SendData(FormData data) async {
+    var url = 'tc/addB';
+    print(data.fields);
+    try {
+      var response = await dioTestApi.post(url, data: data);
+      if (response.statusCode == 200) {
+        if (response.data == "ok")
+          Fluttertoast.showToast(
+              msg:
+                  languageType == 0 ? "تم إرسال الطلب بنجاح" : "Request sent.");
+        else {
+          Fluttertoast.showToast(
+              msg:
+                  languageType == 0 ? "تم إرسال الطلب بنجاح" : "Request sent.");
+        }
+      } else {
+        Fluttertoast.showToast(
+            msg: languageType == 0
+                ? "لم يتم إرسال الطلب الراء التاكد من حالة الخادم"
+                : "Request not sent check server status");
+      }
+    } catch (exception) {
+      print(exception);
     }
   }
 }

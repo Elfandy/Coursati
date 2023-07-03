@@ -32,12 +32,12 @@ class _ContainerForCourseState extends State<ContainerForCourse> {
   }
 
   Future getTeachers(int trainingCenterID) async {
-    var url = "/TrainerData";
+    var url = "trainers";
     trainers.clear();
     try {
-      var response = await dioTestApi.post(url, data: {"id": trainingCenterID});
+      var response = await dioTestApi.post(url, data: {"tc": trainingCenterID});
       if (response.statusCode == 200) {
-        for (var item in response.data["trainer"]) {
+        for (var item in response.data) {
           trainers.add(TrainerData.fromJson(item));
         }
 
@@ -53,7 +53,7 @@ class TrainerData {
   TrainerData({required this.id, required this.name});
   String id, name;
   TrainerData.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
+      : id = json["id"].toString(),
         name = json["name"];
 
   Map<String, dynamic> toJson() => {"id": id, "name": name};

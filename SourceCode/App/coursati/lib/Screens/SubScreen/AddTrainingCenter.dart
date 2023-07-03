@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,6 +38,7 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
       _whatsapp = TextEditingController(),
       _closeTime = TextEditingController(),
       _openTime = TextEditingController();
+  double _openDouble = 0, _closeDouble = 0;
   String? _dropDownValue;
   Locations locationData = Locations(city: "", id: 0, lat: 0, lng: 0);
   // Location? _dropDownValue = locations.first;
@@ -206,15 +208,15 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                         ),
                       ),
 
-                      Visibility(
-                        visible: _showPersonalPhonenymberErrorMessage,
-                        child: Text(
-                          languageType == 0
-                              ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
-                              : "Phone number needs to starts with 091,092,094,095",
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ),
+                      // Visibility(
+                      //   visible: _showPersonalPhonenymberErrorMessage,
+                      //   child: Text(
+                      //     languageType == 0
+                      //         ? "رقم الهاتف يجب ان يبدأ ب 091 أو 092 أو 094 أو 095"
+                      //         : "Phone number needs to starts with 091,092,094,095",
+                      //     style: const TextStyle(color: Colors.red),
+                      //   ),
+                      // ),
                       //* This is for creating an OTP function for the phoen number
                       // Text((languageType == 0)
                       //     ? ""
@@ -467,66 +469,72 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: TextField(
-                                onTap: () async => {
-                                  await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now())
-                                      .then((value) {
-                                    if (value != null)
-                                      _closeTime.text =
-                                          "${value!.hour}:${value.minute}";
-                                  }),
-                                },
-                                readOnly: true,
-                                controller: _closeTime,
-                                decoration: InputDecoration(
-                                  label: Text((languageType == 0)
-                                      ? "وقت اﻹغلاق"
-                                      : "closeTime"),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: TextField(
+                                  onTap: () async => {
+                                    await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now())
+                                        .then((value) {
+                                      if (value != null)
+                                        _closeTime.text =
+                                            "${value!.hour}:${value.minute}";
+                                      _closeDouble = double.parse(
+                                          "${value!.hour}.${value.minute}");
+                                    }),
+                                  },
+                                  readOnly: true,
+                                  controller: _closeTime,
+                                  decoration: InputDecoration(
+                                    label: Text((languageType == 0)
+                                        ? "وقت اﻹغلاق"
+                                        : "closeTime"),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: TextField(
-                                onTap: () async => {
-                                  await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now())
-                                      .then((value) {
-                                    if (value != null)
-                                      _openTime.text =
-                                          "${value!.hour}:${value.minute}";
-                                  }),
-                                },
-                                readOnly: true,
-                                controller: _openTime,
-                                decoration: InputDecoration(
-                                  label: Text((languageType == 0)
-                                      ? "وقت الفتح"
-                                      : "openTime"),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: TextField(
+                                  onTap: () async => {
+                                    await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now())
+                                        .then((value) {
+                                      if (value != null)
+                                        _openTime.text =
+                                            "${value!.hour}:${value.minute}";
+                                      _openDouble = double.parse(
+                                          "${value!.hour}.${value.minute}");
+                                    }),
+                                  },
+                                  readOnly: true,
+                                  controller: _openTime,
+                                  decoration: InputDecoration(
+                                    label: Text((languageType == 0)
+                                        ? "وقت الفتح"
+                                        : "openTime"),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1311,27 +1319,50 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                   )
                 ],
                 currentStep: _index,
-                onStepContinue: () => setState(() {
+                onStepContinue: () async {
                   if (_index < 1) {
-                    _index++;
+                    setState(() {
+                      _index++;
+                    });
                   } else {
-                    // TrainingCenter tc = TrainingCenter(
+                    List<int> tagsNum = [];
+                    _selectedTags.forEach(
+                      (element) {
+                        tagsNum.add(element.id!);
+                      },
+                    );
+                    FormData form = FormData.fromMap({
+                      'description': _description.text,
+                      'email': _email.text,
+                      'image': await MultipartFile.fromFile(_image!.path,
+                          filename: _image!.path.split('/').last),
+                      'imageName': _image!.path.split('/').last,
+                      'logo': await MultipartFile.fromFile(_logo!.path,
+                          filename: _logo!.path.split('/').last),
+                      'logoName': _logo!.path.split('/').last,
+                      'openTime': _openDouble,
+                      'name': _trainingCenterName.text,
+                      'closeTime': _closeDouble,
+                      'passportID': _id.text,
+                      'longitude': locationData.lng,
+                      'latitude': locationData.lat,
+                      'locName': _location.text,
+                      'phonenumber': _trainingCenterPhoneNumber.text,
+                      'website': _website.text,
+                      'facebook': _facebook.text,
+                      'whatsapp': _whatsapp.text,
+                      'tags': {for (var element in tagsNum) element},
+                      'userID': user.id
+                    });
 
-                    //   description: _description.text,
-                    //   email: _email.text,
-                    //   image: (await multipart_image),
-                    //   name:_trainingCenterName.text,
-                    //   close: TimeOfDay(hour: ),
-
-                    //   );
-                    // SendData();
+                    SendData(form);
                     Fluttertoast.showToast(
                         msg: (languageType == 0)
                             ? "تم إرسال الطلب للمراجعة"
                             : "Request has been sent to get reviewed");
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   }
-                }),
+                },
                 onStepCancel: () => setState(() {
                   if (_index > 0) {
                     _index--;
@@ -1367,25 +1398,28 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
 
   Future<String> fetchCityName(double lat, double lng) async {
     GeoData address = await Geocoder2.getDataFromCoordinates(
-        language: "en",
-        latitude: lat,
-        longitude: lng,
-        googleMapApiKey: "AIzaSyBbg24GYIH8LvMFHWMkK7QGqLcsMMk0n3w");
+      language: "AR",
+      latitude: lat,
+      longitude: lng,
+      googleMapApiKey: "AIzaSyBbg24GYIH8LvMFHWMkK7QGqLcsMMk0n3w",
+    );
 
     var first = address.address;
     return first.toString();
   }
 
-  Future SendData(TrainingCenter tc) async {
+  Future SendData(FormData tc) async {
     var url = "tc/add";
     try {
-      var response = await dioTestApi.post(url, data: tc.toJson());
+      var response = await dioTestApi.post(url, data: tc);
       if (response.statusCode == 200) {
+        print(response.data);
         Fluttertoast.showToast(msg: "Request sent.");
       } else {
         Fluttertoast.showToast(msg: "Request not sent check server status");
       }
     } catch (exception) {
+      print(exception);
       Fluttertoast.showToast(
           msg: "There was an error connecting to the Server");
     }

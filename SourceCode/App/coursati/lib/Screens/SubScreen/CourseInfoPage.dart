@@ -229,14 +229,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                   .push(ScreenController().createRoute(
                                       MapScreenCourse(
                                         course: _course,
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              ScreenController().createRoute(
-                                                  MapScreenCourse(
-                                                      course: _course,
-                                                      onTap: () {}),
-                                                  0));
-                                        },
+                                        onTap: null,
                                       ),
                                       1));
                             },

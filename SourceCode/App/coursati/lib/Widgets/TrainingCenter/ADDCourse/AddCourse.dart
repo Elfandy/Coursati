@@ -5,6 +5,7 @@ import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:coursati/Widgets/TrainingCenter/ADDCourse/ContainerForCourse.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class _AddCourseState extends State<AddCourse> {
 
   @override
   Widget build(BuildContext context) {
+    widget.trainers.forEach((element) {
+      print(element.name);
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -140,16 +144,24 @@ class _AddCourseState extends State<AddCourse> {
                 ),
                 onChanged: (val) {
                   setState(() {
-                    widget.trainers.forEach((element) {
+                    for (var element in widget.trainers) {
                       if (element.name == val) {
                         trainer = element;
-                        return;
+                        continue;
                       }
-                    });
+                    }
                   });
                 },
                 selectedItem: trainer != null ? trainer!.name : null,
               ),
+              // child: DropdownButton<String>(onChanged: (value) {}, items: [
+              //   for (var x in widget.trainers)
+              //     DropdownMenuItem(
+              //       child: Text(x.name),
+              //       value: x.id,
+              //       onTap: () {},
+              //     )
+              // ]),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -294,7 +306,25 @@ class _AddCourseState extends State<AddCourse> {
                       Text((languageType == 0) ? "اختر الصورة" : "Pic Imgae")),
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  FormData form = FormData.fromMap({
+                    'courseID': _id.text,
+                    'name': _name.text,
+                    'tags': {for (var element in _selectedTags) element.id},
+                    'startDate': _startingDate.text,
+                    'price': _price.text,
+                    'image': await MultipartFile.fromFile(_image!.path,
+                        filename: _image!.path.split('/').last),
+                    'imageName': _image!.path.split('/').last,
+                    'duration': _duration.text,
+                    'period': 0,
+                    'tcID': widget.trainingCenter.id,
+                    'trainers': trainer!.id,
+                    'description': _descitpion.text
+                  });
+                  addCourse(data: form);
+                  Navigator.pop(context, true);
+                },
                 child: Text((languageType == 0) ? "إضافة" : "Create"))
           ],
         ),
@@ -309,5 +339,20 @@ class _AddCourseState extends State<AddCourse> {
     setState(() {
       _image = imageTemp;
     });
+  }
+
+  Future addCourse({required FormData data}) async {
+    var url = "course/add";
+    try {
+      var response = await dioTestApi.post(url, data: data);
+
+      if (response.statusCode == 200) {
+        if (response.data == "added") {
+          return true;
+        }
+      }
+    } catch (exception) {
+      print(exception);
+    }
   }
 }
