@@ -45,7 +45,7 @@ class BLDTrainer {
   String name;
 
   BLDTrainer.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : id = json['id'].toString(),
         name = json['name'];
   Map<String, dynamic> toJson() => {
         "id": id,

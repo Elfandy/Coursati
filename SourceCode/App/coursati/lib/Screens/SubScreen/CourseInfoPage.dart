@@ -204,12 +204,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  const Icon(
-                                    Icons.attach_money,
-                                    size: 30,
-                                  ),
                                   Text(
-                                    "${_course.price}",
+                                    languageType == 0
+                                        ? "${_course.price} د.ل"
+                                        : "${_course.price} LD",
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
@@ -482,6 +480,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
     try {
       var response = await dioTestApi.post(url, data: {"id": int.parse(id)});
+
       if (response.statusCode == 200) {
         _course = Course.fromJson(response.data['info'][0]);
       }

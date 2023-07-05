@@ -97,8 +97,8 @@ class _MapScreenState extends State<MapScreen> {
             LatLng(widget.tc.location.lat!, widget.tc.location.lng!),
             widget.tc.location.city!),
         onTap: (argument) {
-          Navigator.of(context).push(ScreenController()
-              .createRoute(TrainingCenterPage(id: widget.tc.id), 0));
+          // Navigator.of(context).push(ScreenController()
+          //     .createRoute(TrainingCenterPage(id: widget.tc.id), 0));
         },
         initialCameraPosition: CameraPosition(target: _center, zoom: 15.0),
       ),

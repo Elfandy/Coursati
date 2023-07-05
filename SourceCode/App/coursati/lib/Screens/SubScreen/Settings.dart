@@ -1,6 +1,7 @@
 import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Classes/GlobalVariables.dart';
 import '../../Classes/UserData.dart';
 
@@ -123,11 +124,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     languageType = 1;
                   }
                   isDark = themeMode;
-
-                  FileHandle().writeConfig(ConfigSave);
+//!!!!!!!!!!!!!!!!!! deprcated file handle
+                  // FileHandle().writeConfig(ConfigSave);
 
                   // saveConfig(isDark, languageType);
-                  ScreenController().restartApp(context);
+
+                  ///??????????????????? New File handle
+                  ///
+                  await setSettings().then((value) {
+                    ScreenController().restartApp(context);
+                  });
                 }
               },
               child: Text(
@@ -142,5 +148,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+  }
+
+  Future setSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('darkMode', isDark);
+    prefs.setInt('language', languageType);
+    return true;
   }
 }

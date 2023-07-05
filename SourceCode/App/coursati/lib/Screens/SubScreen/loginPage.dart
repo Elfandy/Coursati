@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:coursati/Services/Controller/FileHandle.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -786,12 +787,16 @@ class _loginPageState extends State<loginPage> {
                                   _accountFound = 1;
 
                                   if (_accountFound == 1) {
-                                    if (widget.contextIn.widget.toString() ==
-                                        "TCNotLogged") {
-                                      ScreenController().restartApp(context);
-                                    } else {
-                                      Navigator.pop(context, true);
-                                    }
+                                    FileHandle()
+                                        .writeConfig(ConfigSave)
+                                        .then((value) {
+                                      if (widget.contextIn.widget.toString() ==
+                                          "TCNotLogged") {
+                                        ScreenController().restartApp(context);
+                                      } else {
+                                        Navigator.pop(context, true);
+                                      }
+                                    });
                                   } else if (_accountFound == 0) {
                                     _accountFound = 2;
                                   }

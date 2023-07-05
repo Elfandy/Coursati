@@ -53,74 +53,67 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
 
               return Scaffold(
                 floatingActionButton: Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 40, left: 40, bottom: 15),
-                      child: FloatingActionButton(
-                        backgroundColor: const Color(0xee1776e0),
-                        heroTag: "add",
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            useSafeArea: true,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    // color: Colors.amber,
-                                  ),
-                                  child: Column(children: [
-                                    OutlinedButton(
-                                      child: const Text(
-                                        "Add Course",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      onPressed: () async {
-                                        bool result =
-                                            await Navigator.of(context).push(
-                                                ScreenController().createRoute(
-                                                    ContainerForCourse(
-                                                      trainingCenter:
-                                                          Data.tcData!,
-                                                    ),
-                                                    1));
-                                        if (result) {
-                                          setState(() {
-                                            Navigator.pop(context);
-                                          });
-                                        }
-                                      },
-                                    ),
-                                    const Divider(),
-                                    OutlinedButton(
-                                      child: const Text(
-                                        "Add Trainer",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                            ScreenController().createRoute(
-                                                AddTrainer(
-                                                    trainingCenter:
-                                                        Data.tcData!),
-                                                1));
-                                      },
-                                    )
-                                  ]),
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: FloatingActionButton(
+                      backgroundColor: const Color(0xee1776e0),
+                      heroTag: "add",
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          useSafeArea: true,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Container(
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  // color: Colors.amber,
                                 ),
-                              );
-                            },
-                          );
-                        },
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                        child: const Icon(
-                          Icons.add,
-                          size: 50,
-                          color: Colors.white,
-                        ),
+                                child: Column(children: [
+                                  OutlinedButton(
+                                    child: const Text(
+                                      "Add Course",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    onPressed: () async {
+                                      bool result = await Navigator.of(context)
+                                          .push(ScreenController().createRoute(
+                                              ContainerForCourse(
+                                                trainingCenter: Data.tcData!,
+                                              ),
+                                              1));
+                                      if (result) {
+                                        setState(() {
+                                          Navigator.pop(context);
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  const Divider(),
+                                  OutlinedButton(
+                                    child: const Text(
+                                      "Add Trainer",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          ScreenController().createRoute(
+                                              AddTrainer(
+                                                  trainingCenter: Data.tcData!),
+                                              1));
+                                    },
+                                  )
+                                ]),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      // materialTapTargetSize: MaterialTapTargetSize.padded,
+                      child: const Icon(
+                        Icons.add,
+                        size: 35,
+                        color: Colors.white,
                       ),
                     )),
                 appBar: AppBar(
@@ -608,23 +601,25 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "Branches: ",
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text(
-                                      Data.tcData!.branchCount.toString(),
-                                      style: TextStyle(
-                                          color: Color(0xff1776e0),
-                                          fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              widget.mainBranch
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Branches: ",
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Text(
+                                            Data.tcData!.branchCount.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xff1776e0),
+                                                fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(

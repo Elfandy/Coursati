@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../Classes/GlobalVariables.dart';
-import '../../Classes/Location.dart';
 
 class SetLocationMap extends StatefulWidget {
   const SetLocationMap({super.key});
@@ -60,6 +59,7 @@ class _SetLocationMapState extends State<SetLocationMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pop(context, _locationPos);

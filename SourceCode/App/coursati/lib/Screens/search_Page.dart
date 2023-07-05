@@ -80,6 +80,9 @@ class _SearchPageState extends State<SearchPage> {
                         setState(() {
                           if (_search.text.isNotEmpty) {
                             searching = true;
+                            _selectedTags.forEach((element) {
+                              print(element.name_ar);
+                            });
                           } else {
                             searching = false;
                           }
@@ -422,13 +425,14 @@ class _SearchPageState extends State<SearchPage> {
     Map<String, dynamic> SearchJson = {};
     FormData form = FormData.fromMap({
       "Search": _search.text,
-      "Tags": _selectedTags,
-      "Type": _selectedTypes
+      "Tags": {for (var value in _selectedTags) value.id},
+      "Type": {for (var value in _selectedTypes) value.name_en}
     });
 
     try {
       _TrainingCenterList.clear();
       _CourseList.clear();
+
       var response = await dioTestApi.post(
         url,
         data: form,

@@ -22,13 +22,13 @@ class _TrainerDetailedFetchDataState extends State<TrainerDetailedFetchData> {
         future: fetchTrainerData(widget.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            Trainer trainer = Trainer.fromJson(snapshot.data);
+            Trainer trainer = Trainer.fromJson(snapshot.data[0]);
             return TrainerDetailedInfo(
               trainer: trainer,
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Center(child: CircularProgressIndicator()),
             );
           }
         },
@@ -37,7 +37,7 @@ class _TrainerDetailedFetchDataState extends State<TrainerDetailedFetchData> {
   }
 
   Future fetchTrainerData(String id) async {
-    var url = "Trainer";
+    var url = "trainerInfo";
     try {
       FormData form = FormData.fromMap({'id': id});
       var response = await dioTestApi.post(url, data: form);

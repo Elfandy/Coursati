@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../../../Classes/Course.dart';
@@ -105,20 +108,43 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
           body: SafeArea(
               child: ListView(
             children: [
-              Container(
-                height: 200,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(50)),
-                child: CachedNetworkImage(
+              Stack(children: [
+                CachedNetworkImage(
+                  height: 220,
+                  width: double.infinity,
                   imageUrl: widget.course.image,
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  progressIndicatorBuilder: (context, url, progress) => Center(
-                      child:
-                          CircularProgressIndicator(value: progress.progress)),
                   fit: BoxFit.cover,
-                  // height: 300,
                 ),
-              ),
+                (isEditing)
+                    ? Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 160),
+                          child: OutlinedButton(
+                            onPressed: () {},
+                            child: Icon(Icons.edit),
+                            style: OutlinedButton.styleFrom(
+                                shape: CircleBorder(),
+                                backgroundColor: Color(0x44444444)),
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ]),
+              // Container(
+              //   height: 200,
+              //   decoration:
+              //       BoxDecoration(borderRadius: BorderRadius.circular(50)),
+              //   child: CachedNetworkImage(
+              //     imageUrl: widget.course.image,
+              //     errorWidget: (context, url, error) => const Icon(Icons.error),
+              //     progressIndicatorBuilder: (context, url, progress) => Center(
+              //         child:
+              //             CircularProgressIndicator(value: progress.progress)),
+              //     fit: BoxFit.cover,
+              //     // height: 300,
+              //   ),
+              // ),
               SizedBox(
                 height: 20,
               ),
@@ -129,6 +155,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   child: TextField(
                     controller: !isEditing ? _name : _nameEdit,
                     readOnly: !isEditing,
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     decoration: InputDecoration(
                       label: Text((languageType == 0) ? "الاسم" : "name"),
                       border: OutlineInputBorder(
@@ -143,6 +175,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     controller: !isEditing ? _startDate : _startDateEdit,
                     readOnly: !isEditing,
                     decoration: InputDecoration(
@@ -160,6 +198,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     controller: !isEditing ? _duration : _durationEdit,
                     readOnly: !isEditing,
                     decoration: InputDecoration(
@@ -176,6 +220,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     controller: !isEditing ? _price : _priceEdit,
                     readOnly: !isEditing,
                     decoration: InputDecoration(
@@ -192,6 +242,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     controller: !isEditing ? _discription : _discriptionEdit,
                     readOnly: !isEditing,
                     minLines: 1,
@@ -275,6 +331,12 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: TextField(
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : !isEditing
+                                ? Colors.black54
+                                : Colors.black),
                     controller: !isEditing ? _trainer : _trainerEdit,
                     readOnly: !isEditing,
                     decoration: InputDecoration(
@@ -356,5 +418,32 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
     }
 
     return _course;
+  }
+
+  Future editCourse({required FormData form}) async {
+    var url = "";
+
+    try {
+      var response = await dioTestApi.post(url, data: form);
+      if (response.statusCode == 200) {
+        if (response.data == 'success') {
+          Fluttertoast.showToast(
+              msg: languageType == 0
+                  ? "تم تعديل بيانات الدورة بنجاح"
+                  : "Course data has been editited successfully");
+        }
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
+  }
+
+  Future disable({required FormData form}) async {
+    var url = "";
+    try {
+      var response = await dioTestApi.post(url, data: form);
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
   }
 }

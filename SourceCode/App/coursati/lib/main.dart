@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
 import 'package:coursati/firebase_options.dart';
@@ -65,7 +66,8 @@ Future<void> main() async {
 
     FileHandle().readConfig().then((value) {
       if (value != null) {
-        FileHandle().extractConfigData(value);
+        print('hello wolrd');
+        FileHandle().extractConfigData();
       } else {
         FileHandle().writeConfig(ConfigSave);
       }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Classes/Location.dart';
@@ -9,6 +11,7 @@ import 'package:coursati/Widgets/TrainingCenter/SetLoationMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoder2/geocoder2.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class TrainingCenterParsonalInfo extends StatefulWidget {
@@ -44,6 +47,8 @@ class _TrainingCenterParsonalInfoState
       _websiteEdit = TextEditingController(),
       _facebookEdit = TextEditingController(),
       _discriptionEdit = TextEditingController();
+
+  File? _image;
   late Locations locationDataEdit;
 
   List<Tag> _selectedTags = [];
@@ -121,12 +126,14 @@ class _TrainingCenterParsonalInfoState
             Column(
               children: [
                 Stack(children: [
-                  CachedNetworkImage(
-                    height: 220,
-                    width: double.infinity,
-                    imageUrl: widget.tc.image,
-                    fit: BoxFit.cover,
-                  ),
+                  _image == null
+                      ? CachedNetworkImage(
+                          height: 220,
+                          width: double.infinity,
+                          imageUrl: widget.tc.image,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(_image!),
                   (isEditing)
                       ? Align(
                           alignment: Alignment.bottomLeft,
@@ -148,6 +155,12 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       controller: !isEditing ? _name : _nameEdit,
                       readOnly: !isEditing,
                       decoration: InputDecoration(
@@ -166,6 +179,12 @@ class _TrainingCenterParsonalInfoState
                     child: TextField(
                       controller: !isEditing ? _email : _emailEdit,
                       readOnly: !isEditing,
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       decoration: InputDecoration(
                         label: Text(
                             (languageType == 0) ? "البريد الإلكترني" : "email"),
@@ -183,6 +202,12 @@ class _TrainingCenterParsonalInfoState
                     child: TextField(
                       controller: !isEditing ? _phoneNumber : _phoneNumberEdit,
                       readOnly: !isEditing,
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       decoration: InputDecoration(
                         label: Text((languageType == 0)
                             ? "رقم الهاتف"
@@ -201,6 +226,12 @@ class _TrainingCenterParsonalInfoState
                     child: TextField(
                       controller: !isEditing ? _whatsApp : _whatsAppEdit,
                       readOnly: !isEditing,
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       decoration: InputDecoration(
                         label: Text(
                             (languageType == 0) ? "الواتس أب" : "whatsApp"),
@@ -219,6 +250,12 @@ class _TrainingCenterParsonalInfoState
                       child: Container(
                         width: MediaQuery.of(context).size.width / 3,
                         child: TextField(
+                          style: TextStyle(
+                              color: isDark
+                                  ? Colors.white
+                                  : !isEditing
+                                      ? Colors.black54
+                                      : Colors.black),
                           onTap: () async => {
                             if (isEditing)
                               await showTimePicker(
@@ -248,6 +285,12 @@ class _TrainingCenterParsonalInfoState
                       child: Container(
                         width: MediaQuery.of(context).size.width / 3,
                         child: TextField(
+                          style: TextStyle(
+                              color: isDark
+                                  ? Colors.white
+                                  : !isEditing
+                                      ? Colors.black54
+                                      : Colors.black),
                           onTap: () async => {
                             if (isEditing)
                               await showTimePicker(
@@ -278,6 +321,12 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       readOnly: true,
                       controller: !isEditing ? _location : _locationEdit,
                       decoration: InputDecoration(
@@ -334,6 +383,12 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       readOnly: !isEditing,
                       controller: !isEditing ? _website : _websiteEdit,
                       decoration: InputDecoration(
@@ -352,6 +407,12 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       readOnly: !isEditing,
                       controller: !isEditing ? _facebook : _facebookEdit,
                       decoration: InputDecoration(
@@ -369,6 +430,12 @@ class _TrainingCenterParsonalInfoState
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: TextField(
+                      style: TextStyle(
+                          color: isDark
+                              ? Colors.white
+                              : !isEditing
+                                  ? Colors.black54
+                                  : Colors.black),
                       readOnly: !isEditing,
                       controller: !isEditing ? _discription : _discriptionEdit,
                       minLines: 1,
@@ -573,4 +640,13 @@ class _TrainingCenterParsonalInfoState
   }
 
   Future DeleteTC(int id) async {}
+
+  Future getImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    setState(() {
+      _image = imageTemp;
+    });
+  }
 }

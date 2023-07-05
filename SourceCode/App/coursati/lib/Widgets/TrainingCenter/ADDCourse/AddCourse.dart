@@ -62,11 +62,21 @@ class _AddCourseState extends State<AddCourse> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
+              child: Text(
+                languageType == 0
+                    ? "قم بتعبئة جميع بيانات الدورة لتقوم بإضافتها للمركز التدريبي"
+                    : "Fill all course data to add it to your Training center",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
                 controller: _id,
                 style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 decoration: InputDecoration(
-                  labelText: (languageType == 0) ? " رمز الدورة" : "ID",
+                  labelText: (languageType == 0) ? " رمز الدورة" : "Course ID",
                   // labelStyle: TextStyle(color:)
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
@@ -128,10 +138,10 @@ class _AddCourseState extends State<AddCourse> {
               padding: const EdgeInsets.all(10.0),
               child: DropdownSearch(
                 items: [for (var x in widget.trainers) x.name],
-                popupProps: const PopupProps.bottomSheet(
+                popupProps: PopupProps.bottomSheet(
                   bottomSheetProps: BottomSheetProps(
-                      backgroundColor: Color(0xff1776e0),
-                      shape: ContinuousRectangleBorder(
+                      backgroundColor: isDark ? Colors.grey[800] : Colors.white,
+                      shape: const ContinuousRectangleBorder(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(50),
                               topRight: Radius.circular(50)))),
@@ -172,8 +182,8 @@ class _AddCourseState extends State<AddCourse> {
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
-                      firstDate: DateTime.now(),
-                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now().add(Duration(days: 1)),
+                      initialDate: DateTime.now().add(Duration(days: 1)),
                       lastDate: DateTime.now().add(const Duration(days: 730)),
                       useRootNavigator: true);
 
@@ -322,8 +332,11 @@ class _AddCourseState extends State<AddCourse> {
                     'trainers': trainer!.id,
                     'description': _descitpion.text
                   });
-                  addCourse(data: form);
-                  Navigator.pop(context, true);
+                  addCourse(data: form).then(
+                    (value) {
+                      Navigator.pop(context, true);
+                    },
+                  );
                 },
                 child: Text((languageType == 0) ? "إضافة" : "Create"))
           ],
@@ -344,7 +357,13 @@ class _AddCourseState extends State<AddCourse> {
   Future addCourse({required FormData data}) async {
     var url = "course/add";
     try {
-      var response = await dioTestApi.post(url, data: data);
+      var response = await dioTestApi.post(
+        url,
+        data: data,
+        onSendProgress: (count, total) {
+          print("$count $total");
+        },
+      );
 
       if (response.statusCode == 200) {
         if (response.data == "added") {

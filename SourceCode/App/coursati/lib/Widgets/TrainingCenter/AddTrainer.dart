@@ -5,6 +5,7 @@ import 'package:coursati/Classes/TagData.dart';
 import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:coursati/Widgets/TrainingCenter/ADDCourse/ContainerForCourse.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
 
@@ -46,7 +47,7 @@ class _AddTrainerState extends State<AddTrainer> {
               width: MediaQuery.of(context).size.width / 1.5,
               height: 270,
               child: Image.asset(
-                "Assets/Images/juicy-ai-person-detection-slash-face-id.png",
+                "Assets/Images/taxi-data-science-graphs-floating-from-laptop.gif",
                 fit: BoxFit.contain,
               ),
             ),
@@ -165,7 +166,7 @@ class _AddTrainerState extends State<AddTrainer> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_name.text.isEmpty) {
                       return;
                     }
@@ -177,6 +178,15 @@ class _AddTrainerState extends State<AddTrainer> {
                         _descitpion.text.isNotEmpty &&
                         _major.text.isNotEmpty &&
                         _image != null) {}
+                    FormData form = FormData.fromMap({
+                      'name': _name.text,
+                      'major': _major.text,
+                      'description': _descitpion.text,
+                      'image': (await MultipartFile.fromFile(_image!.path)),
+                      'imageName': _image!.path.split('/').last,
+                      'tc': widget.trainingCenter.id
+                    });
+                    setTrainer(form: form);
                   },
                   style: ElevatedButton.styleFrom(
                       shape: ContinuousRectangleBorder(
@@ -203,25 +213,19 @@ class _AddTrainerState extends State<AddTrainer> {
     });
   }
 
-  Future setTrainer(
-      {required String name,
-      required String major,
-      required String description,
-      required File image}) async {
-    var url = "";
+  Future setTrainer({required FormData form}) async {
+    var url = "trainer/add";
+
     try {
-      var response = await dioTestApi.post(url, data: {
-        'name': name,
-        'major': major,
-        'description': description,
-        'image': image
-      });
+      var response = await dioTestApi.post(url, data: form);
+      print(response.data);
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(
-            msg: languageType == 0
-                ? "تمت الإضافة بنجاح."
-                : "Added succesfully.");
-        return true;
+        if (response.data == 'added') {
+          Fluttertoast.showToast(
+              msg: languageType == 0
+                  ? "تمت الإضافة بنجاح."
+                  : "Added succesfully.");
+        }
       } else {
         return false;
       }

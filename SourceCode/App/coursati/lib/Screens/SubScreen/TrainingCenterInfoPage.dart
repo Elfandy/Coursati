@@ -187,11 +187,11 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
                                       MapScreen(
                                         tc: trainingCenter,
                                         onTap: () {
-                                          Navigator.of(context).push(
-                                              ScreenController().createRoute(
-                                                  TrainingCenterPage(
-                                                      id: trainingCenter.id),
-                                                  0));
+                                          // Navigator.of(context).push(
+                                          //     ScreenController().createRoute(
+                                          //         TrainingCenterPage(
+                                          //             id: trainingCenter.id),
+                                          // 0));
                                         },
                                       ),
                                       1));

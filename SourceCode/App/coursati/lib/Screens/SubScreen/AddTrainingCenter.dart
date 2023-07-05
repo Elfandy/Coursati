@@ -340,9 +340,9 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                                     // _email.text.lastIndexOf(".") ==
                                     //     _email.text.indexOf(".")
                                     ) {
-                                  _emailCheck = true;
-                                } else {
                                   _emailCheck = false;
+                                } else {
+                                  _emailCheck = true;
                                 }
                               },
                             );
@@ -351,6 +351,22 @@ class _AddTrainingCenterPageState extends State<AddTrainingCenterPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                           child: TextField(
+                            // onSubmitted: (value) {
+                            //   setState(
+                            //     () {
+                            //       if (_email.text.contains("@") &&
+                            //           _email.text.contains(".") &&
+                            //           _email.text.indexOf("@") <
+                            //               _email.text.indexOf(".") &&
+                            //           _email.text.lastIndexOf("@") ==
+                            //               _email.text.indexOf("@")) {
+                            //         _emailCheck = false;
+                            //       } else {
+                            //         _emailCheck = true;
+                            //       }
+                            //     },
+                            //   );
+                            // },
                             onTap: () {
                               if (_email.selection ==
                                   TextSelection.fromPosition(TextPosition(

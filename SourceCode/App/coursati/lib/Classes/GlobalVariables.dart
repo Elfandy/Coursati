@@ -17,13 +17,7 @@ final RegExp arabic = RegExp(r'^[\u0621-\u064A]+');
 
 //!!!!!!!!!
 //!!!!!!!!!
-String server =
-// "http://192.168.1.7";
-// "http://192.168.43.126";
-    "http://192.168.1.7";
-// "http://192.168.43.20";
-// "http://192.168.238.20";
-// "http://192.168.1.153";
+
 List<Tag> _tagTypeList = [
   Tag(id: 1, name_ar: "دورة", name_en: "Course"),
   Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training Center")
@@ -46,8 +40,24 @@ final Dio dioTestApi = Dio(BaseOptions(
 ));
 String deviceID = "";
 
-String ConfigSave =
-    "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}},deviceid=$deviceID";
+// String ConfigSave =
+//     "language:$languageType,\ndarkMode:$isDark,\n{name:${user.name}, email:${user.email}, image:${user.image}, token:${user.token}, password:${user.password}, birthDate:${user.birthDate}, notifications:${user.notifications}, gender:${user.gender} , id:${user.id}, trainingCenterId:${user.trainingCenterId}},deviceid=$deviceID";
+Map<String, dynamic> ConfigSave = {
+  'language': languageType,
+  'darkMode': isDark,
+  'name': user.name,
+  'email': user.email,
+  'image': user.image,
+  'token': user.token,
+  'birthDate': user.birthDate,
+  'notifications': user.notifications,
+  'gender': user.gender,
+  'id': user.id,
+  'deviceid': deviceID,
+  'phoneNumber': user.phoneNumber,
+  'passportID': user.personalID,
+  'hasTC': user.hasTC
+};
 
 int languageType = 0;
 bool isDark = false;
