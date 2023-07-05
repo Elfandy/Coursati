@@ -77,12 +77,13 @@ class _SearchPageState extends State<SearchPage> {
                       style: TextStyle(
                           color: (isDark) ? Colors.white : Colors.black),
                       onSubmitted: (value) {
-                        setState(() {
+                        setState(() async {
                           if (_search.text.isNotEmpty) {
-                            searching = true;
-                            _selectedTags.forEach((element) {
-                              print(element.name_ar);
-                            });
+                            await fetchSearch().then(
+                              (value) {
+                                searching = true;
+                              },
+                            );
                           } else {
                             searching = false;
                           }
@@ -296,50 +297,51 @@ class _SearchPageState extends State<SearchPage> {
           ),
           //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           (searching)
-              ? FutureBuilder(
-                  future: fetchSearch(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      Map<String, dynamic> SearchJson = snapshot.data!;
-                      SearchJson.forEach((key, value) {
-                        if (key == "listCourse") {
-                          for (var val in value)
-                            _CourseList.add(BoxCourseLabelData.fromJson(val));
-                        } else if (key == "listTC") {
-                          for (var val in value)
-                            _TrainingCenterList.add(
-                                BoxTCLabelData.fromJson(val));
-                        }
-                      });
-                      // for (var SearchJson in SearchJson) {
-                      //   if (SearchJson["type"] == "course") {
-                      //     _CourseList.add(
-                      //         BoxCourseLabelData.fromJson(SearchJson));
-                      //   } else if (SearchJson["type"] == "trainingcenter") {
-                      //     _TrainingCenterList.add(
-                      //         BoxTCLabelData.fromJson(SearchJson));
-                      //   }
-                      // }
-                      // return Container();
-                      //******************************  This is the Search result widget */
-                      return Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height / 1.3,
-                          // child: SearchResult(
-                          //   courseList: _CourseList,
-                          //   trainingCenterList: _TrainingCenterList,
-                          // ),
-                          child: searchResult(
-                              courseList: _CourseList,
-                              trainingCenterList: _TrainingCenterList));
-                      //**************** This is the Search result */
-                    } else {
-                      return Container(
-                          height: MediaQuery.of(context).size.height / 1.3,
-                          child: Center(child: CircularProgressIndicator()));
-                    }
-                  },
-                )
+              ?
+              // ? FutureBuilder(
+              //     future: fetchSearch(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.done) {
+              //         Map<String, dynamic> SearchJson = snapshot.data!;
+              //         SearchJson.forEach((key, value) {
+              //           if (key == "listCourse") {
+              //             for (var val in value)
+              //               _CourseList.add(BoxCourseLabelData.fromJson(val));
+              //           } else if (key == "listTC") {
+              //             for (var val in value)
+              //               _TrainingCenterList.add(
+              //                   BoxTCLabelData.fromJson(val));
+              //           }
+              //         });
+              // for (var SearchJson in SearchJson) {
+              //   if (SearchJson["type"] == "course") {
+              //     _CourseList.add(
+              //         BoxCourseLabelData.fromJson(SearchJson));
+              //   } else if (SearchJson["type"] == "trainingcenter") {
+              //     _TrainingCenterList.add(
+              //         BoxTCLabelData.fromJson(SearchJson));
+              //   }
+              // }
+              // return Container();
+              //******************************  This is the Search result widget */
+              Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 1.3,
+                  // child: SearchResult(
+                  //   courseList: _CourseList,
+                  //   trainingCenterList: _TrainingCenterList,
+                  // ),
+                  child: searchResult(
+                      courseList: _CourseList,
+                      trainingCenterList: _TrainingCenterList))
+              //**************** This is the Search result */
+              // } else {
+              //   return Container(
+              //       height: MediaQuery.of(context).size.height / 1.3,
+              //       child: Center(child: CircularProgressIndicator()));
+              // }
+              // },
+              // )
               : Container(
                   height: MediaQuery.of(context).size.height / 1.3,
                   child: Center(
@@ -439,10 +441,18 @@ class _SearchPageState extends State<SearchPage> {
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
         SearchJson = response.data;
+        SearchJson.forEach((key, value) {
+          if (key == "listCourse") {
+            for (var val in value)
+              _CourseList.add(BoxCourseLabelData.fromJson(val));
+          } else if (key == "listTC") {
+            for (var val in value)
+              _TrainingCenterList.add(BoxTCLabelData.fromJson(val));
+          }
+        });
 
-        return SearchJson;
+        // return SearchJson;
       } else {
         return false;
       }
