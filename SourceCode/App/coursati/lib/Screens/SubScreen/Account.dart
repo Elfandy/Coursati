@@ -142,13 +142,13 @@ class _AccountPageState extends State<AccountPage> {
                           alignment: AlignmentDirectional.bottomStart,
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
-                                shape: CircleBorder(),
-                                backgroundColor: Color(0xbbffffff)),
-                            child: Icon(
+                                shape: const CircleBorder(),
+                                backgroundColor: const Color(0xbbffffff)),
+                            onPressed: getImage,
+                            child: const Icon(
                               Icons.edit,
                               color: Colors.grey,
                             ),
-                            onPressed: getImage,
                           ),
                         )
                       : Container(),
@@ -236,7 +236,7 @@ class _AccountPageState extends State<AccountPage> {
                                     _editGender = value;
                                   });
                                 },
-                                style: TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.black),
                               )
                             : Align(
                                 alignment: AlignmentDirectional.centerStart,
@@ -331,8 +331,8 @@ class _AccountPageState extends State<AccountPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.edit),
-                          SizedBox(
+                          const Icon(Icons.edit),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -401,7 +401,7 @@ class _AccountPageState extends State<AccountPage> {
                               languageType == 0
                                   ? "تغيير كلمة المرور"
                                   : "Change password",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color(0xff1776e0), fontSize: 18),
                             ),
                           ),
@@ -432,16 +432,18 @@ class _AccountPageState extends State<AccountPage> {
                                     decoration: InputDecoration(
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: (_oldPassError)
-                                            ? BorderSide(color: Colors.red)
-                                            : BorderSide(
+                                            ? const BorderSide(
+                                                color: Colors.red)
+                                            : const BorderSide(
                                                 color: Color(0xff1776e0)),
                                         borderRadius:
                                             BorderRadius.circular(200),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: (_newPassError)
-                                            ? BorderSide(color: Colors.red)
-                                            : BorderSide(
+                                            ? const BorderSide(
+                                                color: Colors.red)
+                                            : const BorderSide(
                                                 color: Color(0xff1776e0)),
                                         borderRadius:
                                             BorderRadius.circular(200),
@@ -458,7 +460,7 @@ class _AccountPageState extends State<AccountPage> {
                                     cursorHeight: 3,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 SizedBox(
@@ -478,7 +480,7 @@ class _AccountPageState extends State<AccountPage> {
                                           ? "الرمز السري الجديد "
                                           : "New Password"),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                             color: Color(0xff1776e0)),
                                         borderRadius:
                                             BorderRadius.circular(200),
@@ -491,7 +493,7 @@ class _AccountPageState extends State<AccountPage> {
                                     cursorHeight: 3,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 SizedBox(
@@ -518,16 +520,18 @@ class _AccountPageState extends State<AccountPage> {
                                       counterText: "",
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: (_newPassError)
-                                            ? BorderSide(color: Colors.red)
-                                            : BorderSide(
+                                            ? const BorderSide(
+                                                color: Colors.red)
+                                            : const BorderSide(
                                                 color: Color(0xff1776e0)),
                                         borderRadius:
                                             BorderRadius.circular(200),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: (_newPassError)
-                                            ? BorderSide(color: Colors.red)
-                                            : BorderSide(
+                                            ? const BorderSide(
+                                                color: Colors.red)
+                                            : const BorderSide(
                                                 color: Color(0xff1776e0)),
                                         borderRadius:
                                             BorderRadius.circular(200),
@@ -552,15 +556,15 @@ class _AccountPageState extends State<AccountPage> {
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width / 2,
                                 child: TextButton(
-                                  child: Text(
-                                      languageType == 0 ? "تغيير" : "submit",
-                                      style: TextStyle(fontSize: 18)),
                                   onPressed: () {},
                                   style: TextButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
+                                  child: Text(
+                                      languageType == 0 ? "تغيير" : "submit",
+                                      style: const TextStyle(fontSize: 18)),
                                 ),
                               ),
                             )
@@ -570,8 +574,8 @@ class _AccountPageState extends State<AccountPage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.edit),
-                            SizedBox(
+                            const Icon(Icons.edit),
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -619,13 +623,13 @@ class _AccountPageState extends State<AccountPage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.logout, color: Colors.red),
-                            SizedBox(
+                            const Icon(Icons.logout, color: Colors.red),
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
                               (languageType == 0) ? "تسجيل الخروج" : "Logout",
-                              style: TextStyle(color: Colors.red),
+                              style: const TextStyle(color: Colors.red),
                             ),
                           ]),
                     ),
@@ -654,7 +658,7 @@ class _AccountPageState extends State<AccountPage> {
           title: Center(
             child: Text(
               languageType == 0 ? "تغيير كلمة المرور" : "Change password",
-              style: TextStyle(color: Color(0xff1776e0), fontSize: 18),
+              style: const TextStyle(color: Color(0xff1776e0), fontSize: 18),
             ),
           ),
           content: SizedBox(
@@ -682,8 +686,8 @@ class _AccountPageState extends State<AccountPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: (_oldPassError)
-                            ? BorderSide(color: Colors.red)
-                            : BorderSide(color: Color(0xff1776e0)),
+                            ? const BorderSide(color: Colors.red)
+                            : const BorderSide(color: Color(0xff1776e0)),
                         borderRadius: BorderRadius.circular(200),
                       ),
                       counterText: "",
@@ -697,7 +701,7 @@ class _AccountPageState extends State<AccountPage> {
                     cursorHeight: 3,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -715,7 +719,7 @@ class _AccountPageState extends State<AccountPage> {
                           ? "الرمز السري الجديد "
                           : "New Password"),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff1776e0)),
+                        borderSide: const BorderSide(color: Color(0xff1776e0)),
                         borderRadius: BorderRadius.circular(200),
                       ),
                       border: OutlineInputBorder(
@@ -725,7 +729,7 @@ class _AccountPageState extends State<AccountPage> {
                     cursorHeight: 3,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -750,8 +754,8 @@ class _AccountPageState extends State<AccountPage> {
                       counterText: "",
                       enabledBorder: OutlineInputBorder(
                         borderSide: (_newPassError)
-                            ? BorderSide(color: Colors.red)
-                            : BorderSide(color: Color(0xff1776e0)),
+                            ? const BorderSide(color: Colors.red)
+                            : const BorderSide(color: Color(0xff1776e0)),
                         borderRadius: BorderRadius.circular(200),
                       ),
                       focusColor: Colors.red,
@@ -773,14 +777,14 @@ class _AccountPageState extends State<AccountPage> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: TextButton(
-                  child: Text(languageType == 0 ? "تغيير" : "submit",
-                      style: TextStyle(fontSize: 18)),
                   onPressed: () {},
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  child: Text(languageType == 0 ? "تغيير" : "submit",
+                      style: const TextStyle(fontSize: 18)),
                 ),
               ),
             )
@@ -801,7 +805,7 @@ class _AccountPageState extends State<AccountPage> {
           decoration: InputDecoration(
             counterText: '',
             hintText: user.name,
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
           ),
         );
         _email = TextField(
@@ -812,7 +816,7 @@ class _AccountPageState extends State<AccountPage> {
           decoration: InputDecoration(
               counterText: '',
               hintText: user.email,
-              hintStyle: TextStyle(color: Colors.grey)),
+              hintStyle: const TextStyle(color: Colors.grey)),
         );
 
         _birthDate = TextField(
@@ -835,7 +839,7 @@ class _AccountPageState extends State<AccountPage> {
           controller: _editBirthDate,
           decoration: InputDecoration(
               hintText: user.birthDate,
-              hintStyle: TextStyle(color: Colors.grey)),
+              hintStyle: const TextStyle(color: Colors.grey)),
         );
         _phoneNumber = TextField(
           style: TextStyle(color: isDark ? Colors.white : Colors.black),
@@ -848,7 +852,7 @@ class _AccountPageState extends State<AccountPage> {
           decoration: InputDecoration(
               counterText: '',
               hintText: user.phoneNumber,
-              hintStyle: TextStyle(color: Colors.grey)),
+              hintStyle: const TextStyle(color: Colors.grey)),
         );
         // _organaiationName = TextField(
         //   style: TextStyle(color: isDark ? Colors.white : Colors.black),
@@ -868,7 +872,7 @@ class _AccountPageState extends State<AccountPage> {
           decoration: InputDecoration(
               counterText: '',
               hintText: user.personalID,
-              hintStyle: TextStyle(color: Colors.grey)),
+              hintStyle: const TextStyle(color: Colors.grey)),
         );
         _isEdit = true;
       } else {

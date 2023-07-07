@@ -27,7 +27,7 @@ class _BoxTCLabelState extends State<BoxTCLabel> {
             widget.bld.name!,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.start,

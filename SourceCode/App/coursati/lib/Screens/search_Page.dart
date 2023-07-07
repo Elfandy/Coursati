@@ -470,7 +470,7 @@ class _SearchPageState extends State<SearchPage> {
         url,
         data: form,
       );
-
+      print(response.data);
       if (response.statusCode == 200) {
         SearchJson = response.data;
         SearchJson.forEach((key, value) {

@@ -1,19 +1,9 @@
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/TCBranch.dart';
-import 'package:coursati/Screens/SubScreen/MapScreenTC.dart';
 import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPageData.dart';
-import 'package:coursati/Services/ScreenController.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../Classes/GlobalVariables.dart';
-
 import '../../../Classes/TrainingCenter.dart';
-import '../CoursesViewPage.dart';
 
 class TrainingCenterPage extends StatefulWidget {
   const TrainingCenterPage({super.key, required this.id, required this.loc});
@@ -25,8 +15,9 @@ class TrainingCenterPage extends StatefulWidget {
 }
 
 class _TrainingCenterPageState extends State<TrainingCenterPage> {
-  int following = 0, canRate = 0, branchedto = 0;
+  int following = 0, canRate = 0, branchedto = 0, rateCount = 0;
   List<TcBranch> branches = [];
+  int TcMine = 0;
   //*************************************************************************** */
   @override
   Widget build(BuildContext context) {
@@ -49,6 +40,8 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
             following: following,
             loc: widget.loc,
             trainingCenter: trainingCenter,
+            TcMine: TcMine,
+            rateCount: rateCount,
           );
         } else {
           return Container(
@@ -82,9 +75,10 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
       Map<String, dynamic> data =
           user.id != 0 ? {"id": id, 'userID': user.id} : {"id": id};
       var response = await dioTestApi.post(url, data: data);
+
       if (response.statusCode == 200) {
         trainingCenter = TrainingCenter.fromJson(response.data['info']);
-
+        rateCount = response.data['info']['ratecount'];
         following = response.data['info']['follow'] == 'no'
             ? 1
             : response.data['info']['follow'] == 'yes'
@@ -95,22 +89,17 @@ class _TrainingCenterPageState extends State<TrainingCenterPage> {
             : response.data['info']['allowtorate'] == 'yes'
                 ? 1
                 : 2;
+        TcMine = response.data['info']['userID'] == user.id ? 1 : 0;
+
         branches.clear();
         branchedto = response.data['info']['branched_to'] != null ? 0 : 1;
-        for (var value in response.data['tcBranch'])
+        for (var value in response.data['tcBranch']) {
           branches.add(TcBranch.fromJson(value));
+        }
       }
     } catch (e) {
       print(e);
     }
     return trainingCenter;
   }
-  // TrainingCenter? getTCData(String name) {
-  //   for (int i = 0; i < trainingCenterData.length; i++) {
-  //     if (name == trainingCenterData[i].name) {
-  //       return trainingCenterData[i];
-  //     }
-  //   }
-  //   return null;
-  // }
 }

@@ -150,7 +150,7 @@ class _loginPageState extends State<loginPage> {
                         ],
                       ),
                       AnimatedSwitcher(
-                        duration: const Duration(seconds: 2),
+                        duration: const Duration(seconds: 1),
                         switchInCurve: Curves.linear,
                         child: (_isSelected == 0)
                             ? SingleChildScrollView(
@@ -906,7 +906,7 @@ class _loginPageState extends State<loginPage> {
       if (kDebugMode) {
         Fluttertoast.showToast(
             // msg: "There was an error using this data please check your data");
-            msg: exception.toString());
+            msg: "There was an error");
       }
     }
   }

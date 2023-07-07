@@ -6,6 +6,7 @@ import 'package:coursati/Screens/SubScreen/CoursesViewPage.dart';
 import 'package:coursati/Screens/SubScreen/MapScreenTC.dart';
 import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
 import 'package:coursati/Services/ScreenController.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,11 +21,14 @@ class TrainingCenterInfo extends StatefulWidget {
       required this.canRate,
       required this.following,
       required this.trainingCenter,
-      required this.loc});
+      required this.loc,
+      required this.TcMine,
+      required this.rateCount});
   TrainingCenter trainingCenter;
-  int following = 0, canRate = 0, branchedto = 0;
+  int following, canRate, branchedto, rateCount;
   List<TcBranch> branches = [];
   bool loc;
+  int TcMine;
 
   @override
   State<TrainingCenterInfo> createState() => _TrainingCenterInfoState();
@@ -42,6 +46,8 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
 
   int following = 0, canRate = 0, branchedto = 0;
   List<TcBranch> branches = [];
+  double rating = 0.0;
+  bool hasRatied = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -60,7 +66,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
         child: Stack(children: [
       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       //? This is the image code
-      Container(
+      SizedBox(
         width: double.infinity,
         child: InkWell(
           onTap: () {
@@ -105,8 +111,8 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                        child: Container(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: SizedBox(
                           width: (MediaQuery.of(context).size.width / 2),
                           height: 100,
                           child: TextButton(
@@ -201,7 +207,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 25,
                                     height: 25,
                                     child: Image.asset(
@@ -222,7 +228,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 200,
                                     child: Text(
                                       trainingCenter.location.city!,
@@ -236,7 +242,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: Image.asset(
@@ -256,7 +262,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: 200,
                                   child: Text(
                                     trainingCenter.location.city!,
@@ -269,67 +275,160 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                     ),
                   ),
                   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                  following != 0
+                  widget.TcMine == 0
+                      ? following != 0
+                          ? Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    width: double.infinity,
+                                  ),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          fixedSize: Size(
+                                              following == 2 ? 160 : 130, 50),
+                                          backgroundColor: following == 2
+                                              ? Colors.white
+                                              : const Color(0xff1667e0),
+                                          shape: ContinuousRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              side: const BorderSide(
+                                                  color: Color(0xff1776e0)))),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.favorite,
+                                            color: following == 2
+                                                ? const Color(0xff1667e0)
+                                                : Colors.white,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                              following == 2
+                                                  ? languageType == 0
+                                                      ? "إلغاء المتابعة"
+                                                      : "Unfollow"
+                                                  : languageType == 0
+                                                      ? "متابعة"
+                                                      : "Follow",
+                                              style: TextStyle(
+                                                  color: following == 2
+                                                      ? const Color(0xff1667e0)
+                                                      : Colors.white)),
+                                        ],
+                                      ),
+                                      onPressed: () async {
+                                        if (following == 1) {
+                                          followTC();
+                                        } else if (following == 2) {
+                                          unFollowTC();
+                                        }
+                                      }),
+                                ],
+                              ),
+                            )
+                          : Container()
+                      : Container(),
+
+                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                  //?This is the all courses from tc place of the center
+
+                  TextButton(
+                    child: Padding(
+                      padding: labelPad,
+                      child: Text(
+                        (languageType == 0)
+                            ? "تفحص دوراتنا"
+                            : "See Our Courses",
+                        style: labeleStyle,
+                      ),
+                    ),
+                    //???????????????? This is for the function of the see our courses
+                    onPressed: () {
+                      Navigator.of(context).push(ScreenController().createRoute(
+                          CoursesViewPage(
+                            id: trainingCenter.id,
+                          ),
+                          1));
+                    },
+                  ),
+
+                  //* Second try of the tags place
+
+                  (trainingCenter.tags.isNotEmpty)
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          padding: labelPad,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: double.infinity,
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text(
+                                  (languageType == 0) ? "الوسوم" : "Tags",
+                                  style: labeleStyle,
+                                ),
                               ),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      fixedSize:
-                                          Size(following == 2 ? 160 : 130, 50),
-                                      backgroundColor: following == 2
-                                          ? Colors.white
-                                          : Color(0xff1667e0),
-                                      shape: ContinuousRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          side: BorderSide(
-                                              color: Color(0xff1776e0)))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.favorite,
-                                        color: following == 2
-                                            ? Color(0xff1667e0)
-                                            : Colors.white,
+                              Wrap(
+                                children: [
+                                  for (int i = 0;
+                                      i < trainingCenter.tags.length;
+                                      i++)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: const Color(0xffdddddd)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            (languageType == 0)
+                                                ? trainingCenter.tags[i].name_ar
+                                                : trainingCenter
+                                                    .tags[i].name_en,
+                                            style: tagsStyle,
+                                          ),
+                                        ),
                                       ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                          following == 2
-                                              ? languageType == 0
-                                                  ? "إلغاء المتابعة"
-                                                  : "Unfollow"
-                                              : languageType == 0
-                                                  ? "متابعة"
-                                                  : "Follow",
-                                          style: TextStyle(
-                                              color: following == 2
-                                                  ? Color(0xff1667e0)
-                                                  : Colors.white)),
-                                    ],
-                                  ),
-                                  onPressed: () async {
-                                    if (following == 1) {
-                                      followTC();
-                                    } else if (following == 2) {
-                                      unFollowTC();
-                                    }
-                                  }),
+                                    ),
+                                ],
+                              )
                             ],
                           ),
                         )
                       : Container(),
-                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                  //?This is the branches place of the center
+                  // Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child:
 
+                  //     )),
+
+                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!a
+                  //? this is the description
+
+                  Padding(
+                    padding: labelPad,
+                    child: Text(
+                      (languageType == 0) ? "الوصف" : "Description",
+                      style: labeleStyle,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 30, 10),
+                    child: Text(
+                      trainingCenter.description,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                   branches.isNotEmpty
                       ? Padding(
                           padding: labelPad,
@@ -352,7 +451,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 width: 25,
                                                 height: 25,
                                                 child: Image.asset(
@@ -391,153 +490,135 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                 //? this is the tags place of the center
                               ]))
                       : Container(),
-
-                  // (trainingCenter.branch!.isNotEmpty)
-                  //     ? Padding(
-                  //         padding: labelPad,
-                  //         child: Column(
-                  //             crossAxisAlignment:
-                  //                 CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 (languageType == 0)
-                  //                     ? "الفروع"
-                  //                     : "Branches",
-                  //                 style: labeleStyle,
-                  //               ),
-
-                  //               // Wrap(
-                  //               //   spacing: 10,
-                  //               //   runSpacing: 10,
-                  //               //   childredirectionint i = 0;
-                  //               //         i <
-                  //               //             trainingCenter
-                  //               //                 .branch!.length;
-                  //               //         i++)
-                  //               //       Row(
-                  //               //           mainAxisAlignment:
-                  //               //               MainAxisAlignment.start,
-                  //               //           children: [
-                  //               //             Container(
-                  //               //               width: 25,
-                  //               //               height: 25,
-                  //               //               child: Image.asset(
-                  //               //                 "Assets/Icons/map-pin-location.png",
-                  //               //                 color: (isDark)
-                  //               //                     ? Colors.white
-                  //               //                     : Colors.black,
-                  //               //               ),
-                  //               //             ),
-                  //               //             const SizedBox(
-                  //               //               width: 10,
-                  //               //             ),
-                  //               //             // Text(
-                  //               //             //   trainingCenter.branch![i]
-                  //               //             //       .location.city!,
-                  //               //             //   style: branchStyle,
-                  //               //             // ),
-                  //               //           ]),
-                  //               //   ],
-                  //               // ),
-
-                  //               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                  //               //? this is the tags place of the center
-                  //             ]))
-                  // : Container(),
-                  //* Second try of the tags place
-
-                  (trainingCenter.tags.isNotEmpty)
-                      ? Padding(
-                          padding: labelPad,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: Text(
-                                  (languageType == 0) ? "الوسوم" : "Tags",
-                                  style: labeleStyle,
-                                ),
-                              ),
-                              Wrap(
-                                children: [
-                                  for (int i = 0;
-                                      i < trainingCenter.tags.length;
-                                      i++)
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: const Color(0xffdddddd)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            (languageType == 0)
-                                                ? trainingCenter
-                                                    .tags[i].name_ar!
-                                                : trainingCenter
-                                                    .tags[i].name_en!,
-                                            style: tagsStyle,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      : Container(),
-                  // Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child:
-
-                  //     )),
-
-                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!a
-                  //? this is the description
-
-                  Padding(
-                    padding: labelPad,
-                    child: Text(
-                      (languageType == 0) ? "الوصف" : "Description",
-                      style: labeleStyle,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 30, 10),
-                    child: Text(
-                      trainingCenter.description,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  ),
-                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                  //?this is the see our courses section
+                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                  //???????????? The rating side
                   Padding(
                     padding: labelPad,
                     child: const Divider(),
                   ),
-                  TextButton(
-                    child: Padding(
-                      padding: labelPad,
-                      child: Text(
-                        (languageType == 0)
-                            ? "تفحص دوراتنا"
-                            : "See Our Courses",
-                        style: labeleStyle,
-                      ),
-                    ),
-                    //???????????????? This is for the function of the see our courses
-                    onPressed: () {
-                      Navigator.of(context).push(ScreenController().createRoute(
-                          CoursesViewPage(
-                            id: trainingCenter.id,
+
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                trainingCenter.rating.toString(),
+                                style: TextStyle(fontSize: 50),
+                              ),
+                              RatingBar.builder(
+                                onRatingUpdate: (value) {},
+                                initialRating: trainingCenter.rating,
+                                minRating: 1,
+                                itemSize: 10,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                ignoreGestures: true,
+                                itemCount: 5,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 1.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Color(0xff1776e0),
+                                  size: 2,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(widget.rateCount.toString()),
+                              ),
+                            ],
                           ),
-                          1));
-                    },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: VerticalDivider(),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.5,
+                              child: RatingBar.builder(
+                                initialRating: 3,
+                                itemSize: 40,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rate) {
+                                  setState(() {
+                                    hasRatied = true;
+                                    rating = rate;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                canRate == 1
+                                    ? OutlinedButton(
+                                        onPressed: () {
+                                          if (hasRatied) {
+                                            updateRate();
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "please select rating before submitting");
+                                          }
+                                        },
+                                        child: Text("Submit Rate",
+                                            style: TextStyle(fontSize: 12)),
+                                        style: OutlinedButton.styleFrom(),
+                                      )
+                                    : OutlinedButton(
+                                        onPressed: () {
+                                          if (hasRatied) {
+                                            submitRate();
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "please select rating before submitting");
+                                          }
+                                        },
+                                        child: Text("Update Rate",
+                                            style: TextStyle(fontSize: 12)),
+                                        style: OutlinedButton.styleFrom(),
+                                      ),
+                                SizedBox(width: 10),
+                                OutlinedButton(
+                                    onPressed: () {
+                                      deleteRating();
+                                    },
+                                    child: Text("delete Rate",
+                                        style: TextStyle(fontSize: 12)))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
+
+                  Padding(
+                    padding: labelPad,
+                    child: const Divider(),
+                  ),
+
+                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                  //?this is the see our courses section
 
                   Padding(
                     padding: labelPad,
@@ -633,7 +714,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                               20, 0, 20, 0),
                                           child: Column(
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 width: 45,
                                                 height: 45,
                                                 child: TextButton(
@@ -658,6 +739,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                           ),
                                         )
                                       : Container(),
+
                                   //! this is for viper
                                   // (_trainingCenter.ViperAllow)
                                   //     ? Padding(
@@ -695,6 +777,10 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                           ],
                         )
                       : Container(),
+                  Padding(
+                    padding: labelPad,
+                    child: const Divider(),
+                  ),
 
                   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                   //?this is for the email
@@ -846,6 +932,65 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
       if (kDebugMode) {
         print(exception);
       }
+    }
+  }
+
+  Future submitRate() async {
+    var url = "tc/rate";
+    try {
+      var response = await dioTestApi.post(url, data: {
+        'userID': user.id,
+        'tcID': widget.trainingCenter.id,
+        "rating": rating
+      });
+      print(response.data);
+      print("hello");
+
+      if (response.statusCode == 200) {
+        if (response.data == 'added') {
+          Fluttertoast.showToast(msg: "Your rating have been added succefully");
+          setState(() {});
+        }
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
+  }
+
+  Future updateRate() async {
+    var url = "tc/updateRate";
+    try {
+      var response = await dioTestApi.post(url, data: {
+        'userID': user.id,
+        'tcID': widget.trainingCenter.id,
+        "rating": rating
+      });
+      if (response.statusCode == 200) {
+        if (response.data == 'added') {
+          Fluttertoast.showToast(msg: "Your rating have been added succefully");
+          setState(() {});
+        }
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
+  }
+
+  Future deleteRating() async {
+    var url = "tc/deleteRate";
+    try {
+      var response = await dioTestApi.post(url, data: {
+        'userID': user.id,
+        'tcID': widget.trainingCenter.id,
+      });
+      if (response.statusCode == 200) {
+        if (response.data == 'deleted') {
+          Fluttertoast.showToast(msg: "Your rating have been removed");
+          setState(() {});
+        }
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
     }
   }
 }
