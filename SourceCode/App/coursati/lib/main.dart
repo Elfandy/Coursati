@@ -5,6 +5,7 @@ import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
 import 'package:coursati/firebase_options.dart';
 import 'package:cr_file_saver/file_saver.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:coursati/Services/Controller/FileHandle.dart';
@@ -58,23 +59,24 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runZonedGuarded(() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   checkServer().then((value) {
-//       if (value == 1) {
+    // WidgetsFlutterBinding.ensureInitialized();
+    // checkServer().then((value) {
+    //   if (connected == 1) {
     CRFileSaver.requestWriteExternalStoragePermission();
     Permission.location;
 
     FileHandle().readConfig().then((value) {
       if (value != null) {
-        print('hello wolrd');
         FileHandle().extractConfigData();
       } else {
         FileHandle().writeConfig(ConfigSave);
       }
       runApp(const MainApp());
     });
-
-    //  }else{ runApp(ServerError(error: value));}});
+    //   } else {
+    //     runApp(ServerError(error: connected));
+    //   }
+    // });
   }, (_, s) {});
   // // TODO: Request permission
 }
@@ -241,20 +243,35 @@ class _MainAppState extends State<MainApp> {
   }
 }
 
-Future<int> checkServer() async {
-  try {
-    //*** This is the default server check */
-    // response = await http.get(Uri.parse(server));
-    //!! temp server check
+Future checkServer() async {
+  // try {
+  //   //*** This is the default server check */
+  //   // response = await http.get(Uri.parse(server));
+  //   //!! temp server check
 
-    var response =
-        await http.get(Uri.parse(onlineServer + "Courses/NewCourses"));
-    if (response.statusCode == 200) {
-      return 1;
-    } else {
-      return 2;
-    }
-  } catch (e) {
-    return 0;
+  //   var response =
+  //       await http.get(Uri.parse(onlineServer + "Courses/NewCourses"));
+  //   if (response.statusCode == 200) {
+  //     return 1;
+  //   } else {
+  //     return 2;
+  //   }
+  // } catch (e) {
+  //   return 0;
+  // }
+
+  ///??????????????????? The new server check
+
+  try {
+    var ping = Ping(ser, count: 3, timeout: 1, ipv6: false);
+    var res = await ping.stream.listen((event) {
+      print(event);
+
+      if (event.error == null) {
+        connected = 1;
+      }
+    });
+  } catch (exception) {
+    connected = 0;
   }
 }

@@ -502,6 +502,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  flutter_icmp_ping:
+    dependency: "direct main"
+    description:
+      name: flutter_icmp_ping
+      sha256: a06c2255a857c8f9d1b0a68f546b113557e48e7a543f91e38bd66aeab296f3a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   flutter_image_slideshow:
     dependency: "direct main"
     description:

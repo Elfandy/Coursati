@@ -70,8 +70,6 @@ class _HomePageState extends State<HomePage> {
       var response = await dioTestApi.get(url);
 
       if (response.statusCode == 200) {
-        print(response.data);
-
         List<dynamic> coursesJson = response.data['courses'];
 
         for (var coursesJson in coursesJson) {

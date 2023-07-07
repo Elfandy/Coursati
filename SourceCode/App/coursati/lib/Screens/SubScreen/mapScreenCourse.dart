@@ -1,5 +1,5 @@
 import 'package:coursati/Classes/Course.dart';
-import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
+import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

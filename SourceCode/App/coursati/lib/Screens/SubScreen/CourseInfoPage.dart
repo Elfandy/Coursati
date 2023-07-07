@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Screens/SubScreen/MapScreenTC.dart';
-import 'package:coursati/Screens/SubScreen/TrainingCenterInfoPage.dart';
+import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
 import 'package:coursati/Screens/SubScreen/mapScreenCourse.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
@@ -132,20 +132,21 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                         //? This is the side where simple data is in
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(ScreenController()
-                                  .createRoute(
-                                      TrainingCenterPage(
-                                          id: _course.trainingCenterID),
-                                      1));
-                            },
+                          child: TextButton(
                             child: Text(
                               (languageType == 0)
                                   ? "مركز ${_course.trainingCenterName}"
                                   : "${_course.trainingCenterName} Center",
                               style: TextStyle(fontSize: 24),
                             ),
+                            onPressed: () {
+                              Navigator.of(context).push(ScreenController()
+                                  .createRoute(
+                                      TrainingCenterPage(
+                                          id: _course.trainingCenterID,
+                                          loc: true),
+                                      1));
+                            },
                           ),
                         ),
                         Row(

@@ -4,7 +4,7 @@ import 'package:coursati/Widgets/Home/BoxTCLabel.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../../Screens/SubScreen/TrainingCenterInfoPage.dart';
+import '../../Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
 import '../../Services/ScreenController.dart';
 
 //////////////////////////////////////////////////////////////
@@ -154,7 +154,10 @@ class _TCBoxState extends State<TCBox> with TickerProviderStateMixin {
           _boxAnimationController.reverse(),
         });
     Navigator.of(context).push(ScreenController().createRoute(
-      TrainingCenterPage(id: widget.bld.id!),
+      TrainingCenterPage(
+        id: widget.bld.id!,
+        loc: true,
+      ),
       2,
     ));
   }

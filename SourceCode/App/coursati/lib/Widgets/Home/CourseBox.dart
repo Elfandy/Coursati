@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../Classes/GlobalVariables.dart';
-import '../../Screens/SubScreen/TrainingCenterInfoPage.dart';
+import '../../Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
 import '../../Services/ScreenController.dart';
 
 class CourseBox extends StatefulWidget {

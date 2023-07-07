@@ -1,3 +1,5 @@
+import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPage.dart';
+import 'package:coursati/Services/ScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -111,6 +113,9 @@ class _AllMapScreenState extends State<AllMapScreen> {
                   (languageType == 0 ? "" : "  >"),
               onTap: () {
                 //** Going to TrainingCenter page */
+                Navigator.of(context).push(ScreenController().createRoute(
+                    TrainingCenterPage(id: list[i].id.toString(), loc: false),
+                    0));
               })));
     }
     return mark;

@@ -55,6 +55,7 @@ class _SearchPageState extends State<SearchPage> {
     _selectedTypes.add(_tagTypeList[1]);
   }
 
+  Widget searchResultWidget = Center(child: CircularProgressIndicator());
   bool searching = false;
   @override
   Widget build(BuildContext context) {
@@ -77,17 +78,31 @@ class _SearchPageState extends State<SearchPage> {
                       style: TextStyle(
                           color: (isDark) ? Colors.white : Colors.black),
                       onSubmitted: (value) {
-                        setState(() async {
-                          if (_search.text.isNotEmpty) {
-                            await fetchSearch().then(
-                              (value) {
-                                searching = true;
-                              },
-                            );
-                          } else {
-                            searching = false;
-                          }
-                        });
+                        // if (_search.text.isNotEmpty) {
+                        //   setState(() {
+                        //     searching = true;
+                        //   });
+                        //   fetchSearch().then(
+                        //     (value) {
+                        //       setState(() {
+                        //         searchResultWidget = Container(
+                        //             width: double.infinity,
+                        //             height: MediaQuery.of(context).size.height /
+                        //                 1.3,
+                        //             // child: SearchResult(
+                        //             //   courseList: _CourseList,
+                        //             //   trainingCenterList: _TrainingCenterList,
+                        //             // ),
+                        //             child: searchResult(
+                        //                 courseList: _CourseList,
+                        //                 trainingCenterList:
+                        //                     _TrainingCenterList));
+                        //       });
+                        //     },
+                        //   );
+                        // } else {
+                        //   searching = false;
+                        // }
                       },
                       onTap: () {
                         if (_search.selection ==
@@ -97,7 +112,7 @@ class _SearchPageState extends State<SearchPage> {
                               TextPosition(offset: _search.text.length));
                         }
                       },
-                      onEditingComplete: () {
+                      onEditingComplete: () async {
                         // setState(() {
                         //   if (_search.text.isNotEmpty) {
                         //     searching = true;
@@ -105,6 +120,31 @@ class _SearchPageState extends State<SearchPage> {
                         //     searching = false;
                         //   }
                         // });
+                        if (_search.text.isNotEmpty) {
+                          setState(() {
+                            searching = true;
+                          });
+                          fetchSearch().then(
+                            (value) {
+                              setState(() {
+                                searchResultWidget = Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height /
+                                        1.3,
+                                    // child: SearchResult(
+                                    //   courseList: _CourseList,
+                                    //   trainingCenterList: _TrainingCenterList,
+                                    // ),
+                                    child: searchResult(
+                                        courseList: _CourseList,
+                                        trainingCenterList:
+                                            _TrainingCenterList));
+                              });
+                            },
+                          );
+                        } else {
+                          searching = false;
+                        }
                       },
                       controller: _search,
                       cursorHeight: 20,
@@ -257,7 +297,7 @@ class _SearchPageState extends State<SearchPage> {
                                             (languageType == 0)
                                                 ? "إعادة ضبط"
                                                 : "Reset",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18),
                                           ),
@@ -297,7 +337,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           (searching)
-              ?
+              ? Center(child: searchResultWidget)
               // ? FutureBuilder(
               //     future: fetchSearch(),
               //     builder: (context, snapshot) {
@@ -324,16 +364,7 @@ class _SearchPageState extends State<SearchPage> {
               // }
               // return Container();
               //******************************  This is the Search result widget */
-              Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 1.3,
-                  // child: SearchResult(
-                  //   courseList: _CourseList,
-                  //   trainingCenterList: _TrainingCenterList,
-                  // ),
-                  child: searchResult(
-                      courseList: _CourseList,
-                      trainingCenterList: _TrainingCenterList))
+
               //**************** This is the Search result */
               // } else {
               //   return Container(
@@ -378,7 +409,7 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                           onPressed: () {
                             Navigator.of(context).push(ScreenController()
-                                .createRoute(AllMapScreen(), 1));
+                                .createRoute(const AllMapScreen(), 1));
                           },
                         )
                       ],
@@ -421,9 +452,9 @@ class _SearchPageState extends State<SearchPage> {
 
   Future fetchSearch() async {
     var url = "Search";
-    Map search = {};
-    String jsonTags = json.encode(_selectedTags);
-    String jsonType = json.encode(_selectedTypes);
+    // Map search = {};
+    // String jsonTags = json.encode(_selectedTags);
+    // String jsonType = json.encode(_selectedTypes);
     Map<String, dynamic> SearchJson = {};
     FormData form = FormData.fromMap({
       "Search": _search.text,
@@ -444,14 +475,15 @@ class _SearchPageState extends State<SearchPage> {
         SearchJson = response.data;
         SearchJson.forEach((key, value) {
           if (key == "listCourse") {
-            for (var val in value)
+            for (var val in value) {
               _CourseList.add(BoxCourseLabelData.fromJson(val));
+            }
           } else if (key == "listTC") {
-            for (var val in value)
+            for (var val in value) {
               _TrainingCenterList.add(BoxTCLabelData.fromJson(val));
+            }
           }
         });
-
         // return SearchJson;
       } else {
         return false;
@@ -473,7 +505,7 @@ class _SearchPageState extends State<SearchPage> {
               elevation: 0,
               backgroundColor: Colors.transparent,
               toolbarHeight: 0,
-              bottom: TabBar(
+              bottom: const TabBar(
                 indicatorColor: Color(0xff1776e0),
                 unselectedLabelColor: Colors.grey,
                 labelColor: Color(0xff1776e0),
@@ -498,7 +530,9 @@ class _SearchPageState extends State<SearchPage> {
                               alignment: WrapAlignment.center,
                               children: [
                                 for (BoxCourseLabelData course in courseList)
-                                  CourseBox(bld: course)
+                                  CourseBox(
+                                    bld: course,
+                                  )
                               ],
                             ),
                           ),
