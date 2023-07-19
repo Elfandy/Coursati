@@ -1,2 +1,2 @@
-# Coursati
-This is the main repo for the Coursati APP
+Coursati APP
+coursati is a platform for searching for courses 
