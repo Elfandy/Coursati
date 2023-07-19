@@ -8,8 +8,11 @@ import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Services/ScreenController.dart';
 import 'package:coursati/Widgets/CustomeWidgets/TagChip.dart';
 import 'package:coursati/Widgets/TrainingCenter/SetLoationMap.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -48,6 +51,8 @@ class _TrainingCenterParsonalInfoState
       _facebookEdit = TextEditingController(),
       _discriptionEdit = TextEditingController();
 
+  double open = 0, close = 0;
+
   File? _image;
   late Locations locationDataEdit;
 
@@ -63,7 +68,8 @@ class _TrainingCenterParsonalInfoState
       _whatsApp.text = widget.tc.whatsAppNum ?? "";
       _closeTime.text = "${widget.tc.close.hour}:${widget.tc.close.minute}";
       _openTime.text = "${widget.tc.open.hour}:${widget.tc.open.minute}";
-
+      close = double.parse("${widget.tc.close.hour}.${widget.tc.close.minute}");
+      open = double.parse("${widget.tc.open.hour}.${widget.tc.open.minute}");
       _website.text = widget.tc.website ?? "";
       _facebook.text = widget.tc.facebook ?? "";
       _discription.text = widget.tc.description;
@@ -133,14 +139,26 @@ class _TrainingCenterParsonalInfoState
                           imageUrl: widget.tc.image,
                           fit: BoxFit.cover,
                         )
-                      : Image.file(_image!),
+                      : Container(
+                          height: 220,
+                          width: double.infinity,
+                          child: Image(
+                            image: FileImage(
+                              _image!,
+                            ),
+                            fit: BoxFit.cover,
+                            height: 220,
+                          ),
+                        ),
                   (isEditing)
                       ? Align(
                           alignment: Alignment.bottomLeft,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 160),
                             child: OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                getImage();
+                              },
                               child: Icon(Icons.edit),
                               style: OutlinedButton.styleFrom(
                                   shape: CircleBorder(),
@@ -455,11 +473,8 @@ class _TrainingCenterParsonalInfoState
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: MultiSelectDialogField(
                           items: tags
-                              .map((e) => MultiSelectItem(
-                                  e,
-                                  (languageType == 0)
-                                      ? e.name_ar!
-                                      : e.name_en!))
+                              .map((e) => MultiSelectItem(e,
+                                  (languageType == 0) ? e.name_ar : e.name_en))
                               .toList(),
                           listType: MultiSelectListType.CHIP,
                           unselectedColor: Colors.grey[600],
@@ -526,7 +541,33 @@ class _TrainingCenterParsonalInfoState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                Map<String, dynamic> form = {'userID': user.id};
+
+                                form['name'] = _nameEdit.text;
+                                form['email'] = _emailEdit.text;
+                                form['phonenumber'] = _phoneNumberEdit.text;
+                                form['whatsapp'] = _whatsAppEdit.text;
+
+                                form['locName'] = _locationEdit.text;
+                                form['website'] = _websiteEdit.text;
+                                form['facebook'] = _facebookEdit.text;
+                                form['description'] = _discriptionEdit.text;
+                                form['longitude'] = locationData.lng;
+                                form['latitude'] = locationData.lat;
+                                form['tcID'] = widget.tc.id;
+                                form['tags'] = {
+                                  for (var element in _selectedTags) element
+                                };
+                                form['openTime'] = open;
+                                form['closeTime'] = close;
+                                if (_image != null) {
+                                  form['image'] = await MultipartFile.fromFile(
+                                      _image!.path);
+                                }
+                                FormData data = FormData.fromMap(form);
+                                editTC(form: data);
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(120, 40)),
                               child: Text(
@@ -595,13 +636,17 @@ class _TrainingCenterParsonalInfoState
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.of(context).pop(false),
-                                        //<-- SEE HERE
                                         child: new Text(
                                             (languageType == 0) ? "لا" : "No"),
                                       ),
                                       TextButton(
-                                        onPressed: () {},
-                                        // <-- SEE HERE
+                                        onPressed: () {
+                                          deleteTC(widget.tc.id).then((value) {
+                                            Navigator.pop(context);
+                                            ScreenController()
+                                                .restartApp(context);
+                                          });
+                                        },
                                         child: new Text((languageType == 0)
                                             ? "نعم"
                                             : "Yes"),
@@ -639,7 +684,34 @@ class _TrainingCenterParsonalInfoState
     return first.toString();
   }
 
-  Future DeleteTC(int id) async {}
+  Future deleteTC(String id) async {
+    var url = 'tc/deactivate';
+    try {
+      var response = await dioTestApi.post(url, data: {'id': id});
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: languageType == 0
+                ? "تم إيقاف المركز التدريبي بنجاح"
+                : "The Training Center has been deactivated succfully");
+      }
+    } catch (exception) {}
+  }
+
+  Future editTC({required FormData form}) async {
+    var url = "tc/update";
+    try {
+      var response = await dioTestApi.post(url, data: form);
+      print(response.data);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: languageType == 0
+                ? "تم تحديث بيانات الدورة التدريبية بنجاح"
+                : "Training center has been added succefully");
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
+  }
 
   Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);

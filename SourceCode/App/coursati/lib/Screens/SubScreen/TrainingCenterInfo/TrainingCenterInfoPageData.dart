@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Classes/TCBranch.dart';
@@ -507,7 +508,7 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                             children: [
                               Text(
                                 trainingCenter.rating.toString(),
-                                style: TextStyle(fontSize: 50),
+                                style: const TextStyle(fontSize: 50),
                               ),
                               RatingBar.builder(
                                 onRatingUpdate: (value) {},
@@ -519,8 +520,8 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                 ignoreGestures: true,
                                 itemCount: 5,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 1.0),
-                                itemBuilder: (context, _) => Icon(
+                                    const EdgeInsets.symmetric(horizontal: 1.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Color(0xff1776e0),
                                   size: 2,
@@ -533,79 +534,165 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 3),
                           child: VerticalDivider(),
                         ),
-                        Column(
+                        Stack(
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.5,
-                              child: RatingBar.builder(
-                                initialRating: 3,
-                                itemSize: 40,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rate) {
-                                  setState(() {
-                                    hasRatied = true;
-                                    rating = rate;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                canRate == 1
-                                    ? OutlinedButton(
-                                        onPressed: () {
-                                          if (hasRatied) {
-                                            updateRate();
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "please select rating before submitting");
-                                          }
-                                        },
-                                        child: Text("Submit Rate",
-                                            style: TextStyle(fontSize: 12)),
-                                        style: OutlinedButton.styleFrom(),
-                                      )
-                                    : OutlinedButton(
-                                        onPressed: () {
-                                          if (hasRatied) {
-                                            submitRate();
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "please select rating before submitting");
-                                          }
-                                        },
-                                        child: Text("Update Rate",
-                                            style: TextStyle(fontSize: 12)),
-                                        style: OutlinedButton.styleFrom(),
+                            user.token != ''
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.5,
+                                        child: RatingBar.builder(
+                                          initialRating: 3,
+                                          itemSize: 40,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 4.0),
+                                          itemBuilder: (context, _) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rate) {
+                                            setState(() {
+                                              hasRatied = true;
+                                              rating = rate;
+                                            });
+                                          },
+                                        ),
                                       ),
-                                SizedBox(width: 10),
-                                OutlinedButton(
-                                    onPressed: () {
-                                      deleteRating();
-                                    },
-                                    child: Text("delete Rate",
-                                        style: TextStyle(fontSize: 12)))
-                              ],
-                            ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          canRate == 1
+                                              ? OutlinedButton(
+                                                  onPressed: () {
+                                                    if (hasRatied) {
+                                                      submitRate().then(
+                                                        (value) {
+                                                          setState(() {
+                                                            hasRatied = false;
+                                                          });
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              ScreenController().createRoute(
+                                                                  TrainingCenterPage(
+                                                                      id: widget
+                                                                          .trainingCenter
+                                                                          .id,
+                                                                      loc: widget
+                                                                          .loc),
+                                                                  1));
+                                                        },
+                                                      );
+                                                      // Navigator.of(context).pushReplacement(
+                                                      //     ScreenController().createRoute(
+                                                      //         TrainingCenterPage(
+                                                      //             id: widget
+                                                      //                 .trainingCenter.id,
+                                                      //             loc: widget.loc),
+                                                      //         1));
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "please select rating before submitting");
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                      "Submit Rate",
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                  style: OutlinedButton
+                                                      .styleFrom(),
+                                                )
+                                              : OutlinedButton(
+                                                  onPressed: () {
+                                                    if (hasRatied) {
+                                                      updateRate().then(
+                                                        (value) {
+                                                          setState(() {
+                                                            hasRatied = false;
+                                                          });
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              ScreenController().createRoute(
+                                                                  TrainingCenterPage(
+                                                                      id: widget
+                                                                          .trainingCenter
+                                                                          .id,
+                                                                      loc: widget
+                                                                          .loc),
+                                                                  1));
+                                                        },
+                                                      );
+
+                                                      // Navigator.of(context).pushReplacement(
+                                                      //     ScreenController().createRoute(
+                                                      //         TrainingCenterPage(
+                                                      //             id: widget
+                                                      //                 .trainingCenter.id,
+                                                      //             loc: widget.loc),
+                                                      //         1));
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "please select rating before submitting");
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                      "Update Rate",
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                  style: OutlinedButton
+                                                      .styleFrom(),
+                                                ),
+                                          const SizedBox(width: 10),
+                                          OutlinedButton(
+                                              onPressed: () {
+                                                deleteRating().then((value) {
+                                                  setState(() {
+                                                    hasRatied = false;
+                                                  });
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      ScreenController().createRoute(
+                                                          TrainingCenterPage(
+                                                              id: widget
+                                                                  .trainingCenter
+                                                                  .id,
+                                                              loc: widget.loc),
+                                                          1));
+                                                });
+                                              },
+                                              child: const Text("delete Rate",
+                                                  style:
+                                                      TextStyle(fontSize: 12)))
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                : Center(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.5,
+                                      child: Text(languageType == 0
+                                          ? "الرجاء تسجيل الدخول لتقييم المركز التدريبي"
+                                          : "Please Login First to rate the Training center"),
+                                    ),
+                                  ),
                           ],
                         ),
                       ],
@@ -619,11 +706,6 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
 
                   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                   //?this is the see our courses section
-
-                  Padding(
-                    padding: labelPad,
-                    child: const Divider(),
-                  ),
 
                   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                   //? This is for the contact us section
@@ -708,7 +790,8 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
                                           ),
                                         )
                                       : Container(),
-                                  (trainingCenter.whatsAppNum != "")
+                                  (trainingCenter.whatsAppNum != "" &&
+                                          trainingCenter.whatsApp != "")
                                       ? Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 0, 20, 0),
@@ -943,13 +1026,13 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
         'tcID': widget.trainingCenter.id,
         "rating": rating
       });
-      print(response.data);
-      print("hello");
+      // print(response.data);
+      // print("hello");
 
       if (response.statusCode == 200) {
         if (response.data == 'added') {
-          Fluttertoast.showToast(msg: "Your rating have been added succefully");
-          setState(() {});
+          // Fluttertoast.showToast(msg: "Your rating have been added succefully");
+          return true;
         }
       }
     } catch (exception) {
@@ -967,8 +1050,15 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
       });
       if (response.statusCode == 200) {
         if (response.data == 'added') {
-          Fluttertoast.showToast(msg: "Your rating have been added succefully");
-          setState(() {});
+          // Fluttertoast.showToast(msg: "Your rating have been added succefully");
+          // setState(() {
+          //   Navigator.pushReplacement(
+          //       context,
+          //       ScreenController().createRoute(
+          //           TrainingCenterPage(
+          //               id: widget.trainingCenter.id, loc: widget.loc),
+          //           1));
+          // });
         }
       }
     } catch (exception) {
@@ -985,8 +1075,8 @@ class _TrainingCenterInfoState extends State<TrainingCenterInfo> {
       });
       if (response.statusCode == 200) {
         if (response.data == 'deleted') {
-          Fluttertoast.showToast(msg: "Your rating have been removed");
-          setState(() {});
+          // Fluttertoast.showToast(msg: "Your rating have been removed");
+          // setState(() {});
         }
       }
     } catch (exception) {

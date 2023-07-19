@@ -104,9 +104,9 @@ class _AddBranchState extends State<AddBranch> {
                             // _email.text.lastIndexOf(".") ==
                             //     _email.text.indexOf(".")
                             ) {
-                          _emailCheck = true;
-                        } else {
                           _emailCheck = false;
+                        } else {
+                          _emailCheck = true;
                         }
                       },
                     );
@@ -250,6 +250,8 @@ class _AddBranchState extends State<AddBranch> {
                               });
                             }),
                           },
+                          style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black),
                           readOnly: true,
                           controller: _openTime,
                           decoration: InputDecoration(
@@ -288,6 +290,8 @@ class _AddBranchState extends State<AddBranch> {
                                   },
                           readOnly: true,
                           controller: _closeTime,
+                          style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black),
                           decoration: InputDecoration(
                             label: Text((languageType == 0)
                                 ? "وقت اﻹغلاق"
@@ -509,6 +513,9 @@ class _AddBranchState extends State<AddBranch> {
                   ),
                 ),
               ),
+              Text(languageType == 0
+                  ? "عليك كتابة على الاقل 100 حرف"
+                  : "You have to write at least a 100 letters"),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: TextField(
@@ -656,7 +663,9 @@ class _AddBranchState extends State<AddBranch> {
                         'tags': {for (var element in tagsNum) element},
                         'userID': user.id
                       });
-                      SendData(form);
+                      SendData(form).then((value) {
+                        Navigator.pop(context, true);
+                      });
                     },
                     child: Text(
                       (languageType == 0) ? "أضف فرع" : "Add branch",

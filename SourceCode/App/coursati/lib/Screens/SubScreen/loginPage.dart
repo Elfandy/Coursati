@@ -746,7 +746,7 @@ class _loginPageState extends State<loginPage> {
                                 if (!(_loginEmail.text.contains("@") &&
                                     _loginEmail.text.contains(".") &&
                                     _loginEmail.text.indexOf("@") <
-                                        _loginEmail.text.indexOf(".") &&
+                                        _loginEmail.text.lastIndexOf(".") &&
                                     _loginEmail.text.lastIndexOf("@") ==
                                         _loginEmail.text.indexOf("@"))) {
                                   _loginemailCheck = 1;
@@ -770,42 +770,51 @@ class _loginPageState extends State<loginPage> {
                                   //**** Fetch credintials */
                                   var userCredinitals =
                                       await getCredintials(user.token);
+                                  if (userCredinitals != 'no') {
+                                    user.name = userCredinitals['name'];
+                                    user.email = userCredinitals['email'];
+                                    user.id = userCredinitals['id'];
+                                    user.birthDate =
+                                        userCredinitals['birthdate'];
+                                    user.gender = userCredinitals['gender'];
+                                    user.phoneNumber =
+                                        userCredinitals['phonenumber'];
+                                    user.hasTC = userCredinitals['hasTC'];
+                                    user.personalID =
+                                        userCredinitals['passportID']
+                                            .toString();
+                                    user.image = "${userCredinitals['avatar']}";
+                                    _accountFound = 1;
 
-                                  user.name = userCredinitals['name'];
-                                  user.email = userCredinitals['email'];
-                                  user.id = userCredinitals['id'];
-
-                                  user.birthDate = userCredinitals['birthdate'];
-
-                                  user.gender = userCredinitals['gender'];
-                                  user.phoneNumber =
-                                      userCredinitals['phonenumber'];
-                                  user.hasTC = userCredinitals['hasTC'];
-                                  user.personalID =
-                                      userCredinitals['passportID'].toString();
-                                  user.image = "${userCredinitals['avatar']}";
-                                  _accountFound = 1;
-
-                                  if (_accountFound == 1) {
-                                    FileHandle()
-                                        .writeConfig(ConfigSave)
-                                        .then((value) {
-                                      if (widget.contextIn.widget.toString() ==
-                                          "TCNotLogged") {
-                                        ScreenController().restartApp(context);
-                                      } else {
-                                        Navigator.pop(context, true);
-                                      }
-                                    });
-                                  } else if (_accountFound == 0) {
+                                    if (_accountFound == 1) {
+                                      FileHandle()
+                                          .writeConfig(ConfigSave)
+                                          .then((value) {
+                                        if (widget.contextIn.widget
+                                                .toString() ==
+                                            "TCNotLogged") {
+                                          ScreenController()
+                                              .restartApp(context);
+                                        } else {
+                                          Navigator.pop(context, true);
+                                        }
+                                      });
+                                    } else if (_accountFound == 0) {
+                                      _accountFound = 2;
+                                    }
+                                  } else {
                                     _accountFound = 2;
                                   }
                                 } else {
-                                  setState(
-                                    () {
-                                      _accountFound = 2;
-                                    },
-                                  );
+                                  if (token != "'message':'Unauthenticated'") {
+                                    _accountFound = 3;
+                                  } else {
+                                    setState(
+                                      () {
+                                        _accountFound = 2;
+                                      },
+                                    );
+                                  }
                                 }
                               }
                             }
@@ -844,6 +853,7 @@ class _loginPageState extends State<loginPage> {
       var response = await dioTestApi.post(url,
           data: {"email": email, "password": password, "deviceID": deviceID});
       if (response.statusCode == 200) {
+        print(response.data);
         return response.data;
       } else {
         Fluttertoast.showToast(
@@ -861,10 +871,13 @@ class _loginPageState extends State<loginPage> {
   Future getCredintials(String token) async {
     var url = "user";
     try {
-      var response = await dioTestApi.post(url,
-          options: Options(headers: {'Authorization': "Bearer $token"}));
+      var response = await dioTestApi.post(url, data: {'token': token});
       if (response.statusCode == 200) {
-        return response.data;
+        if (response.data != []) {
+          return response.data[0];
+        } else {
+          return 'no';
+        }
       } else {
         Fluttertoast.showToast(
             msg: languageType == 0
@@ -895,6 +908,7 @@ class _loginPageState extends State<loginPage> {
         "gender": gender,
         "phonenumber": phonenum
       });
+
       if (response.statusCode == 200) {
         if (response.data != 'email') {
           return true;

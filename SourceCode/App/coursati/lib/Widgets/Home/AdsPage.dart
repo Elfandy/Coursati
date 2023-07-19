@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Classes/Ads.dart';
 import 'package:coursati/Classes/GlobalVariables.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AdsPage extends StatefulWidget {
   AdsPage({super.key, required this.ad});
@@ -47,7 +49,13 @@ class _AdsPageState extends State<AdsPage> {
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(),
-                onPressed: () {},
+                onPressed: () {
+                  _launchSocial(widget.ad.link.startsWith('http')
+                      ? widget.ad.link
+                      : widget.ad.link.startsWith('https')
+                          ? widget.ad.link
+                          : "https://" + widget.ad.link);
+                },
                 child: Text(
                   languageType == 0 ? "اذهب للموقع" : "Go to Link",
                   style: TextStyle(color: Colors.white),
@@ -56,5 +64,18 @@ class _AdsPageState extends State<AdsPage> {
         ]),
       ),
     );
+  }
+
+  void _launchSocial(String url) async {
+    // Don't use canLaunch because of fbProtocolUrl (fb://)
+    try {
+      if (!await launchUrl(Uri.parse(url),
+          mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (exception) {
+      if (kDebugMode) print(exception);
+    }
+    // await launchUrl(Uri.https(url),mode: LaunchMode.externalApplication ,);
   }
 }

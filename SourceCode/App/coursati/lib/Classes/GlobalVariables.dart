@@ -21,9 +21,10 @@ List<Tag> _tagTypeList = [
   Tag(id: 1, name_ar: "دورة", name_en: "Course"),
   Tag(id: 2, name_ar: "مركز تدريب", name_en: "Training center")
 ];
+
 // String serverStorage = "";
 // String ser = "192.168.43.98";
-String ser = "192.168.43.128";
+String ser = "192.168.1.174";
 
 String serverStorage = "http://$ser/coursatidash/public/storage/";
 String onlineServer = "http://$ser/coursatidash/public/api/";

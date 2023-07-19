@@ -2,7 +2,9 @@ import 'package:coursati/Classes/GlobalVariables.dart';
 import 'package:coursati/Screens/SubScreen/Account.dart';
 import 'package:coursati/Screens/SubScreen/Settings.dart';
 import 'package:coursati/Widgets/More/OptionButton.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../Services/ScreenController.dart';
 import '../Widgets/More/AvatarGuestMore.dart';
@@ -82,9 +84,10 @@ class _MorePageState extends State<MorePage> {
                   image: const AssetImage("Assets/Icons/settings.png"),
                   label: (languageType == 0) ? "الإعدادات" : "Settings",
                   onPressed: () {
-                    Navigator.of(context).push(
-                      ScreenController().createRoute(const SettingsPage(), 1),
-                    );
+                    getCredintials(user.token).then((value) {
+                      Navigator.of(context).push(ScreenController()
+                          .createRoute(const SettingsPage(), 1));
+                    });
                   },
                 ),
                 OptionButton(
@@ -131,5 +134,45 @@ class _MorePageState extends State<MorePage> {
         ],
       ),
     );
+  }
+
+  Future getCredintials(String token) async {
+    var url = "user";
+    try {
+      var response = await dioTestApi.post(url, data: {'token': token});
+      if (response.statusCode == 200) {
+        if (response.data != []) {
+          var userCredinitals = response.data[0];
+
+          if (userCredinitals != 'no') {
+            setState(() {
+              user.name = userCredinitals['name'];
+              user.email = userCredinitals['email'];
+              user.id = userCredinitals['id'];
+
+              user.birthDate = userCredinitals['birthdate'];
+
+              user.gender = userCredinitals['gender'];
+              user.phoneNumber = userCredinitals['phonenumber'];
+              user.hasTC = userCredinitals['hasTC'];
+              user.personalID = userCredinitals['passportID'].toString();
+              user.image = "${userCredinitals['avatar']}";
+            });
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          Fluttertoast.showToast(
+              msg: languageType == 0
+                  ? "هناك خطاء في الخادم الرجاء المحاولة لاحقاً"
+                  : "There is an error with the server try again later");
+        }
+      }
+    } catch (exception) {
+      if (kDebugMode) {
+        print(exception);
+      }
+    }
   }
 }

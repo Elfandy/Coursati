@@ -1,7 +1,6 @@
 import 'package:coursati/Classes/TCBranch.dart';
 import 'package:coursati/Screens/SubScreen/TrainingCenterInfo/TrainingCenterInfoPageData.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Classes/GlobalVariables.dart';
 import '../../../Classes/TrainingCenter.dart';
 

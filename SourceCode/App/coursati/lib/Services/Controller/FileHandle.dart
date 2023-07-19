@@ -84,7 +84,7 @@ class FileHandle {
 
     user.token = prefs.getString('token')!;
 
-    deviceID = prefs.getString('deviceid')!;
+    deviceID = prefs.getString('deviceid') ?? "";
     user.hasTC = prefs.getInt('hasTC')!;
     user.personalID = prefs.getString('passportID')!;
     user.phoneNumber = prefs.getString('phoneNumber')!;

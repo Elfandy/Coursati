@@ -4,6 +4,7 @@ import 'package:coursati/Classes/TrainingCenter.dart';
 import 'package:coursati/Widgets/TrainingCenter/AddTrainer.dart';
 import 'package:coursati/firebase_options.dart';
 import 'package:cr_file_saver/file_saver.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,9 +56,11 @@ Future<void> main() async {
   //????????????????????????????????/
   //* FireBase Notification handling
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runZonedGuarded(() async {
     // WidgetsFlutterBinding.ensureInitialized();
     // checkServer().then((value) {
@@ -91,26 +94,54 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   String _lastMessage = "";
 
+  // Future<void> setupInteractedMessage() async {
+  //   // Get any messages which caused the application to open from
+  //   // a terminated state.
+  //   RemoteMessage? initialMessage =
+  //       await FirebaseMessaging.instance.getInitialMessage();
+
+  //   // If the message also contains a data property with a "type" of "chat",
+  //   // navigate to a chat screen
+  //   if (initialMessage != null) {
+  //     _handleMessage(initialMessage);
+  //   }
+
+  //   // Also handle any interaction when the app is in the background via a
+  //   // Stream listener
+  //   FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  // }
+// void _handleMessage(RemoteMessage message) {
+//     if (message.data['type'] == 'chat') {
+//       Navigator.pushNamed(context, '/chat',
+//         arguments: ChatArguments(message),
+//       );
+//     }
+//   }
+
   @override
   void initState() {
     super.initState();
     requestPermssionFireBase();
     getToken();
+    //  setupInteractedMessage();
   }
-  // _MainAppState() {
-  //   _messageStreamController.listen((message) {
-  //     setState(() {
-  //       if (message.notification != null) {
-  //         _lastMessage = 'Received a notification message:'
-  //             '\nTitle=${message.notification?.title},'
-  //             '\nBody=${message.notification?.body},'
-  //             '\nData=${message.data}';
-  //       } else {
-  //         _lastMessage = 'Received a data message: ${message.data}';
-  //       }
-  //     });
-  //   });
-  // }
+
+  _MainAppState() {
+    _messageStreamController.listen((message) {
+      setState(() {
+        if (message.notification != null) {
+          _lastMessage = 'Received a notification message:'
+              '\nTitle=${message.notification?.title},'
+              '\nBody=${message.notification?.body},'
+              '\nData=${message.data}';
+        } else {
+          _lastMessage = 'Received a data message: ${message.data}';
+        }
+      });
+      print(_lastMessage);
+      print("bye");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,35 +151,7 @@ class _MainAppState extends State<MainApp> {
       title: (languageType == 0) ? "كورساتي" : "Coursati",
       debugShowCheckedModeBanner: false,
       home: const MainPage(),
-//       home: AddTrainer(
-//         trainingCenter: TrainingCenter(
-// //     // branch: [Branches[0], Branches[1], Branches[2]],
-//           close: TimeOfDay(hour: 19, minute: 00),
-//           description: """Advancing the Community with Hands-on Cyber
-// Security Training.
-// It is our ongoing mission to empower cyber security
-//  professionals with the practical skills and knowledge
-//  they need to make our world a safer place.
-// Advancing the Community with Hands-on Cyber Security
-// Training.
-// It is our ongoing mission to empower cyber security
-// professionals with the practical skills and knowledge
-// they need to make our world a safer place.""",
-//           email: "Octal@gmail.com",
-//           id: "0091",
-//           location: locations[3],
-//           name: "Octal",
-//           open: TimeOfDay(hour: 8, minute: 00),
-//           phoneNumber: "0911234567",
-//           rating: 3.8,
-//           tags: [],
-//           image: "${server}/Images/all-bong-L2oedF1AsH8-unsplash.jpg",
-//           logo: "${server}/Images/Asset%201%20(2).png",
-//           facebook: "https://www.facebook.com",
-//           website: "https://www.octal.com.ly",
-//           whatsAppNum: "0910502646",
-//         ),
-//       ),
+//
 
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -205,7 +208,9 @@ class _MainAppState extends State<MainApp> {
   }
 
   void requestPermssionFireBase() async {
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     final messaging = FirebaseMessaging.instance;
+    messaging.subscribeToTopic('app_promotion');
     final settings = await messaging.requestPermission(
       alert: true,
       announcement: false,

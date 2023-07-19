@@ -186,7 +186,9 @@ class _AddTrainerState extends State<AddTrainer> {
                       'imageName': _image!.path.split('/').last,
                       'tc': widget.trainingCenter.id
                     });
-                    setTrainer(form: form);
+                    setTrainer(form: form).then((value) {
+                      Navigator.pop(context, true);
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                       shape: ContinuousRectangleBorder(

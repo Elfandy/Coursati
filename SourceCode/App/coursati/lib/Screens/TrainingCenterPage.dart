@@ -369,14 +369,21 @@ class _TrainingCenterState extends State<TrainingCenter> {
                                           Icons.add,
                                           color: Colors.white,
                                         ),
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                              ScreenController().createRoute(
-                                                  AddBranch(
-                                                      tcID: trainingCenter.id!,
-                                                      name:
-                                                          trainingCenter.name!),
-                                                  1));
+                                        onPressed: () async {
+                                          bool result =
+                                              await Navigator.of(context).push(
+                                                  ScreenController()
+                                                      .createRoute(
+                                                          AddBranch(
+                                                              tcID:
+                                                                  trainingCenter
+                                                                      .id!,
+                                                              name:
+                                                                  trainingCenter
+                                                                      .name!),
+                                                          1));
+
+                                          if (result) {}
                                         },
                                       ),
                                     ),

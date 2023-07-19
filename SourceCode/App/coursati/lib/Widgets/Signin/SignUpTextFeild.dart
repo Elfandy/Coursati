@@ -16,11 +16,13 @@ class SignupTextFeild extends StatefulWidget {
       this.eyeOfSeeing = false,
       required this.onTap,
       required this.onChange,
-      this.numbers = false});
+      this.numbers = false,
+      this.textDirection = false});
   String text_ar, text_en;
   IconData icon;
   TextEditingController textController;
   int? maxLingth;
+  bool textDirection;
   bool readOnly, password, eyeOfSeeing, numbers;
   void Function() onTap;
   void Function(String?) onChange;
@@ -62,6 +64,11 @@ class _SignupTextFeildState extends State<SignupTextFeild> {
           style: TextStyle(
               color: isDark ? Colors.white : Colors.black, fontSize: 16),
           controller: widget.textController,
+          textDirection: widget.textDirection
+              ? TextDirection.ltr
+              : languageType == 0
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
           decoration: InputDecoration(
             counterText: "",
             suffixIcon: (widget.eyeOfSeeing)

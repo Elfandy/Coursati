@@ -71,8 +71,10 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                 ),
                                 child: Column(children: [
                                   OutlinedButton(
-                                    child: const Text(
-                                      "Add Course",
+                                    child: Text(
+                                      languageType == 0
+                                          ? "إضافة دورة"
+                                          : "Add Course",
                                       style: TextStyle(fontSize: 20),
                                     ),
                                     onPressed: () async {
@@ -91,16 +93,23 @@ class _TrainingCenterPersonalState extends State<TrainingCenterPersonal> {
                                   ),
                                   const Divider(),
                                   OutlinedButton(
-                                    child: const Text(
-                                      "Add Trainer",
+                                    child: Text(
+                                      languageType == 0
+                                          ? "إضافة مدرب"
+                                          : "Add Trainer",
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          ScreenController().createRoute(
+                                    onPressed: () async {
+                                      bool result = await Navigator.of(context)
+                                          .push(ScreenController().createRoute(
                                               AddTrainer(
                                                   trainingCenter: Data.tcData!),
                                               1));
+                                      if (result) {
+                                        setState(() {
+                                          Navigator.pop(context);
+                                        });
+                                      }
                                     },
                                   )
                                 ]),

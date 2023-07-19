@@ -140,7 +140,8 @@ class _AddCourseState extends State<AddCourse> {
                 items: [for (var x in widget.trainers) x.name],
                 popupProps: PopupProps.bottomSheet(
                   bottomSheetProps: BottomSheetProps(
-                      backgroundColor: isDark ? Colors.grey[800] : Colors.white,
+                      backgroundColor:
+                          isDark ? Colors.grey[800] : Colors.grey[400],
                       shape: const ContinuousRectangleBorder(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(50),

@@ -1,13 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coursati/Widgets/TrainingCenter/CourseDetailed/CourseDetailedInfo.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../../../Classes/Course.dart';
 import '../../../Classes/GlobalVariables.dart';
-import '../../../Classes/TagData.dart';
 import '../../../Classes/Trainer.dart';
-import '../../CustomeWidgets/TagChip.dart';
 
 class CourseDetailedfetchData extends StatefulWidget {
   const CourseDetailedfetchData(

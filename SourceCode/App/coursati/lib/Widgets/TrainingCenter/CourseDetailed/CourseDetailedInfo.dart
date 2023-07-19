@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../../../Classes/Course.dart';
 import '../../../Classes/GlobalVariables.dart';
 import '../../../Classes/TagData.dart';
@@ -148,6 +148,7 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
               SizedBox(
                 height: 20,
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -170,6 +171,8 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ),
                 ),
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
+
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -193,6 +196,8 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ),
                 ),
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
+
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -215,6 +220,8 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ),
                 ),
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
+
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -237,6 +244,8 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ),
                 ),
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
+
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -262,6 +271,8 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ),
                 ),
               ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
+
               Wrap(
                 children: [
                   for (var item in _selectTagsNum)
@@ -309,6 +320,7 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
               //     (languageType == 0) ? "أضف وسوم" : "Add Tags",
               //   ),
               // ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -326,46 +338,89 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
                   ],
                 ),
               ),
+              // Visibility(child: Text(languageType == 0 ? "" : "")),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
+              //   child: Container(
+              //     width: MediaQuery.of(context).size.width / 1.2,
+              //     child: TextField(
+              //       style: TextStyle(
+              //           color: isDark
+              //               ? Colors.white
+              //               : !isEditing
+              //                   ? Colors.black54
+              //                   : Colors.black),
+              //       controller: !isEditing ? _trainer : _trainerEdit,
+              //       readOnly: !isEditing,
+              //       decoration: InputDecoration(
+              //         label: Text((languageType == 0) ? " المدرب" : "Trainer"),
+              //         border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(50),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              Visibility(child: Text(languageType == 0 ? "" : "")),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  child: TextField(
-                    style: TextStyle(
-                        color: isDark
-                            ? Colors.white
-                            : !isEditing
-                                ? Colors.black54
-                                : Colors.black),
-                    controller: !isEditing ? _trainer : _trainerEdit,
-                    readOnly: !isEditing,
-                    decoration: InputDecoration(
-                      label: Text((languageType == 0) ? " المدرب" : "Trainer"),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                padding: const EdgeInsets.all(10.0),
+                child: DropdownSearch(
+                  items: [for (var x in widget.trainers) x.name],
+                  popupProps: PopupProps.bottomSheet(
+                    bottomSheetProps: BottomSheetProps(
+                        backgroundColor:
+                            isDark ? Colors.grey[800] : Colors.grey[400],
+                        shape: const ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50)))),
                   ),
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                        labelText: (languageType == 0) ? "المدرب" : "Trainer",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      for (var element in widget.trainers) {
+                        print(element.name);
+                        if (element.name == val) {
+                          trainer = element;
+                          continue;
+                        }
+                      }
+                    });
+                  },
+                  selectedItem: trainer != null ? trainer.name : null,
                 ),
+                // child: DropdownButton<String>(onChanged: (value) {}, items: [
+                //   for (var x in widget.trainers)
+                //     DropdownMenuItem(
+                //       child: Text(x.name),
+                //       value: x.id,
+                //       onTap: () {},
+                //     )
+                // ]),
               ),
-              (isEditing)
-                  ? DropdownButton(
-                      items: [
-                          for (var item in widget.trainers)
-                            DropdownMenuItem(
-                              child: Text(item.name),
-                              value: item,
-                            )
-                        ],
-                      onChanged: (value) {
-                        setState(() {
-                          if (value != null) {
-                            trainer = value;
-                            _trainerEdit.text = trainer.name;
-                          }
-                        });
-                      })
-                  : Container(),
+              // (isEditing)
+              //     ? DropdownButton(
+              //         items: [
+              //             for (var item in widget.trainers)
+              //               DropdownMenuItem(
+              //                 child: Text(item.name),
+              //                 value: item,
+              //               )
+              //           ],
+              //         onChanged: (value) {
+              //           setState(() {
+              //             if (value != null) {
+              //               trainer = value;
+              //               _trainerEdit.text = trainer.name;
+              //             }
+              //           });
+              //         })
+              //     : Container(),
               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               //? This is the side where simple data is in
 
@@ -421,7 +476,7 @@ class _CourseDetailedInfoState extends State<CourseDetailedInfo> {
   }
 
   Future editCourse({required FormData form}) async {
-    var url = "";
+    var url = "course/update";
 
     try {
       var response = await dioTestApi.post(url, data: form);
